@@ -1,0 +1,45 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700,900');
+
+@import "compass/reset";
+
+$fg-color: #eee;
+$bg-color: #222;
+
+body {
+    color: $fg-color;
+    background-color: $bg-color;
+}
+
+a {
+    font-family: 'Lato', sans-serif;
+    color: $fg-color;
+    text-decoration: none;
+    line-height: 1.2em;
+    font-weight: 700;
+}
+
+.artists a {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.artists {
+    border: 1px solid red;
+}
+
+@media all and (min-width: 1200px) {
+
+    .artists {
+        height: 100vh;
+        width: 360px;
+        overflow-y: scroll;
+    }
+
+}

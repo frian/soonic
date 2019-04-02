@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<nav class="artists">
+    <h1>Artists list</h1>
+    <ul>
+    {% for artist in artists %}
+        <li><a href="{{ path('artist_show', { 'id': artist.id }) }}">{{ artist.name }}</a></li>
+    {% endfor %}
+    </ul>
+</nav>
+
+{% endblock %}
