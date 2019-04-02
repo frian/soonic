@@ -4,11 +4,17 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+
         <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+
+        <script src="/js/jquery-3.3.1.min.js"></script>
+        <script src="/js/main.js"></script>
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {{ include('common/topbar.html.twig') }}
+        
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>

@@ -1,15 +1,12 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-
+<ul>
 {% for song in songs %}
 
-{{ song.title }} <br>
+<li><a href="#"> - {{ song.title }}</a></li>
 
 {% else %}
     <h1>no song</h1>
 {% endfor %}
-
+</ul>
 {#    <h1>{{ artist }}</h1>
 
     <table>
@@ -50,4 +47,3 @@
             <a href="{{ path('artist_index') }}">Back to the list</a>
         </li>
     </ul>#}
-{% endblock %}
