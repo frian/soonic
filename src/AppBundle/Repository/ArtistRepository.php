@@ -1,5 +1,5 @@
 <?php
-// src/AppBundle/Repository/ProductRepository.php
+// src/AppBundle/Repository/ArtistRepository.php
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;

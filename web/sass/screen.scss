@@ -8,11 +8,16 @@
 @import "compass/reset";
 
 $fg-color: #eee;
-$bg-color: #222;
+$bg-color: #111;
+
+$debug: 0;
 
 body {
     color: $fg-color;
     background-color: $bg-color;
+    background: linear-gradient(to bottom right,
+        rgba(17,17,17, 1) 0%,
+        rgba(17,17,17, 0.9) 100% );
 }
 
 a {
@@ -23,15 +28,38 @@ a {
     font-weight: 700;
 }
 
+
+$topbar-size: 50px;
+
+.topbar {
+    // background-color: #222;
+    height: $topbar-size;
+    border: #{$debug}px solid red;
+    border-bottom: 1px solid #333;
+}
+
+.topbar > div {
+    display: inline-block;
+}
+
+.logo {
+    height: $topbar-size;
+    line-height: 50px;
+    padding: 0 20px;
+    border: #{$debug}px solid red;
+}
+
+
 .artists a {
     display: block;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding-left: 5px;
 }
 
 .artists {
-    border: 1px solid red;
+    border: #{$debug}px solid red;
 }
 
 @media all and (min-width: 1200px) {

@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Album</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Path</th>
+                <td>{{ album.path }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ album.name }}</td>
+            </tr>
+            <tr>
+                <th>Artist</th>
+                <td>{{ album.artist }}</td>
+            </tr>
+            <tr>
+                <th>Songcount</th>
+                <td>{{ album.songCount }}</td>
+            </tr>
+            <tr>
+                <th>Durationseconds</th>
+                <td>{{ album.durationSeconds }}</td>
+            </tr>
+            <tr>
+                <th>Coverartpath</th>
+                <td>{{ album.coverArtPath }}</td>
+            </tr>
+            <tr>
+                <th>Playcount</th>
+                <td>{{ album.playCount }}</td>
+            </tr>
+            <tr>
+                <th>Lastplayed</th>
+                <td>{% if album.lastPlayed %}{{ album.lastPlayed|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Comment</th>
+                <td>{{ album.comment }}</td>
+            </tr>
+            <tr>
+                <th>Created</th>
+                <td>{% if album.created %}{{ album.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Lastscanned</th>
+                <td>{% if album.lastScanned %}{{ album.lastScanned|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Present</th>
+                <td>{% if album.present %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Year</th>
+                <td>{{ album.year }}</td>
+            </tr>
+            <tr>
+                <th>Genre</th>
+                <td>{{ album.genre }}</td>
+            </tr>
+            <tr>
+                <th>Folderid</th>
+                <td>{{ album.folderId }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ album.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('album_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

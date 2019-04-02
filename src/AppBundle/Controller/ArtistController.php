@@ -41,8 +41,13 @@ class ArtistController extends Controller
     public function showAction(Artist $artist)
     {
 
+        $em = $this->getDoctrine()->getManager();
+
+        $songs = $em->getRepository('AppBundle:MediaFile')->findByArtist($artist->getName());
+
+
         return $this->render('artist/show.html.twig', array(
-            'artist' => $artist,
+            'songs' => $songs,
         ));
     }
 }
