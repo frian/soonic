@@ -8,15 +8,13 @@ class MediaFileRepository extends EntityRepository
 {
     public function findByArtist($artist)
     {
-        $query = $this->createQueryBuilder('s')
+        return $this->createQueryBuilder('s')
             ->where('s.artist = :artist')
             ->setParameter('artist', $artist)
-            ->andWhere('s.title is not null')
-            // ->setParameter('null', serialize(null))
+            ->andWhere('s.title != :null')
+            ->setParameter('null', serialize(null))
             ->orderBy('s.album', 'ASC')
-            ->getQuery();
-
-        $products = $query->getResult();
-        return $products;
+            ->getQuery()
+            ->getResult();
     }
 }

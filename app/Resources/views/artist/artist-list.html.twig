@@ -1,0 +1,5 @@
+<ul id="artists-nav">
+{% for artist in artists %}
+    <li><a href="{{ path('artist_show', { 'id': artist.id }) }}">{{ artist.name }}</a></li>
+{% endfor %}
+</ul>

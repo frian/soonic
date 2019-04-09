@@ -29,7 +29,7 @@ a {
 }
 
 
-$topbar-size: 50px;
+$topbar-size: 49px;
 
 .topbar {
     // background-color: #222;
@@ -59,15 +59,58 @@ $topbar-size: 50px;
 }
 
 .artists {
+    float: left;
     border: #{$debug}px solid red;
+}
+
+.songs, .queue {
+    margin-left: 360px;
+    border: #{$debug}px solid red;
+}
+
+.filter {
+    height: 40px;
+    line-height: 40px;
+    background-color: #333;
+    border: #{$debug}px solid red;
+
+    label {
+        font-size: 110%;
+        padding: 0 10px;
+    }
+
+    input[type="text"] {
+        position: relative;
+        top: -2px;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 10px;
+        margin: 0;
+        background-color: #222;
+        border: 1px solid #000;
+    }
 }
 
 @media all and (min-width: 1200px) {
 
+    $nav-width: 360px;
+
     .artists {
-        height: 100vh;
-        width: 360px;
+        height: calc(100vh - (#{$topbar-size} + 1px));
+        width: $nav-width;
         overflow-y: scroll;
     }
 
+    .songs, .queue {
+        margin-left: $nav-width;
+        height: calc((100vh - (#{$topbar-size} + 1px)) / 2);
+    }
+
+    .songs {
+
+    }
+
+    .queue {
+
+    }
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * MediaFile
  *
  * @ORM\Table(name="media_file", indexes={@ORM\Index(name="idx_media_file_path", columns={"path"}), @ORM\Index(name="idx_media_file_parent_path", columns={"parent_path"}), @ORM\Index(name="idx_media_file_type", columns={"type"}), @ORM\Index(name="idx_media_file_album", columns={"album"}), @ORM\Index(name="idx_media_file_artist", columns={"artist"}), @ORM\Index(name="idx_media_file_album_artist", columns={"album_artist"}), @ORM\Index(name="idx_media_file_present", columns={"present"}), @ORM\Index(name="idx_media_file_genre", columns={"genre"}), @ORM\Index(name="idx_media_file_play_count", columns={"play_count"}), @ORM\Index(name="idx_media_file_created", columns={"created"}), @ORM\Index(name="idx_media_file_last_played", columns={"last_played"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\MediaFileRepository")
  */
 class MediaFile
 {

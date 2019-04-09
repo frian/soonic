@@ -3,12 +3,19 @@
 
 {% block body %}
 <nav class="artists">
-    <!-- <h1>Artists list</h1> -->
-    <ul>
-    {% for artist in artists %}
-        <li><a href="{{ path('artist_show', { 'id': artist.id }) }}">{{ artist.name }}</a></li>
-    {% endfor %}
-    </ul>
+
+    <div class="filter">
+        <form class="" action="index.html" method="post">
+            <label for="filter">filter</label>
+            <input type="text" name="filter" value="">
+        </form>
+    </div>
+
+    {% include('artist/artist-list.html.twig') %}
+
 </nav>
+
+{{ include('index/songs.html.twig') }}
+{{ include('index/queue.html.twig') }}
 
 {% endblock %}
