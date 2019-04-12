@@ -44,12 +44,26 @@ $topbar-size: 49px;
 }
 
 .logo {
+    // float: left;
     height: $topbar-size;
     line-height: 50px;
     padding: 0 20px;
     border: #{$debug}px solid red;
 }
 
+
+[class^="icon-"] {
+    font-size: 120%;
+    // border: 1px solid red;
+}
+
+.icon-play {
+    font-size: 150%;
+}
+
+.icon-to-end {
+    margin-left: -4px;
+}
 
 .artists a {
     display: block;
@@ -100,18 +114,20 @@ table {
 thead {
     font-family: 'Muli', sans-serif;
     font-weight: 700;
-    background-color: #444;
+    background-color: #333;
     tr {
-        height: 30px;
-        line-height: 30px;
+        height: 22px;
+        line-height: 22px;
 
         th {
             padding: 0 10px;
             font-family: 'Muli', sans-serif;
             font-weight: 700;
-            font-size: 90%;
+            font-size: 80%;
             letter-spacing: 1px;
+            border: 1px solid lime;
         }
+
     }
 }
 
@@ -129,6 +145,19 @@ tbody {
     }
 }
 
+.queue-header {
+    height: 22px;
+    line-height: 18px;
+    padding-left: 10px;
+    // padding-bottom: 2px;
+    font-family: 'Muli', sans-serif;
+    font-weight: 700;
+    font-size: 80%;
+    letter-spacing: 1px;
+    background-color: #333;
+    // border: 1px solid white;
+}
+
 @media all and (min-width: 1024px) {
 
     $nav-width: 360px;
@@ -141,7 +170,7 @@ tbody {
 
     .songs, .queue {
         margin-left: $nav-width;
-        height: calc((100vh - (#{$topbar-size} + 1px)) / 2);
+        height: calc((100vh - (#{$topbar-size} + 1px)) / 2)!important;
     }
 
     .songs {
@@ -150,5 +179,38 @@ tbody {
 
     .queue {
 
+    }
+
+    thead {
+        tr {
+            th:nth-child(1) {
+                width: 2%;
+            }
+
+            th:nth-child(2) {
+                width: 25%;
+            }
+
+            th:nth-child(3) {
+                width: 25%;
+            }
+
+            th:nth-child(4) {
+                width: 25%;
+            }
+
+
+            th:nth-child(5) {
+                width: 5%;
+            }
+
+            th:nth-child(6) {
+                width: 5%;
+            }
+
+            th:nth-child(7) {
+                width: 5%;
+            }
+        }
     }
 }

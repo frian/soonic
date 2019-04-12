@@ -1,5 +1,7 @@
 $(function() {
 
+    // $("#songs").niceScroll({cursorcolor:"#00F"});
+
     /**
      * Returns a album list for an artist or remove album list (close)
      * Updates the navigation panel
