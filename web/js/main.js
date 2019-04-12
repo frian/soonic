@@ -1,12 +1,14 @@
 $(function() {
 
-    // -- show artist albums
+    /**
+     * Returns a album list for an artist or remove album list (close)
+     * Updates the navigation panel
+     */
     $(document).on("click", ".artists a.artist", function(e) {
-        console.log("LOG 1");
-        e.preventDefault();
-        var url = $(this).attr("href");
 
-console.log("in show albums : " + url);
+        e.preventDefault();
+
+        var url = $(this).attr("href");
 
         if ($(this).next('ul').length) {
             $(this).next().remove();
@@ -24,7 +26,10 @@ console.log("in show albums : " + url);
     });
 
 
-    // -- filter artists list
+    /**
+     * Filters the artists list
+     * Updates the navigation panel
+     */
     var lastval = "";
     var timeout = null;
 
@@ -32,10 +37,8 @@ console.log("in show albums : " + url);
 
         var url = '/artist/filter/';
 
-        // if input is cleared
+        // -- if input is cleared
         if (this.value.length === 0 && lastval.length > 0) {
-
-            console.log("in filter artists 2 : " + url);
 
             $.get({
                 url: url,
@@ -47,12 +50,14 @@ console.log("in show albums : " + url);
             });
         }
 
+        // -- if input has not changed
         if (this.value === lastval) {
             return;
         }
 
         lastval = this.value;
 
+        // -- if input has less than 3 chars
         if (this.value.length < 3) {
             return;
         }
@@ -62,8 +67,6 @@ console.log("in show albums : " + url);
         if (timeout) { clearTimeout(timeout); }
 
         timeout = setTimeout(function() {
-
-console.log("in filter artists 1 : " + url + filter);
 
             $.get({
                 url: url + filter,
@@ -79,14 +82,15 @@ console.log("in filter artists 1 : " + url + filter);
     });
 
 
-    // -- show album songs
+    /**
+     * Returns the songs from an album
+     * Updates the songs panel
+     */
     $(document).on("click", ".artists a.song", function(e) {
-        console.log("LOG 2");
+
         e.preventDefault();
 
         var url = $(this).attr("href");
-
-        console.log("in show songss : " + url);
 
         $.get({
             url: url,
@@ -96,6 +100,6 @@ console.log("in filter artists 1 : " + url + filter);
                 $("#songs table").append(data);
             }
         });
-
     });
+
 });
