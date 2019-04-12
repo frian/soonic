@@ -53,7 +53,7 @@ class ArtistController extends Controller
 
 
     /**
-     * Finds and displays a artist entity.
+     * Finds songs from an artist.
      *
      * @Route("/{id}", name="artist_show")
      * @Method("GET")
@@ -69,6 +69,39 @@ class ArtistController extends Controller
         ));
     }
 
+    /**
+     * Finds albums from an artist.
+     *
+     * @Route("/albums/{id}", name="artist_albums")
+     * @Method("GET")
+     */
+    public function showArtistAlbumsAction(Artist $artist)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $albums = $em->getRepository('AppBundle:Album')->findByArtist($artist->getName());
+
+        return $this->render('album/album-list.html.twig', array(
+            'albums' => $albums,
+        ));
+    }
 
 
+    /**
+     * Finds songs from an album from an artist.
+     *
+     * @Route("/songs/{name}/{album}", name="artist_albums_songs")
+     * @Method("GET")
+     *
+     */
+    public function showArtistAlbumsSongsAction(Artist $artist, $album)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $albums = $em->getRepository('AppBundle:MediaFile')->findByAlbum($artist->getName(), $album);
+
+        return $this->render('mediafile/index.html.twig', array(
+            'mediaFiles' => $albums,
+        ));
+    }
 }

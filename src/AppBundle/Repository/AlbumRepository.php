@@ -11,9 +11,9 @@ class AlbumRepository extends EntityRepository
         return $this->createQueryBuilder('a')
             ->where('a.artist = :artist')
             ->setParameter('artist', $artist)
-            // ->andWhere('a.title != :null')
-            // ->setParameter('null', serialize(null))
-            // ->orderBy('a.album', 'ASC')
+            ->andWhere('a.name != :null')
+            ->setParameter('null', serialize(null))
+            ->orderBy('a.year', 'ASC')
             ->getQuery()
             ->getResult();
     }
