@@ -54,10 +54,11 @@ $topbar-size: 49px;
 
 [class^="icon-"] {
     font-size: 120%;
+    cursor: pointer;
     // border: 1px solid red;
 }
 
-.icon-play {
+.icon-play, .icon-pause {
     font-size: 150%;
 }
 
