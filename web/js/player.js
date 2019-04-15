@@ -29,7 +29,11 @@ $(function() {
      */
     $(document).on("click", "#songslist tbody tr", function(e) {
 
+        $("#songslist tbody .active").removeClass('active');
+
         loadSong($(this));
+
+        playerStatus = "playing";
 
         $(this).addClass('active');
     });
@@ -40,18 +44,19 @@ $(function() {
      */
     $(document).on("click", ".icon-to-end", function(e) {
 
-        if ($("#songslist tbody .active").length) {
-
-            var current = $("#songslist tbody .active");
-
-            var next = current.next('tr');
-
-            current.removeClass('active');
-            next.addClass('active');
-
-            loadSong(next);
-        }
+        playNext();
+        playerStatus = "playing";
     });
+
+    /**
+     * play next song in songslist
+     */
+    $(document).on("click", ".icon-to-start", function(e) {
+
+        playNext('backward');
+        playerStatus = "playing";
+    });
+
 
 });
 
@@ -107,10 +112,37 @@ function loadSong(song) {
     $(".songInfo").html(title + ' - ' + artist);
 
     player.play();
-    playerStatus = "playing";
 
     if ($("#startStopButton").attr("class") === 'icon-play') {
         $("#startStopButton").attr("class", "icon-pause");
     }
 
+}
+
+/**
+ * play next song (forward or backward)
+ */
+function playNext(direction) {
+
+    if ($("#songslist tbody .active").length) {
+
+        var current = $("#songslist tbody .active");
+
+        var next = null;
+
+        if (!direction) {
+            next = current.next('tr');
+        }
+        else {
+            next = current.prev('tr');
+        }
+
+        if (next.length) {
+
+            current.removeClass('active');
+            next.addClass('active');
+
+            loadSong(next);
+        }
+    }
 }
