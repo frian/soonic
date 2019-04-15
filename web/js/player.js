@@ -3,13 +3,6 @@ $(function() {
     var playerStatus = "paused";
     var statusClass = '';
 
-
-    // var audio = $("#player")[0];
-    // $("#player").on("loadedmetadata", function() {
-    //     alert(audio.duration);
-    // });
-
-
     /**
      * Play / Pause currently loaded song
      */
@@ -21,8 +14,7 @@ $(function() {
             player.play();
             playerStatus = "playing";
             statusClass = "icon-pause";
-        }
-        else {
+        } else {
             player.pause();
             playerStatus = "paused";
             statusClass = "icon-play";
@@ -35,45 +27,31 @@ $(function() {
     /**
      * load and play a song from the songs list
      */
-     $(document).on("click", "#songslist tbody tr", function(e) {
+    $(document).on("click", "#songslist tbody tr", function(e) {
 
-         var path = $(this).data("path");
+        loadSong($(this));
 
-         var buff = path.split('/');
-         path = '/' + buff.slice(4).join('/');
+        $(this).addClass('active');
+    });
 
-         console.log(path);
 
-         var format = $(this).data("format");
+    /**
+     * play next song in songslist
+     */
+    $(document).on("click", ".icon-to-end", function(e) {
 
-         var values = $(this).find('td').map(function() {
-             return $(this).text();
-         }).get();
+        if ($("#songslist tbody .active").length) {
 
-         var artist = values[1];
-         var title = values[2];
-         var duration = values[4];
+            var current = $("#songslist tbody .active");
 
-         var mpegSource = document.getElementById("mpegSource");
+            var next = current.next('tr');
 
-         $(mpegSource).attr('src', path);
+            current.removeClass('active');
+            next.addClass('active');
 
-         var player = document.getElementById("player");
-
-         player.load();
-
-         $(".songInfo").html(title + ' - ' + artist);
-
-         player.play();
-         playerStatus = "playing";
-
-         if ($("#startStopButton").attr("class") === 'icon-play') {
-             $("#startStopButton").attr("class", "icon-pause");
-         }
-
-         console.log($("#startStopButton").attr("class"));
-     });
-
+            loadSong(next);
+        }
+    });
 
 });
 
@@ -86,7 +64,53 @@ function formatDuration(rawDuration) {
     var durationSeconds = parseInt(rawDuration % 60);
     var durationMinutes = parseInt(rawDuration / 60) % 60;
 
-    durationSeconds = durationSeconds < 10 ? '0' + durationSeconds : durationSeconds ;
+    durationSeconds = durationSeconds < 10 ? '0' + durationSeconds : durationSeconds;
 
     return durationMinutes + ':' + durationSeconds;
+}
+
+/**
+ * song path hack
+ */
+function cleanPath(path) {
+    var buff = path.split('/');
+    return '/' + buff.slice(4).join('/');
+}
+
+/**
+ * load song
+ */
+function loadSong(song) {
+
+    var path = song.data("path");
+
+    path = cleanPath(path);
+
+    var format = song.data("format");
+
+    var values = song.find('td').map(function() {
+        return $(this).text();
+    }).get();
+
+    var artist = values[1];
+    var title = values[2];
+    var duration = values[4];
+
+    var mpegSource = document.getElementById("mpegSource");
+
+    $(mpegSource).attr('src', path);
+
+    var player = document.getElementById("player");
+
+    player.load();
+
+    $(".songInfo").html(title + ' - ' + artist);
+
+    player.play();
+    playerStatus = "playing";
+
+    if ($("#startStopButton").attr("class") === 'icon-play') {
+        $("#startStopButton").attr("class", "icon-pause");
+    }
+
 }
