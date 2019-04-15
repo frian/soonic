@@ -4,7 +4,7 @@
 
         <tbody>
         {% for mediaFile in mediaFiles %}
-            <tr>
+            <tr data-path="{{ mediaFile.path }}" data-format="{{ mediaFile.format }}">
 {#                <td><a href="{{ path('mediafile_show', { 'id': mediaFile.id }) }}">{{ mediaFile.path }}</a></td>
                 <td>{{ mediaFile.folder }}</td>
                 <td>{{ mediaFile.type }}</td>

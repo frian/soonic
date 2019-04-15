@@ -126,7 +126,7 @@ thead {
             font-weight: 700;
             font-size: 80%;
             letter-spacing: 1px;
-            border: 1px solid lime;
+            // border: 1px solid lime;
         }
 
     }
@@ -135,10 +135,10 @@ thead {
 tbody {
     font-family: 'Lato', sans-serif;
     tr {
-
+        cursor: pointer;
         td {
             padding: 5px;
-            border: 1px solid red;
+            // border: 1px solid red;
         }
     }
     tr:nth-child(even) {
