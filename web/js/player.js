@@ -58,6 +58,16 @@ $(function() {
     });
 
 
+
+    $("#player").get(0).addEventListener("timeupdate", function() {
+        var player = document.getElementById("player");
+        $("#currentTime").html(formatDuration(player.currentTime) + ' /');
+    });
+
+
+    $('#player').on('ended', function() {
+       playNext();
+    });
 });
 
 /**
@@ -70,6 +80,7 @@ function formatDuration(rawDuration) {
     var durationMinutes = parseInt(rawDuration / 60) % 60;
 
     durationSeconds = durationSeconds < 10 ? '0' + durationSeconds : durationSeconds;
+    durationMinutes = durationMinutes < 10 ? '0' + durationMinutes : durationMinutes;
 
     return durationMinutes + ':' + durationSeconds;
 }
@@ -109,7 +120,9 @@ function loadSong(song) {
 
     player.load();
 
-    $(".songInfo").html(title + ' - ' + artist);
+    $("#songTitle").html(title);
+    $("#songArtist").html(' by ' + artist);
+    $("#duration").html(duration);
 
     player.play();
 

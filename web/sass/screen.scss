@@ -163,9 +163,35 @@ tr.active {
     // border: 1px solid white;
 }
 
+.songInfo {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.songTitle {
+    font-weight: 900;
+    font-size: 120%;
+}
+
+.songArtist {
+    color: #ddd;
+}
+
+.timeInfo {
+    font-family: 'Muli', sans-serif;
+    font-weight: 700;
+    font-size: 80%;
+    // border: 1px solid white;
+    // height: $topbar-size;
+    // line-height: 50px;
+    padding: 0 10px;
+    letter-spacing: 1px;
+}
+
 @media all and (min-width: 1024px) {
 
-    $nav-width: 360px;
+    $nav-width: 240px;
 
     .artists {
         height: calc(100vh - (#{$topbar-size} + 1px));
@@ -211,11 +237,27 @@ tr.active {
 
             th:nth-child(6) {
                 width: 5%;
+                display: none;
             }
 
             th:nth-child(7) {
                 width: 5%;
+                display: none;
             }
         }
     }
+}
+
+@media all and (min-width: 1200px) {
+
+    $nav-width: 360px;
+
+    .artists {
+        width: $nav-width;
+    }
+
+    .songs, .queue {
+        margin-left: $nav-width;
+    }
+
 }
