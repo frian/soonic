@@ -59,7 +59,7 @@ $(function() {
 
 
 
-    $("#player").get(0).addEventListener("timeupdate", function() {
+    $("#player").on("timeupdate", function() {
         var player = document.getElementById("player");
         $("#currentTime").html(formatDuration(player.currentTime) + ' /');
     });
@@ -156,6 +156,9 @@ function playNext(direction) {
             next.addClass('active');
 
             loadSong(next);
+        }
+        else {
+            
         }
     }
 }

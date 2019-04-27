@@ -1,7 +1,5 @@
 $(function() {
 
-    // $("#songs").niceScroll({cursorcolor:"#00F"});
-
     /**
      * Returns a album list for an artist or remove album list (close)
      * Updates the navigation panel
@@ -89,11 +87,11 @@ $(function() {
      * Updates the songs panel
      */
     $(document).on("click", ".artists a.song", function(e) {
-
+console.log("clicked");
         e.preventDefault();
 
         var url = $(this).attr("href");
-
+console.log(url);
         $.get({
             url: url,
             cache: true,

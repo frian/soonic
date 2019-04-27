@@ -3,8 +3,8 @@
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700,900');
-@import url('https://fonts.googleapis.com/css?family=Muli:400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+@import url('https://fonts.googleapis.com/css?family=Muli:300,400,600,700');
 
 @import "compass/reset";
 
@@ -189,6 +189,43 @@ tr.active {
     letter-spacing: 1px;
 }
 
+.radio {
+    // padding: 10px;
+    border: #{$debug}px solid red;
+
+    .radioName {
+        float: left;
+        width: calc(100% - 20px);
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+        padding: 10px;
+        border: #{$debug}px solid red;
+    }
+
+    .radioUrl {
+        float: left;
+        font-family: 'Lato', sans-serif;
+        font-weight: 300;
+        padding: 10px;
+        border: #{$debug}px solid red;
+    }
+
+    .buttonWrapper {
+        float: left;
+        height: 150px;
+        line-height: 150px;
+        text-align: center;
+        width: 150px;
+        // border: #{$debug}px solid lime;
+    }
+
+    .icon-play, .icon-pause {
+        font-size: 4em;
+        // border: #{$debug}px solid lime;
+    }
+}
+
+
 @media all and (min-width: 1024px) {
 
     $nav-width: 240px;
@@ -210,6 +247,17 @@ tr.active {
 
     .queue {
 
+    }
+
+    .radios {
+        height: calc((100vh - (#{$topbar-size} + 1px)))!important;
+        font-size: 0;
+    }
+
+    .radio {
+        font-size: 16px!important;
+        display: inline-block;
+        width: 50%;
     }
 
     thead {
@@ -237,13 +285,27 @@ tr.active {
 
             th:nth-child(6) {
                 width: 5%;
-                display: none;
+                // display: none;
             }
 
             th:nth-child(7) {
                 width: 5%;
-                display: none;
+                // display: none;
             }
+        }
+    }
+
+    .radio {
+        // padding: 10px;
+
+        .radioName {
+            padding: 30px;
+            width: calc(100% - 60px - 150px);
+            font-size: 2em;
+        }
+        .radioUrl {
+            padding: 10px 30px;
+            font-size: 1.2em;
         }
     }
 }
@@ -260,4 +322,17 @@ tr.active {
         margin-left: $nav-width;
     }
 
+    thead {
+        tr {
+            th:nth-child(6) {
+                // width: 5%;
+                display: table-cell;
+            }
+
+            th:nth-child(7) {
+                // width: 5%;
+                display: cell;
+            }
+        }
+    }
 }

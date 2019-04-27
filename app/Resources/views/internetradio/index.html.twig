@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block js %}
+<script src="/js/radio.js"></script>
+{% endblock %}
+
+{% block body %}
+
+<section id="radios" class="radios">
+
+
+        {% for internetRadio in internetRadios %}
+
+        <section class="radio">
+            <div class="buttonWrapper">
+                <i class="icon-play"></i>
+                <audio preload="none">
+                    <source src="{{ internetRadio.streamUrl }}" type="audio/mpeg"/>
+                </audio>
+            </div>
+
+            <div class="radioName">{{ internetRadio.name }}</div>
+            <div class="radioUrl">{{ internetRadio.homepageUrl }}</div>
+        </section>
+
+
+            <!-- <tr>
+                <td><a href="{{ path('radio_show', { 'id': internetRadio.id }) }}">{{ internetRadio.name }}</a></td>
+                <td>{{ internetRadio.streamUrl }}</td>
+                <td>{{ internetRadio.homepageUrl }}</td>
+                <td>{% if internetRadio.enabled %}Yes{% else %}No{% endif %}</td>
+                <td>{% if internetRadio.changed %}{{ internetRadio.changed|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ internetRadio.id }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('radio_show', { 'id': internetRadio.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('radio_edit', { 'id': internetRadio.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr> -->
+        {% endfor %}
+
+    <!-- <ul>
+        <li>
+            <a href="{{ path('radio_new') }}">Create a new internetRadio</a>
+        </li>
+    </ul> -->
+
+    <!-- <audio id="player" controls preload="none">
+        <source id="mpegSource" src="http://streaming.radionomy.com/Eurodance-90" type="audio/mpeg"/>
+    </audio> -->
+
+</section>
+{% endblock %}
