@@ -223,6 +223,10 @@ tr.active {
         font-size: 4em;
         // border: #{$debug}px solid lime;
     }
+
+    &.activeRadio {
+        background-color: #060!important;
+    }
 }
 
 
