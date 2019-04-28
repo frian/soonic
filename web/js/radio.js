@@ -1,5 +1,11 @@
 $(function() {
 
+console.log($("<source/>", {
+    src: 'some-class',
+    type: "audio/mpeg"
+}));
+
+
     var playerStatus = "paused";
 
     /**
@@ -7,15 +13,12 @@ $(function() {
      */
     $(document).on("click", ".icon-play, .icon-pause", function(e) {
 
-console.log($(this).parent().parent()[0]);
-
-$(this).parent().parent().addClass("activeRadio");
-
         // -- find currently active player and pause it
 
         var activePlayerButton = $("i.activePlayer")[0];
 
-        var activePlayer = null;;
+        var activePlayer = null;
+
         if (activePlayerButton) {
             activePlayer = $(activePlayerButton).next()[0];
             activePlayer.pause();
@@ -23,6 +26,7 @@ $(this).parent().parent().addClass("activeRadio");
             $(activePlayerButton).addClass("icon-play");
             $(activePlayerButton).removeClass("activePlayer");
             playerStatus = "paused";
+            $(activePlayerButton).parent().parent().removeClass("activeRadio");
         }
 
         var player = $(this).next()[0];
@@ -38,12 +42,14 @@ $(this).parent().parent().addClass("activeRadio");
             $(this).removeClass("icon-play");
             $(this).addClass("icon-pause");
             $(this).addClass("activePlayer");
+            $(this).parent().parent().addClass("activeRadio");
         } else {
             player.pause();
             playerStatus = "paused";
             $(this).removeClass("icon-pause");
             $(this).addClass("icon-play");
             $(this).removeClass("activePlayer");
+            $(this).parent().parent().removeClass("activeRadio");
         }
     });
 });

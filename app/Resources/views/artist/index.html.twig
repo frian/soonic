@@ -1,6 +1,10 @@
 {# artist/index #}
 {% extends 'base.html.twig' %}
 
+{% block topbar %}
+{{ include('common/topbar.html.twig') }}
+{% endblock %}
+
 {% block js %}
 <script src="/js/main.js"></script>
 <script src="/js/player.js"></script>

@@ -2,23 +2,39 @@
 
     <div class="logo">Soonic</div>
 
-    <i class="icon-to-start"></i>
-    <i id="startStopButton" class="icon-play"></i>
-    <i class="icon-to-end"></i>
+    {% if app.request.get('_route') == 'artist_index' %}
 
-    <audio id="player" preload="none">
-        <source id="mpegSource" src="" type="audio/mpeg"/>
-    </audio>
+        <i class="icon-to-start"></i>
+        <i id="startStopButton" class="icon-play"></i>
+        <i class="icon-to-end"></i>
 
-    <div class="timeInfo">
-        <span id="currentTime">00:00 /</span>
-        <span id="duration"> 00:00</span>
-    </div>
+        <audio id="player" preload="none">
+            <source id="mpegSource" src="" type="audio/mpeg"/>
+        </audio>
 
-    <div class="songInfo">
-        <span id="songTitle" class="songTitle"></span>
-        <span id="songArtist" class="songArtist"></span>
-    </div>
+        <div class="timeInfo">
+            <span id="currentTime">00:00 /</span>
+            <span id="duration"> 00:00</span>
+        </div>
 
+        <div class="songInfo">
+            <span id="songTitle" class="songTitle"></span>
+            <span id="songArtist" class="songArtist"></span>
+        </div>
+
+    {% else %}
+
+    {% endif %}
+
+
+    <nav class="topbarNav">
+
+        {% if app.request.get('_route') == 'artist_index' %}
+            <a href="{{ path('radio_index') }}">radio</a>
+        {% else %}
+            <a href="{{ path('artist_index') }}">music</a>
+        {% endif %}
+
+    </nav>
 
 </section>
