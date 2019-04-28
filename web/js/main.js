@@ -87,11 +87,11 @@ $(function() {
      * Updates the songs panel
      */
     $(document).on("click", ".artists a.song", function(e) {
-console.log("clicked");
+
         e.preventDefault();
 
         var url = $(this).attr("href");
-console.log(url);
+
         $.get({
             url: url,
             cache: true,
@@ -101,5 +101,49 @@ console.log(url);
             }
         });
     });
+
+
+    /**
+     * Show context
+     */
+
+    var menuVisible = false;
+
+    // $(document).on("click", function(e) {
+    //     if (menuVisible === true) {
+    //         $(".contextMenu").css('display', 'none');
+    //         menuVisible = false;
+    //     }
+    //     return false;
+    // });
+
+    $(document).contextmenu(function(e) {
+
+        e.stopPropagation();
+        e.preventDefault();
+        $(".contextMenu").css('display', 'block');
+        $(".contextMenu").css('top', e.pageY);
+        $(".contextMenu").css('left', e.pageX);
+
+
+        setTimeout(function(){
+            $(document).on( "click", function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                if (menuVisible === true) {
+                    $(".contextMenu").css('display', 'none');
+                    menuVisible = false;
+                }
+                $(document).off( "click");
+              });
+
+        }, 500);
+
+
+
+          menuVisible = true;
+    });
+
+
 
 });
