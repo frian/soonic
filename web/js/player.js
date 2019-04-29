@@ -40,6 +40,42 @@ $(function() {
 
 
     /**
+     * Show context menu
+     */
+    var menuVisible = false;
+
+    $(document).on("contextmenu", "#songslist tbody tr", function(e) {
+
+        $("#songslist tbody tr.active").removeClass("active");
+        $(document).off( "click");
+
+        var currentItem = $(this);
+        currentItem.addClass("active");
+
+        e.preventDefault();
+        $(".contextMenu").css('display', 'block');
+        $(".contextMenu").css('top', e.pageY);
+        $(".contextMenu").css('left', e.pageX);
+
+        setTimeout(function() {
+            $(document).on( "click", function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                if (menuVisible === true) {
+                    $(".contextMenu").css('display', 'none');
+                    menuVisible = false;
+                    currentItem.removeClass("active");
+                }
+                $(document).off( "click");
+              });
+
+        }, 100);
+
+        menuVisible = true;
+    });
+
+
+    /**
      * play next song in songslist
      */
     $(document).on("click", ".icon-to-end", function(e) {
@@ -158,7 +194,7 @@ function playNext(direction) {
             loadSong(next);
         }
         else {
-            
+
         }
     }
 }

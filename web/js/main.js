@@ -101,49 +101,4 @@ $(function() {
             }
         });
     });
-
-
-    /**
-     * Show context
-     */
-
-    var menuVisible = false;
-
-    // $(document).on("click", function(e) {
-    //     if (menuVisible === true) {
-    //         $(".contextMenu").css('display', 'none');
-    //         menuVisible = false;
-    //     }
-    //     return false;
-    // });
-
-    $(document).contextmenu(function(e) {
-
-        e.stopPropagation();
-        e.preventDefault();
-        $(".contextMenu").css('display', 'block');
-        $(".contextMenu").css('top', e.pageY);
-        $(".contextMenu").css('left', e.pageX);
-
-
-        setTimeout(function(){
-            $(document).on( "click", function(e) {
-                e.stopPropagation();
-                e.preventDefault();
-                if (menuVisible === true) {
-                    $(".contextMenu").css('display', 'none');
-                    menuVisible = false;
-                }
-                $(document).off( "click");
-              });
-
-        }, 500);
-
-
-
-          menuVisible = true;
-    });
-
-
-
 });
