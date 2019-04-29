@@ -42,36 +42,29 @@ $(function() {
     /**
      * Show context menu
      */
-    var menuVisible = false;
-
     $(document).on("contextmenu", "#songslist tbody tr", function(e) {
 
+        e.preventDefault();
+
+        // -- if we right-clic two times, remove class and listener
         $("#songslist tbody tr.active").removeClass("active");
         $(document).off( "click");
 
         var currentItem = $(this);
         currentItem.addClass("active");
 
-        e.preventDefault();
         $(".contextMenu").css('display', 'block');
         $(".contextMenu").css('top', e.pageY);
         $(".contextMenu").css('left', e.pageX);
 
         setTimeout(function() {
             $(document).on( "click", function(e) {
-                e.stopPropagation();
                 e.preventDefault();
-                if (menuVisible === true) {
-                    $(".contextMenu").css('display', 'none');
-                    menuVisible = false;
-                    currentItem.removeClass("active");
-                }
+                $(".contextMenu").css('display', 'none');
+                currentItem.removeClass("active");
                 $(document).off( "click");
-              });
-
+            });
         }, 100);
-
-        menuVisible = true;
     });
 
 
