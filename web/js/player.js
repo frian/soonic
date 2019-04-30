@@ -40,21 +40,18 @@ $(function() {
 
 
     /**
-     * Show context menu
+     * Context menu
      */
     $(document).on("contextmenu", "#songslist tbody tr, #queue tbody tr", function(e) {
-
-console.log($(e.target).parent().parent().parent().attr('id'));
 
         e.preventDefault();
 
         // -- if we right-clic two times, remove class and listener
         $("#songslist tbody tr.active").removeClass("active");
-        $(document).off( "click");
+        $(document).off( "click", "body");
 
         var currentItem = $(this);
         currentItem.addClass("active");
-
 
         var contextMenu = '.songsContextMenu';
         var tableId = $(e.target).parent().parent().parent().attr('id');
@@ -63,13 +60,12 @@ console.log($(e.target).parent().parent().parent().attr('id'));
             contextMenu = '.playlistContextMenu';
         }
 
-
         $(contextMenu).css('display', 'block');
         $(contextMenu).css('top', e.pageY);
         $(contextMenu).css('left', e.pageX);
 
         setTimeout(function() {
-            $(document).on( "click", function(e) {
+            $(document).on( "click", "body", function(e) {
                 e.preventDefault();
 
                 if (e.target.id === 'addToPlaylist') {
@@ -83,7 +79,7 @@ console.log($(e.target).parent().parent().parent().attr('id'));
                 }
 
                 $(contextMenu).css('display', 'none');
-                $(document).off( "click");
+                $(document).off( "click", "body");
             });
         }, 100);
     });
