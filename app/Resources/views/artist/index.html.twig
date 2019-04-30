@@ -28,9 +28,16 @@
 {{ include('index/queue.html.twig') }}
 
 
-<div class="contextMenu">
+<div class="songsContextMenu">
   <ul class="menu-options">
-    <li class="menu-option">Add to playlist</li>
+    <li id="addToPlaylist" class="menu-option">Add to playlist</li>
   </ul>
 </div>
+
+<div class="playlistContextMenu">
+  <ul class="menu-options">
+    <li id="removeFromPlaylist" class="menu-option">Remove from playlist</li>
+  </ul>
+</div>
+
 {% endblock %}

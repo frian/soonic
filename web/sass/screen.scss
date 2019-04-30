@@ -259,8 +259,7 @@ tr.active {
     }
 }
 
-.contextMenu {
-    // width: 120px;
+.songsContextMenu, .playlistContextMenu {
     box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.2);
     position: absolute;
     display: none;
@@ -275,12 +274,8 @@ tr.active {
         .menu-option {
             font-family: 'Muli', sans-serif;
             letter-spacing: 1px;
-            // font-weight: 700;
-            // font-weight: 500;
-            // font-size: 14px;
             padding: 10px 40px 10px 20px;
             cursor: pointer;
-            // border: 3px solid cyan;
 
             &:hover {
                 background: rgba(0, 102, 0, 0.8);
@@ -358,6 +353,43 @@ tr.active {
             }
         }
     }
+
+
+    tbody {
+        tr {
+            td:nth-child(1) {
+                width: 2%;
+            }
+
+            td:nth-child(2) {
+                width: 25%;
+            }
+
+            td:nth-child(3) {
+                width: 25%;
+            }
+
+            td:nth-child(4) {
+                width: 25%;
+            }
+
+
+            td:nth-child(5) {
+                width: 5%;
+            }
+
+            td:nth-child(6) {
+                width: 5%;
+                // display: none;
+            }
+
+            td:nth-child(7) {
+                width: 5%;
+                // display: none;
+            }
+        }
+    }
+
 
     .radio {
         // padding: 10px;

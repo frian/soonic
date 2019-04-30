@@ -42,7 +42,9 @@ $(function() {
     /**
      * Show context menu
      */
-    $(document).on("contextmenu", "#songslist tbody tr", function(e) {
+    $(document).on("contextmenu", "#songslist tbody tr, #queue tbody tr", function(e) {
+
+console.log($(e.target).parent().parent().parent().attr('id'));
 
         e.preventDefault();
 
@@ -53,15 +55,34 @@ $(function() {
         var currentItem = $(this);
         currentItem.addClass("active");
 
-        $(".contextMenu").css('display', 'block');
-        $(".contextMenu").css('top', e.pageY);
-        $(".contextMenu").css('left', e.pageX);
+
+        var contextMenu = '.songsContextMenu';
+        var tableId = $(e.target).parent().parent().parent().attr('id');
+
+        if (tableId === 'queue') {
+            contextMenu = '.playlistContextMenu';
+        }
+
+
+        $(contextMenu).css('display', 'block');
+        $(contextMenu).css('top', e.pageY);
+        $(contextMenu).css('left', e.pageX);
 
         setTimeout(function() {
             $(document).on( "click", function(e) {
                 e.preventDefault();
-                $(".contextMenu").css('display', 'none');
-                currentItem.removeClass("active");
+
+                if (e.target.id === 'addToPlaylist') {
+                    var copy = currentItem.clone();
+                    copy.removeClass("active");
+                    $("#queue tbody").append(copy);
+                    currentItem.removeClass("active");
+                }
+                else if (e.target.id === 'removeFromPlaylist') {
+                    currentItem.remove();
+                }
+
+                $(contextMenu).css('display', 'none');
                 $(document).off( "click");
             });
         }, 100);
