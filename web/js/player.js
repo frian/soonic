@@ -27,9 +27,11 @@ $(function() {
     /**
      * load and play a song from the songs list
      */
-    $(document).on("click", "#songslist tbody tr", function(e) {
+    $(document).on("click", "tbody tr", function(e) {
 
-        $("#songslist tbody .active").removeClass('active');
+        console.log($(this).parent().parent().attr('id'));
+
+        $("tbody .active").removeClass('active');
 
         loadSong($(this));
 
@@ -95,7 +97,7 @@ $(function() {
     });
 
     /**
-     * play next song in songslist
+     * play previous song in songslist
      */
     $(document).on("click", ".icon-to-start", function(e) {
 
@@ -104,13 +106,18 @@ $(function() {
     });
 
 
-
+    /**
+     * show time elapsed
+     */
     $("#player").on("timeupdate", function() {
         var player = document.getElementById("player");
         $("#currentTime").html(formatDuration(player.currentTime) + ' /');
     });
 
 
+    /**
+     * on song emd, play next song
+     */
     $('#player').on('ended', function() {
        playNext();
     });
@@ -183,9 +190,9 @@ function loadSong(song) {
  */
 function playNext(direction) {
 
-    if ($("#songslist tbody .active").length) {
+    if ($("tbody .active").length) {
 
-        var current = $("#songslist tbody .active");
+        var current = $("tbody .active");
 
         var next = null;
 
