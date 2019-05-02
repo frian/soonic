@@ -126,7 +126,7 @@ nav.topbarNav {
 
     label {
         font-size: 110%;
-        padding: 0 10px;
+        padding: 0 0 0 10px;
     }
 
     input[type="text"] {
@@ -138,6 +138,25 @@ nav.topbarNav {
         margin: 0;
         background-color: #222;
         border: 1px solid #000;
+    }
+
+    .filterForm {
+        label {
+            // border: 1px solid red;
+            display: inline-block;
+            width: calc(30% - 10px);
+            font-family: 'Muli', sans-serif;
+            letter-spacing: 0.6px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        input {
+            display: inline-block;
+            width: calc(70% - 20px);
+            border: 0;
+            // border: 1px solid lime;
+        }
     }
 }
 
@@ -412,6 +431,12 @@ tr.active {
             font-size: 1.2em;
         }
     }
+
+    input[type="text"] {
+        width: 100px;
+        background-color: black!important;
+    }
+
 }
 
 @media all and (min-width: 1200px) {
