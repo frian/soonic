@@ -1,11 +1,5 @@
 $(function() {
 
-console.log($("<source/>", {
-    src: 'some-class',
-    type: "audio/mpeg"
-}));
-
-
     var playerStatus = "paused";
 
     /**

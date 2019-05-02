@@ -344,12 +344,12 @@ tr.active {
 
             th:nth-child(6) {
                 width: 5%;
-                // display: none;
+                display: none;
             }
 
             th:nth-child(7) {
                 width: 5%;
-                // display: none;
+                display: none;
             }
         }
     }
@@ -357,6 +357,14 @@ tr.active {
 
     tbody {
         tr {
+
+            td {
+                max-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
             td:nth-child(1) {
                 width: 2%;
             }
@@ -380,12 +388,12 @@ tr.active {
 
             td:nth-child(6) {
                 width: 5%;
-                // display: none;
+                display: none;
             }
 
             td:nth-child(7) {
                 width: 5%;
-                // display: none;
+                display: none;
             }
         }
     }
