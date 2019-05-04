@@ -1,16 +1,24 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Internetradio creation</h1>
+
+    <h1>Add radio</h1>
 
     {{ form_start(form) }}
+
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
+
+        <div class="buttonWrapper">
+            <input type="submit" value="Create" />
+        </div>
+
     {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('radio_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <div class="buttonWrapper">
+        <ul>
+            <li>
+                <a href="{{ path('radio_index') }}">Back to the list</a>
+            </li>
+        </ul>
+    </div>
 {% endblock %}
