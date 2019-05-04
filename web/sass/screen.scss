@@ -338,6 +338,11 @@ form div div input {
     padding: 20px 0;
 }
 
+label[for=appbundle_internetradio_enabled], #appbundle_internetradio_enabled,
+label[for=appbundle_internetradio_changed], #appbundle_internetradio_changed {
+    display: none;
+}
+
 
 @media all and (min-width: 1024px) {
 

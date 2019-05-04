@@ -32,6 +32,13 @@
         {% if app.request.get('_route') == 'artist_index' %}
             <a href="{{ path('radio_index') }}">radio</a>
         {% else %}
+
+            {% if app.request.get('_route') != 'radio_new' %}
+                <a href="{{ path('radio_new') }}">add radio</a>
+            {% else %}
+                <a href="{{ path('radio_index') }}">back</a>
+            {% endif %}
+
             <a href="{{ path('artist_index') }}">music</a>
         {% endif %}
 
