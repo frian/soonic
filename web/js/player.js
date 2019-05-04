@@ -10,12 +10,14 @@ $(function() {
 
         var player = document.getElementById("player");
 
-        // if (! document.getElementById("mpegSource")) {
+        var src = document.getElementById("mpegSource");
+
+        // if (!document.getElementById("mpegSource")) {
         //     player.append('<source id="mpegSource" src="" type="audio/mpeg"/>');
         //     return;
         // }
 
-        if (!document.getElementById("mpegSource").attr('src')) {
+        if (!$(src).attr('src')) {
             console.log("No source");
             return;
         }
@@ -39,6 +41,8 @@ $(function() {
      * load and play a song from the songs list
      */
     $(document).on("click", "tbody tr", function(e) {
+
+        console.log($(this).parent().parent().attr('id'));
 
         $("tbody .active").removeClass('active');
 
