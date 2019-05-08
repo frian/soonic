@@ -30,7 +30,11 @@
     <nav class="topbarNav">
 
         {% if app.request.get('_route') == 'artist_index' %}
+
+            {{ render(controller( 'AppBundle\\Controller\\SearchController::showSearchAction' )) }}
+
             <a href="{{ path('radio_index') }}">radio</a>
+
         {% else %}
 
             {% if app.request.get('_route') != 'radio_new' %}

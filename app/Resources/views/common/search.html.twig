@@ -1,0 +1,9 @@
+<form id="searchForm" name="search" method="post" action="{{ path('search') }}">
+
+    {{ form_widget(form.keyword) }}
+
+    <div class="buttonWrapper">
+        <input id="searchButton" class="button" type="submit" value="Search" />
+    </div>
+
+{{ form_end(form) }}

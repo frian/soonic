@@ -6,8 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class MediaFileRepository extends EntityRepository
 {
-    public function findByArtist($artist)
-    {
+    public function findByArtist($artist) {
         return $this->createQueryBuilder('s')
             ->where('s.artist = :artist')
             ->setParameter('artist', $artist)
@@ -18,8 +17,7 @@ class MediaFileRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findByAlbum($artist, $album)
-    {
+    public function findByAlbum($artist, $album) {
         return $this->createQueryBuilder('s')
             ->where('s.artist = :artist')
             ->setParameter('artist', $artist)
@@ -28,6 +26,18 @@ class MediaFileRepository extends EntityRepository
             ->andWhere('s.title != :null')
             ->setParameter('null', serialize(null))
             ->orderBy('s.trackNumber', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByKeyword($keyword) {
+        return $this->createQueryBuilder('s')
+            ->where('s.album like :keyword')
+            ->orWhere('s.title like :keyword')
+            ->setParameter('keyword', '%'.$keyword.'%')
+            ->orderBy('s.artist', 'ASC')
+            ->addOrderBy('s.album', 'ASC')
+            ->addOrderBy('s.title', 'ASC')
             ->getQuery()
             ->getResult();
     }

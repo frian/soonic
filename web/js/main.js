@@ -101,4 +101,29 @@ $(function() {
             }
         });
     });
+
+
+    /**
+     * Returns search results
+     * Updates the songs panel
+     */
+     $(document).on("click", "#searchButton", function(e) {
+
+         e.preventDefault();
+
+         var form = $('#searchForm');
+
+         $.ajax({
+             type: form.attr('method'),
+             url: form.attr('action'),
+             data: form.serialize(),
+             success: function(data) {
+                 $("#songs table tbody").remove();
+                 $("#songs table").append(data);
+             },
+             error:function(data) {
+                 console.log("error");
+             }
+         });
+     });
 });

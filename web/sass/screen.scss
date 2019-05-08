@@ -329,6 +329,7 @@ form div div input {
     letter-spacing: 0.6px;
     padding: 5px 10px;
     width: 300px;
+    border: 1px solid cyan;
 }
 
 
@@ -360,6 +361,34 @@ label[for=appbundle_internetradio_changed], #appbundle_internetradio_changed {
 .button:hover {
 
     background: rgba(0, 102, 0, 0.8);
+}
+
+
+form[name="search"] {
+
+    display: inline-block;
+    // width: 500px;
+    // border: 1px solid lime;
+
+    input {
+        display: inline-block;
+        height: 49px;
+        border: 0;
+        padding: 0 10px;
+    }
+
+    .button {
+        // border: 1px solid white;
+        display: inline-block;
+        border: 0;
+        height: 49px;
+    }
+
+    .buttonWrapper {
+        // border: 1px solid yellow;
+        display: inline-block;
+        padding: 0;
+    }
 }
 
 @media all and (min-width: 1024px) {
