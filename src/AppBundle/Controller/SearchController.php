@@ -35,7 +35,7 @@ class SearchController extends Controller
 
              $results = $em->getRepository('AppBundle:MediaFile')->findByKeyword($data['keyword']);
 
-             return $this->render('mediafile/index.html.twig', array(
+             return $this->render('common/songs-list.html.twig', array(
                  'mediaFiles' => $results,
              ));
          }

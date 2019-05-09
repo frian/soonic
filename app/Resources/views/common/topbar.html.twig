@@ -2,7 +2,7 @@
 
     <div class="logo">Soonic</div>
 
-    {% if app.request.get('_route') == 'artist_index' %}
+    {% if app.request.get('_route') == 'library' %}
 
         <i class="icon-to-start"></i>
         <i id="startStopButton" class="icon-play"></i>
@@ -29,7 +29,7 @@
 
     <nav class="topbarNav">
 
-        {% if app.request.get('_route') == 'artist_index' %}
+        {% if app.request.get('_route') == 'library' %}
 
             {{ render(controller( 'AppBundle\\Controller\\SearchController::showSearchAction' )) }}
 
@@ -43,7 +43,7 @@
                 <a href="{{ path('radio_index') }}">back</a>
             {% endif %}
 
-            <a href="{{ path('artist_index') }}">music</a>
+            <a href="{{ path('library') }}">music</a>
         {% endif %}
 
     </nav>

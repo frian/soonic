@@ -26,7 +26,7 @@ class MediaFileController extends Controller
 
         $mediaFiles = $em->getRepository('AppBundle:MediaFile')->findAll();
 
-        return $this->render('mediafile/index.html.twig', array(
+        return $this->render('common/songs-list.html.twig', array(
             'mediaFiles' => $mediaFiles,
         ));
     }
