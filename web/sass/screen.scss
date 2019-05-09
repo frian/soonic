@@ -116,7 +116,7 @@ nav.topbarNav {
     border: #{$debug}px solid red;
 }
 
-.songs, .queue {
+.songs, .playlist {
     margin-left: 360px;
     overflow-y: scroll;
     border: #{$debug}px solid red;
@@ -206,7 +206,7 @@ tr.active {
     background-color: #060!important;
 }
 
-.queue-header {
+.playlist-header {
     height: 22px;
     line-height: 18px;
     padding-left: 10px;
@@ -401,7 +401,7 @@ form[name="search"] {
         overflow-y: scroll;
     }
 
-    .songs, .queue {
+    .songs, .playlist {
         margin-left: $nav-width;
         height: calc((100vh - (#{$topbar-size} + 1px)) / 2)!important;
     }
@@ -410,7 +410,7 @@ form[name="search"] {
 
     }
 
-    .queue {
+    .playlist {
 
     }
 
@@ -544,7 +544,7 @@ form[name="search"] {
         width: $nav-width;
     }
 
-    .songs, .queue {
+    .songs, .playlist {
         margin-left: $nav-width;
     }
 

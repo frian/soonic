@@ -8,7 +8,6 @@ $(function() {
     $(document).on("click", ".icon-play, .icon-pause", function(e) {
 
         // -- find currently active player and pause it
-
         var activePlayerButton = $("i.activePlayer")[0];
 
         var activePlayer = null;

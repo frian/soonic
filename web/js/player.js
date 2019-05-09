@@ -57,7 +57,7 @@ $(function() {
     /**
      * Context menu
      */
-    $(document).on("contextmenu", "#songslist tbody tr, #queue tbody tr", function(e) {
+    $(document).on("contextmenu", "#songslist tbody tr, #playlist tbody tr", function(e) {
 
         e.preventDefault();
 
@@ -71,7 +71,7 @@ $(function() {
         var contextMenu = '.songsContextMenu';
         var tableId = $(e.target).parent().parent().parent().attr('id');
 
-        if (tableId === 'queue') {
+        if (tableId === 'playlist') {
             contextMenu = '.playlistContextMenu';
         }
 
@@ -86,7 +86,7 @@ $(function() {
                 if (e.target.id === 'addToPlaylist') {
                     var copy = currentItem.clone();
                     copy.removeClass("active");
-                    $("#queue tbody").append(copy);
+                    $("#playlist tbody").append(copy);
                     currentItem.removeClass("active");
                 }
                 else if (e.target.id === 'removeFromPlaylist') {
