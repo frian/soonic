@@ -22,6 +22,13 @@ class MediaFile
     /**
      * @var string
      *
+     * @ORM\Column(name="web_path", type="string", length=1024, nullable=false)
+     */
+    private $webPath;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="folder", type="string", length=512, nullable=true)
      */
     private $folder;
@@ -29,7 +36,7 @@ class MediaFile
     /**
      * @var string
      *
-     * @ORM\Column(name="type", type="string", length=32, nullable=false)
+     * @ORM\Column(name="type", type="string", length=32, nullable=true)
      */
     private $type;
 
@@ -106,7 +113,7 @@ class MediaFile
     /**
      * @var boolean
      *
-     * @ORM\Column(name="variable_bit_rate", type="boolean", nullable=false)
+     * @ORM\Column(name="variable_bit_rate", type="boolean", nullable=true)
      */
     private $variableBitRate;
 
@@ -155,7 +162,7 @@ class MediaFile
     /**
      * @var integer
      *
-     * @ORM\Column(name="play_count", type="integer", nullable=false)
+     * @ORM\Column(name="play_count", type="integer", nullable=true)
      */
     private $playCount;
 
@@ -176,42 +183,42 @@ class MediaFile
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
+     * @ORM\Column(name="created", type="datetime", nullable=true)
      */
     private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="changed", type="datetime", nullable=false)
+     * @ORM\Column(name="changed", type="datetime", nullable=true)
      */
     private $changed;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_scanned", type="datetime", nullable=false)
+     * @ORM\Column(name="last_scanned", type="datetime", nullable=true)
      */
     private $lastScanned;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="children_last_updated", type="datetime", nullable=false)
+     * @ORM\Column(name="children_last_updated", type="datetime", nullable=true)
      */
     private $childrenLastUpdated;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="present", type="boolean", nullable=false)
+     * @ORM\Column(name="present", type="boolean", nullable=true)
      */
     private $present;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="version", type="integer", nullable=false)
+     * @ORM\Column(name="version", type="integer", nullable=true)
      */
     private $version;
 
@@ -248,6 +255,30 @@ class MediaFile
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * Set webPath
+     *
+     * @param string $webPath
+     *
+     * @return MediaFile
+     */
+    public function setWebPath($webPath)
+    {
+        $this->webPath = $webPath;
+
+        return $this;
+    }
+
+    /**
+     * Get webPath
+     *
+     * @return string
+     */
+    public function getWebPath()
+    {
+        return $this->webPath;
     }
 
     /**
