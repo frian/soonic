@@ -166,7 +166,7 @@ function loadSong(song) {
 
     var path = song.data("path");
 
-    path = cleanPath(path);
+    // path = cleanPath(path);
 
     var format = song.data("format");
 

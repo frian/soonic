@@ -15,7 +15,7 @@ class Album
     /**
      * @var string
      *
-     * @ORM\Column(name="path", type="string", length=1024, nullable=false)
+     * @ORM\Column(name="path", type="string", length=1024, nullable=true)
      */
     private $path;
 
@@ -36,14 +36,14 @@ class Album
     /**
      * @var integer
      *
-     * @ORM\Column(name="song_count", type="integer", nullable=false)
+     * @ORM\Column(name="song_count", type="integer", nullable=true)
      */
     private $songCount = '0';
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="duration_seconds", type="integer", nullable=false)
+     * @ORM\Column(name="duration_seconds", type="integer", nullable=true)
      */
     private $durationSeconds = '0';
 
@@ -57,7 +57,7 @@ class Album
     /**
      * @var integer
      *
-     * @ORM\Column(name="play_count", type="integer", nullable=false)
+     * @ORM\Column(name="play_count", type="integer", nullable=true)
      */
     private $playCount = '0';
 
@@ -78,21 +78,21 @@ class Album
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
+     * @ORM\Column(name="created", type="datetime", nullable=true)
      */
     private $created;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_scanned", type="datetime", nullable=false)
+     * @ORM\Column(name="last_scanned", type="datetime", nullable=true)
      */
     private $lastScanned;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="present", type="boolean", nullable=false)
+     * @ORM\Column(name="present", type="boolean", nullable=true)
      */
     private $present;
 

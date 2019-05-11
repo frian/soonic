@@ -29,21 +29,21 @@ class Artist
     /**
      * @var integer
      *
-     * @ORM\Column(name="album_count", type="integer", nullable=false)
+     * @ORM\Column(name="album_count", type="integer", nullable=true)
      */
     private $albumCount = '0';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_scanned", type="datetime", nullable=false)
+     * @ORM\Column(name="last_scanned", type="datetime", nullable=true)
      */
     private $lastScanned;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="present", type="boolean", nullable=false)
+     * @ORM\Column(name="present", type="boolean", nullable=true)
      */
     private $present;
 
