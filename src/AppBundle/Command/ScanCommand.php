@@ -11,13 +11,12 @@ use AppBundle\Entity\MediaFile;
 use AppBundle\Entity\Artist;
 use AppBundle\Entity\Album;
 
-
 require_once(dirname(__FILE__).'/../../../vendor/james-heinrich/getid3/getid3/getid3.php');
 
-class ScanCommand extends ContainerAwareCommand
-{
-	protected function configure()
-	{
+
+class ScanCommand extends ContainerAwareCommand {
+
+	protected function configure() {
 		$this
     		->setName('soonic:scan')
     		->setDescription('scan folders')
@@ -26,8 +25,7 @@ class ScanCommand extends ContainerAwareCommand
 		;
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output)
-	{
+	protected function execute(InputInterface $input, OutputInterface $output) {
 
 		// -- add style
 		$style = new OutputFormatterStyle('red');
@@ -59,7 +57,7 @@ class ScanCommand extends ContainerAwareCommand
          * Scan variables
          */
         // -- folder to scan
-        $root = 'web/music/misc';
+        $root = 'web/music/collection/Bob Marley';
         // -- file types
         $types = array("mp3", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
         // -- db fields
@@ -72,6 +70,10 @@ class ScanCommand extends ContainerAwareCommand
 
         $statement = $em->getConnection()->prepare($query);
 
+        // -- open sql file
+        $sqlFile = dirname(__FILE__).'/../../../web/soonic.sql';
+        $fp = fopen($sqlFile, 'w');
+        fwrite($fp, 'id,path,title,album,artist,track_number,year,genre,web_path,duration'.PHP_EOL);
 
         // -- scan
         $di = new \RecursiveDirectoryIterator($root,\RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
@@ -116,6 +118,7 @@ class ScanCommand extends ContainerAwareCommand
                 else {
                     echo $file, PHP_EOL;
                     $output->writeln('<warning>no artist tag found.');
+                    $output->writeln('<warning>skipping file.');
                     continue;
                 }
 
@@ -136,12 +139,21 @@ class ScanCommand extends ContainerAwareCommand
                     }
                 }
 
+                // echo $fileInfo['playtime_string'], " / " , $fileInfo['playtime_seconds'], PHP_EOL;
+
+                if (!empty($fileInfo['playtime_string'])) {
+                    $tags['duration'] = $fileInfo['playtime_string'];
+                }
+                else {
+                    $tags['duration'] = null;
+                    echo $file, PHP_EOL;
+                    $output->writeln('<warning>no playtime_string tag found.');
+                }
+
+
                 $tags['web_path'] = preg_replace("/^web/", '', $file);
                 $tags['path'] = realpath($file);
 
-                // foreach ($tags as $tag => $value) {
-                //     printf("%-12s : %s".PHP_EOL, $tag, $value);
-                // }
 
                 // -- build album list
                 if (array_key_exists('artist', $tags) and array_key_exists('album', $tags)) {
@@ -162,20 +174,8 @@ class ScanCommand extends ContainerAwareCommand
                         print "no album tag found".PHP_EOL;
                     }
                     echo $file, PHP_EOL;
-                    print "no artist tag found".PHP_EOL;
-                    print_r($fileInfo);
                 }
 
-
-                // INSERT INTO table_name (column1, column2, column3, ...)
-                // VALUES (value1, value2, value3, ...);
-
-                // $query = "INSERT INTO media_file (artist, title, album, year, genre, track_number, path, web_path) VALUES (?,?,?,?,?,?,?,?)";
-                //
-                // $statement = $em->getConnection()->prepare($query);
-
-                // $statement->bindParam("sssiss", $tags['artist'], $tags['title'], $tags['album'], $tags['year'], $tags['genre'], $tags['track_number']);
-// $tags['track_number'] = 0;
 
                 if (!empty($tags['track_number'])) {
                     if (\preg_match("/[^\d$]/", $tags['track_number'])) {
@@ -186,62 +186,31 @@ class ScanCommand extends ContainerAwareCommand
                     }
                 }
 
+                if (empty($tags['genre'])) {
+                    $tags['genre'] = null;
+                }
+                if (empty($tags['year'])) {
+                    $tags['year'] = null;
+                }
+                if (empty($tags['track_number'])) {
+                    $tags['track_number'] = null;
+                }
+                if (empty($tags['title'])) {
+                    $tags['title'] = null;
+                }
+                if (empty($tags['album'])) {
+                    $tags['album'] = null;
+                }
 
-                $statement->bindParam(1, $tags['artist'], \PDO::PARAM_STR);
-                $statement->bindParam(2, $tags['title'], \PDO::PARAM_STR);
-                $statement->bindParam(3, $tags['album'], \PDO::PARAM_STR);
-                $statement->bindParam(4, $tags['year'], \PDO::PARAM_INT);
-                $statement->bindParam(5, $tags['genre'], \PDO::PARAM_STR);
-                $statement->bindParam(6, $tags['track_number'], \PDO::PARAM_STR);
-                $statement->bindParam(7, $tags['path'], \PDO::PARAM_STR);
-                $statement->bindParam(8, $tags['web_path'], \PDO::PARAM_STR);
-                $statement->execute();
-
-                // $mediaFile = new MediaFile();
-                // $mediaFile->setArtist($tags['artist']);
-                //
-                // foreach ($required_fields as $field) {
-                //     if (array_key_exists($field, $tags)) {
-                //         $method = 'set' . ucfirst($field);
-                //         $mediaFile->$method($tags[$field]);
-                //     }
-                //     else {
-                //         print $tags['web_path'].PHP_EOL;
-                //         print "no $field tag found".PHP_EOL;
-                //     }
-                // }
-                //
-                //
-                // foreach ($optional_fields as $field) {
-                //     if (array_key_exists($field, $tags)) {
-                //
-                //         // -- change field_name to fieldName for methos name
-                //         if (strpos($field, '_') !== false) {
-                //             $buff = explode('_', $field);
-                //             $buff[1] = ucfirst($buff[1]);
-                //             $methodName = implode('', $buff);
-                //             $method = 'set' . ucfirst($methodName);
-                //         }
-                //         else {
-                //             $method = 'set' . ucfirst($field);
-                //         }
-                //
-                //         $mediaFile->$method($tags[$field]);
-                //     }
-                //     else {
-                //         // print $tags['web_path'].PHP_EOL;
-                //         // print "no $field tag found".PHP_EOL;
-                //     }
-                // }
-                //
-                // $mediaFile->setPath(realpath($file));
-                // $mediaFile->setWebPath(preg_replace("/^web/", '', $file));
-                //
-                //
-                // $em->persist($mediaFile);
-                // $em->flush();
+                fwrite(
+                    $fp, ",".$tags['path'].",".$tags['title'].",".$tags['album'].",".
+                    $tags['artist'].",".$tags['track_number'].",".$tags['year'].",".
+                    $tags['genre'].",".$tags['web_path'].",".$tags['duration'].PHP_EOL);
             }
         }
+        $query = "LOAD DATA LOCAL INFILE '/home/lpa/atinfo/www/subsonic/web/soonic.sql'  INTO TABLE media_file  FIELDS TERMINATED BY ','  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+        $statement = $em->getConnection()->prepare($query)->execute();
+
         $output->writeln('<info>done.');
 	}
 }

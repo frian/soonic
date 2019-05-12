@@ -78,6 +78,12 @@ class MediaFile
      */
     private $genre;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="duration", type="string", length=64, nullable=true)
+     */
+    private $duration;
 
     /**
      * Set path
@@ -269,6 +275,30 @@ class MediaFile
     public function getGenre()
     {
         return $this->genre;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param string $duration
+     *
+     * @return MediaFile
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return string
+     */
+    public function getDuration()
+    {
+        return $this->duration;
     }
 
     /**
