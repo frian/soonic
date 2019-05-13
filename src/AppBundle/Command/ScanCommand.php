@@ -65,16 +65,13 @@ class ScanCommand extends ContainerAwareCommand {
         }
 
         /*
-         * Scan variables
+         * -- Scan variables
          */
         // -- folder to scan
-        $root = 'web/music/';
+        $root = 'web/music/collection/Bob Marley';
         // -- file types
         $types = array("mp3", "mp4", "oga", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
-        // -- db fields
-        $required_fields = array('artist', 'title', 'album');
-        $optional_fields = array('year', 'genre', 'track_number');
-        $fields = array_merge($required_fields, $optional_fields);
+        // -- counters
         $fileCount = 0;
         $skipCount = 0;
         $loadCount = 0;
@@ -123,58 +120,140 @@ class ScanCommand extends ContainerAwareCommand {
                 $tags = array();
 
 
-                // -- build artist list
-                if (!empty($fileInfoComments['artist'])) {
-
-                    $artist = $em->getRepository('AppBundle:Artist')->findByName($fileInfoComments['artist'][0]);
-
-                    if (!$artist) {
-                        $artist = new Artist();
-                        $artist->setName($fileInfoComments['artist'][0]);
-                        $em->persist($artist);
-                        $em->flush();
-                    }
-                }
-                else {
-                    $output->write('  <error>no artist tag found</error>');
+                /*
+                 * -- Handle artist -------------------------------------------
+                 */
+                if (empty($fileInfoComments['artist'])) {
+                    $output->write('  <warning>no artist tag found</warning>');
                     echo " for ", $file, PHP_EOL;
 
                     $output->write('    guessing artist name : ');
                     $dir = pathinfo($file, PATHINFO_DIRNAME);
                     $buff = explode('/', $dir);
+
+                    // -- one dir up
                     $tmp = array_pop($buff);
                     if (preg_match('/cd\d+/i', $tmp)) {
                         array_pop($buff);
                     }
 
-                    $tmp = array_pop($buff);
-                    if (preg_match('/cd\d+/', $tmp)) {
-                        $tmp = array_pop($buff);
+                    // -- one dir up
+                    $artist = array_pop($buff);
+                    if (preg_match('/cd\d+/', $artist)) {
+                        $artist = array_pop($buff);
                     }
 
-                    $output->writeln($tmp);
 
-                    $output->writeln('-> skipping file.');
-                    $skipCount++;
-                    continue;
+                    if ($artist) {
+                        $tags['artist'] = $artist;
+                        $output->writeln($artist);
+                    }
+                    else {
+                        $output->writeln('<error>-> skipping file.</error>');
+                        $skipCount++;
+                        continue;
+                    }
+                }
+                else {
+                    $tags['artist'] = $fileInfoComments['artist'][0];
                 }
 
 
-                foreach($fields as $field) {
-                    if ( !empty($fileInfoComments[$field]) ) {
-                        $tags[$field] = $fileInfoComments[$field][0];
-                    }
+                $artist = $em->getRepository('AppBundle:Artist')->findByName($tags['artist']);
+
+                if (!$artist) {
+                    $artist = new Artist();
+                    $artist->setName($tags['artist']);
+                    $em->persist($artist);
+                    $em->flush();
                 }
 
-                // -- check for date tag if no year tag
+
+                /*
+                 * -- Handle album --------------------------------------------
+                 */
+                if (empty($fileInfoComments['album'])) {
+
+                    $output->write('  <warning>no album tag found</warning>');
+                    echo " for ", $file, PHP_EOL;
+
+                    $output->write('    guessing album name : ');
+                    $dir = pathinfo($file, PATHINFO_DIRNAME);
+                    $buff = explode('/', $dir);
+                    $album = array_pop($buff);
+                    if (preg_match('/cd\d+/i', $album)) {
+                        $album = array_pop($buff);
+                    }
+
+                    if ($album) {
+                        $tags['album'] = $album;
+                        $output->writeln($album);
+                    }
+                    else {
+                        $output->writeln('<error>-> skipping file.</error>');
+                        $skipCount++;
+                        continue;
+                    }
+                }
+                else {
+                    $tags['album'] = $fileInfoComments['album'][0];
+                }
+
+
+                // -- build album list
+                $album = $em->getRepository('AppBundle:Album')->findBy(array('name' => $tags['album'], 'artist' => $tags['artist']));
+                if (!$album) {
+                    $album = new Album();
+                    $album->setName($tags['album']);
+                    $album->setArtist($tags['artist']);
+                    $em->persist($album);
+                    $em->flush();
+                }
+
+                /*
+                 * -- Handle title --------------------------------------------
+                 */
+                if (empty($fileInfoComments['title'])) {
+                    $output->write('  <warning>no title tag found</warning>');
+                    echo " for ", $file, PHP_EOL;
+
+                    $output->write('    guessing title : ');
+                    $title = pathinfo($file, PATHINFO_FILENAME);
+
+                    $tags['title'] = $title;
+                    $output->writeln($title);
+                }
+                else {
+                    $tags['title'] = $fileInfoComments['title'][0];
+                }
+
+                /*
+                 * -- Handle track number -------------------------------------
+                 */
+                 if (!empty($tags['track_number'])) {
+                     if (!\preg_match("/[^\d+$]/", $tags['track_number'])) {
+
+                         \preg_match("/(\d+)/", $tags['track_number'], $matches);
+
+                         $tags['track_number'] = $matches[0];
+                     }
+                 }
+                 else {
+                     $tags['track_number'] = null;
+                 }
+
+                /*
+                 * -- Handle year ---------------------------------------------
+                 */
                 if (empty($tags['year'])) {
                     if ( !empty($fileInfoComments['date']) ) {
                         $tags['year'] = $fileInfoComments['date'][0];
                     }
                 }
 
-                // echo $fileInfo['playtime_string'], " / " , $fileInfo['playtime_seconds'], PHP_EOL;
-
+                /*
+                 * -- Handle duration -----------------------------------------
+                 */
                 if (!empty($fileInfo['playtime_string'])) {
                     $tags['duration'] = $fileInfo['playtime_string'];
                 }
@@ -184,80 +263,36 @@ class ScanCommand extends ContainerAwareCommand {
                     echo " for ", $file, PHP_EOL;
                 }
 
+                /*
+                 * -- Handle genre ---------------------------------------------
+                 */
+                if (empty($tags['genre'])) {
+                    $tags['genre'] = null;
+                }
 
+                /*
+                 * -- Handle path and web path --------------------------------
+                 */
                 $tags['web_path'] = preg_replace("/^web/", '', $file);
                 $tags['path'] = realpath($file);
 
 
-                // -- build album list
-                if (array_key_exists('artist', $tags) and array_key_exists('album', $tags)) {
-                    $album = $em->getRepository('AppBundle:Album')->findBy(array('name' => $tags['album'], 'artist' => $tags['artist']));
-                    if (!$album) {
-                        $album = new Album();
-                        $album->setName($tags['album']);
-                        $album->setArtist($tags['artist']);
-                        $em->persist($album);
-                        $em->flush();
-                    }
-                }
-                else {
-                    if (!array_key_exists('artist', $tags)) {
-                        print "1 no artist tag found".PHP_EOL;
-                    }
-                    elseif (!array_key_exists('album', $tags)) {
-
-                        $output->write('  <warning>no album tag found</warning>');
-                        echo " for ", $file, PHP_EOL;
-
-                        $output->write('    guessing album name : ');
-                        $dir = pathinfo($file, PATHINFO_DIRNAME);
-                        $buff = explode('/', $dir);
-                        $album = array_pop($buff);
-                        if (preg_match('/cd\d+/i', $album)) {
-                            $album = array_pop($buff);
-                        }
-                        $output->writeln($album);
-                    }
-                }
-
-
-                if (!empty($tags['track_number'])) {
-                    if (\preg_match("/[^\d$]/", $tags['track_number'])) {
-
-                        \preg_match("/(\d+)/", $tags['track_number'], $matches);
-
-                        $tags['track_number'] = $matches[0];
-                    }
-                }
-
-                if (empty($tags['genre'])) {
-                    $tags['genre'] = null;
-                }
-                if (empty($tags['year'])) {
-                    $tags['year'] = null;
-                }
-                if (empty($tags['track_number'])) {
-                    $tags['track_number'] = null;
-                }
-                if (empty($tags['title'])) {
-                    $tags['title'] = null;
-                }
-                if (empty($tags['album'])) {
-                    $tags['album'] = null;
-                }
-
+                // -- write to sql file
                 fwrite(
-                    $fp, ",".$tags['path'].",".$tags['title'].",".$tags['album'].",".
-                    $tags['artist'].",".$tags['track_number'].",".$tags['year'].",".
-                    $tags['genre'].",".$tags['web_path'].",".$tags['duration'].PHP_EOL);
+                    $fp,";".$tags['path'].";".$tags['title'].";".$tags['album'].";".
+                    $tags['artist'].";".$tags['track_number'].";".$tags['year'].";".
+                    $tags['genre'].";".$tags['web_path'].";".$tags['duration'].PHP_EOL);
 
                 $loadCount++;
 
             }
         }
-        $query = "LOAD DATA LOCAL INFILE '/home/lpa/atinfo/www/subsonic/web/soonic.sql'  INTO TABLE media_file  FIELDS TERMINATED BY ','  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+
+        // -- load media_file table
+        $query = "LOAD DATA LOCAL INFILE '/home/lpa/atinfo/www/subsonic/web/soonic.sql'  INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
         $statement = $em->getConnection()->prepare($query)->execute();
 
+        // -- final output
         $output->writeln("analysed $fileCount files.");
         $output->writeln("loaded $loadCount files");
         $output->writeln("skipped $skipCount files");
@@ -276,7 +311,6 @@ class ScanCommand extends ContainerAwareCommand {
         }
 
         $output->writeln("in $output_duration");
-
         $output->writeln('<info>done.');
 	}
 }
