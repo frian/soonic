@@ -27,12 +27,23 @@ class ScanCommand extends ContainerAwareCommand {
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
 
+        $start_time = microtime(true);
+
 		// -- add style
-		$style = new OutputFormatterStyle('red');
+		$style = new OutputFormatterStyle('white', 'red');
+		$output->getFormatter()->setStyle('error', $style);
+
+        $style = new OutputFormatterStyle('white', 'magenta');
 		$output->getFormatter()->setStyle('warning', $style);
 
-		// -- get verbosity
+        // $style = new OutputFormatterStyle('default', 'default');
+        // $output->getFormatter()->setStyle('normal', $style);
+
+        // -- get verbosity
 		$verbosity = $output->getVerbosity();
+
+        // print $verbosity.PHP_EOL;
+        // exit;
 
 		// -- get entity manager
 		$em = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -57,17 +68,19 @@ class ScanCommand extends ContainerAwareCommand {
          * Scan variables
          */
         // -- folder to scan
-        $root = 'web/music/collection/Bob Marley';
+        $root = 'web/music/';
         // -- file types
-        $types = array("mp3", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
+        $types = array("mp3", "mp4", "oga", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
         // -- db fields
         $required_fields = array('artist', 'title', 'album');
         $optional_fields = array('year', 'genre', 'track_number');
         $fields = array_merge($required_fields, $optional_fields);
+        $fileCount = 0;
+        $skipCount = 0;
+        $loadCount = 0;
 
-
+        // -- prepare mysql query
         $query = "INSERT INTO media_file (artist, title, album, year, genre, track_number, path, web_path) VALUES (?,?,?,?,?,?,?,?)";
-
         $statement = $em->getConnection()->prepare($query);
 
         // -- open sql file
@@ -81,6 +94,8 @@ class ScanCommand extends ContainerAwareCommand {
 
         foreach($it as $file) {
             if ( in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), $types) ) {
+
+                $fileCount++;
 
                 $getID3 = new \getID3;
 
@@ -97,10 +112,15 @@ class ScanCommand extends ContainerAwareCommand {
                     $fileInfoComments = $fileInfo['asf']['comments'];
                 }
                 else {
-                    echo $file, PHP_EOL;
-                    $output->writeln('<warning>no tag found.');
+                    $output->write('  <error>no tag found</error>');
+                    echo " for ", $file;
+                    $output->writeln('-> skipping file.');
+                    $skipCount++;
                     continue;
                 }
+
+                // -- create tags array
+                $tags = array();
 
 
                 // -- build artist list
@@ -116,15 +136,29 @@ class ScanCommand extends ContainerAwareCommand {
                     }
                 }
                 else {
-                    echo $file, PHP_EOL;
-                    $output->writeln('<warning>no artist tag found.');
-                    $output->writeln('<warning>skipping file.');
+                    $output->write('  <error>no artist tag found</error>');
+                    echo " for ", $file, PHP_EOL;
+
+                    $output->write('    guessing artist name : ');
+                    $dir = pathinfo($file, PATHINFO_DIRNAME);
+                    $buff = explode('/', $dir);
+                    $tmp = array_pop($buff);
+                    if (preg_match('/cd\d+/i', $tmp)) {
+                        array_pop($buff);
+                    }
+
+                    $tmp = array_pop($buff);
+                    if (preg_match('/cd\d+/', $tmp)) {
+                        $tmp = array_pop($buff);
+                    }
+
+                    $output->writeln($tmp);
+
+                    $output->writeln('-> skipping file.');
+                    $skipCount++;
                     continue;
                 }
 
-
-                // -- create tags array
-                $tags = array();
 
                 foreach($fields as $field) {
                     if ( !empty($fileInfoComments[$field]) ) {
@@ -146,8 +180,8 @@ class ScanCommand extends ContainerAwareCommand {
                 }
                 else {
                     $tags['duration'] = null;
-                    echo $file, PHP_EOL;
-                    $output->writeln('<warning>no playtime_string tag found.');
+                    $output->write('  <warning>no playtime_string tag found.</warning>');
+                    echo " for ", $file, PHP_EOL;
                 }
 
 
@@ -168,12 +202,22 @@ class ScanCommand extends ContainerAwareCommand {
                 }
                 else {
                     if (!array_key_exists('artist', $tags)) {
-                        print "no artist tag found".PHP_EOL;
+                        print "1 no artist tag found".PHP_EOL;
                     }
                     elseif (!array_key_exists('album', $tags)) {
-                        print "no album tag found".PHP_EOL;
+
+                        $output->write('  <warning>no album tag found</warning>');
+                        echo " for ", $file, PHP_EOL;
+
+                        $output->write('    guessing album name : ');
+                        $dir = pathinfo($file, PATHINFO_DIRNAME);
+                        $buff = explode('/', $dir);
+                        $album = array_pop($buff);
+                        if (preg_match('/cd\d+/i', $album)) {
+                            $album = array_pop($buff);
+                        }
+                        $output->writeln($album);
                     }
-                    echo $file, PHP_EOL;
                 }
 
 
@@ -206,10 +250,32 @@ class ScanCommand extends ContainerAwareCommand {
                     $fp, ",".$tags['path'].",".$tags['title'].",".$tags['album'].",".
                     $tags['artist'].",".$tags['track_number'].",".$tags['year'].",".
                     $tags['genre'].",".$tags['web_path'].",".$tags['duration'].PHP_EOL);
+
+                $loadCount++;
+
             }
         }
         $query = "LOAD DATA LOCAL INFILE '/home/lpa/atinfo/www/subsonic/web/soonic.sql'  INTO TABLE media_file  FIELDS TERMINATED BY ','  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
         $statement = $em->getConnection()->prepare($query)->execute();
+
+        $output->writeln("analysed $fileCount files.");
+        $output->writeln("loaded $loadCount files");
+        $output->writeln("skipped $skipCount files");
+
+        $end_time = microtime(true);
+        $duration = $end_time - $start_time;
+
+        if ($duration < 60) {
+            $output_duration = gmdate('s\s', $duration);
+        }
+        elseif ($duration < 3660) {
+            $output_duration = gmdate('i\ms\s', $duration);
+        }
+        else {
+            $output_duration = gmdate('H\hi\ms\s', $duration);
+        }
+
+        $output->writeln("in $output_duration");
 
         $output->writeln('<info>done.');
 	}
