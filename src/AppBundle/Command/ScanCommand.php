@@ -72,7 +72,7 @@ class ScanCommand extends ContainerAwareCommand {
          * -- Scan variables
          */
         // -- folder to scan
-        $root = 'web/music/test';
+        $root = 'web/music/collection';
         // -- file types
         $types = array("mp3", "mp4", "oga", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
         // -- counters
@@ -116,6 +116,9 @@ class ScanCommand extends ContainerAwareCommand {
 
                 $fileInfoComments = array();
 
+                // -- create tags array
+                $tags = array();
+
                 if (!empty($fileInfo['comments'])) {
                     $fileInfoComments = $fileInfo['comments'];
                 }
@@ -123,20 +126,61 @@ class ScanCommand extends ContainerAwareCommand {
                     $fileInfoComments = $fileInfo['asf']['comments'];
                 }
                 else {
-                    $this->printErrorMessage('no tag found', $file, $output);
-                    $this->logErrorMessage('no tag found', $file, $logFile);
-                    $skipCount++;
-                    continue;
-                }
 
-                // -- create tags array
-                $tags = array();
+                    if ($guess) {
+
+                        $hasWarning = true;
+
+                        $artist = $this->previousFolder($file, 2);
+
+                        array_push($warningTags, 'artist');
+                        array_push($warningActions, 'guessing artist tag');
+                        if ($artist) {
+                            $tags['artist'] = $artist;
+                            array_push($warningActionsResult, $artist);
+                        }
+                        else {
+                            $this->printErrorMessage('no artist tag found', $file, $output);
+                            $this->logErrorMessage('no artist tag found', $file, $logFile);
+                            $skipCount++;
+                            continue;
+                        }
+
+                        $album = $this->previousFolder($file, 1);
+
+                        array_push($warningTags, 'album');
+                        array_push($warningActions, 'guessing album tag');
+                        if ($album) {
+                            $tags['album'] = $album;
+                            array_push($warningActionsResult, $album);
+                        }
+                        else {
+                            $this->printErrorMessage('no album tag found', $file, $output);
+                            $this->logErrorMessage('no album tag found', $file, $logFile);
+                            $skipCount++;
+                            continue;
+                        }
+
+                        array_push($warningTags, 'title');
+                        array_push($warningActions, 'guessing title name');
+                        $title = pathinfo($file, PATHINFO_FILENAME);
+                        $tags['title'] = $title;
+                        array_push($warningActionsResult, $title);
+                    }
+                    else {
+                        $this->printErrorMessage('no tag found', $file, $output);
+                        $this->logErrorMessage('no tag found', $file, $logFile);
+                        $skipCount++;
+                        continue;
+                    }
+
+                }
 
 
                 /*
                  * -- Handle artist -------------------------------------------
                  */
-                if (empty($fileInfoComments['artist'])) {
+                if (empty($fileInfoComments['artist']) && empty($tags['artist'])) {
 
                     if ($guess) {
 
@@ -164,7 +208,9 @@ class ScanCommand extends ContainerAwareCommand {
                     }
                 }
                 else {
-                    $tags['artist'] = $fileInfoComments['artist'][0];
+                    if (!empty($fileInfoComments['artist'])) {
+                        $tags['artist'] = $fileInfoComments['artist'][0];
+                    }
                 }
 
 
@@ -181,7 +227,7 @@ class ScanCommand extends ContainerAwareCommand {
                 /*
                  * -- Handle album --------------------------------------------
                  */
-                if (empty($fileInfoComments['album'])) {
+                if (empty($fileInfoComments['album']) && empty($tags['album'])) {
 
                     if ($guess) {
 
@@ -211,7 +257,9 @@ class ScanCommand extends ContainerAwareCommand {
 
                 }
                 else {
-                    $tags['album'] = $fileInfoComments['album'][0];
+                    if (!empty($fileInfoComments['album'])) {
+                        $tags['album'] = $fileInfoComments['album'][0];
+                    }
                 }
 
 
@@ -228,7 +276,7 @@ class ScanCommand extends ContainerAwareCommand {
                 /*
                  * -- Handle title --------------------------------------------
                  */
-                if (empty($fileInfoComments['title'])) {
+                if (empty($fileInfoComments['title']) && empty($tags['title'])) {
 
                     if ($guess) {
 
@@ -249,7 +297,9 @@ class ScanCommand extends ContainerAwareCommand {
                     }
                 }
                 else {
-                    $tags['title'] = $fileInfoComments['title'][0];
+                    if (!empty($fileInfoComments['title'])) {
+                        $tags['title'] = $fileInfoComments['title'][0];
+                    }
                 }
 
                 /*
@@ -385,7 +435,7 @@ class ScanCommand extends ContainerAwareCommand {
 
             foreach ($warningActions as $key => $action) {
                 $warningOutput .= "<warning>$action</warning> ";
-                $warningOutput .= $warningActionsResult[$key];
+                $warningOutput .= $warningActionsResult[$key]." ";
             }
 
             $output->writeln($warningOutput);
