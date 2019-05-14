@@ -20,4 +20,5 @@
 
 /web/music/*
 web/soonic.sql
+web/soonic.log
 .web-server-pid

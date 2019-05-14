@@ -50,16 +50,22 @@ class ScanCommand extends ContainerAwareCommand {
         $tables = array('media_file', 'album', 'artist');
 
         foreach ($tables as $table) {
-            $output->write("  clear table $table .");
+            if ($verbosity >= 128) {
+                $output->write("  clear table $table .");
+            }
 
             $query = "DELETE FROM $table";
             $statement = $em->getConnection()->prepare($query)->execute();
-            $output->write('.');
+            if ($verbosity >= 128) {
+                $output->write('.');
+            }
 
             $query = "ALTER TABLE $table AUTO_INCREMENT = 1;";
             $statement = $em->getConnection()->prepare($query)->execute();
 
-            $output->writeln('. done');
+            if ($verbosity >= 128) {
+                $output->writeln('. done');
+            }
         }
 
         /*
@@ -83,6 +89,10 @@ class ScanCommand extends ContainerAwareCommand {
         $fp = fopen($sqlFile, 'w');
         fwrite($fp, 'id,path,title,album,artist,track_number,year,genre,web_path,duration'.PHP_EOL);
 
+        // -- open log file
+        $logFilePath = dirname(__FILE__).'/../../../web/soonic.log';
+        $logFile = fopen($logFilePath, 'w');
+
         // -- scan
         $di = new \RecursiveDirectoryIterator($root,\RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
         $it = new \RecursiveIteratorIterator($di);
@@ -91,6 +101,12 @@ class ScanCommand extends ContainerAwareCommand {
             if ( in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), $types) ) {
 
                 $fileCount++;
+
+                $hasWarning = false;
+                $warningOutput = '  <warning>no ';
+                $warningTags = array();
+                $warningActions = array();
+                $warningActionsResult = array();
 
                 $getID3 = new \getID3;
 
@@ -107,9 +123,8 @@ class ScanCommand extends ContainerAwareCommand {
                     $fileInfoComments = $fileInfo['asf']['comments'];
                 }
                 else {
-                    $output->write('  <error>no tag found</error>');
-                    echo " for ", $file;
-                    $output->writeln('-> skipping file.');
+                    $this->printErrorMessage('no tag found', $file, $output);
+                    $this->logErrorMessage('no tag found', $file, $logFile);
                     $skipCount++;
                     continue;
                 }
@@ -123,39 +138,27 @@ class ScanCommand extends ContainerAwareCommand {
                  */
                 if (empty($fileInfoComments['artist'])) {
 
-                    $output->write('  <warning>no artist tag found</warning>');
-                    echo " for ", $file, PHP_EOL;
-
                     if ($guess) {
-                        $output->write('    guessing artist name : ');
-                        $dir = pathinfo($file, PATHINFO_DIRNAME);
-                        $buff = explode('/', $dir);
 
-                        // -- one dir up
-                        $tmp = array_pop($buff);
-                        if (preg_match('/cd\d+/i', $tmp)) {
-                            array_pop($buff);
-                        }
+                        $hasWarning = true;
+                        array_push($warningTags, 'artist');
+                        array_push($warningActions, 'guessing artist name');
 
-                        // -- one dir up
-                        $artist = array_pop($buff);
-                        if (preg_match('/cd\d+/', $artist)) {
-                            $artist = array_pop($buff);
-                        }
-
+                        $artist = $this->previousFolder($file, 2);
 
                         if ($artist) {
                             $tags['artist'] = $artist;
-                            $output->writeln($artist);
+                            array_push($warningActionsResult, $artist);
                         }
                         else {
-                            $output->writeln('<error>-> skipping file.</error>');
+                            $this->printErrorMessage('no artist tag found', $file, $output);
+                            $this->logErrorMessage('no artist tag found', $file, $logFile);
                             $skipCount++;
                             continue;
                         }
                     }
                     else {
-                        $output->writeln('<error>-> skipping file.</error>');
+                        $this->logErrorMessage('no artist tag found', $file, $logFile);
                         $skipCount++;
                         continue;
                     }
@@ -180,30 +183,28 @@ class ScanCommand extends ContainerAwareCommand {
                  */
                 if (empty($fileInfoComments['album'])) {
 
-                    $output->write('  <warning>no album tag found</warning>');
-                    echo " for ", $file, PHP_EOL;
-
                     if ($guess) {
-                        $output->write('    guessing album name : ');
-                        $dir = pathinfo($file, PATHINFO_DIRNAME);
-                        $buff = explode('/', $dir);
-                        $album = array_pop($buff);
-                        if (preg_match('/cd\d+/i', $album)) {
-                            $album = array_pop($buff);
-                        }
+
+                        $hasWarning = true;
+                        array_push($warningTags, 'album');
+                        array_push($warningActions, 'guessing album name');
+
+                        $album = $this->previousFolder($file, 1);
 
                         if ($album) {
                             $tags['album'] = $album;
-                            $output->writeln($album);
+                            array_push($warningActionsResult, $album);
                         }
                         else {
-                            $output->writeln('<error>-> skipping file.</error>');
+                            $this->printErrorMessage('no album tag found', $file, $output);
+                            $this->logErrorMessage('no album tag found', $file, $logFile);
                             $skipCount++;
                             continue;
                         }
                     }
                     else {
-                        $output->writeln('<error>-> skipping file.</error>');
+                        $this->printErrorMessage('no album tag found', $file, $output);
+                        $this->logErrorMessage('no album tag found', $file, $logFile);
                         $skipCount++;
                         continue;
                     }
@@ -228,14 +229,24 @@ class ScanCommand extends ContainerAwareCommand {
                  * -- Handle title --------------------------------------------
                  */
                 if (empty($fileInfoComments['title'])) {
-                    $output->write('  <warning>no title tag found</warning>');
-                    echo " for ", $file, PHP_EOL;
 
-                    $output->write('    guessing title : ');
-                    $title = pathinfo($file, PATHINFO_FILENAME);
+                    if ($guess) {
 
-                    $tags['title'] = $title;
-                    $output->writeln($title);
+                        $hasWarning = true;
+                        array_push($warningTags, 'title');
+                        array_push($warningActions, 'guessing title name');
+
+                        $title = pathinfo($file, PATHINFO_FILENAME);
+
+                        $tags['title'] = $title;
+                        array_push($warningActionsResult, $title);
+                    }
+                    else {
+                        $this->printErrorMessage('no title tag found', $file, $output);
+                        $this->logErrorMessage('no title tag found', $file, $logFile);
+                        $skipCount++;
+                        continue;
+                    }
                 }
                 else {
                     $tags['title'] = $fileInfoComments['title'][0];
@@ -253,8 +264,8 @@ class ScanCommand extends ContainerAwareCommand {
                      }
                  }
                  else {
-                     $output->write('  <warning>no track_number tag found</warning>');
-                     echo " for ", $file, PHP_EOL;
+                     $hasWarning = true;
+                     array_push($warningTags, 'track_number');
                      $tags['track_number'] = null;
                  }
 
@@ -266,8 +277,8 @@ class ScanCommand extends ContainerAwareCommand {
                         $tags['year'] = $fileInfoComments['date'][0];
                     }
                     else {
-                        $output->write('  <warning>no year tag found</warning>');
-                        echo " for ", $file, PHP_EOL;
+                        $hasWarning = true;
+                        array_push($warningTags, 'year');
                         $tags['year'] = null;
                     }
                 }
@@ -280,17 +291,17 @@ class ScanCommand extends ContainerAwareCommand {
                 }
                 else {
                     $tags['duration'] = null;
-                    $output->write('  <warning>no playtime_string tag found.</warning>');
-                    echo " for ", $file, PHP_EOL;
+                    $hasWarning = true;
+                    array_push($warningTags, 'duration');
                 }
 
                 /*
                  * -- Handle genre ---------------------------------------------
                  */
                 if (empty($tags['genre'])) {
-                    $output->write('  <warning>no genre tag found</warning>');
-                    echo " for ", $file, PHP_EOL;
                     $tags['genre'] = null;
+                    $hasWarning = true;
+                    array_push($warningTags, 'genre');
                 }
 
                 /*
@@ -299,6 +310,11 @@ class ScanCommand extends ContainerAwareCommand {
                 $tags['web_path'] = preg_replace("/^web/", '', $file);
                 $tags['path'] = realpath($file);
 
+
+                if ($hasWarning) {
+                    $this->printWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $output);
+                    $this->logWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $logFile);
+                }
 
                 // -- write to sql file
                 fwrite(
@@ -316,24 +332,95 @@ class ScanCommand extends ContainerAwareCommand {
         $statement = $em->getConnection()->prepare($query)->execute();
 
         // -- final output
-        $output->writeln("analysed $fileCount files.");
-        $output->writeln("loaded $loadCount files");
-        $output->writeln("skipped $skipCount files");
+        if ($verbosity >= 64) {
+            $output->writeln("analysed $fileCount files.");
+            $output->writeln("loaded $loadCount files");
+            $output->writeln("skipped $skipCount files");
 
-        $end_time = microtime(true);
-        $duration = $end_time - $start_time;
+            $end_time = microtime(true);
+            $duration = $end_time - $start_time;
 
-        if ($duration < 60) {
-            $output_duration = gmdate('s\s', $duration);
-        }
-        elseif ($duration < 3600) {
-            $output_duration = gmdate('i\ms\s', $duration);
-        }
-        else {
-            $output_duration = gmdate('H\hi\ms\s', $duration);
-        }
+            if ($duration < 60) {
+                $output_duration = gmdate('s\s', $duration);
+            }
+            elseif ($duration < 3600) {
+                $output_duration = gmdate('i\ms\s', $duration);
+            }
+            else {
+                $output_duration = gmdate('H\hi\ms\s', $duration);
+            }
 
-        $output->writeln("in $output_duration");
-        $output->writeln('<info>done.');
+            $output->writeln("in $output_duration");
+        }
 	}
+
+
+    private function printErrorMessage($error, $file, $output) {
+        $verbosity = $output->getVerbosity();
+        if ($verbosity >= 64) {
+            $warningOutput = '';
+            $warningOutput .= "<error>$error</error>";
+            $warningOutput .= " for ".$file;
+            $warningOutput .= ' <error>-> skipping file.</error>';
+            $output->writeln($warningOutput);
+        }
+    }
+
+    private function logErrorMessage($error, $file, $logFile) {
+        fwrite($logFile, "[error]$error;$file;skipping file\n");
+    }
+
+
+    private function printWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $output) {
+
+        $verbosity = $output->getVerbosity();
+        if ($verbosity >= 128) {
+            $warningOutput = 'no ';
+
+            foreach ($warningTags as $key => $tag) {
+                $warningOutput .= "<warning>$tag</warning> ";
+            }
+
+            $warningOutput .= "tag found for $file ";
+
+            foreach ($warningActions as $key => $action) {
+                $warningOutput .= "<warning>$action</warning> ";
+                $warningOutput .= $warningActionsResult[$key];
+            }
+
+            $output->writeln($warningOutput);
+        }
+    }
+
+    private function logWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $logFile) {
+
+        $warningOutput = '[warning]no ';
+
+        foreach ($warningTags as $key => $tag) {
+            $warningOutput .= "$tag ";
+        }
+
+        $warningOutput .= "tag found;$file;";
+
+        foreach ($warningActions as $key => $action) {
+            $warningOutput .= "$action;";
+            $warningOutput .= $warningActionsResult[$key].";";
+        }
+
+        $warningOutput .= "\n";
+        fwrite($logFile, $warningOutput);
+    }
+
+
+    private function previousFolder($file, $level) {
+        $path = pathinfo($file, PATHINFO_DIRNAME);
+        $pathParts = explode('/', $path);
+        for ($i = 1; $i <= $level ; $i++) {
+            $folder = array_pop($pathParts);
+            if (preg_match('/cd\d+/i', $folder)) {
+                $folder = array_pop($pathParts);
+            }
+        }
+        return $folder;
+    }
 }
