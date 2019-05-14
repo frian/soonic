@@ -21,7 +21,7 @@ class ScanCommand extends ContainerAwareCommand {
     		->setName('soonic:scan')
     		->setDescription('scan folders')
     		->setHelp("\nscan folders and create database\n")
-    		->addOption('force', null, InputOption::VALUE_NONE, 'Si définie, les modifications sont appliquées')
+    		->addOption('guess', null, InputOption::VALUE_NONE, 'If defined, guess tags')
 		;
 	}
 
@@ -36,14 +36,12 @@ class ScanCommand extends ContainerAwareCommand {
         $style = new OutputFormatterStyle('white', 'magenta');
 		$output->getFormatter()->setStyle('warning', $style);
 
-        // $style = new OutputFormatterStyle('default', 'default');
-        // $output->getFormatter()->setStyle('normal', $style);
 
         // -- get verbosity
 		$verbosity = $output->getVerbosity();
 
-        // print $verbosity.PHP_EOL;
-        // exit;
+        // get --guess option
+        $guess = $input->getOption('guess');
 
 		// -- get entity manager
 		$em = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -68,7 +66,7 @@ class ScanCommand extends ContainerAwareCommand {
          * -- Scan variables
          */
         // -- folder to scan
-        $root = 'web/music/collection/Bob Marley';
+        $root = 'web/music/test';
         // -- file types
         $types = array("mp3", "mp4", "oga", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
         // -- counters
@@ -124,29 +122,37 @@ class ScanCommand extends ContainerAwareCommand {
                  * -- Handle artist -------------------------------------------
                  */
                 if (empty($fileInfoComments['artist'])) {
+
                     $output->write('  <warning>no artist tag found</warning>');
                     echo " for ", $file, PHP_EOL;
 
-                    $output->write('    guessing artist name : ');
-                    $dir = pathinfo($file, PATHINFO_DIRNAME);
-                    $buff = explode('/', $dir);
+                    if ($guess) {
+                        $output->write('    guessing artist name : ');
+                        $dir = pathinfo($file, PATHINFO_DIRNAME);
+                        $buff = explode('/', $dir);
 
-                    // -- one dir up
-                    $tmp = array_pop($buff);
-                    if (preg_match('/cd\d+/i', $tmp)) {
-                        array_pop($buff);
-                    }
+                        // -- one dir up
+                        $tmp = array_pop($buff);
+                        if (preg_match('/cd\d+/i', $tmp)) {
+                            array_pop($buff);
+                        }
 
-                    // -- one dir up
-                    $artist = array_pop($buff);
-                    if (preg_match('/cd\d+/', $artist)) {
+                        // -- one dir up
                         $artist = array_pop($buff);
-                    }
+                        if (preg_match('/cd\d+/', $artist)) {
+                            $artist = array_pop($buff);
+                        }
 
 
-                    if ($artist) {
-                        $tags['artist'] = $artist;
-                        $output->writeln($artist);
+                        if ($artist) {
+                            $tags['artist'] = $artist;
+                            $output->writeln($artist);
+                        }
+                        else {
+                            $output->writeln('<error>-> skipping file.</error>');
+                            $skipCount++;
+                            continue;
+                        }
                     }
                     else {
                         $output->writeln('<error>-> skipping file.</error>');
@@ -177,23 +183,31 @@ class ScanCommand extends ContainerAwareCommand {
                     $output->write('  <warning>no album tag found</warning>');
                     echo " for ", $file, PHP_EOL;
 
-                    $output->write('    guessing album name : ');
-                    $dir = pathinfo($file, PATHINFO_DIRNAME);
-                    $buff = explode('/', $dir);
-                    $album = array_pop($buff);
-                    if (preg_match('/cd\d+/i', $album)) {
+                    if ($guess) {
+                        $output->write('    guessing album name : ');
+                        $dir = pathinfo($file, PATHINFO_DIRNAME);
+                        $buff = explode('/', $dir);
                         $album = array_pop($buff);
-                    }
+                        if (preg_match('/cd\d+/i', $album)) {
+                            $album = array_pop($buff);
+                        }
 
-                    if ($album) {
-                        $tags['album'] = $album;
-                        $output->writeln($album);
+                        if ($album) {
+                            $tags['album'] = $album;
+                            $output->writeln($album);
+                        }
+                        else {
+                            $output->writeln('<error>-> skipping file.</error>');
+                            $skipCount++;
+                            continue;
+                        }
                     }
                     else {
                         $output->writeln('<error>-> skipping file.</error>');
                         $skipCount++;
                         continue;
                     }
+
                 }
                 else {
                     $tags['album'] = $fileInfoComments['album'][0];
@@ -239,6 +253,8 @@ class ScanCommand extends ContainerAwareCommand {
                      }
                  }
                  else {
+                     $output->write('  <warning>no track_number tag found</warning>');
+                     echo " for ", $file, PHP_EOL;
                      $tags['track_number'] = null;
                  }
 
@@ -248,6 +264,11 @@ class ScanCommand extends ContainerAwareCommand {
                 if (empty($tags['year'])) {
                     if ( !empty($fileInfoComments['date']) ) {
                         $tags['year'] = $fileInfoComments['date'][0];
+                    }
+                    else {
+                        $output->write('  <warning>no year tag found</warning>');
+                        echo " for ", $file, PHP_EOL;
+                        $tags['year'] = null;
                     }
                 }
 
@@ -267,6 +288,8 @@ class ScanCommand extends ContainerAwareCommand {
                  * -- Handle genre ---------------------------------------------
                  */
                 if (empty($tags['genre'])) {
+                    $output->write('  <warning>no genre tag found</warning>');
+                    echo " for ", $file, PHP_EOL;
                     $tags['genre'] = null;
                 }
 
@@ -303,7 +326,7 @@ class ScanCommand extends ContainerAwareCommand {
         if ($duration < 60) {
             $output_duration = gmdate('s\s', $duration);
         }
-        elseif ($duration < 3660) {
+        elseif ($duration < 3600) {
             $output_duration = gmdate('i\ms\s', $duration);
         }
         else {
