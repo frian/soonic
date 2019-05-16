@@ -224,7 +224,8 @@ function playNext(direction) {
             loadSong(next);
         }
         else {
-
+            current.removeClass('active');
+            $(".icon-pause").attr("class", 'icon-play');
         }
     }
 }
