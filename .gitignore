@@ -18,6 +18,9 @@
 .idea
 /nbproject/private/
 
+access.log
+error.log
+
 /web/music/*
 web/soonic.sql
 web/soonic.log

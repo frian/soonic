@@ -12,13 +12,12 @@ $(function() {
 
         if ($(this).next('ul').length) {
             $(this).next().remove();
-        }
-        else {
+        } else {
             $.get({
                 url: url,
                 context: this,
                 cache: true,
-                success: function(data){
+                success: function(data) {
                     $(this).after(data);
                 }
             });
@@ -43,7 +42,7 @@ $(function() {
             $.get({
                 url: url,
                 cache: true,
-                success: function(data){
+                success: function(data) {
                     $("#artists-nav").remove();
                     $("nav.artists").append(data);
                 }
@@ -64,20 +63,22 @@ $(function() {
 
         var filter = this.value;
 
-        if (timeout) { clearTimeout(timeout); }
+        if (timeout) {
+            clearTimeout(timeout);
+        }
 
         timeout = setTimeout(function() {
 
             $.get({
                 url: url + filter,
                 cache: true,
-                success: function(data){
+                success: function(data) {
                     $("#artists-nav").remove();
                     $("nav.artists").append(data);
                 }
             });
 
-        },300);
+        }, 300);
 
     });
 
@@ -95,7 +96,7 @@ $(function() {
         $.get({
             url: url,
             cache: true,
-            success: function(data){
+            success: function(data) {
                 $("#songs table tbody").remove();
                 $("#songs table").append(data);
             }
@@ -107,23 +108,72 @@ $(function() {
      * Returns search results
      * Updates the songs panel
      */
-     $(document).on("click", "#searchButton", function(e) {
+    $(document).on("click", "#searchButton", function(e) {
 
-         e.preventDefault();
+        e.preventDefault();
 
-         var form = $('#searchForm');
+        var form = $('#searchForm');
 
-         $.ajax({
-             type: form.attr('method'),
-             url: form.attr('action'),
-             data: form.serialize(),
-             success: function(data) {
-                 $("#songs table tbody").remove();
-                 $("#songs table").append(data);
-             },
-             error:function(data) {
-                 console.log("error");
-             }
-         });
-     });
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            success: function(data) {
+                $("#songs table tbody").remove();
+                $("#songs table").append(data);
+            },
+            error: function(data) {
+                console.log("error");
+            }
+        });
+    });
+
+
+    /**
+     * Start scan
+     */
+    $(document).on("click", "#scanButton", function(e) {
+
+        e.preventDefault();
+
+        $.get({
+            url: '/scan',
+            cache: true,
+            success: function(data) {
+                // $("body").append(data);
+            }
+        });
+
+
+        var myVar = setInterval(myTimer, 1000);
+
+        var value = 0;
+        function myTimer() {
+            $.get({
+                url: '/scan/progress',
+                cache: true,
+                success: function(data) {
+                    currentValue = data;
+                    if (value == currentValue) {
+                        console.log('done');
+                        clearInterval(myVar);
+                    }
+                    else {
+                        console.log('go on');
+                    }
+                    value = currentValue;
+                    // $("#songs table tbody").remove();
+                    console.log(data);
+                    $("#scanStatus").html(data);
+                }
+            });
+        }
+
+        function myStopFunction() {
+            clearInterval(myVar);
+        }
+
+
+    });
+
 });

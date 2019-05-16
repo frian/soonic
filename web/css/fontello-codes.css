@@ -1,5 +1,6 @@
 
 .icon-play:before { content: '\e800'; } /* '' */
-.icon-to-end:before { content: '\e801'; } /* '' */
-.icon-to-start:before { content: '\e802'; } /* '' */
-.icon-pause:before { content: '\e803'; } /* '' */
+.icon-cog:before { content: '\e801'; } /* '' */
+.icon-pause:before { content: '\e802'; } /* '' */
+.icon-to-start:before { content: '\e803'; } /* '' */
+.icon-to-end:before { content: '\e804'; } /* '' */

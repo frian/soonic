@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block js %}
+<script src="/js/main.js"></script>
+{% endblock %}
+
+{% block body %}
+<a id="scanButton" class="button" href="{{ path('radio_index') }}">scan</a>
+
+{% if data is defined %}
+{{ data }}
+{% endif %}
+{% endblock %}

@@ -29,6 +29,15 @@ class ScanCommand extends ContainerAwareCommand {
 
         $start_time = microtime(true);
 
+        // -- open log file
+        $logFilePath = dirname(__FILE__).'/../../../web/soonic.log';
+
+        $webPath = realpath(dirname(__FILE__).'/../../../web');
+
+        $logFile = fopen($logFilePath, 'w');
+
+fwrite($logFile, "1\n");
+
 		// -- add style
 		$style = new OutputFormatterStyle('white', 'red');
 		$output->getFormatter()->setStyle('error', $style);
@@ -72,7 +81,7 @@ class ScanCommand extends ContainerAwareCommand {
          * -- Scan variables
          */
         // -- folder to scan
-        $root = 'web/music/collection';
+        $root = $this->getContainer()->get('kernel')->getProjectDir() . '/web/music/test';
         // -- file types
         $types = array("mp3", "mp4", "oga", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
         // -- counters
@@ -88,15 +97,12 @@ class ScanCommand extends ContainerAwareCommand {
         $sqlFile = dirname(__FILE__).'/../../../web/soonic.sql';
         $fp = fopen($sqlFile, 'w');
         fwrite($fp, 'id,path,title,album,artist,track_number,year,genre,web_path,duration'.PHP_EOL);
-
-        // -- open log file
-        $logFilePath = dirname(__FILE__).'/../../../web/soonic.log';
-        $logFile = fopen($logFilePath, 'w');
+fwrite($logFile, "2\n");
 
         // -- scan
         $di = new \RecursiveDirectoryIterator($root,\RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
         $it = new \RecursiveIteratorIterator($di);
-
+fwrite($logFile, "3\n");
         foreach($it as $file) {
             if ( in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), $types) ) {
 
@@ -357,9 +363,8 @@ class ScanCommand extends ContainerAwareCommand {
                 /*
                  * -- Handle path and web path --------------------------------
                  */
-                $tags['web_path'] = preg_replace("/^web/", '', $file);
-                $tags['path'] = realpath($file);
-
+                $tags['web_path'] = preg_replace("|^$webPath|", '', $file);
+                $tags['path'] = $file;
 
                 if ($hasWarning) {
                     $this->printWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $output);
