@@ -81,7 +81,7 @@ class ScanCommand extends ContainerAwareCommand {
          * -- Scan variables
          */
         // -- folder to scan
-        $root = $this->getContainer()->get('kernel')->getProjectDir() . '/web/music/bestofs';
+        $root = $this->getContainer()->get('kernel')->getProjectDir() . '/web/music/';
         // -- file types
         $types = array("mp3", "mp4", "oga", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
         // -- counters

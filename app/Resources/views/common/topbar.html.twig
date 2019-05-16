@@ -26,6 +26,11 @@
 
     {% endif %}
 
+    {% if app.request.get('_route') != 'settings_index' %}
+        <a href="{{ path('settings_index') }}">
+            <i class="icon-cog button"></i>
+        </a>
+    {% endif %}
 
     <nav class="topbarNav">
 
@@ -37,16 +42,21 @@
 
         {% else %}
 
-            {% if app.request.get('_route') != 'radio_new' %}
+            {% if 'radio' in app.request.get('_route') and app.request.get('_route') != 'radio_new' %}
                 <a href="{{ path('radio_new') }}">add radio</a>
-            {% else %}
+
+                {% endif %}
+            {% if app.request.get('_route') == 'radio_new' %}
                 <a href="{{ path('radio_index') }}">back</a>
+            {% endif %}
+
+            {% if app.request.get('_route') == 'settings_index' %}
+                <a href="{{ path('radio_index') }}">radio</a>
             {% endif %}
 
             <a href="{{ path('library') }}">music</a>
         {% endif %}
 
-        <i class="icon-cog button"></i>
     </nav>
 
 </section>
