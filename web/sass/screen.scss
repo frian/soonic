@@ -15,6 +15,7 @@ $debug: 0;
 
 html, body {
     min-height: 100%;
+    font-family: 'Lato', sans-serif;
 }
 
 body {
@@ -329,6 +330,33 @@ h1 {
     letter-spacing: 1px;
 }
 
+h2 {
+    font-family: 'Muli', sans-serif;
+    font-size: 1.6em;
+}
+
+.settings div, .settings a {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.6em;
+}
+
+.settings h2 {
+    float: left;
+    // padding-right: 20px;
+    height: 50px;
+    line-height: 50px;
+}
+
+.info {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+    font-family: 'Muli', sans-serif;
+}
+
 form div div label {
     font-family: 'Lato', sans-serif;
     font-size: 1.2em;
@@ -403,6 +431,12 @@ form[name="search"] {
         display: inline-block;
         padding: 0;
     }
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 @media all and (min-width: 1024px) {
@@ -546,6 +580,11 @@ form[name="search"] {
         display: inline-block;
         padding: 20px 50px;
         width: calc(50% - 100px);
+    }
+
+    .settings {
+        padding: 20px 40px;
+        border: 1px solid lime;
     }
 
 }

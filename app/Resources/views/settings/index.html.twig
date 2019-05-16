@@ -5,7 +5,21 @@
 {% endblock %}
 
 {% block body %}
-<a id="scanButton" class="button" href="{{ path('radio_index') }}">scan</a>
+<h1>Settings</h1>
+<section class="settings clearfix">
+
+    <h2>Library : </h2>
+
+    <div class="info">
+        found  <span id="numFiles">{{ numFiles }}</span> Files
+    </div>
+
+    <a id="scanButton" class="button" href="{{ path('radio_index') }}">scan</a>
+
+    <div id="scanStatus" class="info"></div>
+    <div id="fileCount" class="info"></div>
+
+</section>
 
 {% if data is defined %}
 {{ data }}

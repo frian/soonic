@@ -29,14 +29,14 @@ class ScanCommand extends ContainerAwareCommand {
 
         $start_time = microtime(true);
 
-        // -- open log file
-        $logFilePath = dirname(__FILE__).'/../../../web/soonic.log';
-
         $webPath = realpath(dirname(__FILE__).'/../../../web');
+        $lockFile = $webPath.'/soonic.lock';
 
+        touch($lockFile);
+
+        // -- open log file
+        $logFilePath = $webPath.'/soonic.log';
         $logFile = fopen($logFilePath, 'w');
-
-fwrite($logFile, "1\n");
 
 		// -- add style
 		$style = new OutputFormatterStyle('white', 'red');
@@ -81,7 +81,7 @@ fwrite($logFile, "1\n");
          * -- Scan variables
          */
         // -- folder to scan
-        $root = $this->getContainer()->get('kernel')->getProjectDir() . '/web/music/test';
+        $root = $this->getContainer()->get('kernel')->getProjectDir() . '/web/music/bestofs';
         // -- file types
         $types = array("mp3", "mp4", "oga", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
         // -- counters
@@ -97,12 +97,11 @@ fwrite($logFile, "1\n");
         $sqlFile = dirname(__FILE__).'/../../../web/soonic.sql';
         $fp = fopen($sqlFile, 'w');
         fwrite($fp, 'id,path,title,album,artist,track_number,year,genre,web_path,duration'.PHP_EOL);
-fwrite($logFile, "2\n");
 
         // -- scan
         $di = new \RecursiveDirectoryIterator($root,\RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
         $it = new \RecursiveIteratorIterator($di);
-fwrite($logFile, "3\n");
+
         foreach($it as $file) {
             if ( in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), $types) ) {
 
@@ -407,6 +406,8 @@ fwrite($logFile, "3\n");
 
             $output->writeln("in $output_duration");
         }
+
+        unlink($lockFile);
 	}
 
 

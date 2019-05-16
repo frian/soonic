@@ -24,10 +24,13 @@ class SettingsController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $albums = $em->getRepository('AppBundle:Album')->findAll();
+        $query = "select max(id) from media_file";
+        $statement = $em->getConnection()->prepare($query);
+        $statement->execute();
+        $numFiles = $statement->fetchAll()[0]['max(id)'];
 
         return $this->render('settings/index.html.twig', array(
-            'albums' => $albums,
+            'numFiles' => $numFiles,
         ));
     }
 }

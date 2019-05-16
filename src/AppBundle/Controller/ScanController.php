@@ -11,6 +11,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 /**
@@ -28,8 +29,12 @@ class ScanController extends Controller {
      */
     public function scanAction(KernelInterface $kernel) {
 
-        exec("nohup /usr/bin/php -f /home/lpa/atinfo/www/subsonic/bin/console soonic:scan > /dev/null 2>&1 &");
+        $projectDir = $this->get('kernel')->getProjectDir();
+        $command = $projectDir.'/bin/console soonic:scan';
 
+        // exec("nohup /usr/bin/php -f /home/lpa/atinfo/www/subsonic/bin/console soonic:scan > /dev/null 2>&1 &");
+        // shell_exec(sprintf('%s > /dev/null 2>&1 &', "/usr/bin/php /home/lpa/atinfo/www/subsonic/bin/console soonic:scan"));
+        exec("/usr/bin/php $command > /dev/null 2>&1 &");
         return new Response('');
     }
 
@@ -42,19 +47,20 @@ class ScanController extends Controller {
     public function scanProgressAction() {
 
         $projectDir = $this->get('kernel')->getProjectDir();
+        $lockFile = $projectDir.'/web/soonic.lock';
+        $status = 'stopped';
 
-
+        if (file_exists($lockFile)) {
+            $status = 'running';
+        }
 
         $file = new \SplFileObject($this->get('kernel')->getProjectDir().'/web/soonic.sql', 'r');
         $file->seek(PHP_INT_MAX);
+        $data = $file->key() - 1;
 
-        // echo $file->key() + 1;
+        $response = ['status' => $status, 'data' => $data];
 
-        return new Response($file->key() + 1);
-
-        // return $this->render('settings/index.html.twig', array(
-        //     'data' => $file->key() + 1
-        // ));
+        return new JsonResponse($response);
     }
 
 }

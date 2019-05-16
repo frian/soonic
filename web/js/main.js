@@ -144,8 +144,10 @@ $(function() {
             }
         });
 
+        $("#numFiles").html("0");
+        $("#scanStatus").html('scanning');
 
-        var myVar = setInterval(myTimer, 1000);
+        var $loop = setInterval(myTimer, 1000);
 
         var value = 0;
         function myTimer() {
@@ -153,27 +155,19 @@ $(function() {
                 url: '/scan/progress',
                 cache: true,
                 success: function(data) {
-                    currentValue = data;
-                    if (value == currentValue) {
-                        console.log('done');
-                        clearInterval(myVar);
+                    currentValue = data.data;
+                    if (data.status == 'stopped') {
+                        $("#scanStatus").html('done');
+                        $("#numFiles").html(currentValue);
+                        $("#fileCount").html('');
+                        clearInterval($loop);
+                        return;
                     }
-                    else {
-                        console.log('go on');
-                    }
+
                     value = currentValue;
-                    // $("#songs table tbody").remove();
-                    console.log(data);
-                    $("#scanStatus").html(data);
+                    $("#fileCount").html(data.data);
                 }
             });
         }
-
-        function myStopFunction() {
-            clearInterval(myVar);
-        }
-
-
     });
-
 });

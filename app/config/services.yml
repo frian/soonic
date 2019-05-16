@@ -33,9 +33,3 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
-
-    scan_listener:
-        class: AppBundle\EventListener\ScanListener
-        arguments: [ "%kernel.root_dir%" ]
-        tags:
-            - { name: kernel.event_subscriber }
