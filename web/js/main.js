@@ -4,7 +4,7 @@ $(function() {
      * Returns a album list for an artist or remove album list (close)
      * Updates the navigation panel
      */
-    $(document).on("click", ".artists a.artist", function(e) {
+    $(document).on("click", ".artists-navigation a.artist", function(e) {
 
         e.preventDefault();
 
@@ -87,7 +87,7 @@ $(function() {
      * Returns the songs from an album
      * Updates the songs panel
      */
-    $(document).on("click", ".artists a.song", function(e) {
+    $(document).on("click", ".artists-navigation a.song", function(e) {
 
         e.preventDefault();
 

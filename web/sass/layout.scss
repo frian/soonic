@@ -1,0 +1,134 @@
+$debug : 0;
+
+/*
+  -- Global -------------------------------------------------------------------
+*/
+html, body {
+    height: 100%;
+}
+
+
+/*
+  -- Topbar -------------------------------------------------------------------
+*/
+$topbar-size: 49px;
+$topbar-border-size: 1px;
+
+.topbar {
+    height: $topbar-size;
+    border-bottom-width: $topbar-border-size;
+    border-bottom-style: solid;
+    @if $debug != 0 {
+        background-color: #222;
+    }
+}
+
+.topbar > div {
+    display: inline-block;
+}
+
+
+/*
+  -- Artists navigation -------------------------------------------------------
+*/
+.artists-navigation {
+    float: left;
+    width: 100%;
+    height: calc(100% - (#{$topbar-size} + #{$topbar-border-size}));
+    overflow-y: scroll;
+    @if $debug != 0 {
+        background-color: #333;
+    }
+
+    a {
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-left: 10px;
+        height : 48px;
+        line-height: 48px;
+        @if $debug != 0 {
+            background-color: #500;
+        }
+    }
+}
+
+
+/*
+  -- Songs and playlist panels ------------------------------------------------
+*/
+.songs, .playlist {
+    display: none;
+    overflow-y: scroll;
+}
+
+.songs {
+    @if $debug != 0 {
+        background-color: #444;
+    }
+}
+
+.playlist {
+    @if $debug != 0 {
+        background-color: #222;
+    }
+}
+
+
+/*
+  -- Media query 1024px -------------------------------------------------------
+*/
+@media all and (min-width: 1024px) {
+
+    /* -- Artists navigation -- */
+    $nav-width: 240px;
+
+    .artists-navigation {
+        height: calc(100% - (#{$topbar-size} + #{$topbar-border-size}));
+        width: $nav-width;
+        overflow-y: scroll;
+
+        a {
+            height: auto;
+            line-height: 1.3em;
+
+            &.song {
+                line-height: 1.4em;
+            }
+        }
+
+        > ul {
+            margin-top: 5px;
+        }
+    }
+
+
+    /* -- Songs and playlist panels -- */
+    .songs, .playlist {
+        display: block;
+        height: calc((100% - (#{$topbar-size} + #{$topbar-border-size})) / 2);
+    }
+}
+
+
+/*
+  -- Media query 1200px -------------------------------------------------------
+*/
+@media all and (min-width: 1200px) {
+
+    /* -- Artists navigation -- */
+    $nav-width: 360px;
+
+    .artists-navigation {
+        width: $nav-width;
+    }
+}
+
+
+/*
+  -- Media query 1600px -------------------------------------------------------
+*/
+@media all and (min-width: 1600px) {
+
+}

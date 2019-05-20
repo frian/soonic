@@ -14,7 +14,6 @@ $bg-color: #111;
 $debug: 0;
 
 html, body {
-    min-height: 100%;
     font-family: 'Lato', sans-serif;
 }
 
@@ -27,7 +26,7 @@ body {
 }
 
 a {
-    font-family: 'Lato', sans-serif;
+    // font-family: 'Lato', sans-serif;
     color: $fg-color;
     text-decoration: none;
     line-height: 1.2em;
@@ -38,15 +37,9 @@ a {
 $topbar-size: 49px;
 
 .topbar {
-    // background-color: #222;
-    height: $topbar-size;
-    border: #{$debug}px solid red;
-    border-bottom: 1px solid #333;
+    border-bottom-color: #666;
 }
 
-.topbar > div {
-    display: inline-block;
-}
 
 .logo {
     font-family: 'Muli', sans-serif;
@@ -54,7 +47,7 @@ $topbar-size: 49px;
     font-size: 1.2em;
     font-weight: 700;
     height: $topbar-size;
-    line-height: 50px;
+    line-height: $topbar-size;
     padding: 0 20px;
     border: #{$debug}px solid red;
 }
@@ -115,24 +108,13 @@ nav.topbarNav {
 
 
 
-.artists a {
-    display: block;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    padding-left: 5px;
-}
 
-.artists {
-    float: left;
-    border: #{$debug}px solid red;
-}
 
-.songs, .playlist {
-    margin-left: 360px;
-    overflow-y: scroll;
-    border: #{$debug}px solid red;
-}
+
+// .songs, .playlist {
+//     overflow-y: scroll;
+//     border: #{$debug}px solid red;
+// }
 
 .filter {
     height: 40px;
@@ -462,27 +444,8 @@ form[name="search"] {
 
     $nav-width: 240px;
 
-    .artists {
-        height: calc(100vh - (#{$topbar-size} + 1px));
-        width: $nav-width;
-        overflow-y: scroll;
-    }
-
-    .songs, .playlist {
-        margin-left: $nav-width;
-        height: calc((100vh - (#{$topbar-size} + 1px)) / 2)!important;
-    }
-
-    .songs {
-
-    }
-
-    .playlist {
-
-    }
-
     .radios {
-        height: calc((100vh - (#{$topbar-size} + 1px)))!important;
+        height: calc((100% - (#{$topbar-size} + 1px)))!important;
         font-size: 0;
     }
 
@@ -616,14 +579,6 @@ form[name="search"] {
 @media all and (min-width: 1200px) {
 
     $nav-width: 360px;
-
-    .artists {
-        width: $nav-width;
-    }
-
-    .songs, .playlist {
-        margin-left: $nav-width;
-    }
 
     .songInfo {
         width: 400px;
