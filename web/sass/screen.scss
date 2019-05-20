@@ -86,7 +86,7 @@ nav.topbarNav {
     a {
         font-size: 18px;
         display: inline-block;
-        padding: 0 30px;
+        padding: 0 20px;
         letter-spacing: 1px;
         // border: 1px solid red;
         height: $topbar-size;
@@ -152,7 +152,7 @@ nav.topbarNav {
         line-height: 36px;
         padding: 0 10px;
         margin: 0;
-        background-color: #222;
+        background-color: black;
         border: 1px solid #000;
     }
 
@@ -208,7 +208,7 @@ tbody {
             padding: 5px;
             // border: 1px solid red;
         }
-    }
+    };
     tr:nth-child(even) {
         background-color: #222;
     }
@@ -232,18 +232,26 @@ tr.active {
 }
 
 .songInfo {
+    position: relative;
+    top: 5px;
+    margin-left: 10px;
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     letter-spacing: 0.5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .songTitle {
     font-weight: 900;
     font-size: 120%;
+    // border: 1px solid lime;
 }
 
 .songArtist {
     color: #ddd;
+    // border: 1px solid cyan;
 }
 
 .timeInfo {
@@ -252,6 +260,7 @@ tr.active {
     font-size: 80%;
     padding: 0 10px;
     letter-spacing: 1px;
+    // border: 1px solid yellow;
 }
 
 .radio {
@@ -275,7 +284,7 @@ tr.active {
         padding: 10px;
         border: #{$debug}px solid red;
     }
-
+;
     .buttonWrapper {
         float: left;
         height: 150px;
@@ -388,7 +397,8 @@ label[for=appbundle_internetradio_changed], #appbundle_internetradio_changed {
     height: 50px;
     line-height: 50px;
     display: inline-block;
-    width: 150px;
+    // width: 150px;
+    padding: 0 20px;
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     text-align: center;
@@ -405,6 +415,14 @@ label[for=appbundle_internetradio_changed], #appbundle_internetradio_changed {
         rgba(0,102,0, 0.5) 100% );
 }
 
+input[type="submit"] {
+    padding: 0 20px!important;
+}
+
+input[type="text"] {
+    margin-right: 10px;
+    border: 1px solid #666;
+}
 
 form[name="search"] {
 
@@ -414,9 +432,10 @@ form[name="search"] {
 
     input {
         display: inline-block;
-        height: 49px;
+        height: 36px;
         border: 0;
         padding: 0 10px;
+        border: #{$debug}px solid red;
     }
 
     .button {
@@ -571,8 +590,9 @@ form[name="search"] {
         }
     }
 
-    input[type="text"] {
-        background-color: black!important;
+    #form_keyword {
+        // background-color: red!important;
+        width: 100px;
     }
 
     form div div label {
@@ -580,6 +600,10 @@ form[name="search"] {
         display: inline-block;
         padding: 20px 50px;
         width: calc(50% - 100px);
+    }
+
+    .songInfo {
+        width: 250px;
     }
 
     .settings {
@@ -601,6 +625,10 @@ form[name="search"] {
         margin-left: $nav-width;
     }
 
+    .songInfo {
+        width: 400px;
+    }
+
     thead {
         tr {
             th:nth-child(6) {
@@ -613,5 +641,12 @@ form[name="search"] {
                 display: cell;
             }
         }
+    }
+}
+
+@media all and (min-width: 1600px) {
+
+    .songInfo {
+        width: 800px;
     }
 }
