@@ -29,8 +29,13 @@ class ScanCommand extends ContainerAwareCommand {
 
         $start_time = microtime(true);
 
-        $webPath = realpath(dirname(__FILE__).'/../../../web');
+        $webPath = $this->getContainer()->get('kernel')->getProjectDir().'/web';
         $lockFile = $webPath.'/soonic.lock';
+
+        if (file_exists($lockFile)) {
+            $output->writeln("  <info>already running");
+            return;
+        }
 
         touch($lockFile);
 
@@ -81,7 +86,7 @@ class ScanCommand extends ContainerAwareCommand {
          * -- Scan variables
          */
         // -- folder to scan
-        $root = $this->getContainer()->get('kernel')->getProjectDir() . '/web/music/';
+        $root = $webPath.'/music/albums';
         // -- file types
         $types = array("mp3", "mp4", "oga", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
         // -- counters
@@ -94,7 +99,7 @@ class ScanCommand extends ContainerAwareCommand {
         $statement = $em->getConnection()->prepare($query);
 
         // -- open sql file
-        $sqlFile = dirname(__FILE__).'/../../../web/soonic.sql';
+        $sqlFile = $webPath.'/soonic.sql';
         $fp = fopen($sqlFile, 'w');
         fwrite($fp, 'id,path,title,album,artist,track_number,year,genre,web_path,duration'.PHP_EOL);
 
@@ -382,7 +387,7 @@ class ScanCommand extends ContainerAwareCommand {
         }
 
         // -- load media_file table
-        $query = "LOAD DATA LOCAL INFILE '/home/lpa/atinfo/www/subsonic/web/soonic.sql'  INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+        $query = "LOAD DATA LOCAL INFILE '$webPath/soonic.sql'  INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
         $statement = $em->getConnection()->prepare($query)->execute();
 
         // -- final output
