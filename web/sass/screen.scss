@@ -78,7 +78,6 @@ $topbar-size: 49px;
 #searchForm {
     input[type="text"] {
         background-color: #555;
-        // border-radius: 20px;
         border: 1px solid #888!important;
     }
     input[type="submit"] {
@@ -109,116 +108,82 @@ nav.topbarNav {
 }
 
 
-.icon-cog {
-    height: 100%;
-    font-size: 26px;
-    text-align: center;
-    width: 50px!important;
-}
+
 
 
 /*
   -- Artists navigation -------------------------------------------------------
 */
 .filter {
-    height: 40px;
-    line-height: 40px;
+
     background-color: #333;
-    border: #{$debug}px solid red;
 
     label {
         font-size: 110%;
         padding: 0 0 0 10px;
+
+        font-family: 'Muli', sans-serif;
+        letter-spacing: 0.6px;
+        font-size: 1.1em;
+        font-weight: 600;
     }
 
-    input[type="text"] {
-        position: relative;
-        top: -2px;
-        height: 36px;
-        line-height: 36px;
-        padding: 0 10px;
-        margin: 0;
+    input {
         background-color: black;
-        border: 1px solid #000;
-    }
-
-    .filterForm {
-        label {
-            // border: 1px solid red;
-            display: inline-block;
-            width: calc(30% - 10px);
-            font-family: 'Muli', sans-serif;
-            letter-spacing: 0.6px;
-            font-size: 1.1em;
-            font-weight: 600;
-        }
-
-        input {
-            display: inline-block;
-            width: calc(70% - 20px);
-            border: 0;
-            // border: 1px solid lime;
-        }
+        padding: 0 0 0 10px;
     }
 }
 
 /*
   -- Songs and playlist panels ------------------------------------------------
 */
-table {
-    width: 100%;
-}
-
-thead {
-    font-family: 'Muli', sans-serif;
-    font-weight: 700;
-    background-color: #333;
-    tr {
-        height: 22px;
-        line-height: 22px;
-
-        th {
-            padding: 0 10px;
-            font-family: 'Muli', sans-serif;
-            font-weight: 700;
-            font-size: 80%;
-            letter-spacing: 1px;
-            // border: 1px solid lime;
-        }
-
-    }
-}
-
-tbody {
-    font-family: 'Lato', sans-serif;
-    tr {
-        cursor: pointer;
-        td {
-            padding: 5px;
-            // border: 1px solid red;
-        }
-    };
-    tr:nth-child(even) {
-        background-color: #222;
-    }
-}
-
-tr.active {
-    background-color: #060!important;
-}
-
 .playlist-header {
     height: 22px;
-    line-height: 18px;
+    line-height: 20px;
     padding-left: 10px;
-    // padding-bottom: 2px;
     font-family: 'Muli', sans-serif;
     font-weight: 700;
     font-size: 80%;
     letter-spacing: 1px;
     background-color: #333;
-    // border: 1px solid white;
 }
+
+.list {
+    thead {
+        font-family: 'Muli', sans-serif;
+        font-weight: 700;
+        background-color: #333;
+        tr {
+            th {
+                padding: 0 10px;
+                font-family: 'Muli', sans-serif;
+                font-weight: 700;
+                font-size: 80%;
+                letter-spacing: 1px;
+            }
+
+        }
+    }
+
+    tbody {
+        font-family: 'Lato', sans-serif;
+        tr {
+            cursor: pointer;
+            td {
+                padding: 5px;
+                // border: 1px solid red;
+            }
+        };
+        tr:nth-child(even) {
+            background-color: #222;
+        }
+    }
+
+    tr.active {
+        background-color: #060!important;
+    }
+}
+
 
 
 .radio {
@@ -242,7 +207,7 @@ tr.active {
         padding: 10px;
         border: #{$debug}px solid red;
     }
-;
+
     .buttonWrapper {
         float: left;
         height: 150px;
