@@ -11,6 +11,12 @@ table {
     width: 100%;
 }
 
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
 
 /*
   -- Topbar -------------------------------------------------------------------
@@ -199,6 +205,12 @@ nav.topbarNav {
     }
 }
 
+.playlist-header {
+    height: 22px;
+    line-height: 20px;
+    padding-left: 10px;
+}
+
 
 .list {
     thead {
@@ -209,10 +221,87 @@ nav.topbarNav {
     }
 }
 
+
+/*
+  -- Radios -------------------------------------------------------------------
+*/
+.radios {
+    font-size: 0;
+    height: calc(100% - (#{$topbar-size} + #{$topbar-border-size}));
+    overflow-y: scroll;
+}
+.radio {
+
+    font-size: 16px;
+    box-sizing: border-box;
+    border: #{$debug}px solid red;
+
+    .radioName, .radioUrl {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        float: left;
+        width: calc(100% - 150px);
+        box-sizing: border-box;
+    }
+
+    .radioName {
+        height: 100px;
+        padding-left: 30px;
+        line-height: 100px;
+        border: #{$debug}px solid lime;
+    }
+
+
+    .radioUrl {
+        height: 50px;
+        line-height: 50px;
+        padding: 0 10px 0 20px;
+        border: #{$debug}px solid cyan;
+    }
+
+    .buttonWrapper {
+        float: left;
+        height: 150px;
+        line-height: 150px;
+        width: 150px;
+        text-align: center;
+        box-sizing: border-box;
+        border: #{$debug}px solid yellow;
+    }
+}
+
+label[for=appbundle_radio_enabled], #appbundle_radio_enabled,
+label[for=appbundle_radio_changed], #appbundle_radio_changed {
+    display: none!important;
+}
+
+
+/*
+  -- Settings -----------------------------------------------------------------
+*/
+
+
+
+/*
+  -- Context menus ------------------------------------------------------------
+*/
+.songsContextMenu, .playlistContextMenu {
+
+    position: absolute;
+    display: none;
+}
+
+
 /*
   -- Media query 1024px -------------------------------------------------------
 */
 @media all and (min-width: 1024px) {
+
+    /* -- Topbar -- */
+    .songInfo {
+        width: 250px;
+    }
 
     /* -- Artists navigation -- */
     $nav-width: 240px;
@@ -242,6 +331,45 @@ nav.topbarNav {
         display: block;
         height: calc((100% - (#{$topbar-size} + #{$topbar-border-size})) / 2);
     }
+
+    thead {
+        tr {
+            th:nth-child(1) { width:  2%; }
+            th:nth-child(2) { width: 25%; }
+            th:nth-child(3) { width: 25%; }
+            th:nth-child(4) { width: 25%; }
+            th:nth-child(5) { width:  5%; }
+            th:nth-child(6) { width:  5%; display: none; }
+            th:nth-child(7) { width:  5%; display: none; }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                max-width: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            td:nth-child(1) { width:  2%; }
+            td:nth-child(2) { width: 25%; }
+            td:nth-child(3) { width: 25%; }
+            td:nth-child(4) { width: 25%; }
+            td:nth-child(5) { width:  5%; }
+            td:nth-child(6) { width:  5%; display: none; }
+            td:nth-child(7) { width:  5%; display: none; }
+        }
+    }
+
+
+    /* -- Radios -- */
+    .radio {
+        font-size: 16px!important;
+        display: inline-block;
+        width: 50%;
+    }
 }
 
 
@@ -250,11 +378,31 @@ nav.topbarNav {
 */
 @media all and (min-width: 1200px) {
 
+    /* -- Topbar -- */
+    .songInfo {
+        width: 400px;
+    }
+
+
     /* -- Artists navigation -- */
     $nav-width: 360px;
 
     .artists-navigation {
         width: $nav-width;
+    }
+
+
+    /* -- Songs and playlist panels -- */
+    thead {
+        tr {
+            th:nth-child(6) {
+                display: table-cell;
+            }
+
+            th:nth-child(7) {
+                display: table-cell;
+            }
+        }
     }
 }
 
@@ -264,4 +412,8 @@ nav.topbarNav {
 */
 @media all and (min-width: 1600px) {
 
+    /* -- Topbar -- */
+    .songInfo {
+        width: 800px;
+    }
 }

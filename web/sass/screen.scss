@@ -35,6 +35,16 @@ a {
     font-weight: 700;
 }
 
+h1 {
+    border-bottom: 1px solid #666;
+    text-align: center;
+    padding: 30px 0;
+    margin-bottom: 20px;
+    font-family: 'Muli', sans-serif;
+    font-size: 1.6em;
+    letter-spacing: 1px;
+}
+
 
 /*
   -- Topbar -------------------------------------------------------------------
@@ -138,9 +148,6 @@ nav.topbarNav {
   -- Songs and playlist panels ------------------------------------------------
 */
 .playlist-header {
-    height: 22px;
-    line-height: 20px;
-    padding-left: 10px;
     font-family: 'Muli', sans-serif;
     font-weight: 700;
     font-size: 80%;
@@ -185,41 +192,24 @@ nav.topbarNav {
 }
 
 
-
+/*
+  -- Radios -------------------------------------------------------------------
+*/
 .radio {
 
-    border: #{$debug}px solid red;
-
     .radioName {
-        float: left;
-        width: calc(100% - 20px);
         font-family: 'Lato', sans-serif;
         font-weight: 300;
-        padding: 10px;
         border: #{$debug}px solid red;
     }
 
     .radioUrl {
-        float: left;
-        width: calc(100% - 20px);
         font-family: 'Lato', sans-serif;
         font-weight: 300;
-        padding: 10px;
-        border: #{$debug}px solid red;
-    }
-
-    .buttonWrapper {
-        float: left;
-        height: 150px;
-        line-height: 150px;
-        text-align: center;
-        width: 150px;
-        // border: #{$debug}px solid lime;
     }
 
     .icon-play, .icon-pause {
         font-size: 4em;
-        // border: #{$debug}px solid lime;
     }
 
     &.activeRadio {
@@ -227,16 +217,17 @@ nav.topbarNav {
     }
 }
 
+
+/*
+  -- Context menus ------------------------------------------------------------
+*/
 .songsContextMenu, .playlistContextMenu {
+
     box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.2);
-    position: absolute;
-    display: none;
-    // border: 3px solid red;
 
     .menu-options {
         list-style: none;
         padding: 10px 0;
-        // border: 3px solid lime;
         background-color: black;
 
         .menu-option {
@@ -252,21 +243,10 @@ nav.topbarNav {
     }
 }
 
-h1 {
-    border-bottom: 1px solid #666;
-    text-align: center;
-    padding: 30px 0;
-    margin-bottom: 20px;
-    font-family: 'Muli', sans-serif;
-    font-size: 1.6em;
-    letter-spacing: 1px;
-}
 
-h2 {
-    font-family: 'Muli', sans-serif;
-    font-size: 1.6em;
-}
-
+/*
+  -- Settings -----------------------------------------------------------------
+*/
 .settings div, .settings a {
     float: left;
     height: 50px;
@@ -307,13 +287,9 @@ form div div input {
 
 .buttonWrapper {
     text-align: center;
-    padding: 20px 0;
 }
 
-label[for=appbundle_internetradio_enabled], #appbundle_internetradio_enabled,
-label[for=appbundle_internetradio_changed], #appbundle_internetradio_changed {
-    display: none;
-}
+
 
 .button {
 
@@ -340,127 +316,18 @@ input[type="text"] {
 }
 
 
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
 @media all and (min-width: 1024px) {
 
-    $nav-width: 240px;
-
-    .radios {
-        height: calc((100% - (#{$topbar-size} + 1px)))!important;
-        font-size: 0;
-    }
-
     .radio {
-        font-size: 16px!important;
-        display: inline-block;
-        width: 50%;
-    }
-
-    thead {
-        tr {
-            th:nth-child(1) {
-                width: 2%;
-            }
-
-            th:nth-child(2) {
-                width: 25%;
-            }
-
-            th:nth-child(3) {
-                width: 25%;
-            }
-
-            th:nth-child(4) {
-                width: 25%;
-            }
-
-
-            th:nth-child(5) {
-                width: 5%;
-            }
-
-            th:nth-child(6) {
-                width: 5%;
-                display: none;
-            }
-
-            th:nth-child(7) {
-                width: 5%;
-                display: none;
-            }
-        }
-    }
-
-
-    tbody {
-        tr {
-
-            td {
-                max-width: 0;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-            }
-
-            td:nth-child(1) {
-                width: 2%;
-            }
-
-            td:nth-child(2) {
-                width: 25%;
-            }
-
-            td:nth-child(3) {
-                width: 25%;
-            }
-
-            td:nth-child(4) {
-                width: 25%;
-            }
-
-
-            td:nth-child(5) {
-                width: 5%;
-            }
-
-            td:nth-child(6) {
-                width: 5%;
-                display: none;
-            }
-
-            td:nth-child(7) {
-                width: 5%;
-                display: none;
-            }
-        }
-    }
-
-
-    .radio {
-        // padding: 10px;
-
         .radioName {
-            padding: 30px;
-            width: calc(100% - 60px - 150px);
             font-size: 2em;
         }
         .radioUrl {
-            padding: 10px 30px;
             font-size: 1.2em;
-            width: calc(100% - 60px - 150px);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
         }
     }
 
     #form_keyword {
-        // background-color: red!important;
         width: 100px;
     }
 
@@ -471,43 +338,8 @@ input[type="text"] {
         width: calc(50% - 100px);
     }
 
-    .songInfo {
-        width: 250px;
-    }
-
     .settings {
         padding: 20px 40px;
         border: 1px solid lime;
-    }
-
-}
-
-@media all and (min-width: 1200px) {
-
-    $nav-width: 360px;
-
-    .songInfo {
-        width: 400px;
-    }
-
-    thead {
-        tr {
-            th:nth-child(6) {
-                // width: 5%;
-                display: table-cell;
-            }
-
-            th:nth-child(7) {
-                // width: 5%;
-                display: cell;
-            }
-        }
-    }
-}
-
-@media all and (min-width: 1600px) {
-
-    .songInfo {
-        width: 800px;
     }
 }
