@@ -49,7 +49,7 @@ class RadioController extends Controller
             $em->persist($radio);
             $em->flush();
 
-            return $this->redirectToRoute('radio_show', array('id' => $radio->getId()));
+            return $this->redirectToRoute('radio_index');
         }
 
         return $this->render('radio/new.html.twig', array(
