@@ -21,10 +21,97 @@ $topbar-border-size: 1px;
     @if $debug != 0 {
         background-color: #222;
     }
+
+    > div {
+        display: inline-block;
+        vertical-align: top;
+        height: 100%;
+        line-height: $topbar-size;
+        border: #{$debug}px solid red;
+    }
+
+    .logo {
+        // height: $topbar-size;
+        // line-height: $topbar-size;
+        padding: 0 20px;
+        border: #{$debug}px solid red;
+    }
+
+
+    /* -- Artists navigation -- */
+    [class^="icon-"] {
+        display: inline-block;
+        vertical-align: top;
+        height: $topbar-size;
+        line-height: $topbar-size;
+        font-size: 120%;
+        cursor: pointer;
+        border: #{$debug}px solid red;
+    }
+
+
+    .icon-play, .icon-pause {
+        font-size: 150%;
+    }
+
+    .icon-to-end {
+        margin-left: -2px;
+    }
+
+
+    .songInfo {
+        margin-left: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 }
 
-.topbar > div {
+#searchForm {
     display: inline-block;
+    vertical-align: top;
+    height: $topbar-size;
+    line-height: $topbar-size;
+
+    input[type="text"] {
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        // top: 5px;
+        height: 39px;
+        border: 0;
+        padding: 0 10px;
+        border: #{$debug}px solid lime;
+    }
+
+    input[type="submit"] {
+        display: inline-block;
+        border: 0;
+        height: 49px;
+        line-height: 49px;
+        vertical-align: top;
+        border: #{$debug}px solid lime;
+    }
+}
+
+nav.topbarNav {
+    font-size: 0;
+    float: right;
+    height: $topbar-size;
+    line-height: $topbar-size;
+    @if $debug != 0 {
+        background-color: #666;
+    }
+
+    a {
+        height: $topbar-size;
+        line-height: $topbar-size;
+        border: #{$debug}px solid lime;
+    }
+}
+
+.icon-cog {
+    float: right;
 }
 
 
