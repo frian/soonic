@@ -19,7 +19,6 @@
         "doctrine/orm": "^2.5",
         "incenteev/composer-parameter-handler": "^2.0",
         "james-heinrich/getid3": "^1.9",
-        "mashape/unirest-php": "^3.0",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
         "symfony/monolog-bundle": "^3.1.0",
