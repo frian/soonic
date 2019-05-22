@@ -101,7 +101,7 @@ class ScanCommand extends ContainerAwareCommand {
         // -- open sql file
         $sqlFile = $webPath.'/soonic.sql';
         $fp = fopen($sqlFile, 'w');
-        fwrite($fp, 'id,path,title,album,artist,track_number,year,genre,web_path,duration'.PHP_EOL);
+        fwrite($fp, 'id,path,web_path,title,album,artist,track_number,year,genre,duration'.PHP_EOL);
 
         // -- scan
         $di = new \RecursiveDirectoryIterator($root,\RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
@@ -377,9 +377,11 @@ class ScanCommand extends ContainerAwareCommand {
 
                 // -- write to sql file
                 fwrite(
-                    $fp,";".$tags['path'].";".$tags['title'].";".$tags['album'].";".
-                    $tags['artist'].";".$tags['track_number'].";".$tags['year'].";".
-                    $tags['genre'].";".$tags['web_path'].";".$tags['duration'].PHP_EOL);
+                    $fp,";"
+                    .$tags['path'].";".$tags['web_path'].";".$tags['title'].";"
+                    .$tags['album'].";".$tags['artist'].";".$tags['track_number'].";"
+                    .$tags['year'].";".$tags['genre'].";".$tags['duration']
+                    .PHP_EOL);
 
                 $loadCount++;
 
