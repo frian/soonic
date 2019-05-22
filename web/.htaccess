@@ -66,5 +66,3 @@ DirectoryIndex app.php
         # RedirectTemp cannot be used instead
     </IfModule>
 </IfModule>
-
-php_value max_execution_time 3600
