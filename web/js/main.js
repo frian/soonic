@@ -74,12 +74,10 @@ $(function() {
                 cache: true,
                 success: function(data) {
                     $("#artists-nav").remove();
-                    $("nav.artists").append(data);
+                    $("nav.artists-navigation").append(data);
                 }
             });
-
         }, 300);
-
     });
 
 
