@@ -42,8 +42,6 @@ $topbar-border-size: 1px;
     }
 
     .logo {
-        // height: $topbar-size;
-        // line-height: $topbar-size;
         padding: 0 20px;
         border: #{$debug}px solid red;
     }
@@ -74,7 +72,6 @@ $topbar-border-size: 1px;
         height: 100%;
         font-size: 26px;
         text-align: center;
-        width: 50px;
     }
 
     .songInfo {
@@ -185,6 +182,7 @@ nav.topbarNav {
     }
 }
 
+
 /*
   -- Songs and playlist panels ------------------------------------------------
 */
@@ -230,6 +228,7 @@ nav.topbarNav {
     height: calc(100% - (#{$topbar-size} + #{$topbar-border-size}));
     overflow-y: scroll;
 }
+
 .radio {
 
     font-size: 16px;
@@ -267,6 +266,7 @@ nav.topbarNav {
         width: 150px;
         text-align: center;
         box-sizing: border-box;
+        padding: 0;
         border: #{$debug}px solid yellow;
     }
 }
@@ -281,6 +281,25 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
   -- Settings -----------------------------------------------------------------
 */
 
+
+
+/*
+  -- Crud forms ---------------------------------------------------------------
+*/
+.buttonWrapper {
+    padding: 20px 0;
+    text-align: center;
+    border: #{$debug}px solid red;
+}
+
+.button {
+    box-sizing: border-box;
+    height: 50px;
+    line-height: 50px;
+    display: inline-block;
+    padding: 0 20px;
+    border: 0;
+}
 
 
 /*
@@ -301,6 +320,10 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
     /* -- Topbar -- */
     .songInfo {
         width: 250px;
+    }
+
+    #form_keyword {
+        width: 100px;
     }
 
     /* -- Artists navigation -- */
