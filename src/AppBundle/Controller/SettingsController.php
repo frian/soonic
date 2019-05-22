@@ -27,7 +27,10 @@ class SettingsController extends Controller
         $query = "select max(id) from media_file";
         $statement = $em->getConnection()->prepare($query);
         $statement->execute();
-        $numFiles = $statement->fetchAll()[0]['max(id)'];
+        $numFiles = $statement->fetch()['max(id)'];
+        if ($numFiles === null) {
+            $numFiles = 0;
+        }
 
         return $this->render('settings/index.html.twig', array(
             'numFiles' => $numFiles,

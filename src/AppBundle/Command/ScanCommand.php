@@ -86,7 +86,7 @@ class ScanCommand extends ContainerAwareCommand {
          * -- Scan variables
          */
         // -- folder to scan
-        $root = $webPath.'/music/albums';
+        $root = $webPath.'/music';
         // -- file types
         $types = array("mp3", "mp4", "oga", "wma", "wav", "mpg", "mpc", "m4a", "m4p", "flac");
         // -- counters
