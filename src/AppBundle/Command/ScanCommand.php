@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -104,7 +105,15 @@ class ScanCommand extends ContainerAwareCommand {
         fwrite($fp, 'id,path,web_path,title,album,artist,track_number,year,genre,duration'.PHP_EOL);
 
         // -- scan
-        $di = new \RecursiveDirectoryIterator($root,\RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
+        try {
+            $di = new \RecursiveDirectoryIterator($root,\RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
+        }
+        catch(Exception $e) {
+            $output->writeln('<error>'.$e->getMessage());
+            unlink($lockFile);
+            exit(1);
+        }
+
         $it = new \RecursiveIteratorIterator($di);
 
         foreach($it as $file) {
