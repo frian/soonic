@@ -315,12 +315,17 @@ class ScanCommand extends ContainerAwareCommand {
                 /*
                  * -- Handle track number -------------------------------------
                  */
-                 if (!empty($tags['track_number'])) {
-                     if (!\preg_match("/[^\d+$]/", $tags['track_number'])) {
+                 if (!empty($fileInfoComments['track_number'])) {
+                     print $fileInfoComments['track_number'][0]."\n";
+                     if (!\preg_match("/[^\d+$]/", $fileInfoComments['track_number'][0])) {
 
-                         \preg_match("/(\d+)/", $tags['track_number'], $matches);
+                         \preg_match("/(\d+)/", $fileInfoComments['track_number'][0], $matches);
 
                          $tags['track_number'] = $matches[0];
+                     }
+                     else {
+                         $tags['track_number'] = $fileInfoComments['track_number'][0];
+
                      }
                  }
                  else {
