@@ -31,18 +31,35 @@ class ScanCommand extends ContainerAwareCommand {
         $start_time = microtime(true);
 
         $webPath = $this->getContainer()->get('kernel')->getProjectDir().'/web';
-        $lockFile = $webPath.'/soonic.lock';
+        $lockFile = '/soonic.lock';
 
+        // -- exit if there is a lock file
         if (file_exists($lockFile)) {
             $output->writeln("  <info>already running");
-            return;
+            exit(1);
         }
 
-        touch($lockFile);
+        // -- create loack file
+        try {
+            touch($lockFile);
+        }
+        catch(Exception $e) {
+            $output->writeln('<error>'.$e->getMessage());
+            exit(1);
+        }
+
 
         // -- open log file
         $logFilePath = $webPath.'/soonic.log';
-        $logFile = fopen($logFilePath, 'w');
+        try {
+            $logFile = fopen($logFilePath, 'w');
+        }
+        catch(Exception $e) {
+            $output->writeln('<error>'.$e->getMessage());
+            unlink($lockFile);
+            exit(1);
+        }
+
 
 		// -- add style
 		$style = new OutputFormatterStyle('white', 'red');
@@ -101,7 +118,15 @@ class ScanCommand extends ContainerAwareCommand {
 
         // -- open sql file
         $sqlFile = $webPath.'/soonic.sql';
-        $fp = fopen($sqlFile, 'w');
+        try {
+            $fp = fopen($sqlFile, 'w');
+        }
+        catch(Exception $e) {
+            $output->writeln('<error>'.$e->getMessage());
+            unlink($lockFile);
+            exit(1);
+        }
+
         fwrite($fp, 'id,path,web_path,title,album,artist,track_number,year,genre,duration'.PHP_EOL);
 
         // -- scan
