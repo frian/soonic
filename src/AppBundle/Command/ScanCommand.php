@@ -14,6 +14,9 @@ use AppBundle\Entity\Album;
 
 require_once(dirname(__FILE__).'/../../../vendor/james-heinrich/getid3/getid3/getid3.php');
 
+ini_set('display_startup_errors', 1);
+ini_set('display_errors', 1);
+error_reporting(-1);
 
 class ScanCommand extends ContainerAwareCommand {
 
@@ -112,12 +115,16 @@ class ScanCommand extends ContainerAwareCommand {
         $skipCount = 0;
         $loadCount = 0;
         // -- folder
+        $folderFileCount = 0;
         $currentFolder = null;
-        $previousFolder = array();
+        $currentFolderTags = array();
+        $previousFolder = null;
         // -- artists
         $artists = array();
         $albums = array();
         $albumTags = array();
+
+        $currentFolderFilesTags = array();
 
         // -- prepare mysql query
         $query = "INSERT INTO media_file (artist, title, album, year, genre, track_number, path, web_path) VALUES (?,?,?,?,?,?,?,?)";
@@ -152,6 +159,7 @@ class ScanCommand extends ContainerAwareCommand {
             if ( in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), $types) ) {
 
                 $fileCount++;
+                $folderFileCount++;
 
                 $hasWarning = false;
                 $warningOutput = '  <warning>no ';
@@ -228,56 +236,6 @@ class ScanCommand extends ContainerAwareCommand {
                 }
 
 
-                /*
-                 * -- Handle artist -------------------------------------------
-                 */
-                if (empty($fileInfoComments['artist']) && empty($tags['artist'])) {
-
-                    if ($guess) {
-
-                        $hasWarning = true;
-                        array_push($warningTags, 'artist');
-                        array_push($warningActions, 'guessing artist name');
-
-                        $artist = $this->previousFolder($file, 2);
-
-                        if ($artist) {
-                            $tags['artist'] = $artist;
-                            array_push($warningActionsResult, $artist);
-                        }
-                        else {
-                            $this->printErrorMessage('no artist tag found', $file, $output);
-                            $this->logErrorMessage('no artist tag found', $file, $logFile);
-                            $skipCount++;
-                            continue;
-                        }
-                    }
-                    else {
-                        $this->logErrorMessage('no artist tag found', $file, $logFile);
-                        $skipCount++;
-                        continue;
-                    }
-                }
-                else {
-                    if (!empty($fileInfoComments['artist'])) {
-                        $tags['artist'] = $fileInfoComments['artist'][0];
-                    }
-                }
-
-
-                $tags['artist'] = \strtoupper($tags['artist']);
-                if (!\in_array($tags['artist'], $artists)) {
-                    \array_push($artists, $tags['artist']);
-                }
-                // $artist = $em->getRepository('AppBundle:Artist')->findByName($tags['artist']);
-                //
-                // if (!$artist) {
-                //     $artist = new Artist();
-                //     $artist->setName($tags['artist']);
-                //     $em->persist($artist);
-                //     $em->flush();
-                // }
-
 
                 /*
                  * -- Handle album --------------------------------------------
@@ -329,14 +287,49 @@ class ScanCommand extends ContainerAwareCommand {
                 }
 
 
-                // $album = $em->getRepository('AppBundle:Album')->findBy(array('name' => $tags['album'], 'artist' => $tags['artist']));
-                // if (!$album) {
-                //     $album = new Album();
-                //     $album->setName($tags['album']);
-                //     $album->setArtist($tags['artist']);
-                //     $em->persist($album);
-                //     $em->flush();
-                // }
+
+                /*
+                 * -- Handle artist -------------------------------------------
+                 */
+                if (empty($fileInfoComments['artist']) && empty($tags['artist'])) {
+
+                    if ($guess) {
+
+                        $hasWarning = true;
+                        array_push($warningTags, 'artist');
+                        array_push($warningActions, 'guessing artist name');
+
+                        $artist = $this->previousFolder($file, 2);
+
+                        if ($artist) {
+                            $tags['artist'] = $artist;
+                            array_push($warningActionsResult, $artist);
+                        }
+                        else {
+                            $this->printErrorMessage('no artist tag found', $file, $output);
+                            $this->logErrorMessage('no artist tag found', $file, $logFile);
+                            $skipCount++;
+                            continue;
+                        }
+                    }
+                    else {
+                        $this->logErrorMessage('no artist tag found', $file, $logFile);
+                        $skipCount++;
+                        continue;
+                    }
+                }
+                else {
+                    if (!empty($fileInfoComments['artist'])) {
+                        $tags['artist'] = $fileInfoComments['artist'][0];
+                    }
+                }
+
+
+                $tags['artist'] = \strtoupper($tags['artist']);
+                if (!\in_array($tags['artist'], $artists)) {
+                    \array_push($artists, $tags['artist']);
+                }
+
 
                 /*
                  * -- Handle title --------------------------------------------
@@ -366,6 +359,33 @@ class ScanCommand extends ContainerAwareCommand {
                         $tags['title'] = $fileInfoComments['title'][0];
                     }
                 }
+
+
+                if ( array_key_exists( $tags['album'], $currentFolderFilesTags ) ) {
+                    // print "album found\n";
+                }
+                else {
+                    $currentFolderFilesTags[$tags['album']] = array();
+                }
+
+
+                if ( array_key_exists( $tags['artist'], $currentFolderFilesTags[$tags['album']] ) ) {
+                    // print "album artist found\n";
+                }
+                else {
+                    $currentFolderFilesTags[$tags['album']][$tags['artist']] = array();
+                }
+
+                array_push($currentFolderFilesTags[$tags['album']][$tags['artist']], $tags['title']);
+
+
+                // -- if new folder
+                if ($folder != $currentFolder) {
+                    $folderFileCount = 0;
+                }
+                $currentFolder = $folder;
+
+
 
                 /*
                  * -- Handle track number -------------------------------------
@@ -447,12 +467,12 @@ class ScanCommand extends ContainerAwareCommand {
             }
         }
 
-        print_r($albums);
-        print_r($artists);
+        print_r($currentFolderFilesTags);
 
 
         // -- load media_file table
-        $query = "LOAD DATA LOCAL INFILE '$webPath/soonic.sql'  INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+        $query = "LOAD DATA LOCAL INFILE '$webPath/soonic.sql'".
+        "  INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
         $statement = $em->getConnection()->prepare($query)->execute();
 
         // -- final output
