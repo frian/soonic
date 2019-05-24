@@ -31,7 +31,7 @@ class ScanCommand extends ContainerAwareCommand {
         $start_time = microtime(true);
 
         $webPath = $this->getContainer()->get('kernel')->getProjectDir().'/web';
-        $lockFile = '/soonic.lock';
+        $lockFile = $webPath.'/soonic.lock';
 
         // -- exit if there is a lock file
         if (file_exists($lockFile)) {
@@ -111,6 +111,13 @@ class ScanCommand extends ContainerAwareCommand {
         $fileCount = 0;
         $skipCount = 0;
         $loadCount = 0;
+        // -- folder
+        $currentFolder = null;
+        $previousFolder = array();
+        // -- artists
+        $artists = array();
+        $albums = array();
+        $albumTags = array();
 
         // -- prepare mysql query
         $query = "INSERT INTO media_file (artist, title, album, year, genre, track_number, path, web_path) VALUES (?,?,?,?,?,?,?,?)";
@@ -258,14 +265,18 @@ class ScanCommand extends ContainerAwareCommand {
                 }
 
 
-                $artist = $em->getRepository('AppBundle:Artist')->findByName($tags['artist']);
-
-                if (!$artist) {
-                    $artist = new Artist();
-                    $artist->setName($tags['artist']);
-                    $em->persist($artist);
-                    $em->flush();
+                $tags['artist'] = \strtoupper($tags['artist']);
+                if (!\in_array($tags['artist'], $artists)) {
+                    \array_push($artists, $tags['artist']);
                 }
+                // $artist = $em->getRepository('AppBundle:Artist')->findByName($tags['artist']);
+                //
+                // if (!$artist) {
+                //     $artist = new Artist();
+                //     $artist->setName($tags['artist']);
+                //     $em->persist($artist);
+                //     $em->flush();
+                // }
 
 
                 /*
@@ -306,16 +317,26 @@ class ScanCommand extends ContainerAwareCommand {
                     }
                 }
 
-
                 // -- build album list
-                $album = $em->getRepository('AppBundle:Album')->findBy(array('name' => $tags['album'], 'artist' => $tags['artist']));
-                if (!$album) {
-                    $album = new Album();
-                    $album->setName($tags['album']);
-                    $album->setArtist($tags['artist']);
-                    $em->persist($album);
-                    $em->flush();
+                $album = array();
+                $folder = preg_replace("|^$webPath|", '', pathinfo($file, PATHINFO_DIRNAME));
+                $album['path'] = $folder;
+                $album['name'] = $tags['album'];
+
+
+                if (!\in_array($album, $albums)) {
+                    array_push($albums, $album);
                 }
+
+
+                // $album = $em->getRepository('AppBundle:Album')->findBy(array('name' => $tags['album'], 'artist' => $tags['artist']));
+                // if (!$album) {
+                //     $album = new Album();
+                //     $album->setName($tags['album']);
+                //     $album->setArtist($tags['artist']);
+                //     $em->persist($album);
+                //     $em->flush();
+                // }
 
                 /*
                  * -- Handle title --------------------------------------------
@@ -350,7 +371,6 @@ class ScanCommand extends ContainerAwareCommand {
                  * -- Handle track number -------------------------------------
                  */
                  if (!empty($fileInfoComments['track_number'])) {
-                     print $fileInfoComments['track_number'][0]."\n";
                      if (!\preg_match("/[^\d+$]/", $fileInfoComments['track_number'][0])) {
 
                          \preg_match("/(\d+)/", $fileInfoComments['track_number'][0], $matches);
@@ -427,6 +447,10 @@ class ScanCommand extends ContainerAwareCommand {
             }
         }
 
+        print_r($albums);
+        print_r($artists);
+
+
         // -- load media_file table
         $query = "LOAD DATA LOCAL INFILE '$webPath/soonic.sql'  INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
         $statement = $em->getConnection()->prepare($query)->execute();
@@ -454,6 +478,11 @@ class ScanCommand extends ContainerAwareCommand {
         }
 
         unlink($lockFile);
+
+        // sort($artists);
+        // foreach ($artists as $artist) {
+        //     print $artist.PHP_EOL;
+        // }
 	}
 
 
@@ -471,7 +500,6 @@ class ScanCommand extends ContainerAwareCommand {
     private function logErrorMessage($error, $file, $logFile) {
         fwrite($logFile, "[error]$error;$file;skipping file\n");
     }
-
 
     private function printWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $output) {
 
@@ -512,7 +540,6 @@ class ScanCommand extends ContainerAwareCommand {
         $warningOutput .= "\n";
         fwrite($logFile, $warningOutput);
     }
-
 
     private function previousFolder($file, $level) {
         $path = pathinfo($file, PATHINFO_DIRNAME);
