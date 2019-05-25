@@ -103,6 +103,7 @@ class ScanCommand extends ContainerAwareCommand {
             }
         }
 
+
         /*
          * -- Scan variables
          */
@@ -349,36 +350,6 @@ class ScanCommand extends ContainerAwareCommand {
                 }
 
 
-                // -- add albumName key
-                if ( !array_key_exists( 'albumName', $currentFolderFilesTags ) ) {
-                    $currentFolderFilesTags['albumName'] = array();
-                }
-
-                // -- add album(s)
-                if ( !array_key_exists( $tags['album'], $currentFolderFilesTags['albumName'] )) {
-                    $currentFolderFilesTags['albumName'][$tags['album']] = array();
-                }
-
-                // -- add artistName key
-                if ( !array_key_exists( 'artistName', $currentFolderFilesTags['albumName'][$tags['album']] )) {
-                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] = array();
-                }
-
-                // -- add artist(s)
-                if ( !array_key_exists( $tags['artist'], $currentFolderFilesTags['albumName'][$tags['album']]['artistName'] )) {
-                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] = array();
-                }
-
-
-                // -- add titles key
-                if ( !array_key_exists( 'titles', $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] ) ) {
-                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'] = array();
-                }
-
-                // -- add title(s)
-                array_push($currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'], $tags['title']);
-
-
                 /*
                  * -- Handle track number -------------------------------------
                  */
@@ -435,11 +406,14 @@ class ScanCommand extends ContainerAwareCommand {
                 /*
                  * -- Handle genre ---------------------------------------------
                  */
-                if (empty($tags['genre'])) {
-                    $tags['genre'] = null;
-                    $hasWarning = true;
-                    array_push($warningTags, 'genre');
-                }
+                 if (!empty($fileInfoComments['genre'])) {
+                     $tags['genre'] = $fileInfoComments['genre'][0];
+                 }
+                 else {
+                     $tags['genre'] = null;
+                     $hasWarning = true;
+                     array_push($warningTags, 'genre');
+                 }
 
 
                 /*
@@ -450,17 +424,66 @@ class ScanCommand extends ContainerAwareCommand {
 
 
                 /*
-                 * --Build album list -----------------------------------------
+                 * -- Build album list ----------------------------------------
                  */
-                $album = array();
                 $folder = preg_replace("|^$webPath|", '', pathinfo($file, PATHINFO_DIRNAME));
-                $album['path'] = $folder;
-                $album['name'] = $tags['album'];
 
-
-                if (!\in_array($album, $albums)) {
-                    array_push($albums, $album);
+                // -- add albumName key
+                if ( !array_key_exists( 'albumName', $currentFolderFilesTags ) ) {
+                    $currentFolderFilesTags['albumName'] = array();
                 }
+
+                // -- add album(s)
+                if ( !array_key_exists( $tags['album'], $currentFolderFilesTags['albumName'] )) {
+                    $currentFolderFilesTags['albumName'][$tags['album']] = array();
+                }
+
+                // -- add artistName key
+                if ( !array_key_exists( 'artistName', $currentFolderFilesTags['albumName'][$tags['album']] )) {
+                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] = array();
+                }
+
+                // -- add artist(s)
+                if ( !array_key_exists( $tags['artist'], $currentFolderFilesTags['albumName'][$tags['album']]['artistName'] )) {
+                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] = array();
+                }
+
+                // -- add titles key
+                if ( !array_key_exists( 'titles', $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] ) ) {
+                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'] = array();
+                }
+
+                // -- add title(s)
+                array_push($currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'], $tags['title']);
+
+
+                // -- add year key
+                if ( !array_key_exists( 'year', $currentFolderFilesTags['albumName'][$tags['album']] ) ) {
+                    $currentFolderFilesTags['albumName'][$tags['album']]['year'] = array();
+                }
+
+                // -- add year(s)
+                if ($tags['year'] != null) {
+                    if (!in_array($tags['year'], $currentFolderFilesTags['albumName'][$tags['album']]['year'])) {
+                        array_push($currentFolderFilesTags['albumName'][$tags['album']]['year'],$tags['year']);
+                    }
+                }
+
+                // -- add genre key
+                if ( !array_key_exists( 'genre', $currentFolderFilesTags['albumName'][$tags['album']] ) ) {
+                    $currentFolderFilesTags['albumName'][$tags['album']]['genre'] = array();
+                }
+
+                // -- add genre(s)
+                if ($tags['genre'] != null) {
+                    if (!in_array($tags['genre'], $currentFolderFilesTags['albumName'][$tags['album']]['genre'])) {
+                        array_push($currentFolderFilesTags['albumName'][$tags['album']]['genre'],$tags['genre']);
+                    }
+                }
+
+
+                $currentFolderFilesTags['albumName'][$tags['album']]['web_path'] = $folder;
+                $currentFolderFilesTags['albumName'][$tags['album']]['path'] = pathinfo($file, PATHINFO_DIRNAME);
 
 
                 /*
@@ -481,7 +504,6 @@ class ScanCommand extends ContainerAwareCommand {
                 $currentFolder = $folder;
 
 
-
                 if ($hasWarning) {
                     $this->printWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $output);
                     $this->logWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $logFile);
@@ -496,11 +518,11 @@ class ScanCommand extends ContainerAwareCommand {
                     .PHP_EOL);
 
                 $loadCount++;
-
             }
         }
 
 
+        // -- output last folder
         $this->outputAlbumInfo($currentFolderFilesTags);
 
 
@@ -609,14 +631,29 @@ class ScanCommand extends ContainerAwareCommand {
     }
 
     private function outputAlbumInfo($currentFolderFilesTags) {
+
+        // print_r($currentFolderFilesTags);
+
         foreach (array_keys($currentFolderFilesTags['albumName']) as $album) {
-            print "$album\n";
+            print "album title      : $album\n";
+            $songCount = 0;
             foreach (array_keys($currentFolderFilesTags['albumName'][$album]['artistName']) as $artist) {
-                print "    $artist\n";
-                foreach ($currentFolderFilesTags['albumName'][$album]['artistName'][$artist]['titles'] as $song) {
-                    print "        $song\n";
-                }
+                print "album artist     :     $artist\n";
+                $songCount += count($currentFolderFilesTags['albumName'][$album]['artistName'][$artist]['titles']);
             }
+
+            foreach ($currentFolderFilesTags['albumName'][$album]['year'] as $year) {
+                print "album year       : $year\n";
+            }
+
+            foreach ($currentFolderFilesTags['albumName'][$album]['genre'] as $genre) {
+                print "album genre      : $genre\n";
+            }
+
+            print "song count       : $songCount\n";
+            print "album path       : ".$currentFolderFilesTags['albumName'][$album]['path']."\n";
+            print "album web path   : ".$currentFolderFilesTags['albumName'][$album]['web_path']."\n";
+            print "\n";
         }
     }
 }
