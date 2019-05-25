@@ -125,6 +125,7 @@ class ScanCommand extends ContainerAwareCommand {
         $albumTags = array();
 
         $currentFolderFilesTags = array();
+        $previousFolderFilesTags = array();
 
         // -- prepare mysql query
         $query = "INSERT INTO media_file (artist, title, album, year, genre, track_number, path, web_path) VALUES (?,?,?,?,?,?,?,?)";
@@ -275,16 +276,7 @@ class ScanCommand extends ContainerAwareCommand {
                     }
                 }
 
-                // -- build album list
-                $album = array();
-                $folder = preg_replace("|^$webPath|", '', pathinfo($file, PATHINFO_DIRNAME));
-                $album['path'] = $folder;
-                $album['name'] = $tags['album'];
 
-
-                if (!\in_array($album, $albums)) {
-                    array_push($albums, $album);
-                }
 
 
 
@@ -361,29 +353,18 @@ class ScanCommand extends ContainerAwareCommand {
                 }
 
 
-                if ( array_key_exists( $tags['album'], $currentFolderFilesTags ) ) {
-                    // print "album found\n";
-                }
-                else {
+
+                if ( !array_key_exists( $tags['album'], $currentFolderFilesTags ) ) {
                     $currentFolderFilesTags[$tags['album']] = array();
                 }
 
 
-                if ( array_key_exists( $tags['artist'], $currentFolderFilesTags[$tags['album']] ) ) {
-                    // print "album artist found\n";
-                }
-                else {
+                if ( !array_key_exists( $tags['artist'], $currentFolderFilesTags[$tags['album']] ) ) {
                     $currentFolderFilesTags[$tags['album']][$tags['artist']] = array();
                 }
 
                 array_push($currentFolderFilesTags[$tags['album']][$tags['artist']], $tags['title']);
 
-
-                // -- if new folder
-                if ($folder != $currentFolder) {
-                    $folderFileCount = 0;
-                }
-                $currentFolder = $folder;
 
 
 
@@ -411,7 +392,7 @@ class ScanCommand extends ContainerAwareCommand {
                 /*
                  * -- Handle year ---------------------------------------------
                  */
-                if (empty($tags['year'])) {
+                if (empty($fileInfoComments['year'])) {
                     if ( !empty($fileInfoComments['date']) ) {
                         $tags['year'] = $fileInfoComments['date'][0];
                     }
@@ -421,6 +402,20 @@ class ScanCommand extends ContainerAwareCommand {
                         $tags['year'] = null;
                     }
                 }
+                else {
+                    $tags['year'] = $fileInfoComments['year'][0];
+                }
+
+
+                if ( !array_key_exists( 'date', $currentFolderFilesTags[$tags['album']] ) ) {
+                    $currentFolderFilesTags[$tags['album']]['date'] = array();
+                }
+
+                if (!in_array($tags['year'], $currentFolderFilesTags[$tags['album']]['date'])) {
+                    array_push($currentFolderFilesTags[$tags['album']]['date'], $tags['year']);
+                }
+
+
 
                 /*
                  * -- Handle duration -----------------------------------------
@@ -449,6 +444,52 @@ class ScanCommand extends ContainerAwareCommand {
                 $tags['web_path'] = preg_replace("|^$webPath|", '', $file);
                 $tags['path'] = $file;
 
+
+
+                /*
+                 * --Build album list -----------------------------------------
+                 */
+                $album = array();
+                $folder = preg_replace("|^$webPath|", '', pathinfo($file, PATHINFO_DIRNAME));
+                $album['path'] = $folder;
+                $album['name'] = $tags['album'];
+
+
+                if (!\in_array($album, $albums)) {
+                    array_push($albums, $album);
+                }
+
+
+                /*
+                 * -- If new folder -------------------------------------------
+                 */
+                if ($folder != $currentFolder) {
+
+                    $previousFolderFilesTags = array_pop($currentFolderFilesTags);
+                    if (!empty($currentFolderFilesTags)) {
+                        // -- output
+                        print "\ncurrentFolderFileTags for $currentFolder\n";
+                        // print_r($currentFolderFilesTags);
+
+                        foreach ($currentFolderFilesTags as $album => $artists) {
+                            print "$album \n";
+                            foreach ($artists as $artist => $songs) {
+                                print "  $artist\n";
+                                foreach ($songs as $song) {
+                                    print "    $song\n";
+                                }
+                            }
+
+                        }
+                    }
+                    $currentFolderFilesTags = array();
+                    $currentFolderFilesTags[$tags['album']] = $previousFolderFilesTags;
+                    $tmp = array();
+                }
+                $currentFolder = $folder;
+
+
+
                 if ($hasWarning) {
                     $this->printWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $output);
                     $this->logWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $logFile);
@@ -467,7 +508,8 @@ class ScanCommand extends ContainerAwareCommand {
             }
         }
 
-        print_r($currentFolderFilesTags);
+        // print "currentFolderFileTags for $currentFolder\n";
+        // print_r($currentFolderFilesTags);
 
 
         // -- load media_file table
