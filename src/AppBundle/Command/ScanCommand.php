@@ -237,7 +237,6 @@ class ScanCommand extends ContainerAwareCommand {
                 }
 
 
-
                 /*
                  * -- Handle album --------------------------------------------
                  */
@@ -275,9 +274,6 @@ class ScanCommand extends ContainerAwareCommand {
                         $tags['album'] = $fileInfoComments['album'][0];
                     }
                 }
-
-
-
 
 
                 /*
@@ -353,30 +349,33 @@ class ScanCommand extends ContainerAwareCommand {
                 }
 
 
+                // -- add albumName key
                 if ( !array_key_exists( 'albumName', $currentFolderFilesTags ) ) {
                     $currentFolderFilesTags['albumName'] = array();
                 }
 
+                // -- add album(s)
                 if ( !array_key_exists( $tags['album'], $currentFolderFilesTags['albumName'] )) {
                     $currentFolderFilesTags['albumName'][$tags['album']] = array();
                 }
 
-
+                // -- add artistName key
                 if ( !array_key_exists( 'artistName', $currentFolderFilesTags['albumName'][$tags['album']] )) {
                     $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] = array();
                 }
 
+                // -- add artist(s)
                 if ( !array_key_exists( $tags['artist'], $currentFolderFilesTags['albumName'][$tags['album']]['artistName'] )) {
                     $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] = array();
                 }
 
 
-
+                // -- add titles key
                 if ( !array_key_exists( 'titles', $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] ) ) {
                     $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'] = array();
                 }
 
-
+                // -- add title(s)
                 array_push($currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'], $tags['title']);
 
 
@@ -401,6 +400,7 @@ class ScanCommand extends ContainerAwareCommand {
                      $tags['track_number'] = null;
                  }
 
+
                 /*
                  * -- Handle year ---------------------------------------------
                  */
@@ -419,7 +419,6 @@ class ScanCommand extends ContainerAwareCommand {
                 }
 
 
-
                 /*
                  * -- Handle duration -----------------------------------------
                  */
@@ -432,6 +431,7 @@ class ScanCommand extends ContainerAwareCommand {
                     array_push($warningTags, 'duration');
                 }
 
+
                 /*
                  * -- Handle genre ---------------------------------------------
                  */
@@ -441,12 +441,12 @@ class ScanCommand extends ContainerAwareCommand {
                     array_push($warningTags, 'genre');
                 }
 
+
                 /*
                  * -- Handle path and web path --------------------------------
                  */
                 $tags['web_path'] = preg_replace("|^$webPath|", '', $file);
                 $tags['path'] = $file;
-
 
 
                 /*
@@ -471,20 +471,7 @@ class ScanCommand extends ContainerAwareCommand {
                     $previousFolderFilesTags = array_pop($currentFolderFilesTags['albumName']);
 
                     if (!empty($currentFolderFilesTags['albumName'])) {
-
-                        foreach ($currentFolderFilesTags['albumName'] as $album => $a) {
-                            print "$album \n";
-                            foreach ($a as $b => $artists) {
-                                foreach ($artists as $artist => $c ) {
-                                    print "    $artist  \n";
-                                    foreach ($c as $d => $e ) {
-                                        foreach ($e as $f => $song ) {
-                                            print "        $song \n";
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        $this->outputAlbumInfo($currentFolderFilesTags);
                     }
 
                     $currentFolderFilesTags = array();
@@ -513,21 +500,9 @@ class ScanCommand extends ContainerAwareCommand {
             }
         }
 
-        // print "currentFolderFileTags for $currentFolder\n";
-        // print_r($currentFolderFilesTags);
-        foreach ($currentFolderFilesTags['albumName'] as $album => $a) {
-            print "$album \n";
-            foreach ($a as $b => $artists) {
-                foreach ($artists as $artist => $c ) {
-                    print "    $artist  \n";
-                    foreach ($c as $d => $e ) {
-                        foreach ($e as $f => $song ) {
-                            print "        $song \n";
-                        }
-                    }
-                }
-            }
-        }
+
+        $this->outputAlbumInfo($currentFolderFilesTags);
+
 
 
         // -- load media_file table
@@ -631,5 +606,17 @@ class ScanCommand extends ContainerAwareCommand {
             }
         }
         return $folder;
+    }
+
+    private function outputAlbumInfo($currentFolderFilesTags) {
+        foreach (array_keys($currentFolderFilesTags['albumName']) as $album) {
+            print "$album\n";
+            foreach (array_keys($currentFolderFilesTags['albumName'][$album]['artistName']) as $artist) {
+                print "    $artist\n";
+                foreach ($currentFolderFilesTags['albumName'][$album]['artistName'][$artist]['titles'] as $song) {
+                    print "        $song\n";
+                }
+            }
+        }
     }
 }
