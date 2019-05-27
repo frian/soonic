@@ -1,6 +1,7 @@
 <tbody>
 {% for mediaFile in mediaFiles %}
     <tr data-path="{{ mediaFile.webPath }}">
+        <td class="add">+</td>
         <td>{{ mediaFile.trackNumber }}</td>
         <td>{{ mediaFile.artist }}</td>
         <td>{{ mediaFile.title }}</td>
@@ -10,3 +11,4 @@
         <td>{{ mediaFile.genre }}</td>
     </tr>
 {% endfor %}
+</tbody>

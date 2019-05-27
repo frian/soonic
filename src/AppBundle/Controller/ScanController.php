@@ -12,6 +12,7 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Process\Process;
 
 
 /**
@@ -34,7 +35,12 @@ class ScanController extends Controller {
 
         // exec("nohup /usr/bin/php -f /home/lpa/atinfo/www/subsonic/bin/console soonic:scan > /dev/null 2>&1 &");
         // shell_exec(sprintf('%s > /dev/null 2>&1 &', "/usr/bin/php /home/lpa/atinfo/www/subsonic/bin/console soonic:scan"));
-        exec("/usr/bin/php $command > /dev/null 2>&1 &");
+        
+        // exec("/usr/bin/php $command > /dev/null 2>&1 &");
+
+        $process = new Process(['/usr/bin/php', "$command > /dev/null 2>&1 &"]);
+        $process->disableOutput();
+        $process->run();
         return new Response('');
     }
 

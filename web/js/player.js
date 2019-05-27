@@ -42,8 +42,6 @@ $(function() {
      */
     $(document).on("click", "tbody tr", function(e) {
 
-        console.log($(this).parent().parent().attr('id'));
-
         $("tbody .active").removeClass('active');
 
         loadSong($(this));
@@ -134,6 +132,32 @@ $(function() {
     $('#player').on('ended', function() {
        playNext();
     });
+
+
+    /**
+     * Add song to playlist
+     */
+    $(document).on("click", "#songslist .add", function(e) {
+        e.stopPropagation();
+        console.log($(this).parent());
+        var copy = $(this).parent().clone();
+
+        var td = copy.find("td.add");
+        td.html('-');
+        console.log(td);
+
+        $("#playlist tbody").append(copy);
+    });
+
+
+    /**
+     * Remove song from playlist
+     */
+    $(document).on("click", "#playlist .add", function(e) {
+        e.stopPropagation();
+        $(this).parent().remove();
+    });
+
 });
 
 /**
