@@ -77,4 +77,206 @@ class Album
      */
     private $coverArtPath;
 
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Album
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set artist
+     *
+     * @param string $artist
+     *
+     * @return Album
+     */
+    public function setArtist($artist)
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * Get artist
+     *
+     * @return string
+     */
+    public function getArtist()
+    {
+        return $this->artist;
+    }
+
+    /**
+     * Set songCount
+     *
+     * @param integer $songCount
+     *
+     * @return Album
+     */
+    public function setSongCount($songCount)
+    {
+        $this->songCount = $songCount;
+
+        return $this;
+    }
+
+    /**
+     * Get songCount
+     *
+     * @return integer
+     */
+    public function getSongCount()
+    {
+        return $this->songCount;
+    }
+
+    /**
+     * Set duration
+     *
+     * @param string $duration
+     *
+     * @return Album
+     */
+    public function setDuration($duration)
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    /**
+     * Get duration
+     *
+     * @return string
+     */
+    public function getDuration()
+    {
+        return $this->duration;
+    }
+
+    /**
+     * Set year
+     *
+     * @param integer $year
+     *
+     * @return Album
+     */
+    public function setYear($year)
+    {
+        $this->year = $year;
+
+        return $this;
+    }
+
+    /**
+     * Get year
+     *
+     * @return integer
+     */
+    public function getYear()
+    {
+        return $this->year;
+    }
+
+    /**
+     * Set genre
+     *
+     * @param string $genre
+     *
+     * @return Album
+     */
+    public function setGenre($genre)
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * Get genre
+     *
+     * @return string
+     */
+    public function getGenre()
+    {
+        return $this->genre;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return Album
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * Set coverArtPath
+     *
+     * @param string $coverArtPath
+     *
+     * @return Album
+     */
+    public function setCoverArtPath($coverArtPath)
+    {
+        $this->coverArtPath = $coverArtPath;
+
+        return $this;
+    }
+
+    /**
+     * Get coverArtPath
+     *
+     * @return string
+     */
+    public function getCoverArtPath()
+    {
+        return $this->coverArtPath;
+    }
 }
