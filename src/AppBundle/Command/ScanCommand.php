@@ -126,13 +126,15 @@ class ScanCommand extends ContainerAwareCommand {
 
 
         // -- open media sql file
-        $sqlMediaFile = $this->openFile($webPath.'/soonic-media.sql');
+        $sqlMediaFilePath = $webPath.'/soonic-media.sql';
+        $sqlMediaFile = $this->openFile($sqlMediaFilePath);
         fwrite($sqlMediaFile, 'id,path,web_path,title,album,artist,track_number,year,genre,duration'.PHP_EOL);
 
 
         // -- open album sql file
-        $sqlAlbumFile = $this->openFile($webPath.'/soonic-album.sql');
-        fwrite($sqlMediaFile, 'id,path,name,artist,song-count,duration,year,genre'.PHP_EOL);
+        $sqlAlbumFilePath = $webPath.'/soonic-album.sql';
+        $sqlAlbumFile = $this->openFile($sqlAlbumFilePath);
+        fwrite($sqlMediaFile, 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
 
 
 
@@ -493,7 +495,7 @@ class ScanCommand extends ContainerAwareCommand {
                     $previousFolderFilesTags = array_pop($currentFolderFilesTags['albumName']);
 
                     if (!empty($currentFolderFilesTags['albumName'])) {
-                        $this->outputAlbumInfo($currentFolderFilesTags);
+                        $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile);
                     }
 
                     $currentFolderFilesTags = array();
@@ -522,13 +524,19 @@ class ScanCommand extends ContainerAwareCommand {
 
 
         // -- output last folder
-        $this->outputAlbumInfo($currentFolderFilesTags);
+        $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile);
 
 
         // -- load media_file table
-        $query = "LOAD DATA LOCAL INFILE '$webPath/soonic.sql'".
-            "  INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+        $query = "LOAD DATA LOCAL INFILE '$sqlMediaFilePath'".
+            " INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
         $statement = $em->getConnection()->prepare($query)->execute();
+
+        // -- load album table
+        $query = "LOAD DATA LOCAL INFILE '$sqlAlbumFilePath'".
+            " INTO TABLE album  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+        $statement = $em->getConnection()->prepare($query)->execute();
+
 
         // -- final output
         if ($verbosity >= 64) {
@@ -628,33 +636,61 @@ class ScanCommand extends ContainerAwareCommand {
         return $folder;
     }
 
-    private function outputAlbumInfo($currentFolderFilesTags) {
+    private function outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile) {
 
         foreach (array_keys($currentFolderFilesTags['albumName']) as $album) {
-            print "album title      : $album\n";
+
+            // print "album title      : $album\n";
+
             $songCount = 0;
-            foreach (array_keys($currentFolderFilesTags['albumName'][$album]['artistName']) as $artist) {
-                print "album artist     :     $artist\n";
+            $albumArtist = '';
+            foreach (array_keys($currentFolderFilesTags['albumName'][$album]['artistName']) as $index => $artist) {
+                $albumArtist .= $artist.',';
+                // print "album artist     :     $artist\n";
                 $songCount += count($currentFolderFilesTags['albumName'][$album]['artistName'][$artist]['titles']);
             }
+            $albumArtist = \preg_replace('/,$/', '', $albumArtist);
 
+
+            $albumYear = null;
             foreach ($currentFolderFilesTags['albumName'][$album]['years'] as $year) {
-                print "album year       : $year\n";
+                $albumYear .= $year.',';
+                // print "album year       : $year\n";
             }
+            $albumYear = \preg_replace('/,$/', '', $albumYear);
 
+
+            $albumGenre = null;
             foreach ($currentFolderFilesTags['albumName'][$album]['genres'] as $genre) {
-                print "album genre      : $genre\n";
+                $albumGenre .= $genre.',';
+                // print "album genre      : $genre\n";
             }
+            $albumGenre = \preg_replace('/,$/', '', $albumGenre);
 
-            print "album duration   : ".$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations'])."\n";
 
-            print "song count       : $songCount\n";
-            print "album path       : ".$currentFolderFilesTags['albumName'][$album]['path']."\n";
-            print "album web path   : ".$currentFolderFilesTags['albumName'][$album]['web_path']."\n";
-            print "\n";
+            // print "album duration   : ".$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations'])."\n";
+            // print "song count       : $songCount\n";
+            // print "album path       : ".$currentFolderFilesTags['albumName'][$album]['path']."\n";
+            // print "album web path   : ".$currentFolderFilesTags['albumName'][$album]['web_path']."\n";
+            // print "\n";
+
+
+            //-- 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'
+            fwrite(
+                $sqlAlbumFile,";"
+                // print
+                // ";"
+                .$currentFolderFilesTags['albumName'][$album]['web_path'].";"
+                .$album.";"
+                .$albumArtist.";"
+                .$songCount.";"
+                .$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations']).";"
+                .$albumYear.";"
+                .$albumGenre.";"
+                .";" // -- covert art path
+                .PHP_EOL
+            );
         }
-
-        // print_r($currentFolderFilesTags);
     }
 
     private function openFile($filePath) {
