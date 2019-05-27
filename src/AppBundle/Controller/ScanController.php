@@ -30,7 +30,7 @@ class ScanController extends Controller {
     public function scanAction(KernelInterface $kernel) {
 
         $projectDir = $this->get('kernel')->getProjectDir();
-        $command = $projectDir.'/bin/console soonic:scan';
+        $command = $projectDir.'/bin/console soonic:scan --guess';
 
         // exec("nohup /usr/bin/php -f /home/lpa/atinfo/www/subsonic/bin/console soonic:scan > /dev/null 2>&1 &");
         // shell_exec(sprintf('%s > /dev/null 2>&1 &', "/usr/bin/php /home/lpa/atinfo/www/subsonic/bin/console soonic:scan"));
@@ -54,7 +54,7 @@ class ScanController extends Controller {
             $status = 'running';
         }
 
-        $file = new \SplFileObject($this->get('kernel')->getProjectDir().'/web/soonic.sql', 'r');
+        $file = new \SplFileObject($this->get('kernel')->getProjectDir().'/web/soonic-media.sql', 'r');
         $file->seek(PHP_INT_MAX);
         $data = $file->key() - 1;
 
