@@ -32,6 +32,6 @@ access.log
 error.log
 
 /web/music/*
-web/soonic.sql
-web/soonic.log
+web/soonic*
+
 .web-server-pid
