@@ -14,10 +14,6 @@ use AppBundle\Entity\Album;
 
 require_once(dirname(__FILE__).'/../../../vendor/james-heinrich/getid3/getid3/getid3.php');
 
-ini_set('display_startup_errors', 1);
-ini_set('display_errors', 1);
-error_reporting(-1);
-
 class ScanCommand extends ContainerAwareCommand {
 
 	protected function configure() {
@@ -134,7 +130,13 @@ class ScanCommand extends ContainerAwareCommand {
         // -- open album sql file
         $sqlAlbumFilePath = $webPath.'/soonic-album.sql';
         $sqlAlbumFile = $this->openFile($sqlAlbumFilePath);
-        fwrite($sqlMediaFile, 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
+        fwrite($sqlAlbumFile, 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
+
+
+        // -- open artist sql file
+        $sqlArtistFilePath = $webPath.'/soonic-artist.sql';
+        $sqlArtistFile = $this->openFile($sqlArtistFilePath);
+        fwrite($sqlArtistFile, 'id,name,album_count,cover_art_path'.PHP_EOL);
 
 
 
@@ -310,8 +312,8 @@ class ScanCommand extends ContainerAwareCommand {
 
 
                 $tags['artist'] = \strtoupper($tags['artist']);
-                if (!\in_array($tags['artist'], $artists)) {
-                    \array_push($artists, $tags['artist']);
+                if (!\array_key_exists($tags['artist'], $artists)) {
+                    $artists[$tags['artist']] = 0;
                 }
 
 
@@ -495,7 +497,7 @@ class ScanCommand extends ContainerAwareCommand {
                     $previousFolderFilesTags = array_pop($currentFolderFilesTags['albumName']);
 
                     if (!empty($currentFolderFilesTags['albumName'])) {
-                        $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile);
+                        $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, $artists);
                     }
 
                     $currentFolderFilesTags = array();
@@ -522,9 +524,14 @@ class ScanCommand extends ContainerAwareCommand {
             }
         }
 
-
         // -- output last folder
-        $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile);
+        $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, $artists);
+
+
+        foreach (array_keys($artists) as $artist) {
+            // print ';'.$artist. ";" . $artists[$artist].';'.PHP_EOL;
+            fwrite($sqlArtistFile, ';'.$artist. ";" . $artists[$artist].';'.PHP_EOL);
+        }
 
 
         // -- load media_file table
@@ -535,6 +542,11 @@ class ScanCommand extends ContainerAwareCommand {
         // -- load album table
         $query = "LOAD DATA LOCAL INFILE '$sqlAlbumFilePath'".
             " INTO TABLE album  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+        $statement = $em->getConnection()->prepare($query)->execute();
+
+        // -- load artist table
+        $query = "LOAD DATA LOCAL INFILE '$sqlArtistFilePath'".
+            " INTO TABLE artist  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
         $statement = $em->getConnection()->prepare($query)->execute();
 
 
@@ -561,11 +573,6 @@ class ScanCommand extends ContainerAwareCommand {
         }
 
         unlink($lockFile);
-
-        // sort($artists);
-        // foreach ($artists as $artist) {
-        //     print $artist.PHP_EOL;
-        // }
 	}
 
 
@@ -636,7 +643,7 @@ class ScanCommand extends ContainerAwareCommand {
         return $folder;
     }
 
-    private function outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile) {
+    private function outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, &$artists) {
 
         foreach (array_keys($currentFolderFilesTags['albumName']) as $album) {
 
@@ -645,11 +652,13 @@ class ScanCommand extends ContainerAwareCommand {
             $songCount = 0;
             $albumArtist = '';
             foreach (array_keys($currentFolderFilesTags['albumName'][$album]['artistName']) as $index => $artist) {
-                $albumArtist .= $artist.',';
+                $albumArtist = $artist;
+                // $albumArtist .= $artist.',';  **
                 // print "album artist     :     $artist\n";
+                $artists[$artist]++;
                 $songCount += count($currentFolderFilesTags['albumName'][$album]['artistName'][$artist]['titles']);
             }
-            $albumArtist = \preg_replace('/,$/', '', $albumArtist);
+            // $albumArtist = \preg_replace('/,$/', '', $albumArtist); **
 
 
             $albumYear = null;
@@ -680,17 +689,18 @@ class ScanCommand extends ContainerAwareCommand {
                 $sqlAlbumFile,";"
                 // print
                 // ";"
-                .$currentFolderFilesTags['albumName'][$album]['web_path'].";"
                 .$album.";"
                 .$albumArtist.";"
                 .$songCount.";"
                 .$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations']).";"
                 .$albumYear.";"
                 .$albumGenre.";"
+                .$currentFolderFilesTags['albumName'][$album]['web_path'].";"
                 .";" // -- covert art path
                 .PHP_EOL
             );
         }
+        return $artists;
     }
 
     private function openFile($filePath) {
