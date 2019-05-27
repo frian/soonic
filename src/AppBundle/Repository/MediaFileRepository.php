@@ -19,7 +19,7 @@ class MediaFileRepository extends EntityRepository
 
     public function findByAlbum($artist, $album) {
         return $this->createQueryBuilder('s')
-            ->where('s.artist = :artist')
+            ->where('s.artist like :artist')
             ->setParameter('artist', $artist)
             ->andWhere('s.album = :album')
             ->setParameter('album', $album)
