@@ -53,15 +53,7 @@ class ScanCommand extends ContainerAwareCommand {
 
 
         // -- open log file
-        $logFilePath = $webPath.'/soonic.log';
-        try {
-            $logFile = fopen($logFilePath, 'w');
-        }
-        catch(Exception $e) {
-            $output->writeln('<error>'.$e->getMessage());
-            unlink($lockFile);
-            exit(1);
-        }
+        $logFile = $this->openFile($webPath.'/soonic.log');
 
 
 		// -- add style
@@ -118,7 +110,7 @@ class ScanCommand extends ContainerAwareCommand {
         // -- folder
         $folderFileCount = 0;
         $currentFolder = null;
-        $currentFolderTags = array();
+//        $currentFolderTags = array();
         $previousFolder = null;
         // -- artists
         $artists = array();
@@ -132,18 +124,19 @@ class ScanCommand extends ContainerAwareCommand {
         $query = "INSERT INTO media_file (artist, title, album, year, genre, track_number, path, web_path) VALUES (?,?,?,?,?,?,?,?)";
         $statement = $em->getConnection()->prepare($query);
 
-        // -- open sql file
-        $sqlFile = $webPath.'/soonic.sql';
-        try {
-            $fp = fopen($sqlFile, 'w');
-        }
-        catch(Exception $e) {
-            $output->writeln('<error>'.$e->getMessage());
-            unlink($lockFile);
-            exit(1);
-        }
 
-        fwrite($fp, 'id,path,web_path,title,album,artist,track_number,year,genre,duration'.PHP_EOL);
+        // -- open media sql file
+        $sqlMediaFile = $this->openFile($webPath.'/soonic-media.sql');
+        fwrite($sqlMediaFile, 'id,path,web_path,title,album,artist,track_number,year,genre,duration'.PHP_EOL);
+
+
+        // -- open album sql file
+        $sqlAlbumFile = $this->openFile($webPath.'/soonic-album.sql');
+        fwrite($sqlMediaFile, 'id,path,name,artist,song-count,duration,year,genre'.PHP_EOL);
+
+
+
+
 
         // -- scan
         try {
@@ -353,23 +346,20 @@ class ScanCommand extends ContainerAwareCommand {
                 /*
                  * -- Handle track number -------------------------------------
                  */
-                 if (!empty($fileInfoComments['track_number'])) {
-                     if (!\preg_match("/[^\d+$]/", $fileInfoComments['track_number'][0])) {
-
-                         \preg_match("/(\d+)/", $fileInfoComments['track_number'][0], $matches);
-
-                         $tags['track_number'] = $matches[0];
-                     }
-                     else {
-                         $tags['track_number'] = $fileInfoComments['track_number'][0];
-
-                     }
-                 }
-                 else {
-                     $hasWarning = true;
-                     array_push($warningTags, 'track_number');
-                     $tags['track_number'] = null;
-                 }
+                if (!empty($fileInfoComments['track_number'])) {
+                    if (!\preg_match("/[^\d+$]/", $fileInfoComments['track_number'][0])) {
+                        \preg_match("/(\d+)/", $fileInfoComments['track_number'][0], $matches);
+                        $tags['track_number'] = $matches[0];
+                    }
+                    else {
+                        $tags['track_number'] = $fileInfoComments['track_number'][0];
+                    }
+                }
+                else {
+                    $hasWarning = true;
+                    array_push($warningTags, 'track_number');
+                    $tags['track_number'] = null;
+                }
 
 
                 /*
@@ -456,32 +446,41 @@ class ScanCommand extends ContainerAwareCommand {
                 // -- add title(s)
                 array_push($currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'], $tags['title']);
 
-
                 // -- add year key
-                if ( !array_key_exists( 'year', $currentFolderFilesTags['albumName'][$tags['album']] ) ) {
-                    $currentFolderFilesTags['albumName'][$tags['album']]['year'] = array();
+                if ( !array_key_exists( 'years', $currentFolderFilesTags['albumName'][$tags['album']] ) ) {
+                    $currentFolderFilesTags['albumName'][$tags['album']]['years'] = array();
                 }
 
                 // -- add year(s)
                 if ($tags['year'] != null) {
-                    if (!in_array($tags['year'], $currentFolderFilesTags['albumName'][$tags['album']]['year'])) {
-                        array_push($currentFolderFilesTags['albumName'][$tags['album']]['year'],$tags['year']);
+                    if (!in_array($tags['year'], $currentFolderFilesTags['albumName'][$tags['album']]['years'])) {
+                        array_push($currentFolderFilesTags['albumName'][$tags['album']]['years'],$tags['year']);
                     }
                 }
 
                 // -- add genre key
-                if ( !array_key_exists( 'genre', $currentFolderFilesTags['albumName'][$tags['album']] ) ) {
-                    $currentFolderFilesTags['albumName'][$tags['album']]['genre'] = array();
+                if ( !array_key_exists( 'genres', $currentFolderFilesTags['albumName'][$tags['album']] ) ) {
+                    $currentFolderFilesTags['albumName'][$tags['album']]['genres'] = array();
                 }
 
                 // -- add genre(s)
                 if ($tags['genre'] != null) {
-                    if (!in_array($tags['genre'], $currentFolderFilesTags['albumName'][$tags['album']]['genre'])) {
-                        array_push($currentFolderFilesTags['albumName'][$tags['album']]['genre'],$tags['genre']);
+                    if (!in_array($tags['genre'], $currentFolderFilesTags['albumName'][$tags['album']]['genres'])) {
+                        array_push($currentFolderFilesTags['albumName'][$tags['album']]['genres'],$tags['genre']);
                     }
                 }
 
+                // -- add duration key
+                if ( !array_key_exists( 'durations', $currentFolderFilesTags['albumName'][$tags['album']] ) ) {
+                    $currentFolderFilesTags['albumName'][$tags['album']]['durations'] = array();
+                }
 
+                // -- add durations
+                if ($tags['duration'] != null) {
+                    array_push($currentFolderFilesTags['albumName'][$tags['album']]['durations'],$tags['duration']);
+                }
+
+                // -- add pathes
                 $currentFolderFilesTags['albumName'][$tags['album']]['web_path'] = $folder;
                 $currentFolderFilesTags['albumName'][$tags['album']]['path'] = pathinfo($file, PATHINFO_DIRNAME);
 
@@ -511,7 +510,7 @@ class ScanCommand extends ContainerAwareCommand {
 
                 // -- write to sql file
                 fwrite(
-                    $fp,";"
+                    $sqlMediaFile,";"
                     .$tags['path'].";".$tags['web_path'].";".$tags['title'].";"
                     .$tags['album'].";".$tags['artist'].";".$tags['track_number'].";"
                     .$tags['year'].";".$tags['genre'].";".$tags['duration']
@@ -526,10 +525,9 @@ class ScanCommand extends ContainerAwareCommand {
         $this->outputAlbumInfo($currentFolderFilesTags);
 
 
-
         // -- load media_file table
         $query = "LOAD DATA LOCAL INFILE '$webPath/soonic.sql'".
-        "  INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+            "  INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
         $statement = $em->getConnection()->prepare($query)->execute();
 
         // -- final output
@@ -632,8 +630,6 @@ class ScanCommand extends ContainerAwareCommand {
 
     private function outputAlbumInfo($currentFolderFilesTags) {
 
-        // print_r($currentFolderFilesTags);
-
         foreach (array_keys($currentFolderFilesTags['albumName']) as $album) {
             print "album title      : $album\n";
             $songCount = 0;
@@ -642,18 +638,72 @@ class ScanCommand extends ContainerAwareCommand {
                 $songCount += count($currentFolderFilesTags['albumName'][$album]['artistName'][$artist]['titles']);
             }
 
-            foreach ($currentFolderFilesTags['albumName'][$album]['year'] as $year) {
+            foreach ($currentFolderFilesTags['albumName'][$album]['years'] as $year) {
                 print "album year       : $year\n";
             }
 
-            foreach ($currentFolderFilesTags['albumName'][$album]['genre'] as $genre) {
+            foreach ($currentFolderFilesTags['albumName'][$album]['genres'] as $genre) {
                 print "album genre      : $genre\n";
             }
+
+            print "album duration   : ".$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations'])."\n";
 
             print "song count       : $songCount\n";
             print "album path       : ".$currentFolderFilesTags['albumName'][$album]['path']."\n";
             print "album web path   : ".$currentFolderFilesTags['albumName'][$album]['web_path']."\n";
             print "\n";
         }
+
+        // print_r($currentFolderFilesTags);
     }
+
+    private function openFile($filePath) {
+        try {
+            $file = fopen($filePath, 'w');
+            return $file;
+        }
+        catch(Exception $e) {
+            $output->writeln('<error>'.$e->getMessage());
+            unlink($lockFile);
+            exit(1);
+        }
+    }
+
+    private function getAlbumDuration($durations) {
+        $hrs = 0;
+        $mins = 0;
+        $secs = 0;
+        foreach ($durations as $duration) {
+            $durationParts = explode(':', $duration);
+            $numDurationParts = count($durationParts);
+            if ($numDurationParts === 2) {
+                $mins += (int) $durationParts[0];
+                $secs += (int) $durationParts[1];
+            }
+            elseif ($numDurationParts === 3) {
+                $hrs += (int) $durationParts[0];
+                $mins += (int) $durationParts[1];
+                $secs += (int) $durationParts[2];
+            }
+            // Convert each 60 minutes to an hour
+            if ($mins >= 60) {
+                $hrs++;
+                $mins -= 60;
+            }
+            // Convert each 60 seconds to a minute
+            if ($secs >= 60) {
+                $mins++;
+                $secs -= 60;
+            }
+        }
+        $hrs = $hrs > 9 ? $hrs : 0 . $hrs;
+        $mins = $mins > 9 ? $mins : 0 . $mins;
+        $secs = $secs > 9 ? $secs : 0 . $secs;
+        $returnValue = $mins.":".$secs;
+        if ($hrs != 0) {
+            $returnValue =  $hrs.":".$returnValue;
+        }
+        return $returnValue;
+    }
+
 }
