@@ -202,9 +202,9 @@ function loadSong(song) {
         return $(this).text();
     }).get();
 
-    var artist = values[1];
-    var title = values[2];
-    var duration = values[4];
+    var artist = values[2];
+    var title = values[3];
+    var duration = values[5];
 
     var mpegSource = document.getElementById("mpegSource");
 
