@@ -84,10 +84,14 @@ $(function() {
                 if (e.target.id === 'addToPlaylist') {
                     var copy = currentItem.clone();
                     copy.removeClass("active");
+                    var icon = copy.find(".icon-plus");
+                    $(icon).attr('class', 'icon-minus');
+                    updatePlaylistInfo(copy);
                     $("#playlist tbody").append(copy);
                     currentItem.removeClass("active");
                 }
                 else if (e.target.id === 'removeFromPlaylist') {
+                    updatePlaylistInfo(currentItem, 'remove');
                     currentItem.remove();
                 }
 
@@ -139,14 +143,13 @@ $(function() {
      */
     $(document).on("click", "#songslist .add", function(e) {
         e.stopPropagation();
-        console.log($(this).parent());
+        // -- add song
         var copy = $(this).parent().clone();
-
-        var td = copy.find("td.add");
-        td.html('-');
-        console.log(td);
-
+        var icon = copy.find(".icon-plus");
+        $(icon).attr('class', 'icon-minus');
         $("#playlist tbody").append(copy);
+
+        updatePlaylistInfo(copy);
     });
 
 
@@ -155,6 +158,7 @@ $(function() {
      */
     $(document).on("click", "#playlist .add", function(e) {
         e.stopPropagation();
+        updatePlaylistInfo($(this).parent(), 'remove');
         $(this).parent().remove();
     });
 
@@ -252,4 +256,65 @@ function playNext(direction) {
             $(".icon-pause").attr("class", 'icon-play');
         }
     }
+}
+
+
+function toSeconds(str)  {
+
+    var arr = str.split(':').map(Number);
+
+    if (arr.length === 1) {
+        return (arr[0]);
+    }
+    else if (arr.length === 2) {
+        return (arr[0] * 60) + arr[1];
+    }
+
+    return (arr[0] * 3600) + (arr[1] * 60) + arr[2];
+}
+
+function toDuration(secs) {
+    var hours = parseInt(secs / 3600, 10),
+        minutes = parseInt((secs / 60) % 60, 10),
+        seconds = parseInt(secs % 3600 % 60, 10);
+
+    return [hours, minutes, seconds].map(function (i) { return i.toString().length === 2 ? i : '0' + i; }).join(':');
+}
+
+
+function updatePlaylistInfo(item, action) {
+
+    action = action || 'add';
+
+    var numFiles = document.getElementById("playlistNumFiles").textContent;
+
+    var songDuration = $(item).data("duration");
+    var playlistDuration = document.getElementById("playlistDuration").textContent;
+
+    playlistDuration = toSeconds(playlistDuration);
+    songDuration = toSeconds(songDuration);
+
+    if (action === 'add') {
+        ++numFiles;
+        playlistDuration = toDuration(playlistDuration + songDuration);
+    }
+    else {
+        --numFiles;
+        playlistDuration = toDuration(playlistDuration - songDuration);
+    }
+
+    var fileInfoText = 'file';
+    if (numFiles > 1) {
+        fileInfoText = 'files';
+    }
+
+    document.getElementById("playlistFile").textContent = fileInfoText;
+    document.getElementById("playlistNumFiles").textContent = numFiles;
+    document.getElementById("playlistDuration").textContent = playlistDuration;
+
+    var display = 'none';
+    if (numFiles > 0) {
+        display = 'initial';
+    }
+    document.getElementById("playlistInfos").style.display = display;
 }

@@ -722,7 +722,10 @@ class ScanCommand extends ContainerAwareCommand {
         foreach ($durations as $duration) {
             $durationParts = explode(':', $duration);
             $numDurationParts = count($durationParts);
-            if ($numDurationParts === 2) {
+            if ($numDurationParts === 1) {
+                $secs += (int) $durationParts[0];
+            }
+            elseif ($numDurationParts === 2) {
                 $mins += (int) $durationParts[0];
                 $secs += (int) $durationParts[1];
             }
@@ -745,9 +748,14 @@ class ScanCommand extends ContainerAwareCommand {
         $hrs = $hrs > 9 ? $hrs : 0 . $hrs;
         $mins = $mins > 9 ? $mins : 0 . $mins;
         $secs = $secs > 9 ? $secs : 0 . $secs;
-        $returnValue = $mins.":".$secs;
+        $returnValue = $secs;
         if ($hrs != 0) {
-            $returnValue =  $hrs.":".$returnValue;
+            $returnValue =  $hrs.":".$mins.":".$returnValue;
+        }
+        else {
+            if ($mins != 0) {
+                $returnValue =  $mins.":".$returnValue;
+            }
         }
         return $returnValue;
     }
