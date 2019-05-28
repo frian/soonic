@@ -16,9 +16,7 @@ class ArtistRepository extends EntityRepository
         return $this->createQueryBuilder('a')
             ->where('a.name like :filter')
             ->setParameter('filter', '%'.$filter.'%')
-            // ->andWhere('a.title != :null')
-            // ->setParameter('null', serialize(null))
-            // ->orderBy('a.album', 'ASC')
+            ->orderBy('a.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
