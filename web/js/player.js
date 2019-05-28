@@ -278,7 +278,23 @@ function toDuration(secs) {
         minutes = parseInt((secs / 60) % 60, 10),
         seconds = parseInt(secs % 3600 % 60, 10);
 
-    return [hours, minutes, seconds].map(function (i) { return i.toString().length === 2 ? i : '0' + i; }).join(':');
+    var durationParts = [];
+    if (hours != 0) {
+        durationParts.push(hours);
+        durationParts.push(minutes);
+        durationParts.push(seconds);
+    }
+    else{
+        if (minutes != 0) {
+            durationParts.push(minutes);
+            durationParts.push(seconds);
+        }
+        else {
+            durationParts.push(seconds);
+        }
+    }
+
+    return durationParts.map(function (i) { return i.toString().length === 2 ? i : '0' + i; }).join(':');
 }
 
 
