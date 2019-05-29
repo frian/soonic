@@ -1,5 +1,9 @@
 $debug : 0;
 
+form {
+    position: relative;
+}
+
 /*
   -- Global -------------------------------------------------------------------
 */
@@ -84,6 +88,7 @@ $topbar-border-size: 1px;
 }
 
 #searchForm {
+    position: relative;
     display: inline-block;
     vertical-align: top;
     height: $topbar-size;
@@ -300,8 +305,58 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
 /*
   -- Forms ---------------------------------------------------------------
 */
+.input-reset {
+    position: absolute;
+    background-color: #111;
+    display: inline-block;
+    vertical-align: middle;
+    outline: 0;
+    width: 30px;
+    height: 30px;
+    z-index: 1;
+    border: 0;
+}
 
+.input-reset:after {
+    color: white;
+    content: "\e805";
+    transform: rotate(45deg);
+    font-family: fontello;
+	display: block!important;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	z-index:1;
+    left: 2px;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	border-radius: 50%;
+	text-align: center;
+	font-weight: 900;
+	font-size: 20px;
+	cursor: pointer;
+    background-color: #111;
+}
 
+.filterInput:not(:valid) ~ .input-reset {
+	display: none;
+}
+
+.filterForm {
+    .input-reset {
+        top: 5px;
+        right: 5px;
+    }
+}
+
+#searchForm {
+    .input-reset {
+        top: 10px;
+        right: 105px;
+    }
+}
 
 /*
   -- Crud forms ---------------------------------------------------------------
@@ -335,7 +390,7 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
 /*
   -- Media query 1024px -------------------------------------------------------
 */
-@media all and (min-width: 1024px) {
+@media all and (min-width: 1023px) {
 
     /* -- Topbar -- */
     .songInfo {

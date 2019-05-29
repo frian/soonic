@@ -168,4 +168,17 @@ $(function() {
             });
         }
     });
+
+
+    $(document).on("click", ".input-reset", function(e) {
+        var url = '/artist/filter/';
+        $.get({
+            url: url,
+            cache: true,
+            success: function(data) {
+                $("#artists-nav").remove();
+                $("nav.artists-navigation").append(data);
+            }
+        });
+    });
 });

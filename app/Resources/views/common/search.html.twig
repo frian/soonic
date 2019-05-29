@@ -1,7 +1,8 @@
 <form id="searchForm" name="search" method="post" action="{{ path('search') }}">
 
-    {{ form_widget(form.keyword, {'attr' : {'placeholder': 'min 3 chars'}}) }}
-
+    <input type="text" id="form_keyword" name="form[keyword]" required="required" placeholder="min 3 chars" class="filterInput">
+    <button class="input-reset" type="reset"></button>
     <input id="searchButton" class="button" type="submit" value="search" />
 
-{{ form_end(form) }}
+    {{ form_widget(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}
