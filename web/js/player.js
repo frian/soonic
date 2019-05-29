@@ -43,6 +43,7 @@ $(function() {
         $("tbody .active").removeClass('active');
         loadSong($(this));
         playerStatus = "playing";
+        $(".active").removeClass("active");
         $(this).addClass('active');
     });
 

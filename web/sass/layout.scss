@@ -1,9 +1,5 @@
 $debug : 0;
 
-form {
-    position: relative;
-}
-
 /*
   -- Global -------------------------------------------------------------------
 */
@@ -88,7 +84,6 @@ $topbar-border-size: 1px;
 }
 
 #searchForm {
-    position: relative;
     display: inline-block;
     vertical-align: top;
     height: $topbar-size;
@@ -305,6 +300,11 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
 /*
   -- Forms ---------------------------------------------------------------
 */
+/* neede for reset button */
+form {
+    position: relative;
+}
+
 .input-reset {
     position: absolute;
     background-color: #111;

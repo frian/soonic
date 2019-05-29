@@ -22,6 +22,8 @@ $(function() {
                 }
             });
         }
+        $(".active").removeClass("active");
+        $(this).addClass('active');
     });
 
 
@@ -99,6 +101,8 @@ $(function() {
                 $("#songs table").append(data);
             }
         });
+        $(".active").removeClass("active");
+        $(this).addClass('active');
     });
 
 
