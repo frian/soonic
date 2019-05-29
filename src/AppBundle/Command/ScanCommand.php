@@ -48,16 +48,16 @@ class ScanCommand extends ContainerAwareCommand {
         }
 
 
-        // -- open log file
-        $logFile = $this->openFile($webPath.'/soonic.log');
-
-
-		// -- add style
-		$style = new OutputFormatterStyle('white', 'red');
-		$output->getFormatter()->setStyle('error', $style);
+        // -- add style
+        $style = new OutputFormatterStyle('white', 'red');
+        $output->getFormatter()->setStyle('error', $style);
 
         $style = new OutputFormatterStyle('white', 'magenta');
-		$output->getFormatter()->setStyle('warning', $style);
+        $output->getFormatter()->setStyle('warning', $style);
+
+
+        // -- open log file
+        $logFile = $this->openFile($webPath.'/soonic.log', $output, $lockFile);
 
 
         // -- get verbosity
@@ -123,19 +123,19 @@ class ScanCommand extends ContainerAwareCommand {
 
         // -- open media sql file
         $sqlMediaFilePath = $webPath.'/soonic-media.sql';
-        $sqlMediaFile = $this->openFile($sqlMediaFilePath);
+        $sqlMediaFile = $this->openFile($sqlMediaFilePath, $output, $lockFile);
         fwrite($sqlMediaFile, 'id,path,web_path,title,album,artist,track_number,year,genre,duration'.PHP_EOL);
 
 
         // -- open album sql file
         $sqlAlbumFilePath = $webPath.'/soonic-album.sql';
-        $sqlAlbumFile = $this->openFile($sqlAlbumFilePath);
+        $sqlAlbumFile = $this->openFile($sqlAlbumFilePath, $output, $lockFile);
         fwrite($sqlAlbumFile, 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
 
 
         // -- open artist sql file
         $sqlArtistFilePath = $webPath.'/soonic-artist.sql';
-        $sqlArtistFile = $this->openFile($sqlArtistFilePath);
+        $sqlArtistFile = $this->openFile($sqlArtistFilePath, $output, $lockFile);
         fwrite($sqlArtistFile, 'id,name,album_count,cover_art_path'.PHP_EOL);
 
 
@@ -703,7 +703,7 @@ class ScanCommand extends ContainerAwareCommand {
         return $artists;
     }
 
-    private function openFile($filePath) {
+    private function openFile($filePath, $output, $lockFile) {
         try {
             $file = fopen($filePath, 'w');
             return $file;
