@@ -93,10 +93,6 @@ $topbar-size: 49px;
 }
 
 #searchForm {
-    input[type="text"] {
-        background-color: #555;
-        border: 1px solid #888!important;
-    }
     input[type="submit"] {
         font-family: 'Lato', sans-serif;
         font-weight: 700;
@@ -183,7 +179,6 @@ nav.topbarNav {
             cursor: pointer;
             td {
                 padding: 5px;
-                // border: 1px solid red;
             }
         };
         tr:nth-child(even) {
@@ -277,6 +272,18 @@ nav.topbarNav {
 
 
 /*
+  -- Forms ---------------------------------------------------------------
+*/
+input[type="text"] {
+    color: $fg-color;
+    background-color: $bg-color;
+    font-family: 'Muli', sans-serif;
+    font-size: 18px;
+    border: 1px solid #555!important;
+}
+
+
+/*
   -- Crud forms ---------------------------------------------------------------
 */
 form div div label {
@@ -292,7 +299,6 @@ form div div input {
     width: 300px;
     border: 1px solid #666;
 }
-
 
 .button {
     font-weight: 700;

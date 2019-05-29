@@ -93,7 +93,7 @@ $topbar-border-size: 1px;
         display: inline-block;
         vertical-align: middle;
         position: relative;
-        // top: 5px;
+        width: 130px;
         height: 39px;
         border: 0;
         padding: 0 10px;
@@ -154,6 +154,10 @@ nav.topbarNav {
         line-height: 48px;
         @if $debug != 0 {
             background-color: #500;
+        }
+
+        &.song {
+            background-color: #222;
         }
     }
 }
@@ -293,6 +297,11 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
 */
 
 
+/*
+  -- Forms ---------------------------------------------------------------
+*/
+
+
 
 /*
   -- Crud forms ---------------------------------------------------------------
@@ -348,6 +357,7 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
         a {
             height: auto;
             line-height: 1.3em;
+            border: #{$debug}px solid white;
 
             &.song {
                 line-height: 1.4em;
@@ -376,7 +386,7 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
             th:nth-child(5) { width: 20%; }
             th:nth-child(6) { width: 60px; }
             th:nth-child(7) { width: 60px; display: none; }
-            th:nth-child(8) { width:  5%; display: none; }
+            th:nth-child(8) { width: 60px; display: none; }
         }
     }
 
@@ -459,6 +469,12 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
 
     /* -- Topbar -- */
     .songInfo {
-        width: 800px;
+        width: 600px;
+    }
+
+    #searchForm {
+        input[type="text"] {
+            width: 200px;
+        }
     }
 }
