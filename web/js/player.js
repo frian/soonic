@@ -22,7 +22,6 @@ $(function() {
             return;
         }
 
-
         if (playerStatus === "paused") {
             player.play();
             playerStatus = "playing";
@@ -41,13 +40,9 @@ $(function() {
      * load and play a song from the songs list
      */
     $(document).on("click", "tbody tr", function(e) {
-
         $("tbody .active").removeClass('active');
-
         loadSong($(this));
-
         playerStatus = "playing";
-
         $(this).addClass('active');
     });
 
@@ -106,7 +101,6 @@ $(function() {
      * play next song in songslist
      */
     $(document).on("click", ".icon-to-end", function(e) {
-
         playNext();
         playerStatus = "playing";
     });
@@ -115,7 +109,6 @@ $(function() {
      * play previous song in songslist
      */
     $(document).on("click", ".icon-to-start", function(e) {
-
         playNext('backward');
         playerStatus = "playing";
     });
@@ -126,7 +119,7 @@ $(function() {
      */
     $("#player").on("timeupdate", function() {
         var player = document.getElementById("player");
-        $("#currentTime").html(formatDuration(player.currentTime) + ' /');
+        $("#currentTime").html(toDuration(player.currentTime) + ' /');
     });
 
 
@@ -146,6 +139,9 @@ $(function() {
         // -- add song
         var copy = $(this).parent().clone();
         var icon = copy.find(".icon-plus");
+        if ($(copy).hasClass('active')) {
+            $(copy).removeClass('active');
+        }
         $(icon).attr('class', 'icon-minus');
         $("#playlist tbody").append(copy);
 
@@ -164,28 +160,6 @@ $(function() {
 
 });
 
-/**
- * seconds to minutes:seconds
- */
-function formatDuration(rawDuration) {
-
-    rawDuration = Math.round(rawDuration);
-    var durationSeconds = parseInt(rawDuration % 60);
-    var durationMinutes = parseInt(rawDuration / 60) % 60;
-
-    durationSeconds = durationSeconds < 10 ? '0' + durationSeconds : durationSeconds;
-    durationMinutes = durationMinutes < 10 ? '0' + durationMinutes : durationMinutes;
-
-    return durationMinutes + ':' + durationSeconds;
-}
-
-/**
- * song path hack
- */
-function cleanPath(path) {
-    var buff = path.split('/');
-    return '/' + buff.slice(4).join('/');
-}
 
 /**
  * load song
@@ -193,8 +167,6 @@ function cleanPath(path) {
 function loadSong(song) {
 
     var path = song.data("path");
-
-    // path = cleanPath(path);
 
     var format = song.data("format");
 
@@ -258,7 +230,9 @@ function playNext(direction) {
     }
 }
 
-
+/**
+ * 00:00:00, 00:00 to seconds
+ */
 function toSeconds(str)  {
 
     var arr = str.split(':').map(Number);
@@ -273,7 +247,13 @@ function toSeconds(str)  {
     return (arr[0] * 3600) + (arr[1] * 60) + arr[2];
 }
 
+/**
+ * seconds to 00:00:00, 00:00
+ */
 function toDuration(secs) {
+
+    secs = Math.round(secs);
+
     var hours = parseInt(secs / 3600, 10),
         minutes = parseInt((secs / 60) % 60, 10),
         seconds = parseInt(secs % 3600 % 60, 10);
@@ -285,19 +265,16 @@ function toDuration(secs) {
         durationParts.push(seconds);
     }
     else{
-        if (minutes != 0) {
-            durationParts.push(minutes);
-            durationParts.push(seconds);
-        }
-        else {
-            durationParts.push(seconds);
-        }
+        durationParts.push(minutes);
+        durationParts.push(seconds);
     }
 
     return durationParts.map(function (i) { return i.toString().length === 2 ? i : '0' + i; }).join(':');
 }
 
-
+/**
+ * Update playlist num files and duration
+ */
 function updatePlaylistInfo(item, action) {
 
     action = action || 'add';
