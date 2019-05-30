@@ -102,14 +102,13 @@ class RadioController extends Controller
     /**
      * Deletes a radio entity.
      *
-     * @Route("/{id}", name="radio_delete")
+     * @Route("/delete/{id}", name="radio_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, Radio $radio)
     {
         $form = $this->createDeleteForm($radio);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->remove($radio);
