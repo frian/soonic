@@ -146,8 +146,8 @@ $(function() {
             }
         });
 
-        $("#numFiles").html("0");
-        $("#scanStatus").html('scanning');
+        $("#numFiles").text("0");
+        $("#scanStatus").text('scanning');
 
         var $loop = setInterval(myTimer, 1000);
 
@@ -159,23 +159,27 @@ $(function() {
                 success: function(data) {
                     currentValue = data.data;
                     if (data.status == 'stopped') {
-                        $("#scanStatus").html('done');
-                        $("#numFiles").html(currentValue);
-                        $("#fileCount").html('');
+                        $("#scanStatus").text('done');
+                        $("#numFiles").text(currentValue);
+                        $("#fileCount").text('');
                         clearInterval($loop);
                         return;
                     }
 
                     value = currentValue;
-                    $("#fileCount").html(data.data);
+                    $("#fileCount").text(data.data);
                 }
             });
         }
     });
 
 
-    $(document).on("click", ".input-reset", function(e) {
+    /**
+     * reload artist artist on clear filter form
+     */
+    $(document).on("click", ".filterForm .input-reset", function(e) {
         var url = '/artist/filter/';
+        console.log("triggered");
         $.get({
             url: url,
             cache: true,
@@ -184,5 +188,19 @@ $(function() {
                 $("nav.artists-navigation").append(data);
             }
         });
+    });
+
+
+    /**
+     * empty playlist
+     */
+    $(document).on("click", ".icon-trash", function(e) {
+        if ($("#playlist tbody tr").length) {
+            $("#playlist tbody tr").remove();
+            $("#playlistNumFiles").text(0);
+            $("#playlistFile").text('file');
+            $("#playlistDuration").text('00:00');
+            $("#playlistInfos").css('display', 'none');
+        }
     });
 });

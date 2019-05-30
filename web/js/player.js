@@ -106,6 +106,7 @@ $(function() {
         playerStatus = "playing";
     });
 
+
     /**
      * play previous song in songslist
      */
@@ -120,7 +121,7 @@ $(function() {
      */
     $("#player").on("timeupdate", function() {
         var player = document.getElementById("player");
-        $("#currentTime").html(toDuration(player.currentTime) + ' /');
+        $("#currentTime").text(toDuration(player.currentTime) + ' /');
     });
 
 
@@ -187,9 +188,9 @@ function loadSong(song) {
 
     player.load();
 
-    $("#songTitle").html(title);
-    $("#songArtist").html(' by ' + artist);
-    $("#duration").html(duration);
+    $("#songTitle").text(title);
+    $("#songArtist").text(' by ' + artist);
+    $("#duration").text(duration);
 
     player.play();
 
