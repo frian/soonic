@@ -5,16 +5,16 @@
 {% endblock %}
 
 {% block body %}
-<h1>Settings</h1>
+<h1>{{ 'settings'|trans }}</h1>
 <section class="settings clearfix">
 
-    <h2>Library</h2>
+    <h2>{{ 'library'|trans }}</h2>
 
     <div class="info">
-        found  <span id="numFiles">{{ numFiles }}</span> Files
+        {{ 'found'|trans }}  <span id="numFiles">{{ numFiles }}</span> {{ 'files'|trans }}
     </div>
 
-    <a id="scanButton" class="button" href="{{ path('radio_index') }}">scan</a>
+    <a id="scanButton" class="button" href="{{ path('radio_index') }}">{{ 'scan'|trans }}</a>
 
     <div id="scanStatus" class="info"></div>
     <div id="fileCount" class="info"></div>

@@ -11,7 +11,7 @@
 
     <div class="filter">
         <form class="filterForm" method="post">
-            <label for="filter">filter</label><input type="text" class="filterInput" name="filter" value="" placeholder="min 3 chars" required="required" autocomplete="off">
+            <label for="filter">{{ 'filter'|trans }}</label><input type="text" class="filterInput" name="filter" value="" placeholder="{{ 'filter.placeholder'|trans }}" required="required" autocomplete="off">
             <button class="input-reset" type="reset"></button>
         </form>
     </div>
@@ -26,13 +26,13 @@
 
 <div class="songsContextMenu">
   <ul class="menu-options">
-    <li id="addToPlaylist" class="menu-option">Add to playlist</li>
+    <li id="addToPlaylist" class="menu-option">{{ 'playlist.add'|trans }}</li>
   </ul>
 </div>
 
 <div class="playlistContextMenu">
   <ul class="menu-options">
-    <li id="removeFromPlaylist" class="menu-option">Remove from playlist</li>
+    <li id="removeFromPlaylist" class="menu-option">{{ 'playlist.remove'|trans }}</li>
   </ul>
 </div>
 

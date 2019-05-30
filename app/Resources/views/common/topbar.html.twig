@@ -36,23 +36,23 @@
 
             {{ render(controller( 'AppBundle\\Controller\\SearchController::showSearchAction' )) }}
 
-            <a href="{{ path('radio_index') }}">radio</a>
+            <a href="{{ path('radio_index') }}">{{ 'radio'|trans }}</a>
 
         {% else %}
 
             {% if 'radio' in app.request.get('_route') and app.request.get('_route') != 'radio_new' %}
-                <a href="{{ path('radio_new') }}">add radio</a>
+                <a href="{{ path('radio_new') }}">{{ 'radio.new'|trans }}</a>
 
                 {% endif %}
             {% if app.request.get('_route') == 'radio_new' %}
-                <a href="{{ path('radio_index') }}">back</a>
+                <a href="{{ path('radio_index') }}">{{ 'back'|trans }}</a>
             {% endif %}
 
             {% if app.request.get('_route') == 'settings_index' %}
-                <a href="{{ path('radio_index') }}">radio</a>
+                <a href="{{ path('radio_index') }}">{{ 'radio'|trans }}</a>
             {% endif %}
 
-            <a href="{{ path('library') }}">music</a>
+            <a href="{{ path('library') }}">{{ 'music'|trans }}</a>
         {% endif %}
 
     </nav>
