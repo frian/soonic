@@ -16,16 +16,12 @@ class RadioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('streamUrl')
-            ->add('homepageUrl')
-            ->add('enabled')
-            ->add('changed', DateTimeType::class, array(
-                'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy HH:mm',
-                'attr'   => array('class'=>'date')
-            ));
-    }/**
+            ->add('name', null , array('label' => 'name'))
+            ->add('streamUrl', null , array('label' => 'streamUrl'))
+            ->add('homepageUrl', null , array('label' => 'homePage'));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

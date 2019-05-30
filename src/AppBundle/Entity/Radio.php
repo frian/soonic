@@ -8,11 +8,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Radio
  *
- * @ORM\Table(name="internet_radio")
+ * @ORM\Table(name="radio")
  * @ORM\Entity
  */
-class Radio
-{
+class Radio {
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
     /**
      * @var string
      *
@@ -35,40 +44,21 @@ class Radio
     private $homepageUrl;
 
     /**
-     * @var boolean
+     * Get id
      *
-     * @ORM\Column(name="enabled", type="boolean", nullable=false)
+     * @return integer
      */
-    private $enabled;
-
-    /**
-     * @var \DateTime
-     * @Assert\Type(type="\DateTime")
-     *
-     * @ORM\Column(name="changed", type="datetime", nullable=false)
-     */
-    private $changed;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    public function __construct(){
-        $this->changed = (new \DateTime('1970-01-01 00:00:00'));
+    public function getId()
+    {
+        return $this->id;
     }
-
 
     /**
      * Set name
      *
      * @param string $name
      *
-     * @return InternetRadio
+     * @return Radio
      */
     public function setName($name)
     {
@@ -92,7 +82,7 @@ class Radio
      *
      * @param string $streamUrl
      *
-     * @return InternetRadio
+     * @return Radio
      */
     public function setStreamUrl($streamUrl)
     {
@@ -116,7 +106,7 @@ class Radio
      *
      * @param string $homepageUrl
      *
-     * @return InternetRadio
+     * @return Radio
      */
     public function setHomepageUrl($homepageUrl)
     {
@@ -133,63 +123,5 @@ class Radio
     public function getHomepageUrl()
     {
         return $this->homepageUrl;
-    }
-
-    /**
-     * Set enabled
-     *
-     * @param boolean $enabled
-     *
-     * @return InternetRadio
-     */
-    public function setEnabled($enabled)
-    {
-        $this->enabled = $enabled;
-
-        return $this;
-    }
-
-    /**
-     * Get enabled
-     *
-     * @return boolean
-     */
-    public function getEnabled()
-    {
-        return $this->enabled;
-    }
-
-    /**
-     * Set changed
-     *
-     * @param \DateTime $changed
-     *
-     * @return InternetRadio
-     */
-    public function setChanged($changed)
-    {
-        $this->changed = $changed;
-
-        return $this;
-    }
-
-    /**
-     * Get changed
-     *
-     * @return \DateTime
-     */
-    public function getChanged()
-    {
-        return $this->changed;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 }
