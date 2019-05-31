@@ -25,6 +25,6 @@ scan: scan
 search: search
 search.placeholder: min 3 chars
 settings: settings
-streamUrl: streamUrl
+streamUrl: stream url
 title: title
 year: year
