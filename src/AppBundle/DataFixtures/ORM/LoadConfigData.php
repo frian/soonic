@@ -28,15 +28,12 @@ class LoadConfigData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-
-    	$configData = array('language' => 'en');
-
     	/**
     	 * Add config
     	 */
     	// create config
         $config = new Config();
-        $config->setLanguage($configData['language']);
+        $config->setLanguage($this->getReference('language1'));
 
         // add reference for further fixtures
         $this->addReference('config', $config);
