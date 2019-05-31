@@ -13,8 +13,12 @@ class ConfigType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('language');
-    }/**
+        $builder->add('language', null , array(
+            'label' => 'language'
+        ));
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)

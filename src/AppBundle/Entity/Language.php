@@ -35,6 +35,10 @@ class Language
      */
     private $code;
 
+    public function __toString() {
+        return $this->name;
+    }
+
 
     /**
      * Get id
