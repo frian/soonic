@@ -296,7 +296,17 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
 /*
   -- Settings -----------------------------------------------------------------
 */
+.settings {
+    border: #{$debug}px solid red;
+}
 
+.info {
+    border: #{$debug}px solid red;
+}
+
+.libraryInfo{
+    margin-bottom: 20px;
+}
 
 /*
   -- Forms ---------------------------------------------------------------

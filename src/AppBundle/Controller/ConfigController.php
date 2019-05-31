@@ -89,7 +89,7 @@ class ConfigController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('config_edit', array('id' => $config->getId()));
+            return $this->redirectToRoute('settings_index');
         }
 
         return $this->render('config/edit.html.twig', array(

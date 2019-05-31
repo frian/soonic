@@ -27,12 +27,18 @@ class SettingsController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         // -- get collection infos
-        $query = "select max(id) from media_file";
-        $statement = $em->getConnection()->prepare($query);
-        $statement->execute();
-        $numFiles = $statement->fetch()['max(id)'];
-        if ($numFiles === null) {
-            $numFiles = 0;
+        $tables = array('media_file', 'artist', 'album');
+        $infos = array();
+
+        foreach ($tables as $table) {
+            $query = "select max(id) from $table";
+            $statement = $em->getConnection()->prepare($query);
+            $statement->execute();
+            $result = $statement->fetch()['max(id)'];
+            if ($result === null) {
+                $result = 0;
+            }
+            \array_push($infos, $result);
         }
 
         // -- get config form
@@ -40,12 +46,9 @@ class SettingsController extends Controller
         $editForm = $this->createForm('AppBundle\Form\ConfigType', $config);
         $editForm->handleRequest($request);
 
-
-
         return $this->render('settings/index.html.twig', array(
-            'numFiles' => $numFiles,
+            'infos' => $infos,
             'edit_form' => $editForm->createView()
-            // 'dump' => $config
         ));
     }
 }

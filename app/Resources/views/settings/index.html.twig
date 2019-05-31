@@ -10,26 +10,38 @@
 
     <h2>{{ 'library'|trans }}</h2>
 
-    <div class="info">
-        {{ 'found'|trans }}  <span id="numFiles">{{ numFiles }}</span> {{ 'files'|trans }}
+    <div class="libraryInfo">
+        <div class="info">
+            <span id="numFiles">{{ infos[0] }}</span> {{ 'files'|trans }}
+        </div>
+        <div class="info">
+            <span id="numArtists">{{ infos[1] }}</span> artists
+        </div>
+        <div class="info">
+            <span id="numAlbums">{{ infos[1] }}</span> albums
+        </div>
     </div>
 
-    <a id="scanButton" class="button" href="{{ path('radio_index') }}">{{ 'scan'|trans }}</a>
-
-    <div id="scanStatus" class="info"></div>
-    <div id="fileCount" class="info"></div>
+    <div class="info">
+        <a id="scanButton" class="button" href="{{ path('radio_index') }}">{{ 'scan'|trans }}</a>
+        <span id="scanStatus" class="info"></span>
+        <span id="fileCount" class="info"></span>
+    </div>
 
 </section>
 
 <section class="settings clearfix">
 
-    <h2>{{ 'language' }}</h2>
+    <h2>{{ 'language'|trans }}</h2>
 
-    {# {{ dump(dump) }} #}
+    <form name="appbundle_config" method="post" action="{{ path('config_edit', { 'id': 1 }) }}">
 
-    {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
+
+        <div class="buttonWrapper">
+            <input class="button" type="submit" value="{{ 'save'|trans }}" />
+        </div>
+
     {{ form_end(edit_form) }}
 
 </section>
@@ -42,7 +54,4 @@
 
 </section> -->
 
-{% if data is defined %}
-{{ data }}
-{% endif %}
 {% endblock %}

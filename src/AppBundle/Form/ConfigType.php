@@ -5,6 +5,7 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Repository\LanguageRepository;
 
 class ConfigType extends AbstractType
 {
@@ -14,7 +15,8 @@ class ConfigType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('language', null , array(
-            'label' => 'language'
+            'label' => 'language',
+            'placeholder' => false,
         ));
     }
 
@@ -35,6 +37,4 @@ class ConfigType extends AbstractType
     {
         return 'appbundle_config';
     }
-
-
 }
