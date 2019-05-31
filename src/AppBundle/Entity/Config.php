@@ -22,9 +22,10 @@ class Config
     private $id;
 
     /**
-     * @var string
+     * @var AppBundle\Entity\Langguage
      *
-     * @ORM\Column(name="language", type="string", length=8, unique=true)
+     * @ORM\OneToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="language_id", referencedColumnName="id")
      */
     private $language;
 
@@ -32,7 +33,7 @@ class Config
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -42,11 +43,11 @@ class Config
     /**
      * Set language
      *
-     * @param string $language
+     * @param \AppBundle\Entity\Language $language
      *
      * @return Config
      */
-    public function setLanguage($language)
+    public function setLanguage(\AppBundle\Entity\Language $language = null)
     {
         $this->language = $language;
 
@@ -56,11 +57,10 @@ class Config
     /**
      * Get language
      *
-     * @return string
+     * @return \AppBundle\Entity\Language
      */
     public function getLanguage()
     {
         return $this->language;
     }
 }
-
