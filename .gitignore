@@ -32,6 +32,7 @@ access.log
 error.log
 
 /web/music/*
+!/web/music/.gitkeep
 web/soonic*
 
 .web-server-pid
