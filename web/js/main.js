@@ -138,6 +138,12 @@ $(function() {
 
         e.preventDefault();
 
+        if ($("#scanButton").hasClass('running')) {
+            return;
+        }
+
+        $("#scanButton").toggleClass('running');
+
         $.get({
             url: '/scan',
             cache: true,
@@ -147,27 +153,28 @@ $(function() {
         });
 
         $("#numFiles").text("0");
+        $("#numArtists").text("0");
+        $("#numAlbums").text("0");
         $("#scanStatus").text('scanning');
 
         var $loop = setInterval(myTimer, 1000);
 
-        var value = 0;
         function myTimer() {
             $.get({
                 url: '/scan/progress',
                 cache: true,
                 success: function(data) {
-                    currentValue = data.data;
                     if (data.status == 'stopped') {
-                        $("#scanStatus").text('done');
-                        $("#numFiles").text(currentValue);
-                        $("#fileCount").text('');
+                        $("#numFiles").text(data.data.media);
+                        $("#numArtists").text(data.data.artist);
+                        $("#numAlbums").text(data.data.album);
                         clearInterval($loop);
+                        $("#scanButton").toggleClass('running');
                         return;
                     }
-
-                    value = currentValue;
-                    $("#fileCount").text(data.data);
+                    $("#numFiles").text(data.data.media);
+                    $("#numArtists").text(data.data.artist);
+                    $("#numAlbums").text(data.data.album);
                 }
             });
         }

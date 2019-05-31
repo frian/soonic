@@ -8,7 +8,6 @@ html, body {
 }
 
 table {
-    width: 100%;
     table-layout: fixed;
 }
 
@@ -194,6 +193,10 @@ nav.topbarNav {
 .songs, .playlist {
     display: none;
     overflow-y: scroll;
+
+    table {
+        width: 100%;
+    }
 }
 
 .songs {
@@ -298,6 +301,24 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
 */
 .settings {
     border: #{$debug}px solid red;
+
+    table {
+        tr {
+
+            td {
+                padding: 15px 50px;
+                text-align: right;
+                border: #{$debug}px solid lime;
+
+                &:nth-child(1) {
+                    padding: 0;
+                    padding-left: 30px;
+                    text-align: right!important;
+                }
+            }
+        }
+
+    }
 }
 
 .info {
@@ -305,7 +326,7 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
 }
 
 .libraryInfo{
-    margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 /*

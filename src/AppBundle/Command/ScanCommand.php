@@ -314,6 +314,7 @@ class ScanCommand extends ContainerAwareCommand {
                 $tags['artist'] = \strtoupper($tags['artist']);
                 if (!\array_key_exists($tags['artist'], $artists)) {
                     $artists[$tags['artist']] = 0;
+                    fwrite($sqlArtistFile, ''.PHP_EOL);
                 }
 
 
@@ -527,6 +528,10 @@ class ScanCommand extends ContainerAwareCommand {
         // -- output last folder
         $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, $artists);
 
+        fclose($sqlArtistFile);
+
+
+        $sqlArtistFile = $this->openFile($sqlArtistFilePath, $output, $lockFile);
 
         foreach (array_keys($artists) as $artist) {
             // print ';'.$artist. ";" . $artists[$artist].';'.PHP_EOL;

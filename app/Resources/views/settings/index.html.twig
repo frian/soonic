@@ -10,22 +10,23 @@
 
     <h2>{{ 'library'|trans }}</h2>
 
-    <div class="libraryInfo">
-        <div class="info">
-            <span id="numFiles">{{ infos[0] }}</span> {{ 'files'|trans }}
-        </div>
-        <div class="info">
-            <span id="numArtists">{{ infos[1] }}</span> {{ 'artists'|trans }}
-        </div>
-        <div class="info">
-            <span id="numAlbums">{{ infos[1] }}</span> {{ 'albums'|trans }}
-        </div>
-    </div>
+    <table class="libraryInfo">
+        <tr>
+            <td>{{ 'files'|trans }}</td>
+            <td id="numFiles">{{ infos[0] }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'artists'|trans }}</td>
+            <td id="numArtists">{{ infos[1] }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'albums'|trans }}</td>
+            <td id="numAlbums">{{ infos[2] }}</td>
+        </tr>
+    </table>
 
-    <div class="info">
+    <div class="buttonWrapper">
         <a id="scanButton" class="button" href="{{ path('radio_index') }}">{{ 'scan'|trans }}</a>
-        <span id="scanStatus" class="info"></span>
-        <span id="fileCount" class="info"></span>
     </div>
 
 </section>

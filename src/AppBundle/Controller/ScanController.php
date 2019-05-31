@@ -58,9 +58,14 @@ class ScanController extends Controller {
             $status = 'running';
         }
 
-        $file = new \SplFileObject($this->get('kernel')->getProjectDir().'/web/soonic-media.sql', 'r');
-        $file->seek(PHP_INT_MAX);
-        $data = $file->key() - 1;
+        $files = array('media', 'artist', 'album');
+        $data = array();
+        foreach ($files as $file) {
+            $file_handle = new \SplFileObject($this->get('kernel')->getProjectDir().'/web/soonic-'.$file.'.sql', 'r');
+            $file_handle->seek(PHP_INT_MAX);
+            $data[$file] = $file_handle->key() - 1;
+        }
+
 
         $response = ['status' => $status, 'data' => $data];
 

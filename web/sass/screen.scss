@@ -263,19 +263,16 @@ a.active {
     // padding: 20px 40px;
     padding-bottom: 20px;
     border-bottom: 1px solid #666!important;
+
+    table {
+        font-family: 'Muli', sans-serif;
+        font-size: 1.2em;
+    }
 }
 
 .settings a {
     // float: left;
     font-size: 18px;
-}
-
-.info {
-    // float: left;
-    height: 50px;
-    line-height: 50px;
-    padding: 0 30px;
-    font-family: 'Muli', sans-serif;
 }
 
 
@@ -333,6 +330,17 @@ form div div input {
     }
 }
 
+.running {
+    background: linear-gradient(to top,
+        rgba(204,0,0, 1) 0%,
+        rgba(204,0,0, 0.5) 100% );
+
+    &:hover {
+        background: linear-gradient(to top,
+            rgba(204,0,0, 1) 0%,
+            rgba(204,0,0, 0.5) 100% );
+    }
+}
 
 /*
   -- Media query 1024px -------------------------------------------------------
