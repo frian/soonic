@@ -45,11 +45,11 @@ class LoadLanguageData extends AbstractFixture implements OrderedFixtureInterfac
     	);
 
     	/**
-    	 * Add users
+    	 * Add languages
     	 */
     	foreach ( $languages as $index => $languageData ) {
 
-	    	// create user
+	    	// create language
 	        $language = new Language();
 	        $language->setName($languageData['name']);
             $language->setCode($languageData['code']);
@@ -60,7 +60,6 @@ class LoadLanguageData extends AbstractFixture implements OrderedFixtureInterfac
 	    	$manager->persist($language);
 	    	$manager->flush();
     	}
-
     }
 
     /**
