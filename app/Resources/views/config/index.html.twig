@@ -7,7 +7,6 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Language</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -15,7 +14,6 @@
         {% for config in configs %}
             <tr>
                 <td><a href="{{ path('config_show', { 'id': config.id }) }}">{{ config.id }}</a></td>
-                <td>{{ config.language }}</td>
                 <td>
                     <ul>
                         <li>
