@@ -35,11 +35,11 @@ class LoadLanguageData extends AbstractFixture implements OrderedFixtureInterfac
                 'code' => 'en'
     		),
     		1 => array(
-    			'name' => 'french',
+    			'name' => 'français',
                 'code' => 'fr'
     		),
             2 => array(
-    			'name' => 'italian',
+    			'name' => 'italiano',
                 'code' => 'it'
     		),
     	);
