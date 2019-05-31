@@ -39,3 +39,9 @@ services:
     AppBundle\DataFixtures\:
         resource: '../../src/AppBundle/DataFixtures'
         tags: ['doctrine.fixture.orm']
+
+
+    AppBundle\EventSubscriber\LocaleSubscriber:
+        arguments: ['%kernel.default_locale%',"@doctrine.orm.entity_manager"]
+        # redundant if you're using autoconfigure
+        tags: [kernel.event_subscriber]
