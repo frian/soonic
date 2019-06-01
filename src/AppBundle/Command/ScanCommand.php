@@ -658,12 +658,12 @@ class ScanCommand extends ContainerAwareCommand {
             $albumArtist = '';
             foreach (array_keys($currentFolderFilesTags['albumName'][$album]['artistName']) as $index => $artist) {
                 $albumArtist = $artist;
-                // $albumArtist .= $artist.',';  **
+                // $albumArtist .= $artist.',';  // **
                 // print "album artist     :     $artist\n";
                 $artists[$artist]++;
                 $songCount += count($currentFolderFilesTags['albumName'][$album]['artistName'][$artist]['titles']);
             }
-            // $albumArtist = \preg_replace('/,$/', '', $albumArtist); **
+            // $albumArtist = \preg_replace('/,$/', '', $albumArtist); // **
 
 
             $albumYear = null;
