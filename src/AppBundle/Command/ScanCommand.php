@@ -139,9 +139,6 @@ class ScanCommand extends ContainerAwareCommand {
         fwrite($sqlArtistFile, 'id,name,album_count,cover_art_path'.PHP_EOL);
 
 
-
-
-
         // -- scan
         try {
             $di = new \RecursiveDirectoryIterator($root,\RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
@@ -314,8 +311,13 @@ class ScanCommand extends ContainerAwareCommand {
                 $tags['artist'] = \strtoupper($tags['artist']);
                 if (!\array_key_exists($tags['artist'], $artists)) {
                     $artists[$tags['artist']] = 0;
+                    $artistId = count($artists);
                     fwrite($sqlArtistFile, ''.PHP_EOL);
                 }
+                else {
+                    $artistId = array_search($tags['artist'],array_keys($artists)) + 1;
+                }
+                $tags['artistId'] = $artistId;
 
 
                 /*
@@ -517,9 +519,15 @@ class ScanCommand extends ContainerAwareCommand {
                 fwrite(
                     $sqlMediaFile,";"
                     .$tags['path'].";".$tags['web_path'].";".$tags['title'].";"
-                    .$tags['album'].";".$tags['artist'].";".$tags['track_number'].";"
+                    .$tags['album'].";".$tags['artistId'].";".$tags['track_number'].";"
                     .$tags['year'].";".$tags['genre'].";".$tags['duration']
                     .PHP_EOL);
+
+                // print ";"
+                //     .$tags['path'].";".$tags['web_path'].";".$tags['title'].";"
+                //     .$tags['album'].";".$tags['artist'].";".$tags['track_number'].";"
+                //     .$tags['year'].";".$tags['genre'].";".$tags['duration']
+                //     .PHP_EOL;
 
                 $loadCount++;
             }
@@ -532,12 +540,17 @@ class ScanCommand extends ContainerAwareCommand {
 
 
         $sqlArtistFile = $this->openFile($sqlArtistFilePath, $output, $lockFile);
+        fwrite($sqlArtistFile, 'id,name,album_count,cover_art_path'.PHP_EOL);
 
         foreach (array_keys($artists) as $artist) {
             // print ';'.$artist. ";" . $artists[$artist].';'.PHP_EOL;
             fwrite($sqlArtistFile, ';'.$artist. ";" . $artists[$artist].';'.PHP_EOL);
         }
 
+
+        // -- disable foreign keys checks
+        $query = "SET FOREIGN_KEY_CHECKS=0;";
+        $statement = $em->getConnection()->prepare($query)->execute();
 
         // -- load media_file table
         $query = "LOAD DATA LOCAL INFILE '$sqlMediaFilePath'".
@@ -554,6 +567,9 @@ class ScanCommand extends ContainerAwareCommand {
             " INTO TABLE artist  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
         $statement = $em->getConnection()->prepare($query)->execute();
 
+        // -- disable foreign keys checks
+        $query = "SET FOREIGN_KEY_CHECKS=1;";
+        $statement = $em->getConnection()->prepare($query)->execute();
 
         // -- final output
         if ($verbosity >= 64) {
@@ -694,8 +710,8 @@ class ScanCommand extends ContainerAwareCommand {
                 $sqlAlbumFile,";"
                 // print
                 // ";"
-                .$album.";"
-                .$albumArtist.";"
+                .$album.";'"
+                .$albumArtist."';"
                 .$songCount.";"
                 .$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations']).";"
                 .$albumYear.";"
