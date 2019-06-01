@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MediaFile
  *
- * @ORM\Table(name="media_file", indexes={@ORM\Index(name="idx_media_file_path", columns={"path"}), @ORM\Index(name="idx_media_file_album", columns={"album"}), @ORM\Index(name="idx_media_file_artist", columns={"artist"}), @ORM\Index(name="idx_media_file_genre", columns={"genre"})})
+ * @ORM\Table(name="media_file", indexes={@ORM\Index(name="idx_media_file_path", columns={"path"}), @ORM\Index(name="idx_media_file_album", columns={"album"}), @ORM\Index(name="idx_media_file_genre", columns={"genre"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MediaFileRepository")
  */
 class MediaFile
@@ -53,7 +53,8 @@ class MediaFile
     /**
      * @var string
      *
-     * @ORM\Column(name="artist", type="string", length=256, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Artist", inversedBy="songs")
+     * @ORM\JoinColumn(name="artist_id", referencedColumnName="id")
      */
     private $artist;
 
@@ -84,6 +85,17 @@ class MediaFile
      * @ORM\Column(name="duration", type="string", length=64, nullable=true)
      */
     private $duration;
+    
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set path
@@ -179,30 +191,6 @@ class MediaFile
     public function getAlbum()
     {
         return $this->album;
-    }
-
-    /**
-     * Set artist
-     *
-     * @param string $artist
-     *
-     * @return MediaFile
-     */
-    public function setArtist($artist)
-    {
-        $this->artist = $artist;
-
-        return $this;
-    }
-
-    /**
-     * Get artist
-     *
-     * @return string
-     */
-    public function getArtist()
-    {
-        return $this->artist;
     }
 
     /**
@@ -302,12 +290,26 @@ class MediaFile
     }
 
     /**
-     * Get id
+     * Set artist
      *
-     * @return integer
+     * @param \AppBundle\Entity\Artist $artist
+     *
+     * @return MediaFile
      */
-    public function getId()
+    public function setArtist(\AppBundle\Entity\Artist $artist = null)
     {
-        return $this->id;
+        $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * Get artist
+     *
+     * @return \AppBundle\Entity\Artist
+     */
+    public function getArtist()
+    {
+        return $this->artist;
     }
 }
