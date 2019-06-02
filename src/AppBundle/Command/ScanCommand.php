@@ -116,22 +116,20 @@ class ScanCommand extends ContainerAwareCommand {
         $previousFolderFilesTags = array();
 
 
-        // -- open media sql file
-        $sqlMediaFilePath = $webPath.'/soonic-media.sql';
-        $sqlMediaFile = $this->openFile($sqlMediaFilePath, $output, $lockFile);
-        fwrite($sqlMediaFile, 'id,album_id,artist_id,path,web_path,title,track_number,year,genre,duration'.PHP_EOL);
+        // -- open sql files
+        $sqlFiles = array();
+        $sqlFilesPathes = array();
+        foreach ($tables as $table) {
+            $sqlFilesPathes[$table] = $webPath.'/soonic-'.$table.'.sql';
+            $sqlFile[$table] = $this->openFile($sqlFilesPathes[$table], $output, $lockFile);
+        }
 
 
-        // -- open album sql file
-        $sqlAlbumFilePath = $webPath.'/soonic-album.sql';
-        $sqlAlbumFile = $this->openFile($sqlAlbumFilePath, $output, $lockFile);
-        fwrite($sqlAlbumFile, 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
-
-
-        // -- open artist sql file
-        $sqlArtistFilePath = $webPath.'/soonic-artist.sql';
-        $sqlArtistFile = $this->openFile($sqlArtistFilePath, $output, $lockFile);
-        fwrite($sqlArtistFile, 'id,name,album_count,cover_art_path'.PHP_EOL);
+        // -- write headers
+        fwrite($sqlFile['media_file'],
+            'id,album_id,artist_id,path,web_path,title,track_number,year,genre,duration'.PHP_EOL);
+        fwrite($sqlFile['album'], 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
+        fwrite($sqlFile['artist'], PHP_EOL); // empty line used for scsn progress
 
 
         // -- scan
@@ -340,7 +338,7 @@ class ScanCommand extends ContainerAwareCommand {
                 if (!\array_key_exists($tags['artist'], $artists)) {
                     $artists[$tags['artist']] = 0;
                     $artistId = count($artists);
-                    fwrite($sqlArtistFile, ''.PHP_EOL);
+                    fwrite($sqlFile['artist'], ''.PHP_EOL); // empty line used for scsn progress
                 }
                 else {
                     $artistId = array_search($tags['artist'],array_keys($artists)) + 1;
@@ -351,15 +349,15 @@ class ScanCommand extends ContainerAwareCommand {
                 /*
                  * -- Handle album id -----------------------------------------
                  */
-                 $tags['album'] = \ucwords(\strtolower($tags['album']));
-                 if (!\array_key_exists($tags['album'], $albums)) {
-                     $albums[$tags['album']] = 0;
-                     $albumId = count($albums);
-                 }
-                 else {
-                     $albumId = array_search($tags['album'],array_keys($albums)) + 1;
-                 }
-                 $tags['albumId'] = $albumId;
+                $tags['album'] = \ucwords(\strtolower($tags['album']));
+                if (!\array_key_exists($tags['album'], $albums)) {
+                 $albums[$tags['album']] = 0;
+                 $albumId = count($albums);
+                }
+                else {
+                 $albumId = array_search($tags['album'],array_keys($albums)) + 1;
+                }
+                $tags['albumId'] = $albumId;
 
 
                 /*
@@ -536,7 +534,7 @@ class ScanCommand extends ContainerAwareCommand {
 
                 // -- write to sql file
                 fwrite(
-                    $sqlMediaFile,";"
+                    $sqlFile['media_file'],";"
                     .$tags['albumId'].";"
                     .$tags['artistId'].";"
                     .$tags['path'].";"
@@ -551,10 +549,10 @@ class ScanCommand extends ContainerAwareCommand {
         }
 
         // -- output last folder
-        $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, $artists);
+        $this->outputAlbumInfo($currentFolderFilesTags, $sqlFile['album'], $artists);
 
-        fclose($sqlArtistFile);
-        $sqlArtistFile = $this->openFile($sqlArtistFilePath, $output, $lockFile);
+        fclose($sqlFile['artist']);
+        $sqlArtistFile = $this->openFile($sqlFilesPathes['artist'], $output, $lockFile);
         fwrite($sqlArtistFile, 'id,name,album_count,cover_art_path'.PHP_EOL);
 
         foreach (array_keys($artists) as $artist) {
@@ -567,20 +565,12 @@ class ScanCommand extends ContainerAwareCommand {
         $query = "SET FOREIGN_KEY_CHECKS=0;";
         $statement = $em->getConnection()->prepare($query)->execute();
 
-        // -- load media_file table
-        $query = "LOAD DATA LOCAL INFILE '$sqlMediaFilePath'".
-            " INTO TABLE media_file  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
-        $statement = $em->getConnection()->prepare($query)->execute();
-
-        // -- load album table
-        $query = "LOAD DATA LOCAL INFILE '$sqlAlbumFilePath'".
-            " INTO TABLE album  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
-        $statement = $em->getConnection()->prepare($query)->execute();
-
-        // -- load artist table
-        $query = "LOAD DATA LOCAL INFILE '$sqlArtistFilePath'".
-            " INTO TABLE artist  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
-        $statement = $em->getConnection()->prepare($query)->execute();
+        // -- bulk load collection
+        foreach ($tables as $table) {
+            $query = "LOAD DATA LOCAL INFILE '".$sqlFilesPathes[$table]."'".
+                " INTO TABLE ". $table ."  FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+            $statement = $em->getConnection()->prepare($query)->execute();
+        }
 
         // -- disable foreign keys checks
         $query = "SET FOREIGN_KEY_CHECKS=1;";
