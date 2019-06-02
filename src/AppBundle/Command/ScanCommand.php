@@ -517,7 +517,7 @@ class ScanCommand extends ContainerAwareCommand {
                     $previousFolderFilesTags = array_pop($currentFolderFilesTags['albumName']);
 
                     if (!empty($currentFolderFilesTags['albumName'])) {
-                        $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, $artists);
+                        $this->outputAlbumInfo($currentFolderFilesTags, $sqlFile['album'], $artists);
                     }
 
                     $currentFolderFilesTags = array();
