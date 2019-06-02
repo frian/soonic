@@ -106,7 +106,6 @@ class ScanCommand extends ContainerAwareCommand {
         // -- folder
         $folderFileCount = 0;
         $currentFolder = null;
-//        $currentFolderTags = array();
         $previousFolder = null;
         // -- artists
         $artists = array();
@@ -116,15 +115,11 @@ class ScanCommand extends ContainerAwareCommand {
         $currentFolderFilesTags = array();
         $previousFolderFilesTags = array();
 
-        // -- prepare mysql query
-        $query = "INSERT INTO media_file (artist, title, album, year, genre, track_number, path, web_path) VALUES (?,?,?,?,?,?,?,?)";
-        $statement = $em->getConnection()->prepare($query);
-
 
         // -- open media sql file
         $sqlMediaFilePath = $webPath.'/soonic-media.sql';
         $sqlMediaFile = $this->openFile($sqlMediaFilePath, $output, $lockFile);
-        fwrite($sqlMediaFile, 'id,artist_id,path,web_path,title,album,track_number,year,genre,duration'.PHP_EOL);
+        fwrite($sqlMediaFile, 'id,album_id,artist_id,path,web_path,title,track_number,year,genre,duration'.PHP_EOL);
 
 
         // -- open album sql file
@@ -308,18 +303,6 @@ class ScanCommand extends ContainerAwareCommand {
                 }
 
 
-                $tags['artist'] = \strtoupper($tags['artist']);
-                if (!\array_key_exists($tags['artist'], $artists)) {
-                    $artists[$tags['artist']] = 0;
-                    $artistId = count($artists);
-                    fwrite($sqlArtistFile, ''.PHP_EOL);
-                }
-                else {
-                    $artistId = array_search($tags['artist'],array_keys($artists)) + 1;
-                }
-                $tags['artistId'] = $artistId;
-
-
                 /*
                  * -- Handle title --------------------------------------------
                  */
@@ -348,6 +331,35 @@ class ScanCommand extends ContainerAwareCommand {
                         $tags['title'] = $fileInfoComments['title'][0];
                     }
                 }
+
+
+                /*
+                 * -- Handle artist id------------------------------------------
+                 */
+                $tags['artist'] = \strtoupper($tags['artist']);
+                if (!\array_key_exists($tags['artist'], $artists)) {
+                    $artists[$tags['artist']] = 0;
+                    $artistId = count($artists);
+                    fwrite($sqlArtistFile, ''.PHP_EOL);
+                }
+                else {
+                    $artistId = array_search($tags['artist'],array_keys($artists)) + 1;
+                }
+                $tags['artistId'] = $artistId;
+
+
+                /*
+                 * -- Handle album id -----------------------------------------
+                 */
+                 $tags['album'] = \ucwords(\strtolower($tags['album']));
+                 if (!\array_key_exists($tags['album'], $albums)) {
+                     $albums[$tags['album']] = 0;
+                     $albumId = count($albums);
+                 }
+                 else {
+                     $albumId = array_search($tags['album'],array_keys($albums)) + 1;
+                 }
+                 $tags['albumId'] = $albumId;
 
 
                 /*
@@ -435,23 +447,30 @@ class ScanCommand extends ContainerAwareCommand {
                     $currentFolderFilesTags['albumName'][$tags['album']] = array();
                 }
 
+
                 // -- add artistName key
                 if ( !array_key_exists( 'artistName', $currentFolderFilesTags['albumName'][$tags['album']] )) {
                     $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] = array();
                 }
 
                 // -- add artist(s)
-                if ( !array_key_exists( $tags['artist'], $currentFolderFilesTags['albumName'][$tags['album']]['artistName'] )) {
-                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] = array();
+                if ( !array_key_exists(
+                    $tags['artist'],
+                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'] )) {
+                        $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] = array();
                 }
 
                 // -- add titles key
-                if ( !array_key_exists( 'titles', $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] ) ) {
-                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'] = array();
+                if ( !array_key_exists(
+                    'titles',
+                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']] ) ) {
+                        $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'] = array();
                 }
 
                 // -- add title(s)
-                array_push($currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'], $tags['title']);
+                array_push(
+                    $currentFolderFilesTags['albumName'][$tags['album']]['artistName'][$tags['artist']]['titles'],
+                    $tags['title']);
 
                 // -- add year key
                 if ( !array_key_exists( 'years', $currentFolderFilesTags['albumName'][$tags['album']] ) ) {
@@ -518,20 +537,14 @@ class ScanCommand extends ContainerAwareCommand {
                 // -- write to sql file
                 fwrite(
                     $sqlMediaFile,";"
+                    .$tags['albumId'].";"
                     .$tags['artistId'].";"
                     .$tags['path'].";"
                     .$tags['web_path'].";"
                     .$tags['title'].";"
-                    .$tags['album'].";"
                     .$tags['track_number'].";"
                     .$tags['year'].";".$tags['genre'].";".$tags['duration']
                     .PHP_EOL);
-
-                // print ";"
-                //     .$tags['path'].";".$tags['web_path'].";".$tags['title'].";"
-                //     .$tags['album'].";".$tags['artist'].";".$tags['track_number'].";"
-                //     .$tags['year'].";".$tags['genre'].";".$tags['duration']
-                //     .PHP_EOL;
 
                 $loadCount++;
             }
@@ -541,8 +554,6 @@ class ScanCommand extends ContainerAwareCommand {
         $this->outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, $artists);
 
         fclose($sqlArtistFile);
-
-
         $sqlArtistFile = $this->openFile($sqlArtistFilePath, $output, $lockFile);
         fwrite($sqlArtistFile, 'id,name,album_count,cover_art_path'.PHP_EOL);
 
@@ -700,13 +711,6 @@ class ScanCommand extends ContainerAwareCommand {
                 // print "album genre      : $genre\n";
             }
             $albumGenre = \preg_replace('/,$/', '', $albumGenre);
-
-
-            // print "album duration   : ".$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations'])."\n";
-            // print "song count       : $songCount\n";
-            // print "album path       : ".$currentFolderFilesTags['albumName'][$album]['path']."\n";
-            // print "album web path   : ".$currentFolderFilesTags['albumName'][$album]['web_path']."\n";
-            // print "\n";
 
 
             //-- 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'
