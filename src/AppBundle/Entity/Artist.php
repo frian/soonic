@@ -47,6 +47,12 @@ class Artist
      */
     private $songs;
 
+
+    public function __toString() {
+        return $this->name;
+    }
+
+    
     /**
      * Constructor
      */

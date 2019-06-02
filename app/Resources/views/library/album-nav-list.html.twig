@@ -1,5 +1,5 @@
 <ul id="album-nav">
 {% for album in albums %}
-    <li><a class="song" href="{{ path('artist_albums_songs', { 'name': album.artist, 'album' : album.name }) }}"> - {{ album.name }}</a></li>
+    <li><a class="song" href="{{ path('artist_albums_songs', { 'artist': album.artist, 'album' : album.name }) }}"> - {{ album.name }}</a></li>
 {% endfor %}
 </ul>

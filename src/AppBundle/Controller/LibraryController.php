@@ -71,14 +71,18 @@ class LibraryController extends Controller
     /**
      * Find songs from an album from an artist.
      *
-     * @Route("/songs/{name}/{album}", name="artist_albums_songs")
+     * @Route("/songs/{artist}/{album}", name="artist_albums_songs")
      * @Method("GET")
      */
-    public function showAlbumsSongsAction(Artist $artist, $album) {
+    public function showAlbumsSongsAction($artist, $album) {
 
         $em = $this->getDoctrine()->getManager();
 
-        $albums = $em->getRepository('AppBundle:MediaFile')->findByAlbum($artist->getName(), $album);
+        $artist = \preg_replace("/^'|'$/", '', $artist);
+
+        $artist = $em->getRepository('AppBundle:Artist')->findOneByName($artist);
+
+        $albums = $em->getRepository('AppBundle:MediaFile')->findByAlbum($artist->getId(), $album);
 
         return $this->render('common/songs-list.html.twig', array(
             'mediaFiles' => $albums,

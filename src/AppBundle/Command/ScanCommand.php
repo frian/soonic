@@ -124,7 +124,7 @@ class ScanCommand extends ContainerAwareCommand {
         // -- open media sql file
         $sqlMediaFilePath = $webPath.'/soonic-media.sql';
         $sqlMediaFile = $this->openFile($sqlMediaFilePath, $output, $lockFile);
-        fwrite($sqlMediaFile, 'id,path,web_path,title,album,artist,track_number,year,genre,duration'.PHP_EOL);
+        fwrite($sqlMediaFile, 'id,artist_id,path,web_path,title,album,track_number,year,genre,duration'.PHP_EOL);
 
 
         // -- open album sql file
@@ -518,8 +518,12 @@ class ScanCommand extends ContainerAwareCommand {
                 // -- write to sql file
                 fwrite(
                     $sqlMediaFile,";"
-                    .$tags['path'].";".$tags['web_path'].";".$tags['title'].";"
-                    .$tags['album'].";".$tags['artistId'].";".$tags['track_number'].";"
+                    .$tags['artistId'].";"
+                    .$tags['path'].";"
+                    .$tags['web_path'].";"
+                    .$tags['title'].";"
+                    .$tags['album'].";"
+                    .$tags['track_number'].";"
                     .$tags['year'].";".$tags['genre'].";".$tags['duration']
                     .PHP_EOL);
 
