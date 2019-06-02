@@ -3,9 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Artist;
+use AppBundle\Entity\Album;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * Library controller.
@@ -82,10 +84,12 @@ class LibraryController extends Controller
 
         $artist = $em->getRepository('AppBundle:Artist')->findOneByName($artist);
 
-        $albums = $em->getRepository('AppBundle:MediaFile')->findByAlbum($artist->getId(), $album);
+        $album = $em->getRepository('AppBundle:Album')->findOneByName($album); // add artist to params
+
+        $songs = $album->getSongs();
 
         return $this->render('common/songs-list.html.twig', array(
-            'mediaFiles' => $albums,
+            'mediaFiles' => $songs,
         ));
     }
 }
