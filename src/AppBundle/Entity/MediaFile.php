@@ -85,7 +85,7 @@ class MediaFile
      * @ORM\Column(name="duration", type="string", length=64, nullable=true)
      */
     private $duration;
-    
+
 
     /**
      * Get id
