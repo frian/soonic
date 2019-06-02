@@ -79,6 +79,24 @@ class Album
 
 
     /**
+     * @ORM\OneToMany(targetEntity="MediaFile", mappedBy="album")
+     */
+    private $songs;
+
+
+    public function __toString() {
+        return $this->name;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->songs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -278,5 +296,39 @@ class Album
     public function getCoverArtPath()
     {
         return $this->coverArtPath;
+    }
+
+    /**
+     * Add song
+     *
+     * @param \AppBundle\Entity\MediaFile $song
+     *
+     * @return Album
+     */
+    public function addSong(\AppBundle\Entity\MediaFile $song)
+    {
+        $this->songs[] = $song;
+
+        return $this;
+    }
+
+    /**
+     * Remove song
+     *
+     * @param \AppBundle\Entity\MediaFile $song
+     */
+    public function removeSong(\AppBundle\Entity\MediaFile $song)
+    {
+        $this->songs->removeElement($song);
+    }
+
+    /**
+     * Get songs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSongs()
+    {
+        return $this->songs;
     }
 }

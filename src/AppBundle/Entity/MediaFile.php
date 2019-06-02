@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MediaFile
  *
- * @ORM\Table(name="media_file", indexes={@ORM\Index(name="idx_media_file_path", columns={"path"}), @ORM\Index(name="idx_media_file_album", columns={"album"}), @ORM\Index(name="idx_media_file_genre", columns={"genre"})})
+ * @ORM\Table(name="media_file", indexes={@ORM\Index(name="idx_media_file_path", columns={"path"}), @ORM\Index(name="idx_media_file_genre", columns={"genre"})})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MediaFileRepository")
  */
 class MediaFile
@@ -46,7 +46,8 @@ class MediaFile
     /**
      * @var string
      *
-     * @ORM\Column(name="album", type="string", length=256, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Album", inversedBy="songs")
+     * @ORM\JoinColumn(name="album_id", referencedColumnName="id")
      */
     private $album;
 
@@ -170,30 +171,6 @@ class MediaFile
     }
 
     /**
-     * Set album
-     *
-     * @param string $album
-     *
-     * @return MediaFile
-     */
-    public function setAlbum($album)
-    {
-        $this->album = $album;
-
-        return $this;
-    }
-
-    /**
-     * Get album
-     *
-     * @return string
-     */
-    public function getAlbum()
-    {
-        return $this->album;
-    }
-
-    /**
      * Set trackNumber
      *
      * @param integer $trackNumber
@@ -287,6 +264,30 @@ class MediaFile
     public function getDuration()
     {
         return $this->duration;
+    }
+
+    /**
+     * Set album
+     *
+     * @param \AppBundle\Entity\Album $album
+     *
+     * @return MediaFile
+     */
+    public function setAlbum(\AppBundle\Entity\Album $album = null)
+    {
+        $this->album = $album;
+
+        return $this;
+    }
+
+    /**
+     * Get album
+     *
+     * @return \AppBundle\Entity\Album
+     */
+    public function getAlbum()
+    {
+        return $this->album;
     }
 
     /**
