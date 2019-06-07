@@ -80,6 +80,7 @@ class Album
 
     /**
      * @ORM\OneToMany(targetEntity="MediaFile", mappedBy="album")
+     * @ORM\OrderBy({"trackNumber" = "ASC"})
      */
     private $songs;
 
