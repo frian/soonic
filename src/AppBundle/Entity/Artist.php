@@ -52,7 +52,7 @@ class Artist
         return $this->name;
     }
 
-    
+
     /**
      * Constructor
      */
