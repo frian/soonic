@@ -13,7 +13,7 @@ class AlbumRepository extends EntityRepository
             ->setParameter('artist', $artist)
             ->andWhere('a.name != :null')
             ->setParameter('null', serialize(null))
-            ->orderBy('a.year', 'ASC')
+            ->orderBy('a.name', 'ASC')
             ->getQuery()
             ->getResult();
     }
