@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Album
  *
- * @ORM\Table(name="album", indexes={@ORM\Index(name="idx_album_name", columns={"name"}), @ORM\Index(name="idx_album_artist", columns={"artist"}) })
+ * @ORM\Table(name="album", indexes={@ORM\Index(name="idx_album_name", columns={"name"}) })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AlbumRepository")
  */
 class Album
@@ -29,11 +29,9 @@ class Album
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="artist", type="string", length=256, nullable=false)
+     * @ORM\ManyToMany(targetEntity="Artist", mappedBy="albums")
      */
-    private $artist;
+    private $artists;
 
     /**
      * @var integer
@@ -94,6 +92,7 @@ class Album
      */
     public function __construct()
     {
+        $this->artists = new \Doctrine\Common\Collections\ArrayCollection();
         $this->songs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -129,30 +128,6 @@ class Album
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set artist
-     *
-     * @param string $artist
-     *
-     * @return Album
-     */
-    public function setArtist($artist)
-    {
-        $this->artist = $artist;
-
-        return $this;
-    }
-
-    /**
-     * Get artist
-     *
-     * @return string
-     */
-    public function getArtist()
-    {
-        return $this->artist;
     }
 
     /**
@@ -297,6 +272,40 @@ class Album
     public function getCoverArtPath()
     {
         return $this->coverArtPath;
+    }
+
+    /**
+     * Add artist
+     *
+     * @param \AppBundle\Entity\Artist $artist
+     *
+     * @return Album
+     */
+    public function addArtist(\AppBundle\Entity\Artist $artist)
+    {
+        $this->artists[] = $artist;
+
+        return $this;
+    }
+
+    /**
+     * Remove artist
+     *
+     * @param \AppBundle\Entity\Artist $artist
+     */
+    public function removeArtist(\AppBundle\Entity\Artist $artist)
+    {
+        $this->artists->removeElement($artist);
+    }
+
+    /**
+     * Get artists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getArtists()
+    {
+        return $this->artists;
     }
 
     /**

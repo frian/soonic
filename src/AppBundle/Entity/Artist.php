@@ -47,11 +47,16 @@ class Artist
      */
     private $songs;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Album", inversedBy="artists")
+     * @ORM\JoinTable(name="albums_artists")
+     */
+    private $albums;
+
 
     public function __toString() {
         return $this->name;
     }
-
 
     /**
      * Constructor
@@ -59,6 +64,7 @@ class Artist
     public function __construct()
     {
         $this->songs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->albums = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -175,5 +181,39 @@ class Artist
     public function getSongs()
     {
         return $this->songs;
+    }
+
+    /**
+     * Add album
+     *
+     * @param \AppBundle\Entity\Album $album
+     *
+     * @return Artist
+     */
+    public function addAlbum(\AppBundle\Entity\Album $album)
+    {
+        $this->albums[] = $album;
+
+        return $this;
+    }
+
+    /**
+     * Remove album
+     *
+     * @param \AppBundle\Entity\Album $album
+     */
+    public function removeAlbum(\AppBundle\Entity\Album $album)
+    {
+        $this->albums->removeElement($album);
+    }
+
+    /**
+     * Get albums
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAlbums()
+    {
+        return $this->albums;
     }
 }
