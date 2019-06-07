@@ -349,7 +349,7 @@ class ScanCommand extends ContainerAwareCommand {
                 /*
                  * -- Handle album id -----------------------------------------
                  */
-                $tags['album'] = \ucwords(\strtolower($tags['album']));
+                $tags['album'] = \ucwords(\mb_strtolower($tags['album']));
                 if (!\array_key_exists($tags['album'], $albums)) {
                  $albums[$tags['album']] = 0;
                  $albumId = count($albums);
@@ -509,24 +509,6 @@ class ScanCommand extends ContainerAwareCommand {
                 $currentFolderFilesTags['albumName'][$tags['album']]['path'] = pathinfo($file, PATHINFO_DIRNAME);
 
 
-                /*
-                 * -- If new folder -------------------------------------------
-                 */
-                if ($folder != $currentFolder) {
-
-                    $previousFolderFilesTags = array_pop($currentFolderFilesTags['albumName']);
-
-                    if (!empty($currentFolderFilesTags['albumName'])) {
-                        $this->outputAlbumInfo($currentFolderFilesTags, $sqlFile['album'], $artists);
-                    }
-
-                    $currentFolderFilesTags = array();
-                    $currentFolderFilesTags['albumName'][$tags['album']] = $previousFolderFilesTags;
-                    $previousFolderFilesTags = array();
-                }
-                $currentFolder = $folder;
-
-
                 if ($hasWarning) {
                     $this->printWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $output);
                     $this->logWarningMessage($warningTags, $warningActions, $warningActionsResult, $file, $logFile);
@@ -673,8 +655,6 @@ class ScanCommand extends ContainerAwareCommand {
 
         foreach (array_keys($currentFolderFilesTags['albumName']) as $album) {
 
-            // print "album title      : $album\n";
-
             $songCount = 0;
             $albumArtist = '';
             foreach (array_keys($currentFolderFilesTags['albumName'][$album]['artistName']) as $index => $artist) {
@@ -690,7 +670,6 @@ class ScanCommand extends ContainerAwareCommand {
             $albumYear = null;
             foreach ($currentFolderFilesTags['albumName'][$album]['years'] as $year) {
                 $albumYear .= $year.',';
-                // print "album year       : $year\n";
             }
             $albumYear = \preg_replace('/,$/', '', $albumYear);
 
@@ -698,7 +677,6 @@ class ScanCommand extends ContainerAwareCommand {
             $albumGenre = null;
             foreach ($currentFolderFilesTags['albumName'][$album]['genres'] as $genre) {
                 $albumGenre .= $genre.',';
-                // print "album genre      : $genre\n";
             }
             $albumGenre = \preg_replace('/,$/', '', $albumGenre);
 
