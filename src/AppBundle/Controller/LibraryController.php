@@ -80,13 +80,13 @@ class LibraryController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $artist = \preg_replace("/^'|'$/", '', $artist);
-
         $artist = $em->getRepository('AppBundle:Artist')->findOneByName($artist);
 
         $album = $em->getRepository('AppBundle:Album')->findOneByName($album); // add artist to params
 
-        $songs = $album->getSongs();
+        // $songs = $album->getSongs();
+        $songs = $em->getRepository('AppBundle:MediaFile')->findByAlbum($artist,$album);
+
 
         return $this->render('common/songs-list.html.twig', array(
             'mediaFiles' => $songs,

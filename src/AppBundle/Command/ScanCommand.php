@@ -686,8 +686,8 @@ class ScanCommand extends ContainerAwareCommand {
                 $sqlAlbumFile,";"
                 // print
                 // ";"
-                .$album.";'"
-                .$albumArtist."';"
+                .$album.";"
+                .$albumArtist.";"
                 .$songCount.";"
                 .$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations']).";"
                 .$albumYear.";"
