@@ -62,7 +62,7 @@ class LibraryController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $albums = $em->getRepository('AppBundle:Album')->findByArtist($artist->getName());
+        $albums = $artist->getAlbums();
 
         return $this->render('library/album-nav-list.html.twig', array(
             'albums' => $albums,
@@ -73,14 +73,12 @@ class LibraryController extends Controller
     /**
      * Find songs from an album from an artist.
      *
-     * @Route("/songs/{artist}/{album}", name="artist_albums_songs")
+     * @Route("/songs/{name}/{album}", name="artist_albums_songs")
      * @Method("GET")
      */
-    public function showAlbumsSongsAction($artist, $album) {
+    public function showAlbumsSongsAction(Artist $artist, $album) {
 
         $em = $this->getDoctrine()->getManager();
-
-        $artist = $em->getRepository('AppBundle:Artist')->findOneByName($artist);
 
         $album = $em->getRepository('AppBundle:Album')->findOneByName($album); // add artist to params
 

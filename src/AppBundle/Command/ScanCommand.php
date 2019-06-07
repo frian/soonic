@@ -70,7 +70,7 @@ class ScanCommand extends ContainerAwareCommand {
 		$em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         // -- clear media file table
-        $tables = array('media_file', 'album', 'artist');
+        $tables = array('media_file', 'album', 'artist', 'albums_artists');
 
         foreach ($tables as $table) {
             if ($verbosity >= 128) {
@@ -83,8 +83,11 @@ class ScanCommand extends ContainerAwareCommand {
                 $output->write('.');
             }
 
-            $query = "ALTER TABLE $table AUTO_INCREMENT = 1;";
-            $statement = $em->getConnection()->prepare($query)->execute();
+            if ($table != 'albums_artists') {
+                $query = "ALTER TABLE $table AUTO_INCREMENT = 1;";
+                $statement = $em->getConnection()->prepare($query)->execute();
+            }
+
 
             if ($verbosity >= 128) {
                 $output->writeln('. done');
@@ -128,8 +131,9 @@ class ScanCommand extends ContainerAwareCommand {
         // -- write headers
         fwrite($sqlFile['media_file'],
             'id,album_id,artist_id,path,web_path,title,track_number,year,genre,duration'.PHP_EOL);
-        fwrite($sqlFile['album'], 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
+        fwrite($sqlFile['album'], 'id,name,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
         fwrite($sqlFile['artist'], PHP_EOL); // empty line used for scsn progress
+        fwrite($sqlFile['albums_artists'], 'artist_id,album_id'.PHP_EOL);
 
 
         // -- scan
@@ -531,7 +535,7 @@ class ScanCommand extends ContainerAwareCommand {
         }
 
         // -- output last folder
-        $this->outputAlbumInfo($currentFolderFilesTags, $sqlFile['album'], $artists);
+        $this->outputAlbumInfo($currentFolderFilesTags, $sqlFile['album'], $sqlFile['albums_artists'], $artists, $albums);
 
         fclose($sqlFile['artist']);
         $sqlArtistFile = $this->openFile($sqlFilesPathes['artist'], $output, $lockFile);
@@ -651,20 +655,22 @@ class ScanCommand extends ContainerAwareCommand {
         return $folder;
     }
 
-    private function outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, &$artists) {
+    private function outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, $sqlAlbumsArtists, &$artists, $albums) {
 
         foreach (array_keys($currentFolderFilesTags['albumName']) as $album) {
 
             $songCount = 0;
             $albumArtist = '';
             foreach (array_keys($currentFolderFilesTags['albumName'][$album]['artistName']) as $index => $artist) {
-                $albumArtist = $artist;
-                // $albumArtist .= $artist.',';  // **
-                // print "album artist     :     $artist\n";
+
+                $artistId = array_search($artist,array_keys($artists)) + 1;
+                $albumId = array_search($album,array_keys($albums)) + 1;
+
+                fwrite($sqlAlbumsArtists, $artistId.";".$albumId.PHP_EOL);
+
                 $artists[$artist]++;
                 $songCount += count($currentFolderFilesTags['albumName'][$album]['artistName'][$artist]['titles']);
             }
-            // $albumArtist = \preg_replace('/,$/', '', $albumArtist); // **
 
 
             $albumYear = null;
@@ -681,13 +687,12 @@ class ScanCommand extends ContainerAwareCommand {
             $albumGenre = \preg_replace('/,$/', '', $albumGenre);
 
 
-            //-- 'id,name,artist,song_count,duration,year,genre,path,cover_art_path'
+            //-- 'id,name,song_count,duration,year,genre,path,cover_art_path'
             fwrite(
                 $sqlAlbumFile,";"
                 // print
                 // ";"
                 .$album.";"
-                .$albumArtist.";"
                 .$songCount.";"
                 .$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations']).";"
                 .$albumYear.";"
