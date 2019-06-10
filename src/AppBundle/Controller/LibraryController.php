@@ -55,7 +55,7 @@ class LibraryController extends Controller
     /**
      * Find albums from an artist.
      *
-     * @Route("/albums/{id}", name="artist_albums")
+     * @Route("/albums/{name}", name="artist_albums")
      * @Method("GET")
      */
     public function showArtistAlbumsAction(Artist $artist) {
