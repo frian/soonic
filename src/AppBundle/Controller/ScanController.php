@@ -7,12 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Process\Process;
 
 
 /**
@@ -33,12 +29,9 @@ class ScanController extends Controller {
         $projectDir = $this->get('kernel')->getProjectDir();
         $command = $projectDir.'/bin/console soonic:scan --guess';
 
-        // exec("nohup /usr/bin/php -f $command > /dev/null 2>&1 &");
+        // exec("nohup /usr/bin/php  $command > /dev/null 2>&1 &");
         exec("/usr/bin/php $command > /dev/null 2>&1 &");
 
-        // $process = new Process(['/usr/bin/php', "$command > /dev/null 2>&1 &"]);
-        // $process->disableOutput();
-        // $process->run();
         return new Response('');
     }
 
@@ -58,7 +51,7 @@ class ScanController extends Controller {
             $status = 'running';
         }
 
-        $files = array('media', 'artist', 'album');
+        $files = array('media_file', 'artist', 'album');
         $data = array();
         foreach ($files as $file) {
             $file_handle = new \SplFileObject($this->get('kernel')->getProjectDir().'/web/soonic-'.$file.'.sql', 'r');
@@ -66,9 +59,7 @@ class ScanController extends Controller {
             $data[$file] = $file_handle->key() - 1;
         }
 
-
         $response = ['status' => $status, 'data' => $data];
-
         return new JsonResponse($response);
     }
 

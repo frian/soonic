@@ -172,7 +172,7 @@ $(function() {
                 cache: true,
                 success: function(data) {
                     if (data.status == 'stopped') {
-                        $("#numFiles").text(data.data.media);
+                        $("#numFiles").text(data.data.media_file);
                         $("#numArtists").text(data.data.artist);
                         $("#numAlbums").text(data.data.album);
                         clearInterval($loop);
