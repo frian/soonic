@@ -541,8 +541,15 @@ class ScanCommand extends ContainerAwareCommand {
         $sqlArtistFile = $this->openFile($sqlFilesPathes['artist'], $output, $lockFile);
         fwrite($sqlArtistFile, 'id,name,artist_slug,album_count,cover_art_path'.PHP_EOL);
 
+        $slugs = array();
         foreach (array_keys($artists) as $artist) {
             $slug = $this->slugify($artist);
+            $slugCount = 1;
+            while (in_array($slug, $slugs)) {
+                $slug = $slug . "_" . $slugCount;
+                $slugCount++;
+            }
+            array_push($slugs, $slug);
             fwrite($sqlArtistFile, ';'.$artist. ';' . $slug. ';' .$artists[$artist].';'.PHP_EOL);
         }
 
@@ -657,6 +664,8 @@ class ScanCommand extends ContainerAwareCommand {
 
     private function outputAlbumInfo($currentFolderFilesTags, $sqlAlbumFile, $sqlAlbumsArtists, &$artists, $albums) {
 
+        $slugs = array();
+
         foreach (array_keys($currentFolderFilesTags['albumName']) as $album) {
 
             $songCount = 0;
@@ -688,6 +697,12 @@ class ScanCommand extends ContainerAwareCommand {
 
 
             $slug = $this->slugify($album);
+            $slugCount = 1;
+            while (in_array($slug, $slugs)) {
+                $slug = $slug . "_" . $slugCount;
+                $slugCount++;
+            }
+            array_push($slugs, $slug);
 
             //-- 'id,name,album_slug,song_count,duration,year,genre,path,cover_art_path'
             fwrite(
@@ -767,9 +782,10 @@ class ScanCommand extends ContainerAwareCommand {
 
     private function slugify($string) {
         $string = \mb_strtolower($string);
-        $string = preg_replace('/ - /', '-', $string);
+        $string = preg_replace('/\s+-\s+/', '-', $string);
         $string = preg_replace('/&/', 'and', $string);
-        $string = preg_replace('|[\s\/]|', '-', $string);
+        $string = preg_replace('|[\s+\/]|', '-', $string);
+        $string = preg_replace('/-+/', '-', $string);
         return $string;
     }
 }
