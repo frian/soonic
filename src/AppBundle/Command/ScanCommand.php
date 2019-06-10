@@ -355,11 +355,11 @@ class ScanCommand extends ContainerAwareCommand {
                  */
                 $tags['album'] = \ucwords(\mb_strtolower($tags['album']));
                 if (!\array_key_exists($tags['album'], $albums)) {
-                 $albums[$tags['album']] = 0;
-                 $albumId = count($albums);
+                    $albums[$tags['album']] = 0;
+                    $albumId = count($albums);
                 }
                 else {
-                 $albumId = array_search($tags['album'],array_keys($albums)) + 1;
+                    $albumId = array_search($tags['album'],array_keys($albums)) + 1;
                 }
                 $tags['albumId'] = $albumId;
 
