@@ -29,6 +29,13 @@ class Album
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="album_slug", type="string", length=256, nullable=false)
+     */
+    private $albumSlug;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Artist", mappedBy="albums")
      */
     private $artists;
@@ -128,6 +135,16 @@ class Album
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getAlbumSlug()
+    {
+        return $this->albumSlug;
     }
 
     /**

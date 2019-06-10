@@ -131,7 +131,7 @@ class ScanCommand extends ContainerAwareCommand {
         // -- write headers
         fwrite($sqlFile['media_file'],
             'id,album_id,artist_id,path,web_path,title,track_number,year,genre,duration'.PHP_EOL);
-        fwrite($sqlFile['album'], 'id,name,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
+        fwrite($sqlFile['album'], 'id,name,album_slug,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
         fwrite($sqlFile['artist'], PHP_EOL); // empty line used for scsn progress
         fwrite($sqlFile['albums_artists'], 'artist_id,album_id'.PHP_EOL);
 
@@ -520,14 +520,14 @@ class ScanCommand extends ContainerAwareCommand {
 
                 // -- write to sql file
                 fwrite(
-                    $sqlFile['media_file'],";"
-                    .$tags['albumId'].";"
-                    .$tags['artistId'].";"
-                    .$tags['path'].";"
-                    .$tags['web_path'].";"
-                    .$tags['title'].";"
-                    .$tags['track_number'].";"
-                    .$tags['year'].";".$tags['genre'].";".$tags['duration']
+                    $sqlFile['media_file'],';'
+                    .$tags['albumId'].';'
+                    .$tags['artistId'].';'
+                    .$tags['path'].';'
+                    .$tags['web_path'].';'
+                    .$tags['title'].';'
+                    .$tags['track_number'].';'
+                    .$tags['year'].';'.$tags['genre'].';'.$tags['duration']
                     .PHP_EOL);
 
                 $loadCount++;
@@ -542,16 +542,13 @@ class ScanCommand extends ContainerAwareCommand {
         fwrite($sqlArtistFile, 'id,name,artist_slug,album_count,cover_art_path'.PHP_EOL);
 
         foreach (array_keys($artists) as $artist) {
-            // print $artist."\n";
-            $slug = \mb_strtolower($artist);
-            $slug = preg_replace('|[\s\/]|', '-', $slug);
-            print $slug."\n";
+            $slug = $this->slugify($artist);
             fwrite($sqlArtistFile, ';'.$artist. ';' . $slug. ';' .$artists[$artist].';'.PHP_EOL);
         }
 
 
         // -- disable foreign keys checks
-        $query = "SET FOREIGN_KEY_CHECKS=0;";
+        $query = 'SET FOREIGN_KEY_CHECKS=0;';
         $statement = $em->getConnection()->prepare($query)->execute();
 
         // -- bulk load collection
@@ -690,18 +687,21 @@ class ScanCommand extends ContainerAwareCommand {
             $albumGenre = \preg_replace('/,$/', '', $albumGenre);
 
 
-            //-- 'id,name,song_count,duration,year,genre,path,cover_art_path'
+            $slug = $this->slugify($album);
+
+            //-- 'id,name,album_slug,song_count,duration,year,genre,path,cover_art_path'
             fwrite(
-                $sqlAlbumFile,";"
+                $sqlAlbumFile,';'
                 // print
-                // ";"
-                .$album.";"
-                .$songCount.";"
-                .$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations']).";"
-                .$albumYear.";"
-                .$albumGenre.";"
-                .$currentFolderFilesTags['albumName'][$album]['web_path'].";"
-                .";" // -- covert art path
+                // ';'
+                .$album.';'
+                .$slug.';'
+                .$songCount.';'
+                .$this->getAlbumDuration($currentFolderFilesTags['albumName'][$album]['durations']).';'
+                .$albumYear.';'
+                .$albumGenre.';'
+                .$currentFolderFilesTags['albumName'][$album]['web_path'].';'
+                .';' // -- covert art path
                 .PHP_EOL
             );
         }
@@ -765,4 +765,11 @@ class ScanCommand extends ContainerAwareCommand {
         return $returnValue;
     }
 
+    private function slugify($string) {
+        $string = \mb_strtolower($string);
+        $string = preg_replace('/ - /', '-', $string);
+        $string = preg_replace('/&/', 'and', $string);
+        $string = preg_replace('|[\s\/]|', '-', $string);
+        return $string;
+    }
 }

@@ -66,6 +66,7 @@ class LibraryController extends Controller
 
         return $this->render('library/album-nav-list.html.twig', array(
             'albums' => $albums,
+            'artist' => $artist->getArtistSlug()
         ));
     }
 
@@ -73,19 +74,19 @@ class LibraryController extends Controller
     /**
      * Find songs from an album from an artist.
      *
-     * @Route("/songs/{artistSlug}/{album}", name="artist_albums_songs")
+     * @Route("/songs/{artistSlug}/{albumSlug}", name="artist_albums_songs")
      * @Method("GET")
      */
-    public function showAlbumsSongsAction(Artist $artist, $album) {
+    public function showAlbumsSongsAction(Artist $artist, $albumSlug) {
 
         $em = $this->getDoctrine()->getManager();
 
-        $album = $em->getRepository('AppBundle:Album')->findOneByName($album); // add artist to params
+        $album = $em->getRepository('AppBundle:Album')->findOneByAlbumSlug($albumSlug); // add artist to params
 
         $songs = $album->getSongs();
 
         return $this->render('common/songs-list.html.twig', array(
-            'mediaFiles' => $songs,
+            'mediaFiles' => $songs
         ));
     }
 }
