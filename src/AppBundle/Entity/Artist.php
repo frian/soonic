@@ -29,6 +29,13 @@ class Artist
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="artist_slug", type="string", length=256, nullable=false)
+     */
+    private $artistSlug;
+
+    /**
     * @var integer
     *
     * @ORM\Column(name="album_count", type="integer", nullable=true)
@@ -99,6 +106,16 @@ class Artist
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getArtistSlug()
+    {
+        return $this->artistSlug;
     }
 
     /**

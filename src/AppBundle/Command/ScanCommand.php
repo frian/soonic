@@ -539,11 +539,14 @@ class ScanCommand extends ContainerAwareCommand {
 
         fclose($sqlFile['artist']);
         $sqlArtistFile = $this->openFile($sqlFilesPathes['artist'], $output, $lockFile);
-        fwrite($sqlArtistFile, 'id,name,album_count,cover_art_path'.PHP_EOL);
+        fwrite($sqlArtistFile, 'id,name,artist_slug,album_count,cover_art_path'.PHP_EOL);
 
         foreach (array_keys($artists) as $artist) {
-            // print ';'.$artist. ";" . $artists[$artist].';'.PHP_EOL;
-            fwrite($sqlArtistFile, ';'.$artist. ";" . $artists[$artist].';'.PHP_EOL);
+            // print $artist."\n";
+            $slug = \mb_strtolower($artist);
+            $slug = preg_replace('|[\s\/]|', '-', $slug);
+            print $slug."\n";
+            fwrite($sqlArtistFile, ';'.$artist. ';' . $slug. ';' .$artists[$artist].';'.PHP_EOL);
         }
 
 

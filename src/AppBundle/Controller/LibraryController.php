@@ -55,7 +55,7 @@ class LibraryController extends Controller
     /**
      * Find albums from an artist.
      *
-     * @Route("/albums/{name}", name="artist_albums")
+     * @Route("/albums/{artistSlug}", name="artist_albums")
      * @Method("GET")
      */
     public function showArtistAlbumsAction(Artist $artist) {
@@ -73,7 +73,7 @@ class LibraryController extends Controller
     /**
      * Find songs from an album from an artist.
      *
-     * @Route("/songs/{name}/{album}", name="artist_albums_songs")
+     * @Route("/songs/{artistSlug}/{album}", name="artist_albums_songs")
      * @Method("GET")
      */
     public function showAlbumsSongsAction(Artist $artist, $album) {
