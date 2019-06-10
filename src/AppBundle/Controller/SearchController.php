@@ -22,8 +22,8 @@ class SearchController extends Controller
      public function showSearchAction(Request $request) {
 
          $form = $this->createFormBuilder()
-                 ->add('keyword', TextType::class)
-                 ->getForm();
+             ->add('keyword', TextType::class)
+             ->getForm();
 
          $form->handleRequest($request);
 

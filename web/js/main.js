@@ -114,6 +114,13 @@ $(function() {
 
         e.preventDefault();
 
+        var keyword = $("#form_keyword").val().length;
+
+        if ($("#form_keyword").val().length < 3) {
+            $("#form_keyword").val('');
+            return;
+        }
+
         var form = $('#searchForm');
 
         $.ajax({
@@ -186,7 +193,6 @@ $(function() {
      */
     $(document).on("click", ".filterForm .input-reset", function(e) {
         var url = '/artist/filter/';
-        console.log("triggered");
         $.get({
             url: url,
             cache: true,
