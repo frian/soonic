@@ -81,9 +81,11 @@ class LibraryController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $album = $em->getRepository('AppBundle:Album')->findOneByAlbumSlug($albumSlug); // add artist to params
+        $album = $em->getRepository('AppBundle:Album')->findOneByAlbumSlug($albumSlug);
 
-        $songs = $album->getSongs();
+        $songs = $em->getRepository('AppBundle:MediaFile')->findByArtistAndAlbum($artist->getName(), $album->getName());
+
+        // $songs = $album->getSongs();
 
         return $this->render('common/songs-list.html.twig', array(
             'mediaFiles' => $songs

@@ -6,20 +6,13 @@ use Doctrine\ORM\EntityRepository;
 
 class MediaFileRepository extends EntityRepository {
 
-    public function findByArtist($artist) {
+    public function findByArtistAndAlbum($artist, $album) {
         return $this->createQueryBuilder('s')
-            ->where('s.artist = :artist')
+            ->join('s.artist', 'ar')
+            ->join('s.album', 'al')
+            ->where('ar.name = :artist')
+            ->andWhere('al.name = :album')
             ->setParameter('artist', $artist)
-            ->orderBy('s.album', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findByAlbum($artist, $album) {
-        return $this->createQueryBuilder('s')
-            ->where('s.artist = :artist')
-            ->setParameter('artist', $artist)
-            ->andWhere('s.album = :album')
             ->setParameter('album', $album)
             ->orderBy('s.trackNumber', 'ASC')
             ->getQuery()
