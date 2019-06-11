@@ -46,7 +46,6 @@ $topbar-border-size: 1px;
         border: #{$debug}px solid red;
     }
 
-
     /* -- Artists navigation -- */
     [class^="icon-"] {
         display: inline-block;
@@ -58,7 +57,6 @@ $topbar-border-size: 1px;
         cursor: pointer;
         border: #{$debug}px solid red;
     }
-
 
     .icon-play, .icon-pause {
         font-size: 150%;
@@ -224,7 +222,6 @@ nav.topbarNav {
     }
 }
 
-
 .list {
     thead {
         tr {
@@ -245,7 +242,6 @@ nav.topbarNav {
 }
 
 .radio {
-
     font-size: 16px;
     box-sizing: border-box;
     border: #{$debug}px solid red;
@@ -265,7 +261,6 @@ nav.topbarNav {
         line-height: 100px;
         border: #{$debug}px solid lime;
     }
-
 
     .radioUrl {
         height: 50px;
@@ -300,7 +295,6 @@ label[for=appbundle_radio_changed], #appbundle_radio_changed {
 
     table {
         tr {
-
             td {
                 padding: 15px 50px;
                 text-align: right;
@@ -383,6 +377,7 @@ form {
     }
 }
 
+
 /*
   -- Crud forms ---------------------------------------------------------------
 */
@@ -406,7 +401,6 @@ form {
   -- Context menus ------------------------------------------------------------
 */
 .songsContextMenu, .playlistContextMenu {
-
     position: absolute;
     display: none;
 }
@@ -425,6 +419,7 @@ form {
     #form_keyword {
         width: 100px;
     }
+
 
     /* -- Artists navigation -- */
     $nav-width: 240px;

@@ -10,7 +10,6 @@ $hover-gradient: linear-gradient(to top, rgba(0,102,0, 1), rgba(0,102,0, 0.5) );
 /*
   -- Global -------------------------------------------------------------------
 */
-
 body {
     color: $fg-color;
     background-color: $bg-color;
@@ -25,11 +24,11 @@ a {
 }
 
 h1 {
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid $border-color;
 }
 
 h2 {
-    border-bottom: 1px solid #666;
+    border-bottom: 1px solid $border-color;
 }
 
 
@@ -37,7 +36,7 @@ h2 {
   -- Topbar -------------------------------------------------------------------
 */
 .topbar {
-    border-bottom-color: #666;
+    border-bottom-color: $border-color;
 
     .songArtist {
         color: #ddd;
@@ -45,7 +44,6 @@ h2 {
 }
 
 nav.topbarNav {
-
     a {
         background: $default-gradient;
     }
@@ -65,7 +63,6 @@ nav.topbarNav {
 }
 
 .filter {
-
     background-color: #333;
 
     input {
@@ -110,7 +107,6 @@ a.active {
   -- Radios -------------------------------------------------------------------
 */
 .radio {
-
     &.activeRadio {
         background-color: $hover-active!important;
     }
@@ -125,7 +121,6 @@ a.active {
   -- Context menus ------------------------------------------------------------
 */
 .songsContextMenu, .playlistContextMenu {
-
     box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.2);
 
     .menu-options {
@@ -143,6 +138,7 @@ a.active {
 /*
   -- Settings -----------------------------------------------------------------
 */
+
 /*
   -- Forms ---------------------------------------------------------------
 */
@@ -157,7 +153,7 @@ input[type="text"] {
 }
 
 .input-reset:after {
-    color: white;
+    color: $fg-color;
     background-color: #111;
 }
 
@@ -166,7 +162,7 @@ input[type="text"] {
   -- Crud forms ---------------------------------------------------------------
 */
 form div div input {
-    border: 1px solid #666;
+    border: 1px solid $border-color;
 }
 
 .button {

@@ -19,6 +19,7 @@ $red-gradient: linear-gradient(to top, rgba(204,0,0, 1), rgba(204,0,0, 0.5) );
 
 $debug: 0;
 
+
 /*
   -- Global -------------------------------------------------------------------
 */
@@ -113,7 +114,6 @@ h2 {
 
 
 nav.topbarNav {
-
     a {
         font-size: 18px;
         display: inline-block;
@@ -138,7 +138,6 @@ nav.topbarNav {
 }
 
 .filter {
-
     background-color: #ddd;
 
     label {
@@ -186,7 +185,6 @@ a.active {
                 font-size: 80%;
                 letter-spacing: 1px;
             }
-
         }
     }
 
@@ -217,7 +215,6 @@ a.active {
   -- Radios -------------------------------------------------------------------
 */
 .radio {
-
     .radioName {
         font-family: 'Lato', sans-serif;
         font-weight: 300;
@@ -243,11 +240,11 @@ a.active {
     background-color: $bg-alternate;
 }
 
+
 /*
   -- Context menus ------------------------------------------------------------
 */
 .songsContextMenu, .playlistContextMenu {
-
     box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
 
     .menu-options {
@@ -273,7 +270,6 @@ a.active {
   -- Settings -----------------------------------------------------------------
 */
 .settings {
-    // padding: 20px 40px;
     padding-bottom: 20px;
     border-bottom: 1px solid $border-color!important;
 
@@ -337,7 +333,6 @@ form div div input {
 }
 
 .button:hover {
-
     background: $hover-gradient;
 
     &.danger:hover {
