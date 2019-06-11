@@ -154,10 +154,6 @@ nav.topbarNav {
         @if $debug != 0 {
             background-color: #500;
         }
-
-        &.song {
-            background-color: #222;
-        }
     }
 }
 
@@ -339,7 +335,6 @@ form {
 
 .input-reset {
     position: absolute;
-    background-color: #111;
     display: inline-block;
     vertical-align: middle;
     outline: 0;
@@ -350,7 +345,6 @@ form {
 }
 
 .input-reset:after {
-    color: white;
     content: "\e805";
     transform: rotate(45deg);
     font-family: fontello;
@@ -369,7 +363,6 @@ form {
 	font-weight: 900;
 	font-size: 20px;
 	cursor: pointer;
-    background-color: #111;
 }
 
 .filterInput:not(:valid) ~ .input-reset {
