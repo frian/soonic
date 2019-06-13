@@ -40,11 +40,11 @@ $(function() {
      * load and play a song from the songs list
      */
     $(document).on("click", "tbody tr", function(e) {
-        $("tbody .active").removeClass('active');
+        $("tbody .playing").removeClass('playing');
         loadSong($(this));
         playerStatus = "playing";
-        $(".active").removeClass("active");
-        $(this).addClass('active');
+        // $(".playing").removeClass("playing");
+        $(this).addClass('playing');
     });
 
 
@@ -56,11 +56,11 @@ $(function() {
         e.preventDefault();
 
         // -- if we right-clic two times, remove class and listener
-        $("#songslist tbody tr.active").removeClass("active");
+        $("#songslist tbody tr.playing").removeClass("playing");
         $(document).off( "click", "body");
 
         var currentItem = $(this);
-        currentItem.addClass("active");
+        currentItem.addClass("playing");
 
         var contextMenu = '.songsContextMenu';
         var tableId = $(e.target).parent().parent().parent().attr('id');
@@ -79,12 +79,12 @@ $(function() {
 
                 if (e.target.id === 'addToPlaylist') {
                     var copy = currentItem.clone();
-                    copy.removeClass("active");
+                    copy.removeClass("playing");
                     var icon = copy.find(".icon-plus");
                     $(icon).attr('class', 'icon-minus');
                     updatePlaylistInfo(copy);
                     $("#playlist tbody").append(copy);
-                    currentItem.removeClass("active");
+                    currentItem.removeClass("playing");
                 }
                 else if (e.target.id === 'removeFromPlaylist') {
                     updatePlaylistInfo(currentItem, 'remove');
@@ -141,8 +141,8 @@ $(function() {
         // -- add song
         var copy = $(this).parent().clone();
         var icon = copy.find(".icon-plus");
-        if ($(copy).hasClass('active')) {
-            $(copy).removeClass('active');
+        if ($(copy).hasClass('playing')) {
+            $(copy).removeClass('playing');
         }
         $(icon).attr('class', 'icon-minus');
         $("#playlist tbody").append(copy);
@@ -205,9 +205,9 @@ function loadSong(song) {
  */
 function playNext(direction) {
 
-    if ($("tbody .active").length) {
+    if ($("tbody .playing").length) {
 
-        var current = $("tbody .active");
+        var current = $("tbody .playing");
 
         var next = null;
 
@@ -219,11 +219,12 @@ function playNext(direction) {
         }
 
         if (next.length) {
-
-            current.removeClass('active');
-            next.addClass('active');
-
+            current.removeClass('playing');
+            next.addClass('playing');
             loadSong(next);
+        }
+        else {
+            $("#startStopButton").attr("class", "icon-play");
         }
     }
 }

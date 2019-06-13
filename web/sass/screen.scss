@@ -1,7 +1,6 @@
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/*
+  -- Default styling ----------------------------------------------------------
+*/
 
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 @import url('https://fonts.googleapis.com/css?family=Muli:300,400,600,700');
@@ -201,7 +200,7 @@ a.active {
         }
     }
 
-    tr.active {
+    tr.playing {
         background-color: $hover-active!important;
     }
 

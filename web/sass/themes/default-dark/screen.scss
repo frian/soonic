@@ -1,3 +1,6 @@
+/*
+  -- Default dark theme -------------------------------------------------------
+*/
 
 $fg-color: #eee;
 $bg-color: #111;
@@ -93,7 +96,7 @@ a.active {
         }
     }
 
-    tr.active {
+    tr.playing {
         background-color: $hover-active!important;
     }
 
