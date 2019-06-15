@@ -6,44 +6,26 @@
     <table>
         <thead>
             <tr>
-                <th>Path</th>
                 <th>Name</th>
                 <th>Artist</th>
                 <th>Songcount</th>
-                <th>Durationseconds</th>
-                <th>Coverartpath</th>
-                <th>Playcount</th>
-                <th>Lastplayed</th>
-                <th>Comment</th>
-                <th>Created</th>
-                <th>Lastscanned</th>
-                <th>Present</th>
+                <th>Duration</th>
                 <th>Year</th>
                 <th>Genre</th>
-                <th>Folderid</th>
-                <th>Id</th>
+                <th>Coverartpath</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for album in albums %}
             <tr>
-                <td><a href="{{ path('album_show', { 'id': album.id }) }}">{{ album.path }}</a></td>
                 <td>{{ album.name }}</td>
-                <td>{{ album.artist }}</td>
+                <td>{{ album.artists[0] }}</td>
                 <td>{{ album.songCount }}</td>
-                <td>{{ album.durationSeconds }}</td>
-                <td>{{ album.coverArtPath }}</td>
-                <td>{{ album.playCount }}</td>
-                <td>{% if album.lastPlayed %}{{ album.lastPlayed|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ album.comment }}</td>
-                <td>{% if album.created %}{{ album.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if album.lastScanned %}{{ album.lastScanned|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if album.present %}Yes{% else %}No{% endif %}</td>
+                <td>{{ album.duration }}</td>
                 <td>{{ album.year }}</td>
                 <td>{{ album.genre }}</td>
-                <td>{{ album.folderId }}</td>
-                <td>{{ album.id }}</td>
+                <td>{{ album.coverArtPath }}</td>
                 <td>
                     <ul>
                         <li>
@@ -56,5 +38,5 @@
         </tbody>
     </table>
 
-    
+
 {% endblock %}
