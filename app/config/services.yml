@@ -48,3 +48,8 @@ services:
 
     AppBundle\Twig\FileExistsExtension:
         $projectDir: '%kernel.project_dir%'
+
+
+    theme_helper:
+        class: AppBundle\Helper\ThemeHelper
+        arguments: ["@doctrine.orm.entity_manager", "@security.token_storage"]

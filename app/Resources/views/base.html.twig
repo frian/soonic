@@ -5,13 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Soonic{% endblock %}</title>
 
-        {% block stylesheets %}{% endblock %}
-
         <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <link href="/css/layout.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <link href="/css/fontello-embedded.css" media="screen, projection" rel="stylesheet" type="text/css" />
 
-        {% set theme = 'default-dark' %}
+        {% set theme = theme_helper.get() %}
 
         {% if file_exists('css/themes/' ~ theme ~ '/screen.css') %}
             <link href="/css/themes/{{ theme }}/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -20,6 +18,8 @@
         {% if file_exists('css/themes/' ~ theme ~ '/layout.css') %}
             <link href="/css/themes/{{ theme }}/layout.css" media="screen, projection" rel="stylesheet" type="text/css" />
         {% endif %}
+
+        {% block stylesheets %}{% endblock %}
 
         <script src="/js/jquery-3.4.1.min.js"></script>
 
