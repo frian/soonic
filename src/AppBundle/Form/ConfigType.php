@@ -14,10 +14,16 @@ class ConfigType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('language', null , array(
-            'label' => 'language',
-            'placeholder' => false,
-        ));
+        $builder
+            ->add('language', null , array(
+                'label' => 'language',
+                'placeholder' => false,
+            ))
+            ->add('theme', null , array(
+                'label' => 'theme',
+                'placeholder' => false,
+            ))
+        ;
     }
 
     /**
