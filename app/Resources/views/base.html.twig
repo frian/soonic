@@ -11,7 +11,15 @@
         <link href="/css/layout.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <link href="/css/fontello-embedded.css" media="screen, projection" rel="stylesheet" type="text/css" />
 
-        <link href="/css/themes/default-dark/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        {% set theme = 'default-dark' %}
+
+        {% if file_exists('css/themes/' ~ theme ~ '/screen.css') %}
+            <link href="/css/themes/{{ theme }}/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        {% endif %}
+
+        {% if file_exists('css/themes/' ~ theme ~ '/layout.css') %}
+            <link href="/css/themes/{{ theme }}/layout.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        {% endif %}
 
         <script src="/js/jquery-3.4.1.min.js"></script>
 

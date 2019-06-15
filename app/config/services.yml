@@ -45,3 +45,6 @@ services:
         arguments: ['%kernel.default_locale%',"@doctrine.orm.entity_manager"]
         # redundant if you're using autoconfigure
         tags: [kernel.event_subscriber]
+
+    AppBundle\Twig\FileExistsExtension:
+        $projectDir: '%kernel.project_dir%'
