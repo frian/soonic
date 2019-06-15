@@ -34,5 +34,8 @@ error.log
 /web/music/*
 !/web/music/.gitkeep
 web/soonic*
+src/AppBundle/DataFixtures/ORM/LoadRadioData.php
+
+
 
 .web-server-pid
