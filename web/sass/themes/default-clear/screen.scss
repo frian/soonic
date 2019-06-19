@@ -1,15 +1,15 @@
 /*
-  -- Default dark theme -------------------------------------------------------
+  -- Default clear theme -------------------------------------------------------
 */
 
-$fg-color: #eee;
-$bg-color: #111;
-$hover-active: #060;
-$bg-alternate: #111;
-$header-color: #333;
+$fg-color: #111;
+$bg-color: #eee;
+$hover-active: #bfff00;
+$bg-alternate: #c8c8c8;
+$header-color: #ccc;
 $border-color: #666;
-$default-gradient: linear-gradient(to top, rgba(34,34,34, 1), rgba(51,51,51, 0.9) );
-$hover-gradient: linear-gradient(to top, rgba(0,102,0, 1), rgba(0,102,0, 0.5) );
+$default-gradient: linear-gradient(to top, rgba(221,221,221, 1), rgba(204,204,204, 0.9) );
+$hover-gradient: linear-gradient(to top, rgba(191,255,0, 1), rgba(191,255,0, 0.5) );
 
 /*
   -- Global -------------------------------------------------------------------
@@ -18,8 +18,8 @@ body {
     color: $fg-color;
     background-color: $bg-color;
     background: linear-gradient(to bottom right,
-        rgba(17,17,17, 1),
-        rgba(17,17,17, 0.9)
+        rgba(221,221,221, 1),
+        rgba(221,221,221, 0.8)
     );
 }
 
@@ -43,7 +43,7 @@ h2 {
     border-bottom-color: $border-color;
 
     .songArtist {
-        color: #ddd;
+        color: #333;
     }
 }
 
@@ -70,7 +70,7 @@ nav.topbarNav {
     background-color: $header-color;
 
     input {
-        background-color: black;
+        background-color: white;
     }
 }
 
@@ -128,11 +128,11 @@ a.active {
     box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.2);
 
     .menu-options {
-        background-color: black;
+        background-color: white;
 
         .menu-option {
             &:hover {
-                background: rgba(0, 102, 0, 0.8);
+                background: rgba(191,255,0, 0.8);
             }
         }
     }

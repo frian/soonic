@@ -32,6 +32,9 @@ class LoadThemeData extends AbstractFixture implements OrderedFixtureInterface
     		0 => array(
     			'name' => 'default-dark',
     		),
+            1 => array(
+    			'name' => 'default-clear',
+    		),
     	);
 
     	/**
