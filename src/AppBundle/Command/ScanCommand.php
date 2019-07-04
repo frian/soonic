@@ -561,7 +561,8 @@ class ScanCommand extends ContainerAwareCommand {
         // -- bulk load collection
         foreach ($tables as $table) {
             $query = "LOAD DATA LOCAL INFILE '".$sqlFilesPathes[$table]."'".
-                " INTO TABLE ". $table ." CHARACTER SET UTF8 FIELDS TERMINATED BY ';'  ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+                " INTO TABLE ". $table ." CHARACTER SET UTF8 FIELDS TERMINATED BY ';' " .
+                " ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
             $statement = $em->getConnection()->prepare($query)->execute();
         }
 
