@@ -1,9 +1,11 @@
 
-.icon-play:before { content: '\e800'; } /* '' */
-.icon-cog:before { content: '\e801'; } /* '' */
+.icon-cog:before { content: '\e800'; } /* '' */
+.icon-play:before { content: '\e801'; } /* '' */
 .icon-pause:before { content: '\e802'; } /* '' */
 .icon-to-start:before { content: '\e803'; } /* '' */
 .icon-to-end:before { content: '\e804'; } /* '' */
 .icon-plus:before { content: '\e805'; } /* '' */
 .icon-minus:before { content: '\e806'; } /* '' */
+.icon-left-open:before { content: '\e807'; } /* '' */
+.icon-right-open:before { content: '\e808'; } /* '' */
 .icon-trash:before { content: '\f1f8'; } /* '' */
