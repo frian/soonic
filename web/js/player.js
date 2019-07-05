@@ -1,5 +1,6 @@
 $(function() {
 
+    var screenWidth = $(window).width();
     var playerStatus = "paused";
     var statusClass = '';
 
@@ -45,6 +46,16 @@ $(function() {
         playerStatus = "playing";
         // $(".playing").removeClass("playing");
         $(this).addClass('playing');
+
+        if (screenWidth < 1024) {
+
+            if ($(".songInfo").css('display') === 'none') {
+                $(".songInfo").css('display', 'inline-block');
+                // -- adapt height to obove
+                $(".playlist").css('height', ($(".playlist").height() - $(".songInfo").height()) + 'px');
+            }
+
+        }
     });
 
 

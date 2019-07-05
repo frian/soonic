@@ -1,5 +1,7 @@
 $(function() {
 
+    var screenWidth = $(window).width();
+
     /**
      * Returns a album list for an artist or remove album list (close)
      * Updates the navigation panel
@@ -103,6 +105,11 @@ $(function() {
         });
         $(".active").removeClass("active");
         $(this).addClass('active');
+
+        if (screenWidth < 1024) {
+            $(".artists-navigation").css('display', 'none');
+            $(".songs, .playlist").css('display', 'block');
+        }
     });
 
 
@@ -216,4 +223,30 @@ $(function() {
             $("#playlistInfos").css('display', 'none');
         }
     });
+
+
+    /**
+     * Back to artists list
+     */
+    $(document).on("click", ".mobileBackButton", function(e) {
+
+        $(".songs, .playlist").css('display', 'none');
+        $(".artists-navigation").css('display', 'block');
+
+        console.log('clicked');
+    });
+
+
+    /**
+     * Forward to songs list/playlist
+     */
+    $(document).on("click", ".mobileForwardButton", function(e) {
+
+        $(".songs, .playlist").css('display', 'block');
+        $(".artists-navigation").css('display', 'none');
+
+        console.log('clicked');
+    });
+
+
 });

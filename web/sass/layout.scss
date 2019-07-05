@@ -76,7 +76,10 @@ $topbar-border-size: 1px;
     }
 
     .songInfo {
-        margin-left: 10px;
+        display: none;
+        float: left;
+        width: 100%;
+        padding: 0 10px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -111,6 +114,7 @@ $topbar-border-size: 1px;
 }
 
 nav.topbarNav {
+    display: none;
     font-size: 0;
     float: right;
     height: $topbar-size;
@@ -188,6 +192,9 @@ nav.topbarNav {
   -- Songs and playlist panels ------------------------------------------------
 */
 .songs, .playlist {
+    position: relative;
+    width: 100%;
+    height: calc((100% - (#{$topbar-size} + #{$topbar-border-size})) / 2);
     display: none;
     overflow-y: scroll;
 
@@ -228,9 +235,31 @@ nav.topbarNav {
 .list {
     thead {
         tr {
+            display: none;
             height: 22px;
             line-height: 22px;
         }
+    }
+    tbody {
+        tr {
+            height: 48px;
+            line-height: 48px;
+        }
+    }
+}
+
+
+thead, tbody {
+    tr {
+        th { border: #{$debug}px solid red; }
+        td:nth-child(1),th:nth-child(1) { width: 15px;}
+        td:nth-child(2),th:nth-child(2) { display: none; }
+        td:nth-child(3),th:nth-child(3) { display: none; }
+        td:nth-child(4),th:nth-child(4) { width: calc(100% - 15px); }
+        td:nth-child(5),th:nth-child(5) { display: none; }
+        td:nth-child(6),th:nth-child(6) { display: none; }
+        td:nth-child(7),th:nth-child(7) { display: none; }
+        td:nth-child(8),th:nth-child(8) { display: none; }
     }
 }
 
@@ -410,6 +439,26 @@ form {
 
 
 /*
+  -- Small screens buttons ----------------------------------------------------
+*/
+.mobileBackButton, .mobileForwardButton {
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    position: absolute;
+    right: 0;
+    bottom:0;
+    text-align: center;
+    cursor: pointer;
+    background-color: #000;
+    border: 1px solid #666;
+
+    .icon-left-open, .icon-right-open {
+        font-size: 180%;
+    }
+}
+
+/*
   -- Media query 1024px -------------------------------------------------------
 */
 @media all and (min-width: 1023px) {
@@ -451,6 +500,7 @@ form {
     /* -- Songs and playlist panels -- */
     .songs, .playlist {
         display: block;
+        width: auto;
         height: calc((100% - (#{$topbar-size} + #{$topbar-border-size})) / 2);
     }
 

@@ -24,12 +24,6 @@
 
     {% endif %}
 
-    {% if app.request.get('_route') != 'settings_index' %}
-        <a href="{{ path('settings_index') }}">
-            <i class="icon-cog button"></i>
-        </a>
-    {% endif %}
-
     <nav class="topbarNav">
 
         {% if app.request.get('_route') == 'library' %}
@@ -53,6 +47,12 @@
             {% endif %}
 
             <a href="{{ path('library') }}">{{ 'music'|trans }}</a>
+        {% endif %}
+
+        {% if app.request.get('_route') != 'settings_index' %}
+            <a href="{{ path('settings_index') }}">
+                <i class="icon-cog button"></i>
+            </a>
         {% endif %}
 
     </nav>
