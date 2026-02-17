@@ -10,7 +10,7 @@ $(function() {
 
     // -- on resize
     let resizeTimer;
-    $(window).resize(function() {
+    $(window).on("resize", function() {
         if(resizeTimer) {
             window.clearTimeout(resizeTimer);
         }
@@ -272,7 +272,7 @@ $(function() {
     let lastval = "";
     let timeout = null;
 
-    $("input[name=filter]").keyup(function() {
+    $(document).on("keyup", "input[name=filter]", function() {
 
         const url = '/artist/filter/';
 
@@ -722,9 +722,40 @@ $(function() {
     function setFilterInputSize() {
         let width;
         if (screenWidth < 1024) {
-            var buttonWidth = $( "#searchButton" ).actual( 'outerWidth' );
+            var buttonWidth = getElementOuterWidth($('#searchButton'));
             width = (screenWidth - buttonWidth );
         }
         $('.formElementContainer').width(width);
+    }
+
+    function getElementOuterWidth($element) {
+        if (!$element.length) {
+            return 0;
+        }
+
+        // jQuery 4 safe: avoid dependency on legacy jquery.actual plugin.
+        if ($element.is(':visible')) {
+            return $element.outerWidth() || 0;
+        }
+
+        var element = $element.get(0);
+        var style = element.style;
+        var original = {
+            display: style.display,
+            visibility: style.visibility,
+            position: style.position
+        };
+
+        style.visibility = 'hidden';
+        style.display = 'block';
+        style.position = 'absolute';
+
+        var width = $element.outerWidth() || 0;
+
+        style.display = original.display;
+        style.visibility = original.visibility;
+        style.position = original.position;
+
+        return width;
     }
 });
