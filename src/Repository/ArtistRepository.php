@@ -23,16 +23,14 @@ class ArtistRepository extends ServiceEntityRepository
     {
         return $this->findBy([], ['name' => 'ASC']);
     }
-    
+
     /**
-     * Method findByFilter
-     *
-     * @param $filter $filter [explicite description]
-     *
-     * @return void
+     * @return Artist[]
      */
-    public function findByFilter($filter)
+    public function findByFilter(?string $filter): array
     {
+        $filter = $filter ?? '';
+
         return $this->createQueryBuilder('a')
             ->where('a.name like :filter')
             ->setParameter('filter', '%'.$filter.'%')

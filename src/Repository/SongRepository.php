@@ -19,7 +19,10 @@ class SongRepository extends ServiceEntityRepository
         parent::__construct($registry, Song::class);
     }
 
-    public function findByKeyword($keyword)
+    /**
+     * @return Song[]
+     */
+    public function findByKeyword(string $keyword): array
     {
         return $this->createQueryBuilder('s')
             ->leftJoin('s.album', 'al')
@@ -37,7 +40,10 @@ class SongRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByArtistAndAlbum($artist, $album)
+    /**
+     * @return Song[]
+     */
+    public function findByArtistAndAlbum(string $artist, string $album): array
     {
         return $this->createQueryBuilder('s')
             ->join('s.artist', 'ar')
@@ -51,9 +57,16 @@ class SongRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getRandom($number)
+    /**
+     * @return Song[]
+     */
+    public function getRandom(int $number): array
     {
-        $maxId = $this->createQueryBuilder('s')
+        if ($number <= 0) {
+            return [];
+        }
+
+        $maxId = (int) $this->createQueryBuilder('s')
             ->select('MAX(s.id)')
             ->getQuery()
             ->getSingleScalarResult();
@@ -80,7 +93,7 @@ class SongRepository extends ServiceEntityRepository
             $qb->orWhere('s.id = :num_'.$i);
 
             $random = random_int(1, $maxId);
-            while (in_array($random, $randoms)) {
+            while (in_array($random, $randoms, true)) {
                 $random = random_int(1, $maxId);
             }
             array_push($randoms, $random);

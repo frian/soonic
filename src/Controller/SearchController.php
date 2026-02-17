@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
+use App\Repository\SongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Doctrine\Persistence\ManagerRegistry;
 
 class SearchController extends AbstractController
 {
     #[Route(path: '/search', name: 'search')]
-    public function showSearch(ManagerRegistry $doctrine, Request $request): Response
+    public function showSearch(SongRepository $songRepository, Request $request): Response
     {
         $form = $this->createFormBuilder()
              ->add('keyword', TextType::class)
@@ -23,7 +23,7 @@ class SearchController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
 
-            $results = $doctrine->getRepository('App\Entity\Song')->findByKeyword($data['keyword']);
+            $results = $songRepository->findByKeyword($data['keyword']);
 
             return $this->render('common/songs-list.html.twig', [
                  'songs' => $results,

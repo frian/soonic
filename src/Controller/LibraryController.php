@@ -11,8 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
-error_reporting(E_ALL);
-
 class LibraryController extends AbstractController
 {
     /**
@@ -83,7 +81,7 @@ class LibraryController extends AbstractController
      * @return Response
      */
     #[Route(path: '/songs/{artistSlug:artist}/{albumSlug}', name: 'artist_albums_songs', methods: ['GET'])]    
-    public function showAlbumsSongs(AlbumRepository $albumRepository, SongRepository $songRepository, ?Artist $artist = null, string $albumSlug): Response
+    public function showAlbumsSongs(AlbumRepository $albumRepository, SongRepository $songRepository, string $albumSlug, ?Artist $artist = null): Response
     {
         $response = new Response();
 

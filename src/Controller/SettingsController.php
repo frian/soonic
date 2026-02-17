@@ -37,8 +37,8 @@ class SettingsController extends AbstractController
 
         // -- get config form
         $config = $doctrine->getRepository('App\Entity\Config')->find(1);
-        if (! $config) {
-            die;
+        if (!$config) {
+            throw $this->createNotFoundException('Config not found.');
         }
         $editForm = $this->createForm(ConfigType::class, $config);
         $editForm->handleRequest($request);
