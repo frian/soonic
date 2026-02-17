@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Exception;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 #[AsCommand(
@@ -19,8 +20,8 @@ class ScanCommand extends Command
 {
     private const APPNAME = 'soonic';
 
-    private $entityManager;
-    private $projectDir;
+    private EntityManagerInterface $entityManager;
+    private string $projectDir;
 
     public function __construct(EntityManagerInterface $entityManager, string $projectDir)
     {
@@ -60,15 +61,17 @@ class ScanCommand extends Command
         }
 
         // -- create lock file
-        try {
-            touch($lockFile);
-        } catch (Exception $e) {
-            $io->error($e->getMessage());
+        if (@touch($lockFile) === false) {
+            $io->error('cannot create lock file');
+            return Command::FAILURE;
         }
 
-        // -- open log file
-        $logFilePath = $webPath.'/'.self::APPNAME.'.log';
-        $logFile = $this->openFile($logFilePath, $io, $lockFile);
+        $logFile = null;
+
+        try {
+            // -- open log file
+            $logFilePath = $webPath.'/'.self::APPNAME.'.log';
+            $logFile = $this->openFile($logFilePath, $io);
 
         // -- get entity manager
         $em = $this->entityManager;
@@ -114,7 +117,6 @@ class ScanCommand extends Command
         if (!is_dir($root)) {
             $io->newLine();
             $io->error('music folder not found');
-            unlink($lockFile);
             return Command::FAILURE;
         }
 
@@ -130,6 +132,7 @@ class ScanCommand extends Command
         // -- artists ans album lists
         $songs = [];
         $artists = [];
+        $artistIds = [];
         $albumId = 0;
 
         $albumsTags = [];
@@ -139,7 +142,6 @@ class ScanCommand extends Command
 
         $hasError = false;
         $hasWarning = false;
-        $warningTags = [];
 
         /*
          * -- Prepare needed files ------------------------------------------------------------------------------------
@@ -148,15 +150,14 @@ class ScanCommand extends Command
         $sqlFilesPathes = [];
         foreach ($tables as $table) {
             $sqlFilesPathes[$table] = str_replace('\\', '/', $webPath.'/'.self::APPNAME.'-'.$table.'.sql');
-            $sqlFile[$table] = $this->openFile($sqlFilesPathes[$table], $io, $lockFile);
+            $sqlFile[$table] = $this->openFile($sqlFilesPathes[$table], $io);
         }
 
         // -- write headers
-        fwrite($sqlFile['song'],
-            'id,album_id,artist_id,path,web_path,title, track_number,year,genre,duration'.PHP_EOL);
-        fwrite($sqlFile['album'], 'id,name,album_slug,song_count,duration,year,genre,path,cover_art_path'.PHP_EOL);
-        fwrite($sqlFile['artist'], PHP_EOL); // empty line used for scsn progress
-        fwrite($sqlFile['artist_album'], 'artist_id,album_id'.PHP_EOL);
+        $this->writeCsvRow($sqlFile['song'], ['id', 'album_id', 'artist_id', 'path', 'web_path', 'title', 'track_number', 'year', 'genre', 'duration']);
+        $this->writeCsvRow($sqlFile['album'], ['id', 'name', 'album_slug', 'song_count', 'duration', 'year', 'genre', 'path', 'cover_art_path']);
+        $this->writeCsvRow($sqlFile['artist'], ['id', 'name', 'artist_slug', 'album_count', 'cover_art_path']);
+        $this->writeCsvRow($sqlFile['artist_album'], ['artist_id', 'album_id']);
 
 
         // -- get iterator
@@ -164,11 +165,11 @@ class ScanCommand extends Command
             $di = new \RecursiveDirectoryIterator($root, \RecursiveDirectoryIterator::FOLLOW_SYMLINKS);
         } catch (Exception $e) {
             $io->error($e->getMessage());
-            unlink($lockFile);
             return Command::FAILURE;
         }
 
         $it = new \RecursiveIteratorIterator($di);
+        $getID3 = new \getID3();
 
         /*
          * -- SCAN ----------------------------------------------------------------------------------------------------
@@ -193,7 +194,7 @@ class ScanCommand extends Command
                 if ($currentFolder !== $previousFolder) {
                     if ($previousFolder !== null) {
                         if (!empty($songs)) {
-                            $results = $this->AddAlbumIds($songs, $albumId, $sqlFile['artist_album'], $sqlFile['song']);
+                            $results = $this->addAlbumIds($songs, $albumId, $sqlFile['artist_album'], $sqlFile['song']);
                             $albumId = $results['album_id'];
                             $songs = $results['songs'];
                             $this->buildAlbumTags($songs, $albumsSlugs, $sqlFile['album'], $io, $verbosity);
@@ -206,8 +207,6 @@ class ScanCommand extends Command
                 }
 
                 // -- get track tags
-                $getID3 = new \getID3();
-
                 $fileInfo = $getID3->analyze($file);
 
                 \getid3_lib::CopyTagsToComments($fileInfo);
@@ -216,6 +215,8 @@ class ScanCommand extends Command
                  * -- Build track tags --------------------------------------------------------------------------------
                  */
                 $trackTags = [];
+                $fileHasWarning = false;
+                $fileWarningTags = [];
 
                 // -- copy tags or skip file
                 if (!empty($fileInfo['comments'])) {
@@ -232,25 +233,15 @@ class ScanCommand extends Command
                     $trackTags['duration'][0] = $fileInfo['playtime_string'];
                 }
                 elseif (!empty($fileInfo['playtime_seconds'])) {
-                    $seconds = round($fileInfo['playtime_seconds']);
-                    $playtimeString = '';
+                    $totalSeconds = (int) round((float) $fileInfo['playtime_seconds']);
+                    $hours = intdiv($totalSeconds, 3600);
+                    $minutes = intdiv($totalSeconds % 3600, 60);
+                    $seconds = $totalSeconds % 60;
 
-                    if ($seconds < 60) {
-                        $playtimeString = $seconds;
-                    }
-                    elseif ($seconds >= 60 && $seconds < 3600) {
-                        $minutes = floor(($seconds / 60) % 60);
-                        $seconds = $seconds % 60;
-                        $seconds = ($seconds < 10) ? '0'.$seconds : $seconds;
-                        $playtimeString = "$minutes:$seconds";
-                    }
-                    elseif ($seconds >= 3600) {
-                        $hours = floor($seconds / 3600);
-                        $seconds = $seconds % 60;
-                        $minutes = floor(($seconds / 60) % 60);
-                        $minutes = ($minutes < 10) ? '0'.$minutes : $minutes;
-                        $playtimeString = "$hours:$minutes:$seconds";
-                        $trackTags['duration'][0] = $playtimeString || null;
+                    if ($hours > 0) {
+                        $trackTags['duration'][0] = sprintf('%d:%02d:%02d', $hours, $minutes, $seconds);
+                    } else {
+                        $trackTags['duration'][0] = sprintf('%d:%02d', $minutes, $seconds);
                     }
                 }
 
@@ -276,9 +267,9 @@ class ScanCommand extends Command
                         $tags['track_number'] = $trackTags['track_number'][0];
                     }
                 } else {
-                    $hasWarning = true;
-                    if (!in_array('track_number', $warningTags)) {
-                        array_push($warningTags, 'track_number');
+                    $fileHasWarning = true;
+                    if (!in_array('track_number', $fileWarningTags, true)) {
+                        array_push($fileWarningTags, 'track_number');
                     }
 
                     $tags['track_number'] = null;
@@ -287,9 +278,9 @@ class ScanCommand extends Command
                 if (empty($trackTags['year'])) {
                     if (empty($trackTags['date'])) {
                         if (empty($trackTags['creation_date'])) {
-                            $hasWarning = true;
-                            if (!in_array('year', $warningTags)) {
-                                array_push($warningTags, 'year');
+                            $fileHasWarning = true;
+                            if (!in_array('year', $fileWarningTags, true)) {
+                                array_push($fileWarningTags, 'year');
                             }
                             $tags['year'] = null;
                         } else {
@@ -306,9 +297,9 @@ class ScanCommand extends Command
                     $tags['genre'] = $trackTags['genre'][0];
                 } else {
                     $tags['genre'] = null;
-                    $hasWarning = true;
-                    if (!in_array('genre', $warningTags)) {
-                        array_push($warningTags, 'genre');
+                    $fileHasWarning = true;
+                    if (!in_array('genre', $fileWarningTags, true)) {
+                        array_push($fileWarningTags, 'genre');
                     }
                 }
 
@@ -321,10 +312,9 @@ class ScanCommand extends Command
                 $tags['artist'] = mb_strtoupper($tags['artist']);
                 if (!\array_key_exists($tags['artist'], $artists)) {
                     $artists[$tags['artist']] = 0;
-                    $artistId = count($artists);
-                } else {
-                    $artistId = array_search($tags['artist'], array_keys($artists)) + 1;
+                    $artistIds[$tags['artist']] = count($artistIds) + 1;
                 }
+                $artistId = $artistIds[$tags['artist']];
 
                 if (!in_array($artistId, $albumsTags['artists_ids'])) {
                     array_push($albumsTags['artists_ids'], $artistId);
@@ -338,10 +328,11 @@ class ScanCommand extends Command
 
                 $tags['album_path'] = preg_replace("|^$webPath|", '', pathinfo($file, PATHINFO_DIRNAME));
 
-                if ($hasWarning) {
-                    $this->logWarningMessage($warningTags, $file, $logFile, $verbosity);
+                if ($fileHasWarning) {
+                    $hasWarning = true;
+                    $this->logWarningMessage($fileWarningTags, $file, $logFile);
                     if ($verbosity >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
-                        $this->printWarningMessage($warningTags, $file, $root, $io);
+                        $this->printWarningMessage($fileWarningTags, $file, $root, $io);
                     }
                 }
 
@@ -353,7 +344,7 @@ class ScanCommand extends Command
 
         // -- handle last folder
         if (!empty($songs)) {
-            $results = $this->AddAlbumIds($songs, $albumId, $sqlFile['artist_album'], $sqlFile['song']);
+            $results = $this->addAlbumIds($songs, $albumId, $sqlFile['artist_album'], $sqlFile['song']);
             $albumId = $results['album_id'];
             $songs = $results['songs'];
             $this->buildAlbumTags($songs, $albumsSlugs, $sqlFile['album'], $io, $verbosity);
@@ -377,12 +368,13 @@ class ScanCommand extends Command
         // -- write artist tags to sql file
         // -- name,artist_slug,album_count,cover_art_path
         foreach ($artists as $artist => $albumCount) {
-            fwrite($sqlFile['artist'], ';'.
-                $artist.';'.
-                $this->slugify($artist, $artistsSlugs).';'.
-                $albumCount.';'.
-                PHP_EOL
-            );
+            $this->writeCsvRow($sqlFile['artist'], [
+                '',
+                $artist,
+                $this->slugify($artist, $artistsSlugs),
+                $albumCount,
+                '',
+            ]);
         }
 
         /*
@@ -403,8 +395,7 @@ class ScanCommand extends Command
             }
     
             // -- enable local-infile
-            $query = 'SET GLOBAL local_infile = true';
-            $em->getConnection()->prepare($query)->executeStatement();
+            $this->setLocalInfile($em, true, $io, $verbosity);
     
             if ($verbosity >= OutputInterface::VERBOSITY_VERBOSE) {
                 $io->writeln("<soonic_info>. done</soonic_info>");
@@ -438,15 +429,12 @@ class ScanCommand extends Command
             }
     
             // -- disable local-infile
-            $query = 'SET GLOBAL local_infile = false';
-            $em->getConnection()->prepare($query)->executeStatement();
+            $this->setLocalInfile($em, false, $io, $verbosity);
     
             if ($verbosity >= OutputInterface::VERBOSITY_VERBOSE) {
                 $io->writeln("<soonic_info>. done</soonic_info>");
             }
         }
-
-        fclose($logFile);
 
         // -- final output
         if ($verbosity >= OutputInterface::VERBOSITY_VERBOSE) {
@@ -478,25 +466,39 @@ class ScanCommand extends Command
             $io->writeln(' [INFO]   done. \o/');
         }
 
-        unlink($lockFile);
-
         return Command::SUCCESS;
-    }
-
-    // -- delete lock file on file open error
-    private function openFile(string $filePath, SymfonyStyle $io, $lockFile)
-    {
-        try {
-            $file = fopen($filePath, 'w');
-            return $file;
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             $io->error($e->getMessage());
-            unlink($lockFile);
             return Command::FAILURE;
+        } finally {
+            if (isset($sqlFile) && is_array($sqlFile)) {
+                foreach ($sqlFile as $handle) {
+                    if (is_resource($handle)) {
+                        fclose($handle);
+                    }
+                }
+            }
+            if (is_resource($logFile)) {
+                fclose($logFile);
+            }
+            if (file_exists($lockFile)) {
+                @unlink($lockFile);
+            }
         }
     }
 
-    private function AddAlbumIds($songs, $albumId, $sqlArtistAlbumFile, $sqlSongFile) : array
+    private function openFile(string $filePath, SymfonyStyle $io): mixed
+    {
+        $file = @fopen($filePath, 'w');
+        if ($file === false) {
+            $io->error("cannot open file: $filePath");
+            throw new RuntimeException("cannot open file: $filePath");
+        }
+
+        return $file;
+    }
+
+    private function addAlbumIds(array $songs, int $albumId, mixed $sqlArtistAlbumFile, mixed $sqlSongFile): array
     {
         $albums = [];
         $ids = [];
@@ -513,18 +515,18 @@ class ScanCommand extends Command
             $song['album_id'] = $ids[$song['album']];
 
             // -- write songs to sql
-            fwrite($sqlSongFile, ';'.
-                $song['album_id'].';'.
-                $song['artist_id'].';'.
-                $song['path'].';'.
-                $song['web_path'].';'.
-                $song['title'].';'.
-                $song['track_number'].';'.
-                $song['year'].';'.
-                $song['genre'].';'.
-                $song['duration'].';'.
-                PHP_EOL
-            );
+            $this->writeCsvRow($sqlSongFile, [
+                '',
+                $song['album_id'],
+                $song['artist_id'],
+                $song['path'],
+                $song['web_path'],
+                $song['title'],
+                $song['track_number'],
+                $song['year'],
+                $song['genre'],
+                $song['duration'],
+            ]);
 
             // -- set artist_album values
             $artistAlbumValue = $song['artist_id'].';'.$song['album_id'];
@@ -535,13 +537,14 @@ class ScanCommand extends Command
 
         // -- write artist_album to sql
         foreach ($artistAlbumValues as $value) {
-            fwrite($sqlArtistAlbumFile, $value.PHP_EOL);
+            $parts = explode(';', $value);
+            $this->writeCsvRow($sqlArtistAlbumFile, [$parts[0], $parts[1]]);
         }
 
         return ['album_id' => $albumId, 'songs' => $songs];
     }
     
-    private function buildAlbumTags($songs, $albumsSlugs, $sqlAlbumFile, $io, $verbosity) : void
+    private function buildAlbumTags(array $songs, array &$albumsSlugs, mixed $sqlAlbumFile, SymfonyStyle $io, int $verbosity): void
     {
         $albumSingleTags = ['year', 'genre', 'album_path'];
         $albumsTags = [];
@@ -598,17 +601,17 @@ class ScanCommand extends Command
             }
 
             // -- write album to sql
-            fwrite($sqlAlbumFile, ';'.
-                $albumTags['album'].';'.
-                $this->slugify($albumTags['album'], $albumsSlugs).';'.
-                count($albumTags['durations']).';'.
-                $this->getAlbumDuration($albumTags['durations']).';'.
-                $albumTags['year'].';'.
-                $albumTags['genre'].';'.
-                $albumTags['album_path'].';'.
-                ';'. // -- covert art path
-                PHP_EOL
-            );
+            $this->writeCsvRow($sqlAlbumFile, [
+                '',
+                $albumTags['album'],
+                $this->slugify($albumTags['album'], $albumsSlugs),
+                count($albumTags['durations']),
+                $this->getAlbumDuration($albumTags['durations']),
+                $albumTags['year'],
+                $albumTags['genre'],
+                $albumTags['album_path'],
+                '', // -- cover art path
+            ]);
 
             if ($verbosity >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
                 $io->text(" added album ".$albumTags['album_path']);
@@ -616,7 +619,7 @@ class ScanCommand extends Command
         }
     }
 
-    private function logWarningMessage($warningTags, $file, $logFile) : void
+    private function logWarningMessage(array $warningTags, string $file, mixed $logFile): void
     {
         $warningOutput = '[warning]no ';
         foreach ($warningTags as $key => $tag) {
@@ -626,7 +629,7 @@ class ScanCommand extends Command
         fwrite($logFile, $warningOutput);
     }
 
-    private function printWarningMessage($warningTags, $file, $root, $io) 
+    private function printWarningMessage(array $warningTags, string $file, string $root, SymfonyStyle $io): void
     {
         $file = str_replace($root, '', $file);
         $warningOutput = '<soonic_warning>[WARNING]</soonic_warning> no ';
@@ -637,7 +640,7 @@ class ScanCommand extends Command
         $io->writeln($warningOutput);
     }
 
-    private function skipFile(string $error, $logFile, $skipCount, $io, $verbosity, $root) : int
+    private function skipFile(string $error, mixed $logFile, int $skipCount, SymfonyStyle $io, int $verbosity, string $root): int
     {
         fwrite($logFile, "[error]$error;SKIPPING FILE".PHP_EOL);
         if ($verbosity >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
@@ -687,5 +690,34 @@ class ScanCommand extends Command
         $secs = $secs > 9 ? $secs : 0 .$secs;
 
         return $secs;
+    }
+
+    private function writeCsvRow(mixed $file, array $fields): void
+    {
+        fputcsv($file, $fields, ';', '"', '\\');
+    }
+
+    private function setLocalInfile(EntityManagerInterface $em, bool $enabled, SymfonyStyle $io, int $verbosity): void
+    {
+        $value = $enabled ? 1 : 0;
+
+        try {
+            $query = "SET SESSION local_infile = $value";
+            $em->getConnection()->prepare($query)->executeStatement();
+            return;
+        } catch (\Throwable $sessionException) {
+            // fallback for servers where local_infile is GLOBAL-only
+        }
+
+        try {
+            $query = "SET GLOBAL local_infile = $value";
+            $em->getConnection()->prepare($query)->executeStatement();
+        } catch (\Throwable $globalException) {
+            if ($enabled) {
+                $io->warning('local_infile cannot be changed by this user; LOAD DATA LOCAL INFILE may fail depending on server config.');
+            } elseif ($verbosity >= OutputInterface::VERBOSITY_VERBOSE) {
+                $io->writeln('<soonic_warning>[WARNING]</soonic_warning> unable to disable local_infile after import.');
+            }
+        }
     }
 }
