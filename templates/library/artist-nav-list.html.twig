@@ -1,0 +1,7 @@
+<ul id="artists-nav">
+{% for artist in artists %}
+    <li><a class="artist" href="{{ path('artist_albums', { 'artistSlug': artist.artistSlug }) }}">{{ artist.name }}</a></li>
+{% else %}
+no artists found
+{% endfor %}
+</ul>

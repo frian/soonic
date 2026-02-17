@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>{{ 'radio.edit'|trans }}</h1>
+
+    <form id="radio_save" action="{{ path('radio_edit', {'id': radio.id}) }}" method="POST">
+
+        <table class="form">
+            <tr>
+                <td>{{ form_label(edit_form.name) }}</td>
+                <td>{{ form_widget(edit_form.name) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(edit_form.streamUrl) }}</td>
+                <td>{{ form_widget(edit_form.streamUrl) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form_label(edit_form.homepageUrl) }}</td>
+                <td>{{ form_widget(edit_form.homepageUrl) }}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="buttonRow">
+                    <input class="button" type="submit" value="{{ 'edit'|trans }}" />
+                    <a class="button" href="{{ path('radio_index') }}">{{ 'back.tolist'|trans }}</a>
+                </td>
+            </tr>
+            {{ form_widget(edit_form._token) }}
+        </table>
+    </form>
+
+{% endblock %}

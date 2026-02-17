@@ -1,0 +1,16 @@
+<tbody>
+{% for song in songs %}
+    <tr data-path="{{ song.webPath }}" data-duration="{{ song.duration }}">
+        <td class="add"><i class="icon-plus"></i></td>
+        <td>{{ song.trackNumber }}</td>
+        <td>{{ song.artist }}</td>
+        <td>{{ song.title }}</td>
+        <td>{{ song.album }}</td>
+        <td>{{ song.duration }}</td>
+        <td>{{ song.year }}</td>
+        <td>{{ song.genre }}</td>
+    </tr>
+{% else %}
+no songs found
+{% endfor %}
+</tbody>

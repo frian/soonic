@@ -1,0 +1,36 @@
+<section id="songsSection" class="songs">
+    <div class="songs-header-container">
+        <table class="list songs-header">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th data-text='artist'>{{ 'artist'|trans }}</th>
+                    <th data-text='title'>{{ 'title'|trans }}</th>
+                    <th data-text='album'>{{ 'album'|trans }}</th>
+                    <th data-text='duration'>{{ 'duration'|trans }}</th>
+                    <th data-text='year'>{{ 'year'|trans }}</th>
+                    <th data-text='genre'>{{ 'genre'|trans }}</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="songs-container">
+        <table id="songs" class="list">
+            <thead>
+                <tr>
+                    <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <div class="mobileButton mobileForwardButton mobileSongsToPlaylistButton">
+        <i class="icon-right-open"></i>
+    </div>
+    <div class="mobileButton mobileBackButton mobileSongsToArtistsButton">
+        <i class="icon-left-open"></i>
+    </div>
+</section>

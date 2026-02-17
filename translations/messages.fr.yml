@@ -1,0 +1,38 @@
+album: album
+albums: albums
+artist: artiste
+artists: artistes
+back: retour
+back.tolist: 'retour à la liste'
+create: créer
+delete: effacer
+duration: durée
+edit: modifier
+files: fichiers
+filter: filtre
+filter.placeholder: 'min 3 caractères'
+found: trouvé
+homePage: 'page d''accueil'
+genre: genre
+language: langue
+library: bibliothèque
+music: musique
+name: nom
+playlist: playlist
+playlist.add: 'ajouter à la playlist'
+playlist.remove: 'retirer de la playlist'
+radio: radio
+radios: radios
+radio.new: 'nouvelle radio'
+radio.edit: 'modifier la radio'
+random: aléatoire
+scan: scanner la bibliothèque
+save: enregistrer
+search: chercher
+search.placeholder: 'min 3 caractères'
+settings: réglages
+songs.loadrandom: charger 20 chansons aléatoires
+streamUrl: 'url du flux'
+theme: thème
+title: titre
+year: année

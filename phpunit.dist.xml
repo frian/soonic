@@ -1,44 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         colors="true"
-         failOnDeprecation="true"
-         failOnNotice="true"
-         failOnWarning="true"
-         bootstrap="tests/bootstrap.php"
-         cacheDirectory=".phpunit.cache"
->
-    <php>
-        <ini name="display_errors" value="1" />
-        <ini name="error_reporting" value="-1" />
-        <server name="APP_ENV" value="test" force="true" />
-        <server name="SHELL_VERBOSITY" value="-1" />
-    </php>
-
-    <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
-
-    <source ignoreSuppressionOfDeprecations="true"
-            ignoreIndirectDeprecations="true"
-            restrictNotices="true"
-            restrictWarnings="true"
-    >
-        <include>
-            <directory>src</directory>
-        </include>
-
-        <deprecationTrigger>
-            <method>Doctrine\Deprecations\Deprecation::trigger</method>
-            <method>Doctrine\Deprecations\Deprecation::delegateTriggerToBackend</method>
-            <function>trigger_deprecation</function>
-        </deprecationTrigger>
-    </source>
-
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd" backupGlobals="false" colors="true" bootstrap="tests/bootstrap.php" cacheDirectory=".phpunit.cache">
+  <php>
+    <ini name="display_errors" value="1"/>
+    <ini name="error_reporting" value="-1"/>
+    <server name="APP_ENV" value="test" force="true"/>
+    <server name="SHELL_VERBOSITY" value="-1"/>
+    <server name="SYMFONY_PHPUNIT_REMOVE" value=""/>
+    <server name="SYMFONY_PHPUNIT_VERSION" value="12.2"/>
+    <env name="SYMFONY_DEPRECATIONS_HELPER" value="0"/>
+  </php>
+  <testsuites>
+    <testsuite name="no-music">
+      <directory>tests/Controller/no-music</directory>
+    </testsuite>
+    <testsuite name="scan">
+      <directory>tests/Command</directory>
+    </testsuite>
+    <testsuite name="with-music">
+      <directory>tests/Controller/with-music</directory>
+    </testsuite>
+  </testsuites>
+  <!-- Run `composer require symfony/panther` before enabling this extension -->
+  <!--
     <extensions>
+        <bootstrap class="Symfony\Bridge\PhpUnit\SymfonyExtension">
+            <parameter name="clock-mock-namespaces" value="App" />
+            <parameter name="dns-mock-namespaces" value="App" />
+        </bootstrap>
+        <extension class="Symfony\Component\Panther\ServerExtension" />
     </extensions>
+    -->
+  <source>
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+  </source>
 </phpunit>

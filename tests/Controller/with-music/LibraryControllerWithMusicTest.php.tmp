@@ -1,0 +1,82 @@
+<?php
+
+namespace App\Tests;
+
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+class LibraryControllerWithMusicTest extends WebTestCase
+{
+    public function testLibrary(): void
+    {
+        $url = '/';
+
+        $client = static::createClient();
+        $crawler = $client->request('GET', $url);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.topbar');
+        $this->assertSelectorExists('#songsSection');
+        $this->assertSelectorExists('.artist');
+        $this->assertTrue($crawler->filter(".artist:contains(\"DIRE STRAITS\")")->count() == 1);
+    }
+
+    public function testShowArtistAlbums(): void
+    {
+        $url = '/albums/dire-straits';
+
+        $client = static::createClient();
+        $crawler = $client->request('GET', $url);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertTrue($crawler->filter("#album-nav .song:contains(\"Dire Straits\")")->count() == 1);
+    }
+
+    public function testShowAlbumsSongs(): void
+    {
+        $url = '/songs/dire-straits/dire-straits';
+
+        $client = static::createClient();
+        $crawler = $client->request('GET', $url);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertTrue($crawler->filter("td:contains(\"DIRE STRAITS\")")->count() > 1);
+        $this->assertSelectorExists('i.icon-plus');
+    }
+
+    public function testFilterArtist(): void
+    {
+        $url = '/artist/filter/';   
+
+        $client = static::createClient();
+        $client->request('GET', $url);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('#artists-nav');
+        $this->assertSelectorTextSame('a.artist', 'DIRE STRAITS');
+    }
+
+    public function testFilterArtistWithParam(): void
+    {
+        $url = '/artist/filter/dire';
+
+        $client = static::createClient();
+        $client->request('GET', $url);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('#artists-nav');
+        $this->assertSelectorTextSame('a.artist', 'DIRE STRAITS');
+    }
+
+    public function testRandomSongs(): void
+    {
+        $url = '/songs/random';
+
+        $client = static::createClient();
+        $crawler = $client->request('GET', $url);
+
+        $this->assertResponseIsSuccessful();
+
+        $node = $crawler->filterXPath('//i[@class="icon-plus"]');
+        $this->assertTrue($node->count() == 20);
+    }
+}

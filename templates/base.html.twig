@@ -1,17 +1,56 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Soonic{% block title %}{% endblock %}</title>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <meta name="apple-mobile-web-app-title" content="Soonic">
+        <meta name="application-name" content="Soonic">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+
+        <link href="/css/layout.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="/css/fontello-embedded.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+        {% set theme = theme_helper.get() %}
+
+        {% if file_exists('css/themes/' ~ theme ~ '/layout.css') %}
+            <link id="layoutThemeCss" href="/css/themes/{{ theme }}/layout.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        {% endif %}
+
+        {% if file_exists('css/themes/' ~ theme ~ '/screen.css') %}
+            <link id="screenThemeCss" href="/css/themes/{{ theme }}/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        {% endif %}
+
+        {% block stylesheets %}{% endblock %}
+
+
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        {{ include('common/topbar.html.twig') }}
+
         {% block body %}{% endblock %}
+
+        <script src="/js/jquery-3.6.0.min.js"></script>
+        <script src="/js/jquery.actual.min.js"></script>
+        <script src="/js/jquery.hoverIntent.min.js" ></script>
+        <script src="/js/lozad.min.js"></script>
+        <script src="/js/main.js"></script>
+        <script src="/js/album.js"></script>
+        <script src="/js/player.js"></script>
+        <script src="/js/radio.js"></script>
+
+        {% block javascripts %}
+        {% endblock %}
     </body>
 </html>

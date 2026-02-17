@@ -1,0 +1,239 @@
+/*
+  -- Default dark theme -------------------------------------------------------
+*/
+
+$fg-color: #eee;
+$bg-color: #111;
+$hover-active: #060;
+$bg-alternate: #111;
+$header-color: #333;
+$border-color: #666;
+$default-gradient: linear-gradient(to top, rgba(34,34,34, 1), rgba(51,51,51, 0.9) );
+$hover-gradient: linear-gradient(to top, rgba(0,102,0, 1), rgba(0,102,0, 0.5) );
+
+/*
+  --  1. Global ---------------------------------------------------------------
+*/
+body {
+    color: $fg-color;
+    background-color: $bg-color;
+    background: linear-gradient(to bottom right,
+        rgba(17,17,17, 1),
+        rgba(17,17,17, 0.9)
+    );
+}
+
+a {
+    color: $fg-color;
+}
+
+h1 {
+    border-bottom: 1px solid $border-color;
+}
+
+h2 {
+    border-bottom: 1px solid $border-color;
+}
+
+* {
+    // scrollbar-width: thin;
+    scrollbar-color: $border-color $bg-color;
+}
+*::-webkit-scrollbar {
+    width: 12px;
+}
+*::-webkit-scrollbar-track {
+    background: $bg-color;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: $border-color;
+    border-radius: 20px;
+    border: 3px solid $bg-color;
+}
+
+
+/*
+  --  2. Topbar ---------------------------------------------------------------
+*/
+.topbar {
+    border-bottom-color: $border-color;
+
+    .songArtist {
+        color: #ddd;
+    }
+
+    .progressbar {
+        background-color: #555;
+    }
+}
+
+nav.topbarNav {
+    a {
+        background: $default-gradient;
+    }
+
+    a:hover {
+        background: $hover-gradient;
+        .icon-cog {
+            background: $hover-gradient;
+        }
+    }
+}
+
+/*
+  --  3. Artists navigation ---------------------------------------------------
+*/
+.artists-navigation {
+    .song {
+        background-color: $header-color;
+    }
+}
+
+.filter {
+    background-color: $header-color;
+
+    input {
+        background-color: black;
+    }
+}
+
+a.active {
+    background-color: $hover-active!important;
+}
+
+
+/*
+  --  5. Songs and playlist panels --------------------------------------------
+*/
+.songs-header-container, .playlist-header {
+    background-color: $header-color;
+}
+
+.list {
+    thead {
+        th {
+            background-color: $header-color;
+        }
+    }
+
+    tbody {
+        tr:nth-child(even) {
+            background-color: $bg-alternate;
+        }
+    }
+
+    tr.playing, tr.selected {
+        background-color: $hover-active!important;
+    }
+
+    .icon-plus, .icon-minus {
+        color: #aaa;
+    }
+}
+
+
+/*
+  --  6. Albums view ----------------------------------------------------------
+*/
+.album-container-content {
+    .no-cover-art {
+        .album-info-album {
+
+        }
+    }
+}
+
+
+/*
+  --  7. Radios ---------------------------------------------------------------
+*/
+.radio {
+    &.activeRadio {
+        background-color: $hover-active!important;
+    }
+}
+
+.radio:nth-child(4n+2), .radio:nth-child(4n+3) {
+    background-color: $bg-alternate;
+}
+
+
+/*
+  --  8. Settings-view --------------------------------------------------------
+*/
+
+
+/*
+  --  9. Mobile menu ----------------------------------------------------------
+*/
+.hamburger-inner,
+.hamburger-inner::after,
+.hamburger-inner::before {
+    background-color: $fg-color!important;
+}
+
+
+/*
+  -- 10. Small screen buttons -------------------------------------------------
+*/
+.mobileButton {
+    background-color: $bg-color;
+}
+
+
+/*
+  -- 11. Forms ----------------------------------------------------------------
+*/
+#navigationSearchForm {
+    background-color: $bg-color;
+}
+
+input[type="text"] {
+    color: $fg-color;
+    background-color: $bg-color;
+    border: 1px solid #555!important;
+}
+
+.input-reset {
+    background-color: $bg-color;
+}
+
+.input-reset:after {
+    color: $fg-color;
+    background-color: $bg-color;
+}
+
+
+/*
+  -- 12. Crud forms -----------------------------------------------------------
+*/
+form div div input {
+    border: 1px solid $border-color;
+}
+
+.button {
+    color: $fg-color;
+    background: $default-gradient;
+}
+
+.button:hover {
+    background: $hover-gradient;
+}
+
+
+/*
+  -- 13. Context menus --------------------------------------------------------
+*/
+.songsContextMenu, .playlistContextMenu {
+    box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+    .menu-options {
+        background-color: black;
+
+        .menu-option {
+            &:hover {
+                background: rgba(0, 102, 0, 0.8);
+            }
+        }
+    }
+}
