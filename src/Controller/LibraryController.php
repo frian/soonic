@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Artist;
+use App\Repository\AlbumRepository;
 use App\Repository\ArtistRepository;
+use App\Repository\SongRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
-use Doctrine\Persistence\ManagerRegistry;
 
 error_reporting(E_ALL);
 
@@ -82,7 +83,7 @@ class LibraryController extends AbstractController
      * @return Response
      */
     #[Route(path: '/songs/{artistSlug:artist}/{albumSlug}', name: 'artist_albums_songs', methods: ['GET'])]    
-    public function showAlbumsSongs(ManagerRegistry $doctrine, Artist|null $artist = null, $albumSlug): Response
+    public function showAlbumsSongs(AlbumRepository $albumRepository, SongRepository $songRepository, ?Artist $artist = null, string $albumSlug): Response
     {
         $response = new Response();
 
@@ -90,8 +91,13 @@ class LibraryController extends AbstractController
             $response->setStatusCode(404);
             $songs = [];
         } else {
-            $album = $doctrine->getRepository('App\Entity\Album')->findOneByAlbumSlug($albumSlug);
-            $songs = $doctrine->getRepository('App\Entity\Song')->findByArtistAndAlbum($artist->getName(), $album->getName());
+            $album = $albumRepository->findOneBy(['albumSlug' => $albumSlug]);
+            if (!$album) {
+                $response->setStatusCode(404);
+                $songs = [];
+            } else {
+                $songs = $songRepository->findByArtistAndAlbum($artist->getName(), $album->getName());
+            }
         }
 
 
@@ -112,9 +118,9 @@ class LibraryController extends AbstractController
      */
     #[Route(path: '/artist/filter/', name: 'artist_filter_all', methods: ['GET'])]
     #[Route(path: '/artist/filter/{filter}', name: 'artist_filter', methods: ['GET'])]    
-    public function filterArtist(ManagerRegistry $doctrine, $filter = null): Response
+    public function filterArtist(ArtistRepository $artistRepository, ?string $filter = null): Response
     {
-        $artists = $doctrine->getRepository('App\Entity\Artist')->findByFilter($filter);
+        $artists = $artistRepository->findByFilter($filter);
 
         return $this->render('library/artist-nav-list.html.twig', [
             'artists' => $artists,
@@ -132,9 +138,9 @@ class LibraryController extends AbstractController
      * @return Response
      */
     #[Route(path: '/songs/random', name: 'random_songs', methods: ['GET'])]    
-    public function randomSongs(ManagerRegistry $doctrine, $number = 20): Response
+    public function randomSongs(SongRepository $songRepository, int $number = 20): Response
     {   
-        $songs = $doctrine->getRepository('App\Entity\Song')->getRandom($number);
+        $songs = $songRepository->getRandom($number);
 
         return $this->render('common/songs-list.html.twig', [
             'songs' => $songs,

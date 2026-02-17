@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\ConfigType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,8 +28,7 @@ class SettingsController extends AbstractController
         foreach ($tables as $table) {
             $query = "select max(id) from $table";
             $statement = $doctrine->getConnection()->prepare($query);
-            $result = $statement->execute();
-            $result = $result->fetchAssociative()['max(id)'];
+            $result = $statement->executeQuery()->fetchOne();
             if ($result === null) {
                 $result = 0;
             }
@@ -40,7 +40,7 @@ class SettingsController extends AbstractController
         if (! $config) {
             die;
         }
-        $editForm = $this->createForm('App\Form\ConfigType', $config);
+        $editForm = $this->createForm(ConfigType::class, $config);
         $editForm->handleRequest($request);
 
         return $this->render('settings/index.html.twig', [
