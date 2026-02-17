@@ -14,14 +14,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: 'scan')]
 class ScanController extends AbstractController
 {
-    /**
-     * @var string
-     */
-    private $projectDir;
+    private string $projectDir;
 
     public function __construct(string $projectDir)
     {
-        $this->kernelProjectDir = $projectDir;
+        $this->projectDir = $projectDir;
     }
 
     /**
@@ -30,7 +27,7 @@ class ScanController extends AbstractController
     #[Route(path: '/', name: 'scan', methods: ['GET'])]
     public function scan(): Response
     {
-        $projectDir = $this->kernelProjectDir;
+        $projectDir = $this->projectDir;
         $lockFile = $projectDir.'/public/soonic.lock';
 
         $command = $projectDir.'/bin/console soonic:scan --guess';
@@ -48,7 +45,7 @@ class ScanController extends AbstractController
     #[Route(path: '/progress', name: 'scan_progress', methods: ['GET'])]
     public function scanProgress(): Response
     {
-        $projectDir = $this->kernelProjectDir;
+        $projectDir = $this->projectDir;
         $lockFile = $projectDir.'/public/soonic.lock';
         $status = 'stopped';
 

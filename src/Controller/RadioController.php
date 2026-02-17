@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Radio;
 use App\Form\RadioType;
 use App\Repository\RadioRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +23,13 @@ class RadioController extends AbstractController
     }
 
     #[Route(path: '/new', name: 'radio_new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $radio = new Radio();
         $form = $this->createForm(RadioType::class, $radio);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($radio);
             $entityManager->flush();
 
@@ -51,13 +51,13 @@ class RadioController extends AbstractController
     }
 
     #[Route(path: '/{id}/edit', name: 'radio_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Radio $radio): Response
+    public function edit(Request $request, Radio $radio, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(RadioType::class, $radio);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('radio_index');
         }
@@ -69,10 +69,9 @@ class RadioController extends AbstractController
     }
 
     #[Route(path: '/{id}', name: 'radio_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Radio $radio): Response
+    public function delete(Request $request, Radio $radio, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$radio->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($radio);
             $entityManager->flush();
         }

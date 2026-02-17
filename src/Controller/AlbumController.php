@@ -43,7 +43,7 @@ class AlbumController extends AbstractController
      * @return Response
      */
     #[Route(path: '/{id}', name: 'album_show', methods: ['GET'])]
-    public function show(Album $album = null, Request $request): Response
+    public function show(?Album $album, Request $request): Response
     {
         $response = new Response();
 
