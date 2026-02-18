@@ -32,23 +32,22 @@ class ConfigController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $doctrine->getManager()->flush();
-            $config = $request->request->get('config');
+            $theme = $config->getTheme()?->getName();
+            $lang = $config->getLanguage()?->getCode();
 
-            $theme = $doctrine->getRepository('App\Entity\Theme')->find($config['theme']);
-            $theme = $theme->getName();
-
-            $lang = $doctrine->getRepository('App\Entity\Language')->find($config['language']);
-            $lang = $lang->getCode();
+            if (!$theme || !$lang) {
+                return new JsonResponse(['data' => 'error'], JsonResponse::HTTP_BAD_REQUEST);
+            }
 
             $translations = Yaml::parse(file_get_contents('../translations/messages.'.$lang.'.yml'));
 
-            $config = [];
-            $config['theme'] = $theme;
-            $config['translations'] = $translations;
+            $responseConfig = [];
+            $responseConfig['theme'] = $theme;
+            $responseConfig['translations'] = $translations;
 
             return new JsonResponse(
                 ['data' => 'success',
-                'config' => $config,
+                'config' => $responseConfig,
             ]);
         }
 
