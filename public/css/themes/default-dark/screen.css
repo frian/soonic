@@ -52,13 +52,13 @@ h2 {
   background-color: #555;
 }
 
-nav.topbarNav a {
+nav.topbar-nav a {
   background: linear-gradient(to top, #222222, rgba(51, 51, 51, 0.9));
 }
-nav.topbarNav a:hover {
+nav.topbar-nav a:hover {
   background: linear-gradient(to top, #006600, rgba(0, 102, 0, 0.5));
 }
-nav.topbarNav a:hover .icon-cog {
+nav.topbar-nav a:hover .icon-cog {
   background: linear-gradient(to top, #006600, rgba(0, 102, 0, 0.5));
 }
 
@@ -106,7 +106,7 @@ a.active {
 /*
   --  7. Radios ---------------------------------------------------------------
 */
-.radio.activeRadio {
+.radio.active-radio {
   background-color: #060 !important;
 }
 
@@ -127,7 +127,7 @@ a.active {
 /*
   -- 10. Small screen buttons -------------------------------------------------
 */
-.mobileButton {
+.mobile-button {
   background-color: #111;
 }
 
@@ -172,16 +172,16 @@ form div div input {
 /*
   -- 13. Context menus --------------------------------------------------------
 */
-.songsContextMenu,
-.playlistContextMenu {
+.songs-context-menu,
+.playlist-context-menu {
   box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.2);
 }
-.songsContextMenu .menu-options,
-.playlistContextMenu .menu-options {
+.songs-context-menu .menu-options,
+.playlist-context-menu .menu-options {
   background-color: black;
 }
-.songsContextMenu .menu-options .menu-option:hover,
-.playlistContextMenu .menu-options .menu-option:hover {
+.songs-context-menu .menu-options .menu-option:hover,
+.playlist-context-menu .menu-options .menu-option:hover {
   background: rgba(0, 102, 0, 0.8);
 }
 
