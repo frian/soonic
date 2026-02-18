@@ -40,7 +40,11 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {{ include('common/topbar.html.twig') }}
+        {% set current_route = app.current_route|default('') %}
+        {{ include('common/topbar.html.twig', {
+            is_library_route: current_route == 'library',
+            show_settings_button: current_route != 'settings_index'
+        }) }}
 
         {% block body %}{% endblock %}
 

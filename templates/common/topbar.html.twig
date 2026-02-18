@@ -2,7 +2,7 @@
 
     <div class="logo"><img alt="Soonic" src="/weblogo-grey.png"></div>
 
-    {% if app.request.attributes.get('_route') == 'library' %}
+    {% if is_library_route|default(false) %}
     <div id="player-container">
         <i class="icon-to-start"></i><i id="play-pause-button" class="icon-play"></i><i class="icon-to-end"></i>
 
@@ -53,7 +53,7 @@
                 <a id="back-to-radio-index-button" href="{{ path('radio_index') }}">{{ 'back'|trans }}</a>
             </li> -->
             <li id="navigation-settings">
-                {% if app.request.attributes.get('_route') != 'settings_index' %}
+                {% if show_settings_button|default(true) %}
                     <a id="settings-button" data-title="settings" title="{{ 'settings'|trans }}" href="{{ path('settings_index') }}">
                         <span class="material-icons">settings</span>
                     </a>
