@@ -1,7 +1,7 @@
 <div class="settings-view">
     <section class="settings clearfix">
         <h2 data-text='library'>{{ 'library'|trans }}</h2>
-        <table class="libraryInfo">
+        <table class="library-info">
             <tr>
                 <td data-text='files'>{{ 'files'|trans }}</td>
                 <td id="num-files">{{ infos[0] }}</td>
@@ -15,7 +15,7 @@
                 <td id="num-albums">{{ infos[2] }}</td>
             </tr>
         </table>
-        <div class="buttonWrapper">
+        <div class="button-wrapper">
             <a id="scan-button" class="button" href="{{ path('radio_index') }}" data-text='scan'>{{ 'scan'|trans }}</a>
         </div>
     </section>
@@ -23,7 +23,7 @@
     <section class="settings clearfix">
         <h2 data-text='settings'>{{ 'settings'|trans }}</h2>
         <form name="appbundle_config" id="settings-form" method="post" action="{{ path('config_edit', { 'id': 1 }) }}">
-            <table class="libraryInfo">
+            <table class="library-info">
                 <tr>
                     <td><label for="config_language" class="required" data-text='language'>{{ 'language'|trans }}</label></td>
                     <td>{{ form_widget(edit_form.language) }}</td>
@@ -36,7 +36,7 @@
 
             {{ form_widget(edit_form) }}
 
-            <div class="buttonWrapper">
+            <div class="button-wrapper">
                 <input id="settings-form-button" class="button" type="submit" value="{{ 'save'|trans }}" data-text='save'/>
             </div>
 

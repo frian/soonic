@@ -35,7 +35,7 @@ table {
     display: table;
 }
 
-.noPadding {
+.no-padding {
     padding: 0!important;
 }
 
@@ -318,7 +318,7 @@ img.lozad {
     box-sizing: border-box;
     border: #{$debug}px solid red;
 
-    .radioName, .radioUrl {
+    .radio-name, .radio-url {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -327,21 +327,21 @@ img.lozad {
         box-sizing: border-box;
     }
 
-    .radioName {
+    .radio-name {
         height: 100px;
         padding-left: 30px;
         line-height: 100px;
         border: #{$debug}px solid lime;
     }
 
-    .radioUrl {
+    .radio-url {
         height: 50px;
         line-height: 50px;
         padding: 0 10px 0 20px;
         border: #{$debug}px solid cyan;
     }
 
-    .buttonWrapper {
+    .button-wrapper {
         float: left;
         height: 150px;
         line-height: 150px;
@@ -365,7 +365,7 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 .settings-view {
     border: #{$debug}px solid red;
 
-    .libraryInfo{
+    .library-info{
         margin-top: 20px;
         width: 90%;
     }
@@ -395,7 +395,7 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 /*
   --  9. Mobile menu ----------------------------------------------------------
 */
-ul.topNav {
+ul.top-nav {
     position: relative;
     width: 100%!important;
 
@@ -442,7 +442,7 @@ ul.topNav {
 /*
   -- 10. Small screen buttons -------------------------------------------------
 */
-.mobileButton {
+.mobile-button {
     height: $mobileButtonSize;
     line-height: $mobileButtonSize;
     width: $mobileButtonSize;
@@ -453,15 +453,15 @@ ul.topNav {
 }
 
 
-.mobileForwardButton {
+.mobile-forward-button {
     right: 0;
 }
 
-.mobileBackButton {
+.mobile-back-button {
     left: 0;
 }
 
-.mobileSongsToArtistsButton, .mobileSongsToPlaylistButton, .mobilePlaylistToSongsButton {
+.mobile-songs-to-artists-button, .mobile-songs-to-playlist-button, .mobile-playlist-to-songs-button {
     display: none;
 }
 
@@ -511,11 +511,11 @@ form {
 	cursor: pointer;
 }
 
-.filterInput:not(:valid) ~ .input-reset {
+.filter-input:not(:valid) ~ .input-reset {
 	display: none;
 }
 
-.filterForm {
+.filter-form {
     .input-reset {
         top: 5px;
         right: 5px;
@@ -547,7 +547,7 @@ table.form {
             width: 40%;
         }
 
-        td.buttonRow {
+        td.button-row {
             text-align: center;
             padding-top: 20px;
         }
@@ -557,7 +557,7 @@ table.form {
 /*
   -- 12. Crud forms -----------------------------------------------------------
 */
-.buttonWrapper {
+.button-wrapper {
     padding: 20px 0;
     text-align: center;
     border: #{$debug}px solid red;
@@ -576,7 +576,7 @@ table.form {
 /*
   -- 13. Context menus --------------------------------------------------------
 */
-.songsContextMenu, .playlistContextMenu {
+.songs-context-menu, .playlist-context-menu {
     position: absolute;
     display: none;
 }
@@ -621,13 +621,13 @@ table.form {
         }
     }
 
-    .songInfo {
+    .song-info {
         display: block;
 
         // width: 200px;
     }
 
-    nav.topbarNav {
+    nav.topbar-nav {
         display: initial;
     }
 
@@ -765,7 +765,7 @@ table.form {
 
     /* --  8. Settings-view -- */
     .settings-view {
-        .libraryInfo{
+        .library-info{
             margin-top: 20px;
             margin-left: auto;
             margin-right: auto;
@@ -775,7 +775,7 @@ table.form {
 
 
     /* -- 10. Small screen buttons -- */
-    .mobileButton {
+    .mobile-button {
         display: none;
     }
 
@@ -799,7 +799,7 @@ table.form {
                 width: 40%;
             }
 
-            td.buttonRow {
+            td.button-row {
                 text-align: center;
                 padding-top: 20px;
             }
@@ -813,7 +813,7 @@ table.form {
 */
 @media all and (width >= 1200px) {
     /* --  2. Topbar -- */
-    .songInfo {
+    .song-info {
         // width: 400px;
     }
 
@@ -893,7 +893,7 @@ table.form {
 */
 @media all and (width >= 1600px) {
     /* --  2. Topbar -- */
-    .songInfo {
+    .song-info {
         // width: 600px;
     }
 

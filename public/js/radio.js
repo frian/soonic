@@ -5,7 +5,7 @@ $(function() {
     /**
      * Play / Pause currently loaded radio
      */
-    $(document).on("click", ".radioPlay", function(e) {
+    $(document).on("click", ".radio-play", function(e) {
 
         // -- find currently active player and pause it
         const activePlayerButton = $("i.activePlayer")[0];
@@ -19,7 +19,7 @@ $(function() {
             $(activePlayerButton).addClass("icon-play");
             $(activePlayerButton).removeClass("activePlayer");
             playerStatus = "paused";
-            $(activePlayerButton).parent().parent().removeClass("activeRadio");
+            $(activePlayerButton).parent().parent().removeClass("active-radio");
         }
 
         let radioPlayer = $(this).next()[0];
@@ -35,14 +35,14 @@ $(function() {
             $(this).removeClass("icon-play");
             $(this).addClass("icon-pause");
             $(this).addClass("activePlayer");
-            $(this).parent().parent().addClass("activeRadio");
+            $(this).parent().parent().addClass("active-radio");
         } else {
             radioPlayer.pause();
             playerStatus = "paused";
             $(this).removeClass("icon-pause");
             $(this).addClass("icon-play");
             $(this).removeClass("activePlayer");
-            $(this).parent().parent().removeClass("activeRadio");
+            $(this).parent().parent().removeClass("active-radio");
         }
     });
 });

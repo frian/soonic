@@ -1,6 +1,6 @@
 <form id="search-form" name="search" method="post" action="{{ path('search') }}">
-    <div class="formElementContainer">
-        <input type="text" id="form-keyword" name="form[keyword]" required="required" placeholder="{{ 'search.placeholder'|trans }}" class="filterInput" data-text='search.placeholder'>
+    <div class="form-element-container">
+        <input type="text" id="form-keyword" name="form[keyword]" required="required" placeholder="{{ 'search.placeholder'|trans }}" class="filter-input" data-text='search.placeholder'>
         <button class="input-reset" type="reset"></button>
     </div>
     <button id="search-button" type="submit" name="submit" class="button" data-title="search" title="{{ 'search'|trans }}"><span class="material-icons">search</span></button>

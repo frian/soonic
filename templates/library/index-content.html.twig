@@ -1,15 +1,15 @@
 <nav class="artists-navigation">
 
     <div class="filter">
-        <form class="filterForm" method="post">
-            <label for="filter" data-text='filter'>{{ 'filter'|trans }}</label><input type="text" class="filterInput" name="filter" value="" placeholder="{{ 'filter.placeholder'|trans }}" required="required" autocomplete="off" data-text='filter.placeholder'>
+        <form class="filter-form" method="post">
+            <label for="filter" data-text='filter'>{{ 'filter'|trans }}</label><input type="text" class="filter-input" name="filter" value="" placeholder="{{ 'filter.placeholder'|trans }}" required="required" autocomplete="off" data-text='filter.placeholder'>
             <button class="input-reset" type="reset"></button>
         </form>
     </div>
 
     {% include('library/artist-nav-list.html.twig') %}
 
-    <div class="mobileButton mobileForwardButton mobileArtistsToSongsButton">
+    <div class="mobile-button mobile-forward-button mobile-artists-to-songs-button">
         <i class="icon-right-open"></i>
     </div>
 
@@ -19,13 +19,13 @@
 {{ include('library/playlist.html.twig') }}
 
 
-<div class="songsContextMenu">
+<div class="songs-context-menu">
   <ul class="menu-options">
     <li id="add-to-playlist" class="menu-option">{{ 'playlist.add'|trans }}</li>
   </ul>
 </div>
 
-<div class="playlistContextMenu">
+<div class="playlist-context-menu">
   <ul class="menu-options">
     <li id="remove-from-playlist" class="menu-option">{{ 'playlist.remove'|trans }}</li>
   </ul>

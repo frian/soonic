@@ -37,7 +37,7 @@ $(function() {
         $('#play-pause-button').attr('class', 'icon-pause');;
 
         if (screenWidth < 500) {
-            $(".songInfo").css('display', 'none');
+            $(".song-info").css('display', 'none');
         }
     });
 
@@ -61,11 +61,11 @@ $(function() {
 
         $currentItem.addClass("selected");
 
-        let contextMenu = '.songsContextMenu';
+        let contextMenu = '.songs-context-menu';
         const tableId = $currentItem.closest('table').attr('id');
 
         if (tableId === 'playlist') {
-            contextMenu = '.playlistContextMenu';
+            contextMenu = '.playlist-context-menu';
         }
 
         $(contextMenu).css('display', 'block');
@@ -80,7 +80,7 @@ $(function() {
                 if ($target.length && $selected.length) {
                     if ($target.is("#add-to-playlist")) {
                         if (playlistContainsPath($selected.data("path"))) {
-                            $(".songsContextMenu, .playlistContextMenu").css('display', 'none');
+                            $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
                             $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
                             return;
                         }
@@ -98,7 +98,7 @@ $(function() {
                     }
                 }
 
-                $(".songsContextMenu, .playlistContextMenu").css('display', 'none');
+                $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
                 $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
             });
         }, 100);

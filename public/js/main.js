@@ -351,8 +351,8 @@ $(function() {
             $(".songs").css('display', 'block');
             $(".songs").css('width', '100%');
             $(".playlist").css('display', 'none');
-            $(".mobileSongsToArtistsButton").css('display', 'initial');
-            $(".mobileSongsToPlaylistButton").css('display', 'block');
+            $(".mobile-songs-to-artists-button").css('display', 'initial');
+            $(".mobile-songs-to-playlist-button").css('display', 'block');
         }
 
         if (debug === 1) {
@@ -402,12 +402,12 @@ $(function() {
         $("#songs").append(data);
         // if ($("#top-bar-nav").hasClass('is-active')) {
         //     $("#top-bar-nav").toggleClass('is-active');
-        //     $(".topNav").toggleClass('is-active');
+        //     $(".top-nav").toggleClass('is-active');
         //     $(".songs").css('display', 'initial');
         //     $(".playlist").css('display', 'none');
         //     $(".artists-navigation").css('display', 'none');
-        //     $(".mobileSongsToArtistsButton").css('display', 'initial');
-        //     $(".mobileSongsToPlaylistButton").css('display', 'initial');
+        //     $(".mobile-songs-to-artists-button").css('display', 'initial');
+        //     $(".mobile-songs-to-playlist-button").css('display', 'initial');
         //     hamburger.toggleClass("is-active");
         //
         //     if (debug === 1) {
@@ -522,7 +522,7 @@ $(function() {
     /**
      * reload artist artist on clear filter form
      */
-    $(document).on("click", ".filterForm .input-reset", function(e) {
+    $(document).on("click", ".filter-form .input-reset", function(e) {
         const url = '/artist/filter/';
         $.get({
             url: url,
@@ -532,7 +532,7 @@ $(function() {
                 $("nav.artists-navigation").append(data);
             }
         });
-        $('.filterInput').focus();
+        $('.filter-input').focus();
 
         if (debug === 1) {
             console.log('cleared artist filter');
@@ -569,14 +569,14 @@ $(function() {
     /**
      * Forward to songs list
      */
-    $(document).on("click", ".mobileArtistsToSongsButton", function(e) {
+    $(document).on("click", ".mobile-artists-to-songs-button", function(e) {
 
         $(".songs").css('display', 'block');
         $(".playlist").css('display', 'none');
         $(".artists-navigation").css('display', 'none');
-        $(".mobileArtistsToSongsButton").css('display', 'none');
-        $(".mobileSongsToArtistsButton").css('display', 'initial');
-        $(".mobileSongsToPlaylistButton").css('display', 'initial');
+        $(".mobile-artists-to-songs-button").css('display', 'none');
+        $(".mobile-songs-to-artists-button").css('display', 'initial');
+        $(".mobile-songs-to-playlist-button").css('display', 'initial');
 
         if (debug === 1) {
             console.log('show songs list (forward)');
@@ -587,13 +587,13 @@ $(function() {
     /**
      * Back to artists list
      */
-    $(document).on("click", ".mobileSongsToArtistsButton", function(e) {
+    $(document).on("click", ".mobile-songs-to-artists-button", function(e) {
 
         $(".songs, .playlist").css('display', 'none');
         $(".artists-navigation").css('display', 'block');
-        $(".mobileSongsToArtistsButton").css('display', 'none');
-        $(".mobileSongsToPlaylistButton").css('display', 'none');
-        $(".mobileArtistsToSongsButton").css('display', 'initial');
+        $(".mobile-songs-to-artists-button").css('display', 'none');
+        $(".mobile-songs-to-playlist-button").css('display', 'none');
+        $(".mobile-artists-to-songs-button").css('display', 'initial');
 
         if (debug === 1) {
             console.log('show artists list');
@@ -604,12 +604,12 @@ $(function() {
     /**
      * Forward to playlist
      */
-    $(document).on("click", ".mobileSongsToPlaylistButton", function(e) {
+    $(document).on("click", ".mobile-songs-to-playlist-button", function(e) {
         $(".songs").css('display', 'none');
         $(".playlist").css('display', 'initial');
-        $(".mobileArtistsToSongsButton").css('display', 'none');
-        $(".mobileSongsToPlaylistButton").css('display', 'none');
-        $(".mobilePlaylistToSongsButton").css('display', 'initial');
+        $(".mobile-artists-to-songs-button").css('display', 'none');
+        $(".mobile-songs-to-playlist-button").css('display', 'none');
+        $(".mobile-playlist-to-songs-button").css('display', 'initial');
         console.log('clicked 3');
     });
 
@@ -617,10 +617,10 @@ $(function() {
     /**
      * Back to songs list
      */
-    $(document).on("click", ".mobilePlaylistToSongsButton", function(e) {
+    $(document).on("click", ".mobile-playlist-to-songs-button", function(e) {
         $(".songs").css('display', 'initial');
         $(".playlist").css('display', 'none');
-        $(".mobileSongsToPlaylistButton").css('display', 'initial');
+        $(".mobile-songs-to-playlist-button").css('display', 'initial');
 
         if (debug === 1) {
             console.log('show songs list (backward)');
@@ -633,7 +633,7 @@ $(function() {
      */
     $(".hamburger").on("click", function(e) {
 
-        $(".topbarNav, .topNav, .hamburger").toggleClass("is-active");
+        $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
         mobileMenuState = mobileMenuState == 'closed' ? 'open' : 'closed';
 
         if (mobileMenuState === 'open') {
@@ -644,11 +644,11 @@ $(function() {
                         return;
                     }
                     else if (e.target.className.indexOf('hamburger') !== -1 ) {
-                        $(".topbarNav, .topNav, .hamburger").toggleClass("is-active");
+                        $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
                         mobileMenuState = mobileMenuState == 'closed' ? 'open' : 'closed';
                     }
                     if (!e.target.id.indexOf('Button') !== -1) {
-                        $(".topbarNav, .topNav, .hamburger").toggleClass("is-active");
+                        $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
                         mobileMenuState = mobileMenuState == 'closed' ? 'open' : 'closed';
                     }
                     $(document).off( "click", "body");
@@ -714,9 +714,9 @@ $(function() {
             width = screenWidth - ($('.logo').outerWidth() + $('#player-container').outerWidth() + $('.hamburger').outerWidth() + 50);
         }
         else {
-            width = screenWidth - ($('.logo').outerWidth() + $('#player-container').outerWidth() + $('.topbarNav').outerWidth() + 50);
+            width = screenWidth - ($('.logo').outerWidth() + $('#player-container').outerWidth() + $('.topbar-nav').outerWidth() + 50);
         }
-        $('.songInfo').width(width);
+        $('.song-info').width(width);
     }
 
     function setFilterInputSize() {
@@ -725,7 +725,7 @@ $(function() {
             var buttonWidth = getElementOuterWidth($('#search-button'));
             width = (screenWidth - buttonWidth );
         }
-        $('.formElementContainer').width(width);
+        $('.form-element-container').width(width);
     }
 
     function getElementOuterWidth($element) {

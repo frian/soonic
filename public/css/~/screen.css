@@ -63,7 +63,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-size: 1.6em;
   font-weight: 700;
 }
-.topbar .timeInfo {
+.topbar .time-info {
   font-family: Muli, sans-serif;
   font-weight: 700;
   font-size: 80%;
@@ -76,7 +76,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 .topbar .progress-indicator {
   background-color: #aaa;
 }
-.topbar .songInfo {
+.topbar .song-info {
   font-family: Lato, sans-serif;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -96,14 +96,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   letter-spacing: 1px;
 }
 
-nav.topbarNav a {
+nav.topbar-nav a {
   font-size: 18px;
   display: inline-block;
   padding: 0 20px;
   letter-spacing: 1px;
   background: linear-gradient(to top, rgba(34, 34, 34, 0.2), rgba(51, 51, 51, 0.1));
 }
-nav.topbarNav a:hover {
+nav.topbar-nav a:hover {
   background: linear-gradient(to top, rgba(34, 34, 34, 0.1), rgba(51, 51, 51, 0));
 }
 
@@ -221,12 +221,12 @@ h2 {
 /*
   --  7. Radios ---------------------------------------------------------------
 */
-.radio .radioName {
+.radio .radio-name {
   font-family: Lato, sans-serif;
   font-weight: 300;
   border: 0px solid red;
 }
-.radio .radioUrl {
+.radio .radio-url {
   font-family: Lato, sans-serif;
   font-weight: 300;
 }
@@ -234,7 +234,7 @@ h2 {
   cursor: pointer;
   font-size: 4em;
 }
-.radio.activeRadio {
+.radio.active-radio {
   background-color: #ddd !important;
 }
 
@@ -261,18 +261,18 @@ h2 {
 /*
   --  9. Mobile menu ----------------------------------------------------------
 */
-ul.topNav {
+ul.top-nav {
   background-color: #eee;
 }
 
 /*
   -- 10. Small screen buttons -------------------------------------------------
 */
-.mobileButton {
+.mobile-button {
   border: 1px solid #666;
   background-color: #eee;
 }
-.mobileButton:hover {
+.mobile-button:hover {
   background-color: #ddd;
 }
 
@@ -340,21 +340,21 @@ form div div input {
 /*
   -- 13. Context menus --------------------------------------------------------
 */
-.songsContextMenu, .playlistContextMenu {
+.songs-context-menu, .playlist-context-menu {
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
 }
-.songsContextMenu .menu-options, .playlistContextMenu .menu-options {
+.songs-context-menu .menu-options, .playlist-context-menu .menu-options {
   list-style: none;
   padding: 10px 0;
   background-color: #eee;
 }
-.songsContextMenu .menu-options .menu-option, .playlistContextMenu .menu-options .menu-option {
+.songs-context-menu .menu-options .menu-option, .playlist-context-menu .menu-options .menu-option {
   font-family: Muli, sans-serif;
   letter-spacing: 1px;
   padding: 10px 40px 10px 20px;
   cursor: pointer;
 }
-.songsContextMenu .menu-options .menu-option:hover, .playlistContextMenu .menu-options .menu-option:hover {
+.songs-context-menu .menu-options .menu-option:hover, .playlist-context-menu .menu-options .menu-option:hover {
   background-color: #ddd;
 }
 
@@ -363,10 +363,10 @@ form div div input {
 */
 @media all and (width >= 1024px) {
   /* -- Radios -- */
-  .radio .radioName {
+  .radio .radio-name {
     font-size: 2em;
   }
-  .radio .radioUrl {
+  .radio .radio-url {
     font-size: 1.2em;
   }
 

@@ -57,13 +57,13 @@ $topbar-border-size: 1px !default;
         text-align: center;
     }
 
-    .timeInfo {
+    .time-info {
         display: block;
         height: 30px;
         line-height: 30px;
     }
 
-    .ProgressBarContainer {
+    .progress-bar-container {
         width: 100%;
         height: 19px;
         line-height: 19px;
@@ -78,7 +78,7 @@ $topbar-border-size: 1px !default;
         overflow: hidden;
     }
 
-    .songInfo {
+    .song-info {
         display: inline-block;
         margin-left: 10px;
         overflow: hidden;
@@ -125,13 +125,13 @@ $topbar-border-size: 1px !default;
         border: #{$debug}px solid lime;
     }
 
-    .formElementContainer {
+    .form-element-container {
         display: inline-block;
         position: relative;
     }
 }
 
-nav.topbarNav {
+nav.topbar-nav {
     display: none;
     font-size: 0;
     float: right;

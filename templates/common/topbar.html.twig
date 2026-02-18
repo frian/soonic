@@ -10,12 +10,12 @@
             <source id="audio-source" src="" type="audio/mpeg"/>
         </audio>
 
-        <div class="timeInfoContainer">
-            <div class="timeInfo">
+        <div class="time-info-container">
+            <div class="time-info">
                 <span id="current-time">00:00 /</span>
                 <span id="duration"> 00:00</span>
             </div>
-            <div class="ProgressBarContainer">
+            <div class="progress-bar-container">
                 <div class="progressbar">
                     <div class="progress-indicator"></div>
                 </div>
@@ -23,14 +23,14 @@
         </div>
     </div>
 
-    <div class="songInfo">
+    <div class="song-info">
         <span id="song-title" class="song-title"></span>
         <span id="song-artist" class="song-artist"></span>
     </div>
     {% endif %}
 
-    <nav class="topbarNav" id="top-bar-nav">
-        <ul class="topNav">
+    <nav class="topbar-nav" id="top-bar-nav">
+        <ul class="top-nav">
             <li id="navigation-search-form">
                 {{ render(controller( 'App\\Controller\\SearchController::showSearch' )) }}
             </li>

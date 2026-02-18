@@ -74,7 +74,7 @@ h2 {
     }
 }
 
-nav.topbarNav {
+nav.topbar-nav {
     a {
         background: $default-gradient;
     }
@@ -145,7 +145,7 @@ a.active {
   --  7. Radios ---------------------------------------------------------------
 */
 .radio {
-    &.activeRadio {
+    &.active-radio {
         background-color: $hover-active !important;
     }
 }
@@ -170,7 +170,7 @@ a.active {
   -- 10. Small screen buttons -------------------------------------------------
 */
 @if $mobile-button-bg {
-    .mobileButton {
+    .mobile-button {
         background-color: $mobile-button-bg;
     }
 }
@@ -216,8 +216,8 @@ form div div input {
 /*
   -- 13. Context menus --------------------------------------------------------
 */
-.songsContextMenu,
-.playlistContextMenu {
+.songs-context-menu,
+.playlist-context-menu {
     box-shadow: 0 0 5px 3px rgb(255 255 255 / 20%);
 
     .menu-options {

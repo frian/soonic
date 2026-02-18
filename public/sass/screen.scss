@@ -95,13 +95,13 @@ h2 {
   --  7. Radios ---------------------------------------------------------------
 */
 .radio {
-    .radioName {
+    .radio-name {
         font-family: Lato, sans-serif;
         font-weight: 300;
         border: #{$debug}px solid red;
     }
 
-    .radioUrl {
+    .radio-url {
         font-family: Lato, sans-serif;
         font-weight: 300;
     }
@@ -111,7 +111,7 @@ h2 {
         font-size: 4em;
     }
 
-    &.activeRadio {
+    &.active-radio {
         background-color: $hover-active!important;
     }
 }
@@ -142,7 +142,7 @@ h2 {
 /*
   --  9. Mobile menu ----------------------------------------------------------
 */
-ul.topNav {
+ul.top-nav {
     background-color: $bg-color;
 }
 
@@ -150,7 +150,7 @@ ul.topNav {
 /*
   -- 10. Small screen buttons -------------------------------------------------
 */
-.mobileButton {
+.mobile-button {
     border: 1px solid $border-color;
     background-color: $bg-color;
 
@@ -228,7 +228,7 @@ form div div input {
 /*
   -- 13. Context menus --------------------------------------------------------
 */
-.songsContextMenu, .playlistContextMenu {
+.songs-context-menu, .playlist-context-menu {
     box-shadow: 0 0 5px 3px rgb(0 0 0 / 20%);
 
     .menu-options {
@@ -256,11 +256,11 @@ form div div input {
 @media all and (width >= 1024px) {
     /* -- Radios -- */
     .radio {
-        .radioName {
+        .radio-name {
             font-size: 2em;
         }
 
-        .radioUrl {
+        .radio-url {
             font-size: 1.2em;
         }
     }
