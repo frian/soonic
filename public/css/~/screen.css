@@ -81,11 +81,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-weight: 700;
   letter-spacing: 0.5px;
 }
-.topbar .songTitle {
+.topbar .song-title {
   font-weight: 900;
   font-size: 120%;
 }
-.topbar .songArtist {
+.topbar .song-artist {
   color: #333;
 }
 

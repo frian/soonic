@@ -45,7 +45,7 @@ h2 {
 .topbar {
   border-bottom-color: #666;
 }
-.topbar .songArtist {
+.topbar .song-artist {
   color: #333;
 }
 .topbar .progressbar {
