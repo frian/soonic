@@ -192,4 +192,20 @@ body {
   background: linear-gradient(to bottom right, #111111, rgba(17, 17, 17, 0.9));
 }
 
+.settings-view .library-info select {
+  border-color: #555;
+  background-color: #1a1a1a;
+  color: #eee;
+  background-image: linear-gradient(45deg, transparent 50%, #bbb 50%), linear-gradient(135deg, #bbb 50%, transparent 50%);
+}
+
+.settings-view .library-info select:hover {
+  border-color: #777;
+}
+
+.settings-view .library-info select:focus {
+  border-color: #0a8a2a;
+  box-shadow: 0 0 0 3px rgba(10, 138, 42, 0.3);
+}
+
 /*# sourceMappingURL=screen.css.map */
