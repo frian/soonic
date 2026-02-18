@@ -1,5 +1,5 @@
 /*
-  -- Default dark theme -------------------------------------------------------
+  -- Guitar dark theme --------------------------------------------------------
 */
 
 $fg-color: #eee;
@@ -30,14 +30,22 @@ body {
         rgba(17,17,17, 1),
         rgba(17,17,17, 0.9)
     );
+    background-image: url("../../../images/guitar-dark/guitar.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
-/*
-  --  6. Albums view ----------------------------------------------------------
-*/
-.album-container-content {
-    .no-cover-art {
-        .album-info-album {
-        }
-    }
+body:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom right,
+        rgba(17,17,17, 0.8),
+        rgba(17,17,17, 0.7)
+    );
+    z-index: -1;
 }

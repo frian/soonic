@@ -1,0 +1,230 @@
+/*
+  -- Shared theme rules ------------------------------------------------------
+*/
+
+$fg-color: #111 !default;
+$bg-color: #eee !default;
+$hover-active: #90ee90 !default;
+$bg-alternate: #c8c8c8 !default;
+$header-color: #ccc !default;
+$border-color: #666 !default;
+$default-gradient: linear-gradient(to top, rgba(221,221,221, 1), rgba(204,204,204, 0.9)) !default;
+$hover-gradient: linear-gradient(to top, rgba(144,238,144, 1), rgba(144,238,144, 0.5)) !default;
+
+$song-artist-color: #333 !default;
+$progressbar-color: $border-color !default;
+$filter-input-bg: white !default;
+$scrollbar-track-bg: #111 !default;
+$scrollbar-thumb-border-bg: $fg-color !default;
+$navigation-searchform-bg: $bg-color !default;
+$context-menu-bg: white !default;
+$context-menu-hover-bg: rgba(191,255,0, 0.8) !default;
+$hamburger-color: null !default;
+$mobile-button-bg: null !default;
+
+/*
+  --  1. Global ---------------------------------------------------------------
+*/
+body {
+    color: $fg-color;
+    background-color: $bg-color;
+}
+
+a {
+    color: $fg-color;
+}
+
+h1 {
+    border-bottom: 1px solid $border-color;
+}
+
+h2 {
+    border-bottom: 1px solid $border-color;
+}
+
+* {
+    scrollbar-color: $border-color $scrollbar-track-bg;
+}
+*::-webkit-scrollbar {
+    width: 12px;
+}
+*::-webkit-scrollbar-track {
+    background: $scrollbar-track-bg;
+}
+*::-webkit-scrollbar-thumb {
+    background-color: $border-color;
+    border-radius: 20px;
+    border: 3px solid $scrollbar-thumb-border-bg;
+}
+
+/*
+  --  2. Topbar ---------------------------------------------------------------
+*/
+.topbar {
+    border-bottom-color: $border-color;
+
+    .songArtist {
+        color: $song-artist-color;
+    }
+
+    .progressbar {
+        background-color: $progressbar-color;
+    }
+}
+
+nav.topbarNav {
+    a {
+        background: $default-gradient;
+    }
+
+    a:hover {
+        background: $hover-gradient;
+
+        .icon-cog {
+            background: $hover-gradient;
+        }
+    }
+}
+
+/*
+  --  3. Artists navigation ---------------------------------------------------
+*/
+.artists-navigation {
+    .song {
+        background-color: $header-color;
+    }
+}
+
+.filter {
+    background-color: $header-color;
+
+    input {
+        background-color: $filter-input-bg;
+    }
+}
+
+a.active {
+    background-color: $hover-active !important;
+}
+
+/*
+  --  5. Songs and playlist panels --------------------------------------------
+*/
+.songs-header-container,
+.playlist-header {
+    background-color: $header-color;
+}
+
+.list {
+    thead {
+        th {
+            background-color: $header-color;
+        }
+    }
+
+    tbody {
+        tr:nth-child(even) {
+            background-color: $bg-alternate;
+        }
+    }
+
+    tr.playing,
+    tr.selected {
+        background-color: $hover-active !important;
+    }
+
+    .icon-plus,
+    .icon-minus {
+        color: #aaa;
+    }
+}
+
+/*
+  --  7. Radios ---------------------------------------------------------------
+*/
+.radio {
+    &.activeRadio {
+        background-color: $hover-active !important;
+    }
+}
+
+.radio:nth-child(4n+2),
+.radio:nth-child(4n+3) {
+    background-color: $bg-alternate;
+}
+
+/*
+  --  9. Mobile menu ----------------------------------------------------------
+*/
+@if $hamburger-color != null {
+    .hamburger-inner,
+    .hamburger-inner::after,
+    .hamburger-inner::before {
+        background-color: $hamburger-color !important;
+    }
+}
+
+/*
+  -- 10. Small screen buttons -------------------------------------------------
+*/
+@if $mobile-button-bg != null {
+    .mobileButton {
+        background-color: $mobile-button-bg;
+    }
+}
+
+/*
+  -- 11. Forms ----------------------------------------------------------------
+*/
+#navigationSearchForm {
+    background-color: $navigation-searchform-bg;
+}
+
+input[type="text"] {
+    color: $fg-color;
+    background-color: $bg-color;
+    border: 1px solid #555 !important;
+}
+
+.input-reset {
+    background-color: $bg-color;
+}
+
+.input-reset:after {
+    color: $fg-color;
+    background-color: $bg-color;
+}
+
+/*
+  -- 12. Crud forms -----------------------------------------------------------
+*/
+form div div input {
+    border: 1px solid $border-color;
+}
+
+.button {
+    color: $fg-color;
+    background: $default-gradient;
+}
+
+.button:hover {
+    background: $hover-gradient;
+}
+
+/*
+  -- 13. Context menus --------------------------------------------------------
+*/
+.songsContextMenu,
+.playlistContextMenu {
+    box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.2);
+
+    .menu-options {
+        background-color: $context-menu-bg;
+
+        .menu-option {
+            &:hover {
+                background: $context-menu-hover-bg;
+            }
+        }
+    }
+}
