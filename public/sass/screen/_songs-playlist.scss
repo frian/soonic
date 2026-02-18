@@ -1,0 +1,48 @@
+$bg-alternate: #ddd !default;
+$hover-active: #ddd !default;
+
+.playlist-header {
+    font-family: 'Muli', sans-serif;
+    font-weight: 700;
+    font-size: 80%;
+    letter-spacing: 1px;
+    background-color: #ddd;
+}
+
+.list {
+    thead {
+        font-family: 'Muli', sans-serif;
+        font-weight: 700;
+        background-color: #ddd;
+        tr {
+            th {
+                padding: 0 10px;
+                font-family: 'Muli', sans-serif;
+                font-weight: 700;
+                font-size: 80%;
+                letter-spacing: 1px;
+            }
+        }
+    }
+
+    tbody {
+        font-family: 'Lato', sans-serif;
+        tr {
+            cursor: pointer;
+            td {
+                padding: 5px;
+            }
+        }
+        tr:nth-child(even) {
+            background-color: $bg-alternate;
+        }
+    }
+
+    tr.playing, tr.selected {
+        background-color: $hover-active!important;
+    }
+
+    .icon-plus, .icon-minus {
+        color: #aaa;
+    }
+}

@@ -15,6 +15,24 @@ $red-gradient: linear-gradient(to top, rgba(204,0,0, 1), rgba(204,0,0, 0.5) );
 
 $debug: 0;
 
+@use "screen/topbar" with (
+    $border-color: $border-color,
+    $default-gradient: $default-gradient,
+    $hover-gradient: $hover-gradient
+);
+
+@use "screen/artists-navigation" with (
+    $hover-active: $hover-active,
+    $artists-song-bg: #fff,
+    $filter-bg: #ddd,
+    $filter-input-bg: black
+);
+
+@use "screen/songs-playlist" with (
+    $bg-alternate: $bg-alternate,
+    $hover-active: $hover-active
+);
+
 
 /*
   --  1. Global ---------------------------------------------------------------
@@ -63,157 +81,8 @@ h2 {
 
 
 /*
-  --  2. Topbar ---------------------------------------------------------------
+  --  2/3/5. Topbar + Artists nav + Songs/playlist ----------------------------
 */
-.topbar {
-    border-bottom-color: $border-color;
-
-    .logo {
-        font-family: 'Muli', sans-serif;
-        letter-spacing: 1px;
-        font-size: 1.6em;
-        font-weight: 700;
-    }
-
-
-    .timeInfo {
-        font-family: 'Muli', sans-serif;
-        font-weight: 700;
-        font-size: 80%;
-        padding: 0 10px;
-        letter-spacing: 1px;
-    }
-
-    .progressbar {
-        background-color: #ddd;
-    }
-
-    .progress-indicator {
-        background-color: #aaa;
-    }
-
-    .songInfo {
-        font-family: 'Lato', sans-serif;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-    }
-
-    .songTitle {
-        font-weight: 900;
-        font-size: 120%;
-    }
-
-    .songArtist {
-        color: #333;
-    }
-}
-
-#searchForm {
-    input[type="submit"] {
-        font-family: 'Lato', sans-serif;
-        font-weight: 700;
-        font-size: 18px;
-        letter-spacing: 1px;
-    }
-}
-
-
-nav.topbarNav {
-    a {
-        font-size: 18px;
-        display: inline-block;
-        padding: 0 20px;
-        letter-spacing: 1px;
-        background: $default-gradient;
-    }
-
-    a:hover {
-        background: $hover-gradient;
-    }
-}
-
-
-/*
-  --  3. Artists navigation ---------------------------------------------------
-*/
-.artists-navigation {
-    .song {
-        background-color: #fff;
-    }
-}
-
-.filter {
-    background-color: #ddd;
-
-    label {
-        font-size: 110%;
-        padding: 0 0 0 10px;
-
-        font-family: 'Muli', sans-serif;
-        letter-spacing: 0.6px;
-        font-size: 1.1em;
-        font-weight: 600;
-    }
-
-    input {
-        background-color: black;
-        padding: 0 0 0 10px;
-    }
-}
-
-a.active {
-    background-color: #ddd!important;
-}
-
-
-/*
-  --  5. Songs and playlist panels --------------------------------------------
-*/
-.playlist-header {
-    font-family: 'Muli', sans-serif;
-    font-weight: 700;
-    font-size: 80%;
-    letter-spacing: 1px;
-    background-color: #ddd;
-}
-
-.list {
-    thead {
-        font-family: 'Muli', sans-serif;
-        font-weight: 700;
-        background-color: #ddd;
-        tr {
-            th {
-                padding: 0 10px;
-                font-family: 'Muli', sans-serif;
-                font-weight: 700;
-                font-size: 80%;
-                letter-spacing: 1px;
-            }
-        }
-    }
-
-    tbody {
-        font-family: 'Lato', sans-serif;
-        tr {
-            cursor: pointer;
-            td {
-                padding: 5px;
-            }
-        }
-        tr:nth-child(even) {
-            background-color: $bg-alternate;
-        }
-    }
-
-    tr.playing, tr.selected {
-        background-color: $hover-active!important;
-    }
-
-    .icon-plus, .icon-minus {
-        color: #aaa;
-    }
-}
 
 
 /*

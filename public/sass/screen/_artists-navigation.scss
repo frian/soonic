@@ -1,0 +1,33 @@
+$hover-active: #ddd !default;
+$artists-song-bg: #fff !default;
+$filter-bg: #ddd !default;
+$filter-input-bg: black !default;
+
+.artists-navigation {
+    .song {
+        background-color: $artists-song-bg;
+    }
+}
+
+.filter {
+    background-color: $filter-bg;
+
+    label {
+        font-size: 110%;
+        padding: 0 0 0 10px;
+
+        font-family: 'Muli', sans-serif;
+        letter-spacing: 0.6px;
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+
+    input {
+        background-color: $filter-input-bg;
+        padding: 0 0 0 10px;
+    }
+}
+
+a.active {
+    background-color: $hover-active!important;
+}

@@ -98,33 +98,6 @@
   transition-delay: 0.075s;
 }
 
-/*
--- Default layout -----------------------------------------------------------
-*/
-/*
-  --  1. Global ---------------------------------------------------------------
-*/
-html, body {
-  height: 100%;
-}
-
-table {
-  table-layout: fixed;
-}
-
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.noPadding {
-  padding: 0 !important;
-}
-
-/*
-  --  2. Topbar ---------------------------------------------------------------
-*/
 .topbar {
   height: 49px;
   border-bottom-width: 1px;
@@ -157,7 +130,8 @@ table {
   cursor: pointer;
   border: 0px solid red;
 }
-.topbar .icon-play, .topbar .icon-pause {
+.topbar .icon-play,
+.topbar .icon-pause {
   font-size: 150%;
 }
 .topbar .icon-to-end {
@@ -257,13 +231,12 @@ nav.topbarNav a {
   padding: 0 10px;
 }
 
-#navigationLibrary, #navigationRadioNew, #navigationBackToRadioIndex {
+#navigationLibrary,
+#navigationRadioNew,
+#navigationBackToRadioIndex {
   display: none;
 }
 
-/*
-  --  3. Artists navigation ---------------------------------------------------
-*/
 .artists-navigation {
   float: left;
   width: 100%;
@@ -313,6 +286,33 @@ nav.topbarNav a {
   border: 0px solid lime;
 }
 
+/*
+-- Default layout -----------------------------------------------------------
+*/
+/*
+  --  1. Global ---------------------------------------------------------------
+*/
+html, body {
+  height: 100%;
+}
+
+table {
+  table-layout: fixed;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.noPadding {
+  padding: 0 !important;
+}
+
+/*
+  --  2/3. Topbar + Artists navigation ----------------------------------------
+*/
 /*
   --  4. Views ----------------------------------------------------------------
 */

@@ -1,0 +1,68 @@
+$border-color: #666 !default;
+$default-gradient: linear-gradient(to top, rgba(34,34,34, 0.2), rgba(51,51,51, 0.1)) !default;
+$hover-gradient: linear-gradient(to top, rgba(34,34,34, 0.1), rgba(51,51,51, 0)) !default;
+
+.topbar {
+    border-bottom-color: $border-color;
+
+    .logo {
+        font-family: 'Muli', sans-serif;
+        letter-spacing: 1px;
+        font-size: 1.6em;
+        font-weight: 700;
+    }
+
+    .timeInfo {
+        font-family: 'Muli', sans-serif;
+        font-weight: 700;
+        font-size: 80%;
+        padding: 0 10px;
+        letter-spacing: 1px;
+    }
+
+    .progressbar {
+        background-color: #ddd;
+    }
+
+    .progress-indicator {
+        background-color: #aaa;
+    }
+
+    .songInfo {
+        font-family: 'Lato', sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    .songTitle {
+        font-weight: 900;
+        font-size: 120%;
+    }
+
+    .songArtist {
+        color: #333;
+    }
+}
+
+#searchForm {
+    input[type="submit"] {
+        font-family: 'Lato', sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: 1px;
+    }
+}
+
+nav.topbarNav {
+    a {
+        font-size: 18px;
+        display: inline-block;
+        padding: 0 20px;
+        letter-spacing: 1px;
+        background: $default-gradient;
+    }
+
+    a:hover {
+        background: $hover-gradient;
+    }
+}

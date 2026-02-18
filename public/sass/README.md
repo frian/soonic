@@ -7,6 +7,8 @@ This folder contains the Sass sources used to generate the CSS files in `public/
 - `layout.scss`: structural/layout rules
 - `screen.scss`: default visual theme
 - `_reset.scss`, `_hamburger.scss`: shared partials
+- `layout/*.scss`: extracted layout sections (e.g. topbar, artists navigation)
+- `screen/*.scss`: extracted visual sections (e.g. topbar, artists navigation, songs/playlist)
 - `themes/_base.scss`: shared theme rules
 - `themes/<theme>/screen.scss`: theme-specific variables and overrides
 
