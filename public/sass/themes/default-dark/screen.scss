@@ -2,27 +2,26 @@
   -- Default dark theme -------------------------------------------------------
 */
 
-$fg-color: #eee;
-$bg-color: #111;
-$hover-active: #060;
-$bg-alternate: #111;
-$header-color: #333;
-$border-color: #666;
-$default-gradient: linear-gradient(to top, rgba(34,34,34, 1), rgba(51,51,51, 0.9));
-$hover-gradient: linear-gradient(to top, rgba(0,102,0, 1), rgba(0,102,0, 0.5));
-
-$song-artist-color: #ddd;
-$progressbar-color: #555;
-$filter-input-bg: black;
-$scrollbar-track-bg: $bg-color;
-$scrollbar-thumb-border-bg: $bg-color;
-$navigation-searchform-bg: $bg-color;
-$context-menu-bg: black;
-$context-menu-hover-bg: rgba(0, 102, 0, 0.8);
-$hamburger-color: $fg-color;
-$mobile-button-bg: $bg-color;
-
-@import "../base";
+@use "../base" with (
+    $fg-color: #eee,
+    $bg-color: #111,
+    $hover-active: #060,
+    $bg-alternate: #111,
+    $header-color: #333,
+    $border-color: #666,
+    $default-gradient: linear-gradient(to top, rgba(34,34,34, 1), rgba(51,51,51, 0.9)),
+    $hover-gradient: linear-gradient(to top, rgba(0,102,0, 1), rgba(0,102,0, 0.5)),
+    $song-artist-color: #ddd,
+    $progressbar-color: #555,
+    $filter-input-bg: black,
+    $scrollbar-track-bg: #111,
+    $scrollbar-thumb-border-bg: #111,
+    $navigation-searchform-bg: #111,
+    $context-menu-bg: black,
+    $context-menu-hover-bg: rgba(0, 102, 0, 0.8),
+    $hamburger-color: #eee,
+    $mobile-button-bg: #111
+);
 
 body {
     background: linear-gradient(

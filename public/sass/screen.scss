@@ -2,10 +2,7 @@
   -- Default styling ----------------------------------------------------------
 */
 
-@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
-@import url('https://fonts.googleapis.com/css?family=Muli:300,400,600,700');
-
-@import "reset";
+@use "reset";
 
 $fg-color: #111;
 $bg-color: #eee;
@@ -48,7 +45,7 @@ a {
 }
 
 h1 {
-    border-bottom: 1px solid ;
+    border-bottom: 1px solid $border-color;
     text-align: center;
     padding: 30px 0;
     font-family: 'Muli', sans-serif;
