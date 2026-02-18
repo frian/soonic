@@ -3,14 +3,14 @@
     <div class="filter">
         <form class="filter-form" method="post">
             <label for="filter">{{ 'filter'|trans }}</label><input type="text" class="filter-input" name="filter" value="" placeholder="{{ 'filter.placeholder'|trans }}" required="required" autocomplete="off">
-            <button class="input-reset" type="reset"></button>
+            <button class="input-reset" type="reset" aria-label="Reset filter" title="Reset filter"></button>
         </form>
     </div>
 
     {% include('library/artist-nav-list.html.twig') %}
 
-    <div class="mobile-button mobile-forward-button mobile-artists-to-songs-button">
-        <i class="icon-right-open"></i>
+    <div class="mobile-button mobile-forward-button mobile-artists-to-songs-button" role="button" tabindex="0" aria-label="Show songs" title="Show songs">
+        <i class="icon-right-open" aria-hidden="true"></i>
     </div>
 
 </nav>

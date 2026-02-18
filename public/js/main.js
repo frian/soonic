@@ -8,6 +8,14 @@ $(function() {
 
     _init();
 
+    // Accessibility: make custom role=button controls keyboard-activable.
+    $(document).on("keydown", '[role="button"]', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            $(this).trigger('click');
+        }
+    });
+
     // -- on resize
     let resizeTimer;
     $(window).on("resize", function() {

@@ -1,0 +1,6 @@
+<div class="button-wrapper">
+    {{ include('common/_button_submit.html.twig', { label: submit_label|default('Save') }) }}
+    {% if back_href is defined and back_href %}
+        {{ include('common/_button_link.html.twig', { href: back_href, label: back_label|default('Back') }) }}
+    {% endif %}
+</div>

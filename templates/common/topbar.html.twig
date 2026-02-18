@@ -4,7 +4,7 @@
 
     {% if is_library_route|default(false) %}
     <div id="player-container">
-        <i class="icon-to-start"></i><i id="play-pause-button" class="icon-play"></i><i class="icon-to-end"></i>
+        <i class="icon-to-start" aria-hidden="true"></i><i id="play-pause-button" class="icon-play" role="button" tabindex="0" aria-label="Play / Pause" title="Play / Pause"></i><i class="icon-to-end" aria-hidden="true"></i>
 
         <audio id="player" preload="none">
             <source id="audio-source" src="" type="audio/mpeg"/>
@@ -35,27 +35,24 @@
                 {{ include('common/search.html.twig') }}
             </li>
             <li id="navigation-library">
-                <a id="library-button" href="{{ path('library') }}" title="{{ 'artists'|trans }}"><span class="material-icons">people</span></a>
+                <a id="library-button" href="{{ path('library') }}" title="{{ 'artists'|trans }}" aria-label="{{ 'artists'|trans }}"><span class="material-icons" aria-hidden="true">people</span></a>
             </li>
             <li id="navigation-random">
-                <a id="random-button" href="{{ path('random_songs') }}" title="{{ 'songs.loadrandom'|trans }}"><span class="material-icons">shuffle</span></a>
+                <a id="random-button" href="{{ path('random_songs') }}" title="{{ 'songs.loadrandom'|trans }}" aria-label="{{ 'songs.loadrandom'|trans }}"><span class="material-icons" aria-hidden="true">shuffle</span></a>
             </li>
             <li id="navigation-albums">
-                <a id="albums-button"  href="{{ path('album_index') }}" title="{{ 'albums'|trans }}"><span class="material-icons">album</span></a>
+                <a id="albums-button"  href="{{ path('album_index') }}" title="{{ 'albums'|trans }}" aria-label="{{ 'albums'|trans }}"><span class="material-icons" aria-hidden="true">album</span></a>
             </li>
             <li id="navigation-radios">
-                <a id="radio-button" href="{{ path('radio_index') }}" title="{{ 'radios'|trans }}"><span class="material-icons">radio</span></a>
+                <a id="radio-button" href="{{ path('radio_index') }}" title="{{ 'radios'|trans }}" aria-label="{{ 'radios'|trans }}"><span class="material-icons" aria-hidden="true">radio</span></a>
             </li>
             <li id="navigation-radio-new">
-                <a id="radio-new-button" href="{{ path('radio_new') }}" title="{{ 'radio.new'|trans }}"><span class="material-icons">radio</span><span class="material-icons radio-add">add</span></a>
+                <a id="radio-new-button" href="{{ path('radio_new') }}" title="{{ 'radio.new'|trans }}" aria-label="{{ 'radio.new'|trans }}"><span class="material-icons" aria-hidden="true">radio</span><span class="material-icons radio-add" aria-hidden="true">add</span></a>
             </li>
-            <!-- <li id="navigation-back-to-radio-index">
-                <a id="back-to-radio-index-button" href="{{ path('radio_index') }}">{{ 'back'|trans }}</a>
-            </li> -->
             <li id="navigation-settings">
                 {% if show_settings_button|default(true) %}
-                    <a id="settings-button" title="{{ 'settings'|trans }}" href="{{ path('settings_index') }}">
-                        <span class="material-icons">settings</span>
+                    <a id="settings-button" title="{{ 'settings'|trans }}" aria-label="{{ 'settings'|trans }}" href="{{ path('settings_index') }}">
+                        <span class="material-icons" aria-hidden="true">settings</span>
                     </a>
                 {% endif %}
             </li>
