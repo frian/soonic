@@ -15,8 +15,7 @@
     "selector-class-pattern": [
       "^[a-z][a-z0-9-]*$",
       {
-        "resolveNestedSelectors": true,
-        "severity": "warning"
+        "resolveNestedSelectors": true
       }
     ],
     "selector-id-pattern": "^[a-z][a-z0-9-]*$",

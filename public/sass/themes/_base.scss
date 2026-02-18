@@ -106,7 +106,7 @@ nav.topbar-nav {
 }
 
 a.active {
-    background-color: $hover-active !important;
+    background-color: $hover-active;
 }
 
 /*
@@ -132,7 +132,7 @@ a.active {
 
     tr.playing,
     tr.selected {
-        background-color: $hover-active !important;
+        background-color: $hover-active;
     }
 
     .icon-plus,
@@ -146,7 +146,7 @@ a.active {
 */
 .radio {
     &.active-radio {
-        background-color: $hover-active !important;
+        background-color: $hover-active;
     }
 }
 
@@ -162,7 +162,7 @@ a.active {
     .hamburger-inner,
     .hamburger-inner::after,
     .hamburger-inner::before {
-        background-color: $hamburger-color !important;
+        background-color: $hamburger-color;
     }
 }
 
@@ -185,7 +185,7 @@ a.active {
 input[type="text"] {
     color: $fg-color;
     background-color: $bg-color;
-    border: 1px solid #555 !important;
+    border: 1px solid #555;
 }
 
 .input-reset {

@@ -38,10 +38,22 @@ sass public/sass/themes/default-dark/screen.scss public/css/themes/default-dark/
 sass public/sass/themes/guitar-dark/screen.scss public/css/themes/guitar-dark/screen.css
 ```
 
+Equivalent npm script:
+
+```bash
+npm run build:scss
+```
+
 Optional watch mode:
 
 ```bash
 sass --watch public/sass:public/css
+```
+
+Equivalent npm script:
+
+```bash
+npm run build:scss:watch
 ```
 
 ## Add a new theme
@@ -63,6 +75,12 @@ Run lint:
 
 ```bash
 npm run lint:scss
+```
+
+Lint + build check:
+
+```bash
+npm run check:scss
 ```
 
 Auto-fix where possible:

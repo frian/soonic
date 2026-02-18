@@ -43,7 +43,7 @@
 .hamburger-inner,
 .hamburger-inner::after,
 .hamburger-inner::before {
-  background-color: #111 !important;
+  background-color: #111;
   width: 30px;
   height: 3px;
   border-radius: 4px;
