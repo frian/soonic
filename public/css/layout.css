@@ -170,7 +170,7 @@
 .topbar .material-icons {
   line-height: 49px;
 }
-.topbar #radioNewButton {
+.topbar #radio-new-button {
   padding-right: 10px;
 }
 .topbar .radio-add {
@@ -179,13 +179,13 @@
   line-height: 30px;
 }
 
-#searchForm {
+#search-form {
   display: inline-block;
   vertical-align: top;
   height: 49px;
   line-height: 49px;
 }
-#searchForm input[type=text] {
+#search-form input[type=text] {
   display: inline-block;
   vertical-align: middle;
   position: relative;
@@ -194,14 +194,14 @@
   padding: 0 10px;
   border: 0px solid lime;
 }
-#searchForm input[type=submit] {
+#search-form input[type=submit] {
   display: inline-block;
   height: 49px;
   line-height: 49px;
   vertical-align: top;
   border: 0px solid lime;
 }
-#searchForm .formElementContainer {
+#search-form .formElementContainer {
   display: inline-block;
   position: relative;
 }
@@ -229,9 +229,9 @@ nav.topbarNav a {
   padding: 0 10px;
 }
 
-#navigationLibrary,
-#navigationRadioNew,
-#navigationBackToRadioIndex {
+#navigation-library,
+#navigation-radio-new,
+#navigation-back-to-radio-index {
   display: none;
 }
 
@@ -561,8 +561,8 @@ img.lozad {
   border: 0px solid yellow;
 }
 
-label[for=appbundle_radio_enabled], #appbundle_radio_enabled,
-label[for=appbundle_radio_changed], #appbundle_radio_changed {
+label[for=appbundle_radio_enabled], [id=appbundle_radio_enabled],
+label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
   display: none !important;
 }
 
@@ -707,7 +707,7 @@ form {
   right: 5px;
 }
 
-#searchForm .input-reset {
+#search-form .input-reset {
   top: 10px;
   right: 5px;
 }
@@ -792,7 +792,7 @@ table.form tr td.buttonRow {
     display: initial;
   }
 
-  #form_keyword {
+  #form-keyword {
     width: 100px;
   }
 
@@ -1003,7 +1003,7 @@ table.form tr td.buttonRow {
 */
 @media all and (width >= 1600px) {
   /* --  2. Topbar -- */
-  #searchForm input[type=text] {
+  #search-form input[type=text] {
     width: 200px;
   }
 

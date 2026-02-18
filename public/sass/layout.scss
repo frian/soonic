@@ -353,8 +353,8 @@ img.lozad {
     }
 }
 
-label[for="appbundle_radio_enabled"], #appbundle_radio_enabled,
-label[for="appbundle_radio_changed"], #appbundle_radio_changed {
+label[for="appbundle_radio_enabled"], [id="appbundle_radio_enabled"],
+label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
     display: none!important;
 }
 
@@ -522,7 +522,7 @@ form {
     }
 }
 
-#searchForm {
+#search-form {
     .input-reset {
         top: 10px;
         right: 5px;
@@ -631,7 +631,7 @@ table.form {
         display: initial;
     }
 
-    #form_keyword {
+    #form-keyword {
         width: 100px;
     }
 
@@ -897,7 +897,7 @@ table.form {
         // width: 600px;
     }
 
-    #searchForm {
+    #search-form {
         input[type="text"] {
             width: 200px;
         }

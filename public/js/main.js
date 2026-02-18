@@ -37,8 +37,8 @@ $(function() {
 
         $('.library-view').css('display', 'block');
 
-        $('#navigationRandom, #navigationAlbums, #navigationRadios, #navigationSettings, #navigationSearchForm' ).css('display', 'list-item');
-        $('#navigationLibrary, #navigationRadioNew').css('display', 'none');
+        $('#navigationRandom, #navigationAlbums, #navigationRadios, #navigationSettings, #navigation-search-form' ).css('display', 'list-item');
+        $('#navigation-library, #navigation-radio-new').css('display', 'none');
         setSongInfoSize();
 
         if (debug === 1) {
@@ -81,8 +81,8 @@ $(function() {
                 }
             });
         }
-        $('#navigationLibrary, #navigationRadios, #navigationSettings').css('display', 'list-item');
-        $('#navigationAlbums, #navigationRadioNew, #navigationSearchForm, #navigationRandom').css('display', 'none');
+        $('#navigation-library, #navigationRadios, #navigationSettings').css('display', 'list-item');
+        $('#navigationAlbums, #navigation-radio-new, #navigation-search-form, #navigationRandom').css('display', 'none');
         openView = '.albums-view';
 
         if (debug === 1) {
@@ -119,8 +119,8 @@ $(function() {
             });
         }
 
-        $('#navigationLibrary, #navigationAlbums, #navigationRadioNew, #navigationSettings').css('display', 'list-item');
-        $('#navigationRadios, #navigationRandom, #navigationSearchForm').css('display', 'none');
+        $('#navigation-library, #navigationAlbums, #navigation-radio-new, #navigationSettings').css('display', 'list-item');
+        $('#navigationRadios, #navigationRandom, #navigation-search-form').css('display', 'none');
         setSongInfoSize();
         openView = '.radios-view';
 
@@ -134,7 +134,7 @@ $(function() {
     /**
      * Load new radio page
      */
-    $(document).on("click", "#radioNewButton", function(e) {
+    $(document).on("click", "#radio-new-button", function(e) {
 
         e.preventDefault();
 
@@ -158,8 +158,8 @@ $(function() {
             });
         }
 
-        $('#navigationLibrary, #navigationAlbums, #navigationRadios, #navigationSettings').css('display', 'list-item');
-        $('#navigationRandom, #navigationRadioNew').css('display', 'none');
+        $('#navigation-library, #navigationAlbums, #navigationRadios, #navigationSettings').css('display', 'list-item');
+        $('#navigationRandom, #navigation-radio-new').css('display', 'none');
         setSongInfoSize();
         openView = '.radio-new-view';
 
@@ -196,8 +196,8 @@ $(function() {
                 }
             });
         }
-        $('#navigationSettings, #navigationRandom, #navigationSearchForm, #navigationRadioNew').css('display', 'none');
-        $('#navigationLibrary, #navigationAlbums, #navigationRadios').css('display', 'list-item');
+        $('#navigationSettings, #navigationRandom, #navigation-search-form, #navigation-radio-new').css('display', 'none');
+        $('#navigation-library, #navigationAlbums, #navigationRadios').css('display', 'list-item');
         setSongInfoSize();
         openView = '.settings-view';
 
@@ -370,12 +370,12 @@ $(function() {
 
         e.preventDefault();
 
-        if ($("#form_keyword").val().length < 3) {
-            $("#form_keyword").val('');
+        if ($("#form-keyword").val().length < 3) {
+            $("#form-keyword").val('');
             return;
         }
 
-        var form = $('#searchForm');
+        var form = $('#search-form');
 
         $.ajax({
             type: form.attr('method'),
@@ -543,8 +543,8 @@ $(function() {
     /**
      * set focus on search input on clear
      */
-    $(document).on("click", "#searchForm .input-reset", function(e) {
-        $('#form_keyword').focus();
+    $(document).on("click", "#search-form .input-reset", function(e) {
+        $('#form-keyword').focus();
     });
 
 
@@ -640,7 +640,7 @@ $(function() {
             setTimeout(function() {
                 $(document).on( "click", "body", function(e) {
                     e.preventDefault();
-                    if (e.target.id === 'form_keyword') {
+                    if (e.target.id === 'form-keyword') {
                         return;
                     }
                     else if (e.target.className.indexOf('hamburger') !== -1 ) {

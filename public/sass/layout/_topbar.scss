@@ -90,7 +90,7 @@ $topbar-border-size: 1px !default;
         line-height: 49px;
     }
 
-    #radioNewButton {
+    #radio-new-button {
         padding-right: 10px;
     }
 
@@ -101,7 +101,7 @@ $topbar-border-size: 1px !default;
     }
 }
 
-#searchForm {
+#search-form {
     display: inline-block;
     vertical-align: top;
     height: $topbar-size;
@@ -161,8 +161,8 @@ nav.topbarNav {
 }
 
 // -- set menu items visibility
-#navigationLibrary,
-#navigationRadioNew,
-#navigationBackToRadioIndex {
+#navigation-library,
+#navigation-radio-new,
+#navigation-back-to-radio-index {
     display: none;
 }
