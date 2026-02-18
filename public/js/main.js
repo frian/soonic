@@ -461,10 +461,15 @@ $(function() {
      * Submit setting form
      */
     $(document).on("click", "#settings-form-button", function(e) {
+        e.preventDefault();
+        $('#settings-form').trigger('submit');
+    });
+
+    $(document).on("submit", "#settings-form", function(e) {
 
         e.preventDefault();
 
-        const form = $('#settings-form');
+        const form = $(this);
 
         $.ajax({
             type: form.attr('method'),
@@ -483,30 +488,8 @@ $(function() {
                     $('#layout-theme-css').attr('href', href );
                 }
 
-                const textToTranslate = $('[data-text]');
-
-                $.each(textToTranslate, function( index, value ) {
-                    if ($(this).prop("tagName") === 'INPUT') {
-                        if ($(this).attr('type') === 'submit') {
-                            $(this).attr('value', data.config.translations[$(this).attr('data-text')])
-                        }
-                        else if ($(this).attr('type') === 'text') {
-                            $(this).attr('placeholder', data.config.translations[$(this).attr('data-text')])
-                        }
-                    }
-                    else {
-                        $(this).html(data.config.translations[$(this).attr('data-text')]);
-                    }
-                });
-
-
-                const titlesToTranslate = $('[data-title]');
-
-                $.each(titlesToTranslate, function( index, value ) {
-                    $(this).attr('title', data.config.translations[$(this).attr('data-title')])
-                });
-
-                setSongInfoSize();
+                // Keep the user on the settings panel after save.
+                // Theme CSS links are already refreshed above.
             },
             error:function(data) {
                 console.log(data);
