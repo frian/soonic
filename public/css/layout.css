@@ -43,7 +43,7 @@
 .hamburger-inner,
 .hamburger-inner::after,
 .hamburger-inner::before {
-  background-color: #111 !important;
+  background-color: #111;
   width: 30px;
   height: 3px;
   border-radius: 4px;
@@ -760,7 +760,7 @@ table.form tr td.button-row {
 /*
   -- Media query 500px --------------------------------------------------------
 */
-@media all and (width >= 500px) {
+@media all and (min-width: 500px) {
   /* --  4. Views -- */
   .album-container {
     width: 33.33%;
@@ -769,7 +769,7 @@ table.form tr td.button-row {
 /*
   -- Media query 700px --------------------------------------------------------
 */
-@media all and (width >= 700px) {
+@media all and (min-width: 700px) {
   /* --  4. Views -- */
   .album-container {
     width: 25%;
@@ -778,7 +778,7 @@ table.form tr td.button-row {
 /*
   -- Media query 1024px -------------------------------------------------------
 */
-@media all and (width >= 1023px) {
+@media all and (min-width: 1023px) {
   /* --  2. Topbar -- */
   .topbar .logo > span {
     display: inline-block;
@@ -790,6 +790,22 @@ table.form tr td.button-row {
 
   nav.topbar-nav {
     display: initial;
+  }
+
+  ul.top-nav.is-active {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    z-index: auto;
+  }
+  ul.top-nav.is-active li {
+    float: left;
+    text-align: left;
+  }
+  ul.top-nav.is-active li a {
+    width: auto;
+    text-align: left;
   }
 
   #form-keyword {
@@ -954,7 +970,7 @@ table.form tr td.button-row {
 /*
   -- Media query 1200px -------------------------------------------------------
 */
-@media all and (width >= 1200px) {
+@media all and (min-width: 1200px) {
   /* --  2. Topbar -- */
   /* --  3. Artists navigation -- */
   .artists-navigation {
@@ -1001,7 +1017,7 @@ table.form tr td.button-row {
 /*
   -- Media query 1600px -------------------------------------------------------
 */
-@media all and (width >= 1600px) {
+@media all and (min-width: 1600px) {
   /* --  2. Topbar -- */
   #search-form input[type=text] {
     width: 200px;

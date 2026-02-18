@@ -77,7 +77,7 @@ nav.topbar-nav a:hover .icon-cog {
 }
 
 a.active {
-  background-color: #060 !important;
+  background-color: #060;
 }
 
 /*
@@ -96,7 +96,7 @@ a.active {
 }
 .list tr.playing,
 .list tr.selected {
-  background-color: #060 !important;
+  background-color: #060;
 }
 .list .icon-plus,
 .list .icon-minus {
@@ -107,7 +107,7 @@ a.active {
   --  7. Radios ---------------------------------------------------------------
 */
 .radio.active-radio {
-  background-color: #060 !important;
+  background-color: #060;
 }
 
 .radio:nth-child(4n+2),
@@ -121,7 +121,7 @@ a.active {
 .hamburger-inner,
 .hamburger-inner::after,
 .hamburger-inner::before {
-  background-color: #eee !important;
+  background-color: #eee;
 }
 
 /*
@@ -141,7 +141,7 @@ a.active {
 input[type=text] {
   color: #eee;
   background-color: #111;
-  border: 1px solid #555 !important;
+  border: 1px solid #555;
 }
 
 .input-reset {

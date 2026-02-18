@@ -253,7 +253,7 @@ form div div input {
 /*
   -- Media query 1024px -------------------------------------------------------
 */
-@media all and (width >= 1024px) {
+@media all and (min-width: 1024px) {
     /* -- Radios -- */
     .radio {
         .radio-name {
