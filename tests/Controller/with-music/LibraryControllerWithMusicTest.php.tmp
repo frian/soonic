@@ -15,7 +15,7 @@ class LibraryControllerWithMusicTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.topbar');
-        $this->assertSelectorExists('#songsSection');
+        $this->assertSelectorExists('#songs-section');
         $this->assertSelectorExists('.artist');
         $this->assertTrue($crawler->filter(".artist:contains(\"DIRE STRAITS\")")->count() == 1);
     }

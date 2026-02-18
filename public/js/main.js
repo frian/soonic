@@ -28,7 +28,7 @@ $(function() {
     /**
      * Load library page
      */
-    $(document).on("click", "#libraryButton", function(e) {
+    $(document).on("click", "#library-button", function(e) {
 
         e.preventDefault();
 
@@ -37,7 +37,7 @@ $(function() {
 
         $('.library-view').css('display', 'block');
 
-        $('#navigationRandom, #navigationAlbums, #navigationRadios, #navigationSettings, #navigation-search-form' ).css('display', 'list-item');
+        $('#navigation-random, #navigation-albums, #navigation-radios, #navigation-settings, #navigation-search-form' ).css('display', 'list-item');
         $('#navigation-library, #navigation-radio-new').css('display', 'none');
         setSongInfoSize();
 
@@ -57,7 +57,7 @@ $(function() {
     //     $(this).children(".lozad").fadeOut('fast').delay(3000).fadeIn('fast');
     // });
 
-    $   (document).on("click", "#albumsButton", function(e) {
+    $   (document).on("click", "#albums-button", function(e) {
 
         e.preventDefault();
 
@@ -81,8 +81,8 @@ $(function() {
                 }
             });
         }
-        $('#navigation-library, #navigationRadios, #navigationSettings').css('display', 'list-item');
-        $('#navigationAlbums, #navigation-radio-new, #navigation-search-form, #navigationRandom').css('display', 'none');
+        $('#navigation-library, #navigation-radios, #navigation-settings').css('display', 'list-item');
+        $('#navigation-albums, #navigation-radio-new, #navigation-search-form, #navigation-random').css('display', 'none');
         openView = '.albums-view';
 
         if (debug === 1) {
@@ -95,7 +95,7 @@ $(function() {
     /**
      * Load radios page
      */
-    $(document).on("click", "#radioButton", function(e) {
+    $(document).on("click", "#radio-button", function(e) {
 
         e.preventDefault();
 
@@ -119,8 +119,8 @@ $(function() {
             });
         }
 
-        $('#navigation-library, #navigationAlbums, #navigation-radio-new, #navigationSettings').css('display', 'list-item');
-        $('#navigationRadios, #navigationRandom, #navigation-search-form').css('display', 'none');
+        $('#navigation-library, #navigation-albums, #navigation-radio-new, #navigation-settings').css('display', 'list-item');
+        $('#navigation-radios, #navigation-random, #navigation-search-form').css('display', 'none');
         setSongInfoSize();
         openView = '.radios-view';
 
@@ -158,8 +158,8 @@ $(function() {
             });
         }
 
-        $('#navigation-library, #navigationAlbums, #navigationRadios, #navigationSettings').css('display', 'list-item');
-        $('#navigationRandom, #navigation-radio-new').css('display', 'none');
+        $('#navigation-library, #navigation-albums, #navigation-radios, #navigation-settings').css('display', 'list-item');
+        $('#navigation-random, #navigation-radio-new').css('display', 'none');
         setSongInfoSize();
         openView = '.radio-new-view';
 
@@ -173,7 +173,7 @@ $(function() {
     /**
      * Load settings page
      */
-    $(document).on("click", "#settingsButton", function(e) {
+    $(document).on("click", "#settings-button", function(e) {
 
         e.preventDefault();
 
@@ -196,8 +196,8 @@ $(function() {
                 }
             });
         }
-        $('#navigationSettings, #navigationRandom, #navigation-search-form, #navigation-radio-new').css('display', 'none');
-        $('#navigation-library, #navigationAlbums, #navigationRadios').css('display', 'list-item');
+        $('#navigation-settings, #navigation-random, #navigation-search-form, #navigation-radio-new').css('display', 'none');
+        $('#navigation-library, #navigation-albums, #navigation-radios').css('display', 'list-item');
         setSongInfoSize();
         openView = '.settings-view';
 
@@ -212,7 +212,7 @@ $(function() {
      * Load random songs
      * Updates the songs panel
      */
-    $(document).on("click", "#randomButton", function(e) {
+    $(document).on("click", "#random-button", function(e) {
 
         e.preventDefault();
 
@@ -366,7 +366,7 @@ $(function() {
      * Updates the songs panel
      * TODO: search on smallscreen
      */
-    $(document).on("click", "#searchButton", function(e) {
+    $(document).on("click", "#search-button", function(e) {
 
         e.preventDefault();
 
@@ -400,8 +400,8 @@ $(function() {
 
         $("#songs tbody").remove();
         $("#songs").append(data);
-        // if ($("#topBarNav").hasClass('is-active')) {
-        //     $("#topBarNav").toggleClass('is-active');
+        // if ($("#top-bar-nav").hasClass('is-active')) {
+        //     $("#top-bar-nav").toggleClass('is-active');
         //     $(".topNav").toggleClass('is-active');
         //     $(".songs").css('display', 'initial');
         //     $(".playlist").css('display', 'none');
@@ -426,15 +426,15 @@ $(function() {
     /**
      * Start scan
      */
-    $(document).on("click", "#scanButton", function(e) {
+    $(document).on("click", "#scan-button", function(e) {
 
         e.preventDefault();
 
-        if ($("#scanButton").hasClass('running')) {
+        if ($("#scan-button").hasClass('running')) {
             return;
         }
 
-        $("#scanButton").toggleClass('running');
+        $("#scan-button").toggleClass('running');
 
         $.get({
             url: '/scan',
@@ -444,10 +444,10 @@ $(function() {
             }
         });
 
-        $("#numFiles").text("0");
-        $("#numArtists").text("0");
-        $("#numAlbums").text("0");
-        $("#scanStatus").text('scanning');
+        $("#num-files").text("0");
+        $("#num-artists").text("0");
+        $("#num-albums").text("0");
+        $("#scan-button").text('scanning');
 
         $loop = setInterval(scanTimer, 1000);
 
@@ -460,11 +460,11 @@ $(function() {
     /**
      * Submit setting form
      */
-    $(document).on("click", "#settingsFormButton", function(e) {
+    $(document).on("click", "#settings-form-button", function(e) {
 
         e.preventDefault();
 
-        const form = $('#settingsForm');
+        const form = $('#settings-form');
 
         $.ajax({
             type: form.attr('method'),
@@ -474,13 +474,13 @@ $(function() {
             success: function(data) {
 
                 let href = "";
-                if ($('#screenThemeCss')) {
+                if ($('#screen-theme-css')) {
                     href = "/css/themes/" + data.config.theme + "/screen.css";
-                    $('#screenThemeCss').attr('href', href );
+                    $('#screen-theme-css').attr('href', href );
                 }
-                if ($('#layoutThemeCss')) {
+                if ($('#layout-theme-css')) {
                     href = "/css/themes/" + data.config.theme + "/layout.css";
-                    $('#layoutThemeCss').attr('href', href );
+                    $('#layout-theme-css').attr('href', href );
                 }
 
                 const textToTranslate = $('[data-text]');
@@ -554,10 +554,10 @@ $(function() {
     $(document).on("click", ".icon-trash", function(e) {
         if ($("#playlist tbody tr").length) {
             $("#playlist tbody tr").remove();
-            $("#playlistNumFiles").text(0);
-            $("#playlistFile").text('file');
-            $("#playlistDuration").text('00:00');
-            $("#playlistInfos").css('display', 'none');
+            $("#playlist-num-files").text(0);
+            $("#playlist-file").text('file');
+            $("#playlist-duration").text('00:00');
+            $("#playlist-infos").css('display', 'none');
         }
 
         if (debug === 1) {
@@ -672,7 +672,7 @@ $(function() {
             cache: true,
             success: function(data) {
                 if (data.status == 'running') {
-                    $("#scanButton").toggleClass('running');
+                    $("#scan-button").toggleClass('running');
                     loop = setInterval(scanTimer, 1000);
                 }
             }
@@ -694,11 +694,11 @@ $(function() {
             success: function(data) {
                 if (data.status == 'stopped') {
                     clearInterval($loop);
-                    $("#scanButton").toggleClass('running');
+                    $("#scan-button").toggleClass('running');
                 }
-                $("#numFiles").text(data.data.song);
-                $("#numArtists").text(data.data.artist);
-                $("#numAlbums").text(data.data.album);
+                $("#num-files").text(data.data.song);
+                $("#num-artists").text(data.data.artist);
+                $("#num-albums").text(data.data.album);
             }
         });
     }
@@ -711,10 +711,10 @@ $(function() {
     function setSongInfoSize() {
         let width;
         if (screenWidth < 1024) {
-            width = screenWidth - ($('.logo').outerWidth() + $('#playerContainer').outerWidth() + $('.hamburger').outerWidth() + 50);
+            width = screenWidth - ($('.logo').outerWidth() + $('#player-container').outerWidth() + $('.hamburger').outerWidth() + 50);
         }
         else {
-            width = screenWidth - ($('.logo').outerWidth() + $('#playerContainer').outerWidth() + $('.topbarNav').outerWidth() + 50);
+            width = screenWidth - ($('.logo').outerWidth() + $('#player-container').outerWidth() + $('.topbarNav').outerWidth() + 50);
         }
         $('.songInfo').width(width);
     }
@@ -722,7 +722,7 @@ $(function() {
     function setFilterInputSize() {
         let width;
         if (screenWidth < 1024) {
-            var buttonWidth = getElementOuterWidth($('#searchButton'));
+            var buttonWidth = getElementOuterWidth($('#search-button'));
             width = (screenWidth - buttonWidth );
         }
         $('.formElementContainer').width(width);

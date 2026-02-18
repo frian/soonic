@@ -15,7 +15,7 @@ class LibraryControllerTest extends WebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.topbar');
-        $this->assertSelectorExists('#songsSection');
+        $this->assertSelectorExists('#songs-section');
         $this->assertTrue($crawler->filter("#artists-nav:contains(\"no artists found\")")->count() == 1);
     }
 

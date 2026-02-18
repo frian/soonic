@@ -11,7 +11,7 @@ $(function() {
     /**
      * Play / Pause currently loaded song
      */
-    $(document).on("click", "#playPauseButton", function(e) {
+    $(document).on("click", "#play-pause-button", function(e) {
 
         if (debug === 1) {
             console.log('clicked on Play / Pause');
@@ -34,7 +34,7 @@ $(function() {
         playerStatus = "playing";
         $(this).addClass('playing');
 
-        $('#playPauseButton').attr('class', 'icon-pause');;
+        $('#play-pause-button').attr('class', 'icon-pause');;
 
         if (screenWidth < 500) {
             $(".songInfo").css('display', 'none');
@@ -74,11 +74,11 @@ $(function() {
 
         contextMenuClickTimer = setTimeout(function() {
             $(document).one("click.playlistContext", function(e) {
-                const $target = $(e.target).closest("#addToPlaylist, #removeFromPlaylist");
+                const $target = $(e.target).closest("#add-to-playlist, #remove-from-playlist");
                 const $selected = $("#songs tbody tr.selected, #playlist tbody tr.selected").first();
 
                 if ($target.length && $selected.length) {
-                    if ($target.is("#addToPlaylist")) {
+                    if ($target.is("#add-to-playlist")) {
                         if (playlistContainsPath($selected.data("path"))) {
                             $(".songsContextMenu, .playlistContextMenu").css('display', 'none');
                             $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
@@ -92,7 +92,7 @@ $(function() {
                         updatePlaylistInfo($copy);
                         $("#playlist tbody").append($copy);
                     }
-                    else if ($target.is("#removeFromPlaylist")) {
+                    else if ($target.is("#remove-from-playlist")) {
                         updatePlaylistInfo($selected, 'remove');
                         $selected.remove();
                     }
@@ -159,7 +159,7 @@ $(function() {
      */
     $("#player").on("timeupdate", function() {
 
-        $("#currentTime").text(toDuration(this.currentTime) + ' /');
+        $("#current-time").text(toDuration(this.currentTime) + ' /');
 
         let percentagePlayed = (this.currentTime / this.duration);
 
@@ -217,7 +217,7 @@ $(function() {
         $icon.attr('class', 'icon-minus');
         $("#playlist tbody").append($copy);
 
-        if ($("#playlist").height() + 20 > $("#playlistSection").height()) {
+        if ($("#playlist").height() + 20 > $("#playlist-section").height()) {
             $('.playlist-container').scrollTop($('.playlist-container').prop("scrollHeight"));
         }
 
@@ -293,7 +293,7 @@ $(function() {
                     console.log('playerStatus : ' + playerStatus);
                 }
 
-                $("#playPauseButton").attr('class', 'icon-play');
+                $("#play-pause-button").attr('class', 'icon-play');
                 playerStatus = "paused";
             }
         }
@@ -302,7 +302,7 @@ $(function() {
                 console.log('NO next song');
             }
 
-            $("#playPauseButton").attr('class', 'icon-play');;
+            $("#play-pause-button").attr('class', 'icon-play');;
             playerStatus = "paused";
 
             if (debug === 1) {
@@ -317,8 +317,8 @@ $(function() {
     function playPause() {
 
         const player = document.getElementById("player");
-        const src = document.getElementById("audioSource");
-        const $this = $("#playPauseButton");
+        const src = document.getElementById("audio-source");
+        const $this = $("#play-pause-button");
 
         if (!$(src).attr('src')) {
             console.log("No source");
@@ -354,20 +354,20 @@ $(function() {
         const artist = values[2];
         const title = values[3];
         const duration = values[5];
-        const audioSource = document.getElementById("audioSource");
+        const audioSource = document.getElementById("audio-source");
         const player = document.getElementById("player");
 
         $(audioSource).attr('src', path);
         player.load();
 
-        $("#songTitle").text(title);
-        $("#songArtist").text(' by ' + artist);
+        $("#song-title").text(title);
+        $("#song-artist").text(' by ' + artist);
         $("#duration").text(duration);
 
         player.play();
 
-        if ($("#playPauseButton").attr("class") === 'icon-play') {
-            $("#playPauseButton").attr("class", "icon-pause");
+        if ($("#play-pause-button").attr("class") === 'icon-play') {
+            $("#play-pause-button").attr("class", "icon-pause");
         }
 
         if (debug === 1) {
@@ -425,9 +425,9 @@ $(function() {
 
         action = action || 'add';
 
-        let numFiles = document.getElementById("playlistNumFiles").textContent;
+        let numFiles = document.getElementById("playlist-num-files").textContent;
         let songDuration = $(item).data("duration");
-        let playlistDuration = document.getElementById("playlistDuration").textContent;
+        let playlistDuration = document.getElementById("playlist-duration").textContent;
 
         playlistDuration = toSeconds(playlistDuration);
         songDuration = toSeconds(songDuration);
@@ -446,15 +446,15 @@ $(function() {
             fileInfoText = 'files';
         }
 
-        document.getElementById("playlistFile").textContent = fileInfoText;
-        document.getElementById("playlistNumFiles").textContent = numFiles;
-        document.getElementById("playlistDuration").textContent = playlistDuration;
+        document.getElementById("playlist-file").textContent = fileInfoText;
+        document.getElementById("playlist-num-files").textContent = numFiles;
+        document.getElementById("playlist-duration").textContent = playlistDuration;
 
         let display = 'none';
         if (numFiles > 0) {
             display = 'initial';
         }
-        document.getElementById("playlistInfos").style.display = display;
+        document.getElementById("playlist-infos").style.display = display;
 
         if (debug === 1) {
             console.log('in updatePlaylistInfo');

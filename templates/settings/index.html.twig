@@ -4,25 +4,25 @@
         <table class="libraryInfo">
             <tr>
                 <td data-text='files'>{{ 'files'|trans }}</td>
-                <td id="numFiles">{{ infos[0] }}</td>
+                <td id="num-files">{{ infos[0] }}</td>
             </tr>
             <tr>
                 <td data-text='artists'>{{ 'artists'|trans }}</td>
-                <td id="numArtists">{{ infos[1] }}</td>
+                <td id="num-artists">{{ infos[1] }}</td>
             </tr>
             <tr>
                 <td data-text='albums'>{{ 'albums'|trans }}</td>
-                <td id="numAlbums">{{ infos[2] }}</td>
+                <td id="num-albums">{{ infos[2] }}</td>
             </tr>
         </table>
         <div class="buttonWrapper">
-            <a id="scanButton" class="button" href="{{ path('radio_index') }}" data-text='scan'>{{ 'scan'|trans }}</a>
+            <a id="scan-button" class="button" href="{{ path('radio_index') }}" data-text='scan'>{{ 'scan'|trans }}</a>
         </div>
     </section>
 
     <section class="settings clearfix">
         <h2 data-text='settings'>{{ 'settings'|trans }}</h2>
-        <form name="appbundle_config" id="settingsForm" method="post" action="{{ path('config_edit', { 'id': 1 }) }}">
+        <form name="appbundle_config" id="settings-form" method="post" action="{{ path('config_edit', { 'id': 1 }) }}">
             <table class="libraryInfo">
                 <tr>
                     <td><label for="config_language" class="required" data-text='language'>{{ 'language'|trans }}</label></td>
@@ -37,7 +37,7 @@
             {{ form_widget(edit_form) }}
 
             <div class="buttonWrapper">
-                <input id="settingsFormButton" class="button" type="submit" value="{{ 'save'|trans }}" data-text='save'/>
+                <input id="settings-form-button" class="button" type="submit" value="{{ 'save'|trans }}" data-text='save'/>
             </div>
 
             {{ form_end(edit_form) }}
