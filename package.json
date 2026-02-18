@@ -2,11 +2,11 @@
   "name": "soonic-stylelint",
   "private": true,
   "scripts": {
-    "build:scss": "sass public/sass/layout.scss public/css/layout.css && sass public/sass/screen.scss public/css/screen.css && sass public/sass/themes/default-clear/screen.scss public/css/themes/default-clear/screen.css && sass public/sass/themes/default-dark/screen.scss public/css/themes/default-dark/screen.css && sass public/sass/themes/guitar-dark/screen.scss public/css/themes/guitar-dark/screen.css",
-    "build:scss:watch": "sass --watch public/sass:public/css",
+    "build:scss": "sass assets/styles/layout.scss public/css/layout.css && sass assets/styles/screen.scss public/css/screen.css && sass assets/styles/themes/default-clear/screen.scss public/css/themes/default-clear/screen.css && sass assets/styles/themes/default-dark/screen.scss public/css/themes/default-dark/screen.css && sass assets/styles/themes/guitar-dark/screen.scss public/css/themes/guitar-dark/screen.css",
+    "build:scss:watch": "sass --watch assets/styles:public/css",
     "check:scss": "npm run lint:scss && npm run build:scss",
-    "lint:scss": "stylelint \"public/sass/**/*.scss\"",
-    "lint:scss:fix": "stylelint \"public/sass/**/*.scss\" --fix"
+    "lint:scss": "stylelint \"assets/styles/**/*.scss\"",
+    "lint:scss:fix": "stylelint \"assets/styles/**/*.scss\" --fix"
   },
   "devDependencies": {
     "postcss-scss": "^4.0.9",

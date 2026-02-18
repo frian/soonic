@@ -31,11 +31,11 @@ Current theme sources:
 From the project root:
 
 ```bash
-sass public/sass/layout.scss public/css/layout.css
-sass public/sass/screen.scss public/css/screen.css
-sass public/sass/themes/default-clear/screen.scss public/css/themes/default-clear/screen.css
-sass public/sass/themes/default-dark/screen.scss public/css/themes/default-dark/screen.css
-sass public/sass/themes/guitar-dark/screen.scss public/css/themes/guitar-dark/screen.css
+sass assets/styles/layout.scss public/css/layout.css
+sass assets/styles/screen.scss public/css/screen.css
+sass assets/styles/themes/default-clear/screen.scss public/css/themes/default-clear/screen.css
+sass assets/styles/themes/default-dark/screen.scss public/css/themes/default-dark/screen.css
+sass assets/styles/themes/guitar-dark/screen.scss public/css/themes/guitar-dark/screen.css
 ```
 
 Equivalent npm script:
@@ -47,7 +47,7 @@ npm run build:scss
 Optional watch mode:
 
 ```bash
-sass --watch public/sass:public/css
+sass --watch assets/styles:public/css
 ```
 
 Equivalent npm script:
@@ -58,7 +58,7 @@ npm run build:scss:watch
 
 ## Add a new theme
 
-1. Create `public/sass/themes/<name>/screen.scss`.
+1. Create `assets/styles/themes/<name>/screen.scss`.
 2. Start from an existing theme file and adjust the `@use "../base" with (...)` values.
 3. Add theme-specific overrides (background image, etc.) below the `@use`.
 4. Compile to `public/css/themes/<name>/screen.css`.
