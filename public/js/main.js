@@ -488,8 +488,27 @@ $(function() {
                     $('#layout-theme-css').attr('href', href );
                 }
 
-                // Keep the user on the settings panel after save.
-                // Theme CSS links are already refreshed above.
+                // Refresh translated server-rendered fragments without full-page navigation.
+                $.get({
+                    url: '/settings/',
+                    cache: false,
+                    success: function(html) {
+                        const $html = $('<div>').html(html);
+                        const $newTopbar = $html.find('.topbar').first();
+                        const $newSettings = $html.find('.settings-view').first();
+
+                        if ($newTopbar.length) {
+                            $('.topbar').replaceWith($newTopbar);
+                        }
+
+                        if ($newSettings.length) {
+                            $('.settings-view').replaceWith($newSettings);
+                            openView = '.settings-view';
+                        }
+
+                        setSongInfoSize();
+                    }
+                });
             },
             error:function(data) {
                 console.log(data);
