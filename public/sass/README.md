@@ -10,6 +10,14 @@ This folder contains the Sass sources used to generate the CSS files in `public/
 - `themes/_base.scss`: shared theme rules
 - `themes/<theme>/screen.scss`: theme-specific variables and overrides
 
+## Conventions
+
+- Prefer `@use` over legacy `@import`.
+- Keep shared theme rules in `themes/_base.scss`.
+- In each `themes/<theme>/screen.scss`, configure variables via:
+  `@use "../base" with (...)`
+- Keep visual overrides (e.g. background image/gradient) after `@use`.
+
 Current theme sources:
 
 - `themes/default-clear/screen.scss`
@@ -33,3 +41,10 @@ Optional watch mode:
 ```bash
 sass --watch public/sass:public/css
 ```
+
+## Add a new theme
+
+1. Create `public/sass/themes/<name>/screen.scss`.
+2. Start from an existing theme file and adjust the `@use "../base" with (...)` values.
+3. Add theme-specific overrides (background image, etc.) below the `@use`.
+4. Compile to `public/css/themes/<name>/screen.css`.

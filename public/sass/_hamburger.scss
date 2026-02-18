@@ -44,10 +44,9 @@
 .hamburger-inner,
 .hamburger-inner::after,
 .hamburger-inner::before {
-    background-color: #111!important;
+    background-color: #111 !important;
     width: 30px;
     height: 3px;
-    background-color: #eee;
     border-radius: 4px;
     position: absolute;
     transition-property: transform;
@@ -57,7 +56,6 @@
 
 .hamburger-inner::after,
 .hamburger-inner::before {
-    color: #111!important;
     content: "";
     display: block;
 }

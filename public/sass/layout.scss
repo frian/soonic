@@ -220,7 +220,7 @@ nav.topbarNav {
         white-space: nowrap;
         text-overflow: ellipsis;
         padding: 0 10px;
-        height : $mobileButtonSize;
+        height: $mobileButtonSize;
         line-height: $mobileButtonSize;
         @if $debug != 0 {
             background-color: #500;
@@ -229,7 +229,7 @@ nav.topbarNav {
 }
 
 #artists-nav {
-    height: calc((100% - 45px));
+    height: calc(100% - 45px);
     overflow-y: auto;
 }
 
