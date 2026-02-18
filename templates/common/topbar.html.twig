@@ -32,7 +32,7 @@
     <nav class="topbar-nav" id="top-bar-nav">
         <ul class="top-nav">
             <li id="navigation-search-form">
-                {{ render(controller( 'App\\Controller\\SearchController::showSearch' )) }}
+                {{ include('common/search.html.twig') }}
             </li>
             <li id="navigation-library">
                 <a id="library-button" href="{{ path('library') }}" data-title="artists" title="{{ 'artists'|trans }}"><span class="material-icons">people</span></a>

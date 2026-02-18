@@ -5,5 +5,5 @@
     </div>
     <button id="search-button" type="submit" name="submit" class="button" data-title="search" title="{{ 'search'|trans }}"><span class="material-icons">search</span></button>
 
-    {{ form_widget(form._token) }}
-{{ form_end(form, {'render_rest': false}) }}
+    <input type="hidden" name="form[_token]" value="{{ csrf_token('form') }}">
+</form>

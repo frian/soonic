@@ -1,0 +1,7 @@
+<a
+    href="{{ href }}"
+    class="button{{ class is defined and class ? ' ' ~ class : '' }}"
+    {% if id is defined and id %}id="{{ id }}"{% endif %}
+>
+    {{ label }}
+</a>

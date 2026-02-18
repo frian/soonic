@@ -18,8 +18,8 @@
             </tr>
             <tr>
                 <td colspan="2" class="button-row">
-                    <input class="button" type="submit" value="{{ 'create'|trans }}" />
-                    <a class="button" href="{{ path('radio_index') }}">{{ 'back.tolist'|trans }}</a>
+                    {{ include('common/_button_submit.html.twig', { label: 'create'|trans }) }}
+                    {{ include('common/_button_link.html.twig', { href: path('radio_index'), label: 'back.tolist'|trans }) }}
                 </td>
             </tr>
         </table>
