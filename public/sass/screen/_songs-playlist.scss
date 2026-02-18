@@ -43,7 +43,7 @@ $hover-active: #ddd !default;
     }
 
     tr.playing, tr.selected {
-        background-color: $hover-active!important;
+        background-color: $hover-active;
     }
 
     .icon-plus, .icon-minus {

@@ -112,7 +112,7 @@ h2 {
     }
 
     &.active-radio {
-        background-color: $hover-active!important;
+        background-color: $hover-active;
     }
 }
 
@@ -126,7 +126,7 @@ h2 {
 */
 .settings {
     padding-bottom: 20px;
-    border-bottom: 1px solid $border-color!important;
+    border-bottom: 1px solid $border-color;
 
     table {
         font-family: Muli, sans-serif;
@@ -168,7 +168,7 @@ input[type="text"] {
     background-color: $bg-color;
     font-family: Muli, sans-serif;
     font-size: 18px;
-    border: 1px solid #555!important;
+    border: 1px solid #555;
 }
 
 .input-reset {
@@ -217,10 +217,10 @@ form div div input {
 }
 
 .running {
-    background: $red-gradient!important;
+    background: $red-gradient;
 
     &:hover {
-        background: $red-gradient!important;
+        background: $red-gradient;
     }
 }
 

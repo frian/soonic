@@ -36,7 +36,7 @@ table {
 }
 
 .no-padding {
-    padding: 0!important;
+    padding: 0;
 }
 
 
@@ -84,7 +84,7 @@ $panel-header-height: 22px;
 .songs-header {
     display: none;
     position: relative;
-    width: calc(100% - 10px)!important;
+    width: calc(100% - 10px);
     height: $panel-header-height;
     z-index: 40;
     box-sizing: border-box;
@@ -112,9 +112,9 @@ $panel-header-height: 22px;
     }
 
     thead tr {
-        height: 0!important;
-        line-height: 0!important;
-        font-size: 0!important;
+        height: 0;
+        line-height: 0;
+        font-size: 0;
     }
 }
 
@@ -355,7 +355,7 @@ img.lozad {
 
 label[for="appbundle_radio_enabled"], [id="appbundle_radio_enabled"],
 label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
-    display: none!important;
+    display: none;
 }
 
 
@@ -380,7 +380,7 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
                 &:nth-child(1) {
                     padding: 0;
                     width: 40%;
-                    text-align: right!important;
+                    text-align: right;
                 }
             }
         }
@@ -397,7 +397,7 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 */
 ul.top-nav {
     position: relative;
-    width: 100%!important;
+    width: 100%;
 
     &.is-active {
         position: absolute;
@@ -424,7 +424,7 @@ ul.top-nav {
             width: 100%;
 
             input[type='text'] {
-                width: 90%!important;
+                width: 90%;
             }
 
             input[type='submit'] {
@@ -466,7 +466,7 @@ ul.top-nav {
 }
 
 button:active, button:focus {
-    border: none!important;
+    border: none;
 }
 
 
@@ -494,7 +494,7 @@ form {
     content: "\e805";
     transform: rotate(45deg);
     font-family: fontello, sans-serif;
-	display: block!important;
+	display: block;
 	width: 20px;
 	height: 20px;
 	position: absolute;
@@ -756,7 +756,7 @@ table.form {
 
     /* --  7. Radios -- */
     .radio {
-        font-size: 16px!important;
+        font-size: 16px;
         display: inline-block;
         width: 50%;
 

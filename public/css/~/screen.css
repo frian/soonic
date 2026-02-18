@@ -127,7 +127,7 @@ nav.topbar-nav a:hover {
 }
 
 a.active {
-  background-color: #ddd !important;
+  background-color: #ddd;
 }
 
 .playlist-header {
@@ -163,7 +163,7 @@ a.active {
   background-color: #ddd;
 }
 .list tr.playing, .list tr.selected {
-  background-color: #ddd !important;
+  background-color: #ddd;
 }
 .list .icon-plus, .list .icon-minus {
   color: #aaa;
@@ -235,7 +235,7 @@ h2 {
   font-size: 4em;
 }
 .radio.active-radio {
-  background-color: #ddd !important;
+  background-color: #ddd;
 }
 
 .radio:nth-child(4n+2), .radio:nth-child(4n+3) {
@@ -247,7 +247,7 @@ h2 {
 */
 .settings {
   padding-bottom: 20px;
-  border-bottom: 1px solid #666 !important;
+  border-bottom: 1px solid #666;
 }
 .settings table {
   font-family: Muli, sans-serif;
@@ -284,7 +284,7 @@ input[type=text] {
   background-color: #eee;
   font-family: Muli, sans-serif;
   font-size: 18px;
-  border: 1px solid #555 !important;
+  border: 1px solid #555;
 }
 
 .input-reset {
@@ -331,10 +331,10 @@ form div div input {
 }
 
 .running {
-  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5)) !important;
+  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
 }
 .running:hover {
-  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5)) !important;
+  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
 }
 
 /*
