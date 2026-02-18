@@ -37,7 +37,7 @@
 .hamburger-inner {
   display: block;
   top: 50%;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 .hamburger-inner,
@@ -191,13 +191,11 @@
   position: relative;
   width: 130px;
   height: 39px;
-  border: 0;
   padding: 0 10px;
   border: 0px solid lime;
 }
 #searchForm input[type=submit] {
   display: inline-block;
-  border: 0;
   height: 49px;
   line-height: 49px;
   vertical-align: top;
@@ -445,7 +443,7 @@ thead {
 }
 .album-container .album-controls .material-icons-big {
   font-size: 50px;
-  padding-left: 0px;
+  padding-left: 0;
 }
 
 img.lozad {
@@ -464,14 +462,14 @@ img.lozad {
 .album-infos .album-info-album {
   letter-spacing: 0.4px;
   font-size: 1.1em;
-  padding: 10px 10px 5px 10px;
+  padding: 10px 10px 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .album-infos .album-info-artist {
   font-size: 0.9em;
-  padding: 0px 5px 5px 5px;
+  padding: 0 5px 5px;
   margin-bottom: 5px;
   white-space: nowrap;
   overflow: hidden;
@@ -679,10 +677,10 @@ form {
   border: 0;
 }
 
-.input-reset:after {
+.input-reset::after {
   content: "\e805";
   transform: rotate(45deg);
-  font-family: fontello;
+  font-family: fontello, sans-serif;
   display: block !important;
   width: 20px;
   height: 20px;
@@ -721,12 +719,12 @@ table.form {
 table.form tr td {
   padding: 5px;
 }
+table.form tr td input[type=text] {
+  width: 80%;
+}
 table.form tr td:nth-child(1) {
   text-align: right;
   width: 40%;
-}
-table.form tr td input[type=text] {
-  width: 80%;
 }
 table.form tr td.buttonRow {
   text-align: center;
@@ -762,7 +760,7 @@ table.form tr td.buttonRow {
 /*
   -- Media query 500px --------------------------------------------------------
 */
-@media all and (min-width: 500px) {
+@media all and (width >= 500px) {
   /* --  4. Views -- */
   .album-container {
     width: 33.33%;
@@ -771,7 +769,7 @@ table.form tr td.buttonRow {
 /*
   -- Media query 700px --------------------------------------------------------
 */
-@media all and (min-width: 700px) {
+@media all and (width >= 700px) {
   /* --  4. Views -- */
   .album-container {
     width: 25%;
@@ -780,7 +778,7 @@ table.form tr td.buttonRow {
 /*
   -- Media query 1024px -------------------------------------------------------
 */
-@media all and (min-width: 1023px) {
+@media all and (width >= 1023px) {
   /* --  2. Topbar -- */
   .topbar .logo > span {
     display: inline-block;
@@ -941,12 +939,12 @@ table.form tr td.buttonRow {
   table.form tr td {
     padding: 10px;
   }
+  table.form tr td input[type=text] {
+    width: 80%;
+  }
   table.form tr td:nth-child(1) {
     text-align: right;
     width: 40%;
-  }
-  table.form tr td input[type=text] {
-    width: 80%;
   }
   table.form tr td.buttonRow {
     text-align: center;
@@ -956,7 +954,7 @@ table.form tr td.buttonRow {
 /*
   -- Media query 1200px -------------------------------------------------------
 */
-@media all and (min-width: 1200px) {
+@media all and (width >= 1200px) {
   /* --  2. Topbar -- */
   /* --  3. Artists navigation -- */
   .artists-navigation {
@@ -1003,7 +1001,7 @@ table.form tr td.buttonRow {
 /*
   -- Media query 1600px -------------------------------------------------------
 */
-@media all and (min-width: 1600px) {
+@media all and (width >= 1600px) {
   /* --  2. Topbar -- */
   #searchForm input[type=text] {
     width: 200px;

@@ -21,6 +21,7 @@ $mobileButtonSize: 48px !default;
         padding: 0 10px;
         height: $mobileButtonSize;
         line-height: $mobileButtonSize;
+
         @if $debug != 0 {
             background-color: #500;
         }

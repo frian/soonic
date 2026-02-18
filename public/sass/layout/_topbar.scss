@@ -6,6 +6,7 @@ $topbar-border-size: 1px !default;
     height: $topbar-size;
     border-bottom-width: $topbar-border-size;
     border-bottom-style: solid;
+
     @if $debug != 0 {
         background-color: #222;
     }
@@ -112,14 +113,12 @@ $topbar-border-size: 1px !default;
         position: relative;
         width: 130px;
         height: 39px;
-        border: 0;
         padding: 0 10px;
         border: #{$debug}px solid lime;
     }
 
     input[type="submit"] {
         display: inline-block;
-        border: 0;
         height: 49px;
         line-height: 49px;
         vertical-align: top;
@@ -138,6 +137,7 @@ nav.topbarNav {
     float: right;
     height: $topbar-size;
     line-height: $topbar-size;
+
     @if $debug != 0 {
         background-color: #666;
     }

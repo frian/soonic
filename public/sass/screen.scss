@@ -9,10 +9,9 @@ $bg-color: #eee;
 $hover-active: #ddd;
 $bg-alternate: #ddd;
 $border-color: #666;
-$default-gradient: linear-gradient(to top, rgba(34,34,34, 0.2), rgba(51,51,51, 0.1) );
-$hover-gradient: linear-gradient(to top, rgba(34,34,34, 0.1), rgba(51,51,51, 0) );
-$red-gradient: linear-gradient(to top, rgba(204,0,0, 1), rgba(204,0,0, 0.5) );
-
+$default-gradient: linear-gradient(to top, rgb(34 34 34 / 20%), rgb(51 51 51 / 10%) );
+$hover-gradient: linear-gradient(to top, rgb(34 34 34 / 10%), rgb(51 51 51 / 0%) );
+$red-gradient: linear-gradient(to top, rgb(204 0 0 / 100%), rgb(204 0 0 / 50%) );
 $debug: 0;
 
 @use "screen/topbar" with (
@@ -20,14 +19,12 @@ $debug: 0;
     $default-gradient: $default-gradient,
     $hover-gradient: $hover-gradient
 );
-
 @use "screen/artists-navigation" with (
     $hover-active: $hover-active,
     $artists-song-bg: #fff,
     $filter-bg: #ddd,
     $filter-input-bg: black
 );
-
 @use "screen/songs-playlist" with (
     $bg-alternate: $bg-alternate,
     $hover-active: $hover-active
@@ -38,7 +35,7 @@ $debug: 0;
   --  1. Global ---------------------------------------------------------------
 */
 html, body {
-    font-family: 'Lato', sans-serif;
+    font-family: Lato, sans-serif;
 }
 
 body {
@@ -66,14 +63,14 @@ h1 {
     border-bottom: 1px solid $border-color;
     text-align: center;
     padding: 30px 0;
-    font-family: 'Muli', sans-serif;
+    font-family: Muli, sans-serif;
     font-size: 1.6em;
     letter-spacing: 1px;
 }
 
 h2 {
     padding: 10px 20px;
-    font-family: 'Muli', sans-serif;
+    font-family: Muli, sans-serif;
     font-size: 1.4em;
     letter-spacing: 1px;
     border-bottom: 1px solid $border-color;
@@ -90,7 +87,7 @@ h2 {
 */
 .album-container {
     .album-controls {
-        background-color: rgba(0,0,0, 0.6);
+        background-color: rgb(0 0 0 / 60%);
     }
 }
 
@@ -99,13 +96,13 @@ h2 {
 */
 .radio {
     .radioName {
-        font-family: 'Lato', sans-serif;
+        font-family: Lato, sans-serif;
         font-weight: 300;
         border: #{$debug}px solid red;
     }
 
     .radioUrl {
-        font-family: 'Lato', sans-serif;
+        font-family: Lato, sans-serif;
         font-weight: 300;
     }
 
@@ -132,7 +129,7 @@ h2 {
     border-bottom: 1px solid $border-color!important;
 
     table {
-        font-family: 'Muli', sans-serif;
+        font-family: Muli, sans-serif;
         font-size: 1.2em;
     }
 }
@@ -156,6 +153,7 @@ ul.topNav {
 .mobileButton {
     border: 1px solid $border-color;
     background-color: $bg-color;
+
     &:hover {
         background-color: $hover-active;
     }
@@ -168,7 +166,7 @@ ul.topNav {
 input[type="text"] {
     color: $fg-color;
     background-color: $bg-color;
-    font-family: 'Muli', sans-serif;
+    font-family: Muli, sans-serif;
     font-size: 18px;
     border: 1px solid #555!important;
 }
@@ -177,7 +175,7 @@ input[type="text"] {
     background-color: #ddd;
 }
 
-.input-reset:after {
+.input-reset::after {
     color: $fg-color;
     background-color: #ddd;
 }
@@ -187,7 +185,7 @@ input[type="text"] {
   -- 12. Crud forms -----------------------------------------------------------
 */
 form div div label {
-    font-family: 'Lato', sans-serif;
+    font-family: Lato, sans-serif;
     font-size: 1.2em;
     letter-spacing: 0.6px;
 }
@@ -202,7 +200,7 @@ form div div input {
 
 .button {
     color: $fg-color;
-    font-family: 'Lato', sans-serif;
+    font-family: Lato, sans-serif;
     font-size: 1em;
     font-weight: 700;
     text-align: center;
@@ -231,7 +229,7 @@ form div div input {
   -- 13. Context menus --------------------------------------------------------
 */
 .songsContextMenu, .playlistContextMenu {
-    box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 5px 3px rgb(0 0 0 / 20%);
 
     .menu-options {
         list-style: none;
@@ -239,7 +237,7 @@ form div div input {
         background-color: $bg-color;
 
         .menu-option {
-            font-family: 'Muli', sans-serif;
+            font-family: Muli, sans-serif;
             letter-spacing: 1px;
             padding: 10px 40px 10px 20px;
             cursor: pointer;
@@ -255,13 +253,13 @@ form div div input {
 /*
   -- Media query 1024px -------------------------------------------------------
 */
-@media all and (min-width: 1024px) {
-
+@media all and (width >= 1024px) {
     /* -- Radios -- */
     .radio {
         .radioName {
             font-size: 2em;
         }
+
         .radioUrl {
             font-size: 1.2em;
         }

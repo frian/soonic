@@ -26,25 +26,22 @@
 body {
     background: linear-gradient(
         to bottom right,
-        rgba(17,17,17, 1),
-        rgba(17,17,17, 0.9)
+        rgb(17 17 17 / 100%),
+        rgb(17 17 17 / 90%)
     );
     background-image: url("../../../images/guitar-dark/guitar.jpg");
     background-size: cover;
     background-position: center;
 }
 
-body:before {
+body::before {
     content: "";
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+    inset: 0;
     background: linear-gradient(
         to bottom right,
-        rgba(17,17,17, 0.8),
-        rgba(17,17,17, 0.7)
+        rgb(17 17 17 / 80%),
+        rgb(17 17 17 / 70%)
     );
     z-index: -1;
 }

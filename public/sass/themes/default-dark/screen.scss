@@ -26,17 +26,7 @@
 body {
     background: linear-gradient(
         to bottom right,
-        rgba(17,17,17, 1),
-        rgba(17,17,17, 0.9)
+        rgb(17 17 17 / 100%),
+        rgb(17 17 17 / 90%)
     );
-}
-
-/*
-  --  6. Albums view ----------------------------------------------------------
-*/
-.album-container-content {
-    .no-cover-art {
-        .album-info-album {
-        }
-    }
 }

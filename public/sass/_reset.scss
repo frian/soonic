@@ -15,6 +15,7 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
+
   // font: inherit;
   font-size: 100%;
   vertical-align: baseline;
@@ -42,7 +43,8 @@ caption, th, td {
 q, blockquote {
   quotes: none;
 }
-q:before, q:after, blockquote:before, blockquote:after {
+
+q::before, q::after, blockquote::before, blockquote::after {
   content: "";
   content: none;
 }

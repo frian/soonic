@@ -148,7 +148,7 @@ input[type=text] {
   background-color: #111;
 }
 
-.input-reset:after {
+.input-reset::after {
   color: #eee;
   background-color: #111;
 }
@@ -191,9 +191,5 @@ form div div input {
 body {
   background: linear-gradient(to bottom right, #111111, rgba(17, 17, 17, 0.9));
 }
-
-/*
-  --  6. Albums view ----------------------------------------------------------
-*/
 
 /*# sourceMappingURL=screen.css.map */

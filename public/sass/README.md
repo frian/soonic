@@ -50,3 +50,23 @@ sass --watch public/sass:public/css
 2. Start from an existing theme file and adjust the `@use "../base" with (...)` values.
 3. Add theme-specific overrides (background image, etc.) below the `@use`.
 4. Compile to `public/css/themes/<name>/screen.css`.
+
+## Lint SCSS
+
+Install lint dependencies from project root:
+
+```bash
+npm install
+```
+
+Run lint:
+
+```bash
+npm run lint:scss
+```
+
+Auto-fix where possible:
+
+```bash
+npm run lint:scss:fix
+```

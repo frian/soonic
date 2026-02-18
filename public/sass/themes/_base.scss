@@ -8,9 +8,8 @@ $hover-active: #90ee90 !default;
 $bg-alternate: #c8c8c8 !default;
 $header-color: #ccc !default;
 $border-color: #666 !default;
-$default-gradient: linear-gradient(to top, rgba(221,221,221, 1), rgba(204,204,204, 0.9)) !default;
-$hover-gradient: linear-gradient(to top, rgba(144,238,144, 1), rgba(144,238,144, 0.5)) !default;
-
+$default-gradient: linear-gradient(to top, rgb(221 221 221 / 100%), rgb(204 204 204 / 90%)) !default;
+$hover-gradient: linear-gradient(to top, rgb(144 238 144 / 100%), rgb(144 238 144 / 50%)) !default;
 $song-artist-color: #333 !default;
 $progressbar-color: $border-color !default;
 $filter-input-bg: white !default;
@@ -18,7 +17,7 @@ $scrollbar-track-bg: #111 !default;
 $scrollbar-thumb-border-bg: $fg-color !default;
 $navigation-searchform-bg: $bg-color !default;
 $context-menu-bg: white !default;
-$context-menu-hover-bg: rgba(191,255,0, 0.8) !default;
+$context-menu-hover-bg: rgb(191 255 0 / 80%) !default;
 $hamburger-color: null !default;
 $mobile-button-bg: null !default;
 
@@ -45,12 +44,15 @@ h2 {
 * {
     scrollbar-color: $border-color $scrollbar-track-bg;
 }
+
 *::-webkit-scrollbar {
     width: 12px;
 }
+
 *::-webkit-scrollbar-track {
     background: $scrollbar-track-bg;
 }
+
 *::-webkit-scrollbar-thumb {
     background-color: $border-color;
     border-radius: 20px;
@@ -156,7 +158,7 @@ a.active {
 /*
   --  9. Mobile menu ----------------------------------------------------------
 */
-@if $hamburger-color != null {
+@if $hamburger-color {
     .hamburger-inner,
     .hamburger-inner::after,
     .hamburger-inner::before {
@@ -167,7 +169,7 @@ a.active {
 /*
   -- 10. Small screen buttons -------------------------------------------------
 */
-@if $mobile-button-bg != null {
+@if $mobile-button-bg {
     .mobileButton {
         background-color: $mobile-button-bg;
     }
@@ -190,7 +192,7 @@ input[type="text"] {
     background-color: $bg-color;
 }
 
-.input-reset:after {
+.input-reset::after {
     color: $fg-color;
     background-color: $bg-color;
 }
@@ -216,7 +218,7 @@ form div div input {
 */
 .songsContextMenu,
 .playlistContextMenu {
-    box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 5px 3px rgb(255 255 255 / 20%);
 
     .menu-options {
         background-color: $context-menu-bg;

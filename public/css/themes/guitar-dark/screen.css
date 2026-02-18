@@ -148,7 +148,7 @@ input[type=text] {
   background-color: #111;
 }
 
-.input-reset:after {
+.input-reset::after {
   color: #eee;
   background-color: #111;
 }
@@ -195,13 +195,10 @@ body {
   background-position: center;
 }
 
-body:before {
+body::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  inset: 0;
   background: linear-gradient(to bottom right, rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.7));
   z-index: -1;
 }

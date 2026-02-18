@@ -3,7 +3,7 @@
 */
 @use "hamburger";
 
-$debug : 0;
+$debug: 0;
 $mobileButtonSize: 48px;
 $topbar-size: 49px;
 $topbar-border-size: 1px;
@@ -13,7 +13,6 @@ $topbar-border-size: 1px;
     $topbar-size: $topbar-size,
     $topbar-border-size: $topbar-border-size
 );
-
 @use "layout/artists-navigation" with (
     $debug: $debug,
     $mobileButtonSize: $mobileButtonSize
@@ -68,7 +67,7 @@ table {
 
 .single-album-view {
     border: 1px solid red;
-    background-color: rgba(0,0,0, 0.8);
+    background-color: rgb(0 0 0 / 80%);
 }
 
 .radios-view {
@@ -128,15 +127,38 @@ thead {
     tr {
         td {
             height: $mobileButtonSize;
+
             // padding-left: 10px!important;
         }
-        td:nth-child(1) { width: $mobileButtonSize; text-align: center;}
-        td:nth-child(2) { display: none }
-        td:nth-child(3) { display: none }
-        td:nth-child(5) { display: none }
-        td:nth-child(6) { display: none }
-        td:nth-child(7) { display: none }
-        td:nth-child(8) { display: none }
+
+        td:nth-child(1) {
+            width: $mobileButtonSize;
+            text-align: center;
+        }
+
+        td:nth-child(2) {
+            display: none;
+        }
+
+        td:nth-child(3) {
+            display: none;
+        }
+
+        td:nth-child(5) {
+            display: none;
+        }
+
+        td:nth-child(6) {
+            display: none;
+        }
+
+        td:nth-child(7) {
+            display: none;
+        }
+
+        td:nth-child(8) {
+            display: none;
+        }
     }
 }
 
@@ -145,7 +167,6 @@ thead {
     height: $panel-header-height;
     line-height: 20px;
     padding-left: 10px;
-
     top: 0;
 
     .icon-trash {
@@ -156,6 +177,7 @@ thead {
 
 .list {
     box-sizing: content-box;
+
     thead {
         tr {
             height: $panel-header-height;
@@ -195,7 +217,7 @@ thead {
 
         .material-icons-big {
             font-size: 50px;
-            padding-left: 0px;
+            padding-left: 0;
         }
     }
 }
@@ -209,7 +231,6 @@ img.lozad {
 
 
 .album-infos {
-
     font-size: 0.8em;
 
     > div {
@@ -219,8 +240,7 @@ img.lozad {
     .album-info-album {
         letter-spacing: 0.4px;
         font-size: 1.1em;
-        padding: 10px 10px 5px 10px;
-
+        padding: 10px 10px 5px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -228,9 +248,8 @@ img.lozad {
 
     .album-info-artist {
         font-size: 0.9em;
-        padding: 0px 5px 5px 5px;
+        padding: 0 5px 5px;
         margin-bottom: 5px;
-
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -242,7 +261,6 @@ img.lozad {
 */
 .single-album-container {
     border: 1px solid lime;
-
     position: absolute;
     top: 50%;
     left: 50%;
@@ -282,6 +300,7 @@ img.lozad {
     .album-songs {
         width: 100%;
         table-layout: auto;
+
         td {
             padding: 5px;
             border: 1px solid red;
@@ -334,8 +353,8 @@ img.lozad {
     }
 }
 
-label[for=appbundle_radio_enabled], #appbundle_radio_enabled,
-label[for=appbundle_radio_changed], #appbundle_radio_changed {
+label[for="appbundle_radio_enabled"], #appbundle_radio_enabled,
+label[for="appbundle_radio_changed"], #appbundle_radio_changed {
     display: none!important;
 }
 
@@ -400,11 +419,14 @@ ul.topNav {
                 }
             }
         }
+
         form {
             width: 100%;
+
             input[type='text'] {
                 width: 90%!important;
             }
+
             input[type='submit'] {
                 float: right;
             }
@@ -451,6 +473,7 @@ button:active, button:focus {
 /*
   -- 11. Forms ----------------------------------------------------------------
 */
+
 /* neede for reset button */
 form {
     position: relative;
@@ -467,10 +490,10 @@ form {
     border: 0;
 }
 
-.input-reset:after {
+.input-reset::after {
     content: "\e805";
     transform: rotate(45deg);
-    font-family: fontello;
+    font-family: fontello, sans-serif;
 	display: block!important;
 	width: 20px;
 	height: 20px;
@@ -509,16 +532,21 @@ form {
 table.form {
     width: 90%;
     margin-top: 20px;
+
     tr {
         td {
-            padding : 5px;
-        }
-        td:nth-child(1) { text-align: right; width: 40%}
-        td {
+            padding: 5px;
+
             input[type='text'] {
                 width: 80%;
             }
         }
+
+        td:nth-child(1) {
+            text-align: right;
+            width: 40%;
+        }
+
         td.buttonRow {
             text-align: center;
             padding-top: 20px;
@@ -557,10 +585,11 @@ table.form {
 /*
   -- Media query 500px --------------------------------------------------------
 */
-@media all and (min-width: 500px) {
+@media all and (width >= 500px) {
     /* --  4. Views -- */
     .album-container {
         width: 33.33%;
+
         // padding-top: 33.33%;
     }
 }
@@ -569,10 +598,11 @@ table.form {
 /*
   -- Media query 700px --------------------------------------------------------
 */
-@media all and (min-width: 700px) {
+@media all and (width >= 700px) {
     /* --  4. Views -- */
     .album-container {
         width: 25%;
+
         // padding-top: 25%;
     }
 }
@@ -581,8 +611,7 @@ table.form {
 /*
   -- Media query 1024px -------------------------------------------------------
 */
-@media all and (min-width: 1023px) {
-
+@media all and (width >= 1023px) {
     /* --  2. Topbar -- */
     .topbar {
         .logo {
@@ -594,6 +623,7 @@ table.form {
 
     .songInfo {
         display: block;
+
         // width: 200px;
     }
 
@@ -647,6 +677,7 @@ table.form {
     thead {
         width: 100%;
         display: table-header-group;
+
         tr {
             th {
                 border: #{$debug}px solid red;
@@ -659,8 +690,16 @@ table.form {
             th:nth-child(4) { width: 35%; }
             th:nth-child(5) { width: 20%; }
             th:nth-child(6) { width: 60px; }
-            th:nth-child(7) { width: 60px; display: none; }
-            th:nth-child(8) { width: 80px; display: none; }
+
+            th:nth-child(7) {
+                width: 60px;
+                display: none;
+            }
+
+            th:nth-child(8) {
+                width: 80px;
+                display: none;
+            }
         }
     }
 
@@ -674,12 +713,23 @@ table.form {
                 border: #{$debug}px solid red;
             }
 
-            td:nth-child(1) { text-align: center; padding-left: 2px; }
+            td:nth-child(1) {
+                text-align: center;
+                padding-left: 2px;
+            }
             td:nth-child(2) { display: table-cell}
             td:nth-child(3) { display: table-cell}
             td:nth-child(5) { display: table-cell}
-            td:nth-child(6) { display: table-cell; text-align: center; }
-            td:nth-child(7) { text-align: center; display: none; }
+
+            td:nth-child(6) {
+                display: table-cell;
+                text-align: center;
+            }
+
+            td:nth-child(7) {
+                text-align: center;
+                display: none;
+            }
             td:nth-child(8) { display: none; }
         }
     }
@@ -692,6 +742,7 @@ table.form {
 
     .album-infos {
         font-size: 1em;
+
         > div {
             padding: 0 10px;
             text-align: center;
@@ -736,14 +787,18 @@ table.form {
 
         tr {
             td {
-                padding : 10px;
-            }
-            td:nth-child(1) { text-align: right; width: 40%}
-            td {
+                padding: 10px;
+
                 input[type='text'] {
                     width: 80%;
                 }
             }
+
+            td:nth-child(1) {
+                text-align: right;
+                width: 40%;
+            }
+
             td.buttonRow {
                 text-align: center;
                 padding-top: 20px;
@@ -756,8 +811,7 @@ table.form {
 /*
   -- Media query 1200px -------------------------------------------------------
 */
-@media all and (min-width: 1200px) {
-
+@media all and (width >= 1200px) {
     /* --  2. Topbar -- */
     .songInfo {
         // width: 400px;
@@ -801,6 +855,7 @@ table.form {
     /* --  4. Views -- */
     .album-container {
         width: 16.66%;
+
         // padding-top: 16.66%;
     }
 
@@ -808,6 +863,7 @@ table.form {
     /* --  6. Album voew -- */
     .album-infos {
         font-size: 1.1em;
+
         > div {
             padding: 0 10px;
             text-align: center;
@@ -835,8 +891,7 @@ table.form {
 /*
   -- Media query 1600px -------------------------------------------------------
 */
-@media all and (min-width: 1600px) {
-
+@media all and (width >= 1600px) {
     /* --  2. Topbar -- */
     .songInfo {
         // width: 600px;
@@ -851,6 +906,7 @@ table.form {
     /* --  4. Views -- */
     .album-container {
         width: 12.5%;
+
         // padding-top: 12.5%;
     }
 }
