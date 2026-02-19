@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Song;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\ParameterType;
 use Doctrine\Persistence\ManagerRegistry;
 use Throwable;
 
@@ -142,41 +143,34 @@ SQL
             return [];
         }
 
-        $maxId = (int) $this->createQueryBuilder('s')
-            ->select('MAX(s.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
+        $connection = $this->getEntityManager()->getConnection();
+        $ids = $connection->fetchFirstColumn(
+            'SELECT id FROM song ORDER BY RAND() LIMIT :limit',
+            ['limit' => $number],
+            ['limit' => ParameterType::INTEGER]
+        );
 
-        if (!$maxId) {
-            $maxId = 1;
+        if ($ids === []) {
+            return [];
         }
 
-        $qb = $this->createQueryBuilder('s')
+        $ids = array_map('intval', $ids);
+        $songs = $this->createQueryBuilder('s')
             ->leftJoin('s.album', 'al')
             ->addSelect('al')
             ->leftJoin('s.artist', 'ar')
             ->addSelect('ar')
-            ;
+            ->where('s.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->getResult();
 
+        $orderMap = array_flip($ids);
+        usort(
+            $songs,
+            static fn (Song $a, Song $b): int => ($orderMap[$a->getId()] ?? PHP_INT_MAX) <=> ($orderMap[$b->getId()] ?? PHP_INT_MAX)
+        );
 
-        $randoms = [];
-
-        if ($maxId < $number) {
-            $number = $maxId;
-        }
-
-        for ($i = 1; $i <= $number; ++$i) {
-            $qb->orWhere('s.id = :num_'.$i);
-
-            $random = random_int(1, $maxId);
-            while (in_array($random, $randoms, true)) {
-                $random = random_int(1, $maxId);
-            }
-            array_push($randoms, $random);
-
-            $qb->setParameter('num_'.$i, $random);
-        }
-
-        return $qb->getQuery()->getResult();
+        return $songs;
     }
 }
