@@ -55,7 +55,7 @@ class Album
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function getId(): ?int
@@ -171,6 +171,7 @@ class Album
     {
         if (!$this->artists->contains($artist)) {
             $this->artists->add($artist);
+            $artist->addAlbum($this);
         }
 
         return $this;
@@ -178,7 +179,9 @@ class Album
 
     public function removeArtist(Artist $artist): self
     {
-        $this->artists->removeElement($artist);
+        if ($this->artists->removeElement($artist)) {
+            $artist->removeAlbum($this);
+        }
 
         return $this;
     }
@@ -204,10 +207,7 @@ class Album
     public function removeSong(Song $song): self
     {
         if ($this->songs->removeElement($song)) {
-            // set the owning side to null (unless already changed)
-            if ($song->getAlbum() === $this) {
-                $song->setAlbum(null);
-            }
+            // Song.album is non-nullable; do not nullify owning side here.
         }
 
         return $this;
