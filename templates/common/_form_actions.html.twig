@@ -1,6 +1,15 @@
 <div class="button-wrapper">
-    {{ include('common/_button_submit.html.twig', { label: submit_label|default('Save') }) }}
+    {{ include('common/_button_submit.html.twig', {
+        label: submit_label|default('save'|trans),
+        class: submit_class|default(null),
+        id: submit_id|default(null)
+    }) }}
     {% if back_href is defined and back_href %}
-        {{ include('common/_button_link.html.twig', { href: back_href, label: back_label|default('Back') }) }}
+        {{ include('common/_button_link.html.twig', {
+            href: back_href,
+            label: back_label|default('back.tolist'|trans),
+            class: back_class|default(null),
+            id: back_id|default(null)
+        }) }}
     {% endif %}
 </div>

@@ -1,6 +1,8 @@
 <button
     type="submit"
     class="button{{ class is defined and class ? ' ' ~ class : '' }}"
+    title="{{ title is defined and title ? title : label }}"
+    aria-label="{{ aria_label is defined and aria_label ? aria_label : label }}"
     {% if id is defined and id %}id="{{ id }}"{% endif %}
 >
     {{ label }}

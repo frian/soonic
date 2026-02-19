@@ -1,32 +1,33 @@
 <section class="topbar">
-
     <div class="logo"><img alt="Soonic" src="/weblogo-grey.png"></div>
 
     {% if is_library_route|default(false) %}
-    <div id="player-container">
-        <i class="icon-to-start" aria-hidden="true"></i><i id="play-pause-button" class="icon-play" role="button" tabindex="0" aria-label="Play / Pause" title="Play / Pause"></i><i class="icon-to-end" aria-hidden="true"></i>
+        <div id="player-container">
+            <i class="icon-to-start" aria-hidden="true"></i>
+            <i id="play-pause-button" class="icon-play" role="button" tabindex="0" aria-label="Play / Pause" title="Play / Pause"></i>
+            <i class="icon-to-end" aria-hidden="true"></i>
 
-        <audio id="player" preload="none">
-            <source id="audio-source" src="" type="audio/mpeg"/>
-        </audio>
+            <audio id="player" preload="none">
+                <source id="audio-source" src="" type="audio/mpeg"/>
+            </audio>
 
-        <div class="time-info-container">
-            <div class="time-info">
-                <span id="current-time">00:00 /</span>
-                <span id="duration"> 00:00</span>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progressbar">
-                    <div class="progress-indicator"></div>
+            <div class="time-info-container">
+                <div class="time-info">
+                    <span id="current-time">00:00 /</span>
+                    <span id="duration"> 00:00</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progressbar">
+                        <div class="progress-indicator"></div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="song-info">
-        <span id="song-title" class="song-title"></span>
-        <span id="song-artist" class="song-artist"></span>
-    </div>
+        <div class="song-info">
+            <span id="song-title" class="song-title"></span>
+            <span id="song-artist" class="song-artist"></span>
+        </div>
     {% endif %}
 
     <nav class="topbar-nav" id="top-bar-nav">
@@ -41,7 +42,7 @@
                 <a id="random-button" href="{{ path('random_songs') }}" title="{{ 'songs.loadrandom'|trans }}" aria-label="{{ 'songs.loadrandom'|trans }}"><span class="material-icons" aria-hidden="true">shuffle</span></a>
             </li>
             <li id="navigation-albums">
-                <a id="albums-button"  href="{{ path('album_index') }}" title="{{ 'albums'|trans }}" aria-label="{{ 'albums'|trans }}"><span class="material-icons" aria-hidden="true">album</span></a>
+                <a id="albums-button" href="{{ path('album_index') }}" title="{{ 'albums'|trans }}" aria-label="{{ 'albums'|trans }}"><span class="material-icons" aria-hidden="true">album</span></a>
             </li>
             <li id="navigation-radios">
                 <a id="radio-button" href="{{ path('radio_index') }}" title="{{ 'radios'|trans }}" aria-label="{{ 'radios'|trans }}"><span class="material-icons" aria-hidden="true">radio</span></a>
@@ -59,10 +60,9 @@
         </ul>
     </nav>
 
-    <button type="button" class="hamburger hamburger--elastic">
+    <button type="button" class="hamburger hamburger--elastic" aria-label="Toggle menu" title="Toggle menu">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
     </button>
-
 </section>

@@ -1,24 +1,34 @@
+{% set placeholder = 'search.placeholder'|trans %}
+{% set searchLabel = 'search'|trans %}
+
 {% if form is defined %}
-    {{ form_start(form, { attr: { id: 'search-form' }, action: path('search'), method: 'POST' }) }}
-        <div class="form-element-container">
+{{ form_start(form, { attr: { id: 'search-form' }, action: path('search'), method: 'POST' }) }}
+{% else %}
+<form id="search-form" name="search" method="post" action="{{ path('search') }}">
+{% endif %}
+
+    <div class="form-element-container">
+        {% if form is defined %}
             {{ form_widget(form.keyword, {
                 attr: {
                     id: 'form-keyword',
                     class: 'filter-input',
-                    placeholder: 'search.placeholder'|trans
+                    placeholder: placeholder
                 }
             }) }}
-            <button class="input-reset" type="reset" aria-label="Reset search" title="Reset search"></button>
-        </div>
-        <button id="search-button" type="submit" name="submit" class="button" title="{{ 'search'|trans }}" aria-label="{{ 'search'|trans }}"><span class="material-icons" aria-hidden="true">search</span></button>
-    {{ form_end(form) }}
+        {% else %}
+            <input type="text" id="form-keyword" name="search[keyword]" required="required" placeholder="{{ placeholder }}" class="filter-input">
+            <input type="hidden" name="search[_token]" value="{{ csrf_token('form') }}">
+        {% endif %}
+        <button class="input-reset" type="reset" aria-label="Reset search" title="Reset search"></button>
+    </div>
+
+    <button id="search-button" type="submit" name="submit" class="button" title="{{ searchLabel }}" aria-label="{{ searchLabel }}">
+        <span class="material-icons" aria-hidden="true">search</span>
+    </button>
+
+{% if form is defined %}
+{{ form_end(form) }}
 {% else %}
-    <form id="search-form" name="search" method="post" action="{{ path('search') }}">
-        <div class="form-element-container">
-            <input type="text" id="form-keyword" name="search[keyword]" required="required" placeholder="{{ 'search.placeholder'|trans }}" class="filter-input">
-            <button class="input-reset" type="reset" aria-label="Reset search" title="Reset search"></button>
-        </div>
-        <button id="search-button" type="submit" name="submit" class="button" title="{{ 'search'|trans }}" aria-label="{{ 'search'|trans }}"><span class="material-icons" aria-hidden="true">search</span></button>
-        <input type="hidden" name="search[_token]" value="{{ csrf_token('form') }}">
-    </form>
+</form>
 {% endif %}

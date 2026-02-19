@@ -1,7 +1,7 @@
 <tbody>
 {% for song in songs %}
     <tr data-path="{{ song.webPath }}" data-duration="{{ song.duration }}">
-        <td class="add"><i class="icon-plus"></i></td>
+        <td class="add"><i class="icon-plus" role="button" tabindex="0" aria-label="{{ 'playlist.add'|trans|default('Add song to playlist') }}" title="{{ 'playlist.add'|trans|default('Add song to playlist') }}"></i></td>
         <td>{{ song.trackNumber }}</td>
         <td>{{ song.artist }}</td>
         <td>{{ song.title }}</td>
@@ -11,6 +11,8 @@
         <td>{{ song.genre }}</td>
     </tr>
 {% else %}
-no songs found
+    <tr>
+        <td colspan="8">no songs found</td>
+    </tr>
 {% endfor %}
 </tbody>
