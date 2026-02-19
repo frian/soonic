@@ -23,14 +23,16 @@ class AlbumController extends AbstractController
     #[Route(path: '/', name: 'album_index', methods: ['GET'])]
     public function index(AlbumRepository $albumRepository, Request $request): Response
     {
+        $albums = $albumRepository->findAll();
+
         if ($request->isXmlHttpRequest()) {
             return $this->render('album/index-content.html.twig', [
-                'albums' => $albumRepository->findAll(),
+                'albums' => $albums,
             ]);
         }
 
         return $this->render('album/index.html.twig', [
-            'albums' => $albumRepository->findAll(),
+            'albums' => $albums,
         ]);
     }
 
@@ -45,19 +47,14 @@ class AlbumController extends AbstractController
     #[Route(path: '/{id}', name: 'album_show', methods: ['GET'])]
     public function show(?Album $album, Request $request): Response
     {
-        $response = new Response();
-
         if (!$album) {
-            $response->setStatusCode(404);
+            throw $this->createNotFoundException('Album not found.');
         }
-
-        $content = $this->renderView('album/show.html.twig', ['album' => $album]);
 
         if ($request->isXmlHttpRequest()) {
-            $content = $this->renderView('album/show-content.html.twig', ['album' => $album]);
+            return $this->render('album/show-content.html.twig', ['album' => $album]);
         }
 
-        $response->setContent($content);
-        return $response;
+        return $this->render('album/show.html.twig', ['album' => $album]);
     }
 }
