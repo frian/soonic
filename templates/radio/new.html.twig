@@ -1,8 +1,11 @@
 <section class="radio-new-view">
     <h1>{{ 'radio.new'|trans }}</h1>
 
-    <form id="radio_save" action="{{ path('radio_new') }}" method="POST">
-
+    {{ form_start(form, {
+        action: path('radio_new'),
+        method: 'POST',
+        attr: { id: 'radio_save' }
+    }) }}
         <table class="form">
             <tr>
                 <td>{{ form_label(form.name) }}</td>
@@ -26,6 +29,6 @@
                 </td>
             </tr>
         </table>
-        {{ form_widget(form._token) }}
-    </form>
+        {{ form_rest(form) }}
+    {{ form_end(form, { render_rest: false }) }}
 </section>

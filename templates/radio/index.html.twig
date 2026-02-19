@@ -8,10 +8,18 @@
                 </audio>
             </div>
             <div class="radio-name">{{ radio.name }}</div>
-            <div class="radio-url">{{ radio.homepageUrl }}</div>
+            <div class="radio-url">
+                {% if radio.homepageUrl %}
+                    <a href="{{ radio.homepageUrl }}" target="_blank" rel="noopener noreferrer">{{ radio.homepageUrl }}</a>
+                {% else %}
+                    -
+                {% endif %}
+            </div>
         </section>
     {% else %}
-    no radios found    
+        <section class="radio clearfix">
+            <div class="radio-name">no radios found</div>
+        </section>
     {% endfor %}
 
     {% if totalPages > 1 %}

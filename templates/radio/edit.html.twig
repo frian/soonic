@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block title %} - {{ 'radio.edit'|trans }}{% endblock %}
 
+{% block body %}
     <h1>{{ 'radio.edit'|trans }}</h1>
 
-    <form id="radio_save" action="{{ path('radio_edit', {'id': radio.id}) }}" method="POST">
-
+    {{ form_start(edit_form, {
+        action: path('radio_edit', {'id': radio.id}),
+        method: 'POST',
+        attr: { id: 'radio_save' }
+    }) }}
         <table class="form">
             <tr>
                 <td>{{ form_label(edit_form.name) }}</td>
@@ -28,8 +32,7 @@
                     }) }}
                 </td>
             </tr>
-            {{ form_widget(edit_form._token) }}
         </table>
-    </form>
-
+        {{ form_rest(edit_form) }}
+    {{ form_end(edit_form, { render_rest: false }) }}
 {% endblock %}
