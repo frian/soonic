@@ -1,7 +1,11 @@
 <ul id="album-nav">
-{% for album in albums %}
-    <li><a class="song" href="{{ path('artist_albums_songs', { 'artistSlug': artist, 'albumSlug' : album.albumSlug }) }}"> - {{ album.name }}</a></li>
-{% else %}
-no albums found >> {{artist}} <<
-{% endfor %}
+    {% for album in albums %}
+        <li>
+            <a class="song" href="{{ path('artist_albums_songs', { artistSlug: artist, albumSlug: album.albumSlug }) }}">
+                - {{ album.name }}
+            </a>
+        </li>
+    {% else %}
+        <li>no albums found</li>
+    {% endfor %}
 </ul>

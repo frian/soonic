@@ -1,8 +1,9 @@
-{# library/index #}
 {% extends 'base.html.twig' %}
 
+{% block title %}{% endblock %}
+
 {% block body %}
-<div class="library-view view">
-    {{ include('library/index-content.html.twig') }}
-</div>
+    <div class="library-view view">
+        {{ include('library/index-content.html.twig') }}
+    </div>
 {% endblock %}
