@@ -32,7 +32,7 @@ class ArtistRepository extends ServiceEntityRepository
         $filter = $filter ?? '';
 
         return $this->createQueryBuilder('a')
-            ->where('a.name like :filter')
+            ->where('a.name LIKE :filter')
             ->setParameter('filter', '%'.$filter.'%')
             ->orderBy('a.name', 'ASC')
             ->getQuery()

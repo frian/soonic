@@ -22,11 +22,12 @@ class AlbumRepository extends ServiceEntityRepository
     public function findAll(): array
     {
         return $this->createQueryBuilder('al')
-          ->join('al.artists', 'ar')
-          ->addSelect('ar')
-          ->orderBy('al.name', 'ASC')
-          ->getQuery()
-          ->getResult();
+            ->join('al.artists', 'ar')
+            ->addSelect('ar')
+            ->orderBy('al.name', 'ASC')
+            ->addOrderBy('al.id', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 
     public function findOneByArtistAndAlbumSlug(string $artistSlug, string $albumSlug): ?Album
