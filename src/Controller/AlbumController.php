@@ -9,16 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Album browsing controller.
+ */
 #[Route(path: '/album')]
 class AlbumController extends AbstractController
 {
     /**
-     * Method index
-     *
-     * @param AlbumRepository $albumRepository
-     * @param Request $request
-     *
-     * @return Response
+     * Displays albums list (full page or AJAX fragment).
      */
     #[Route(path: '/', name: 'album_index', methods: ['GET'])]
     public function index(AlbumRepository $albumRepository, Request $request): Response
@@ -37,12 +35,7 @@ class AlbumController extends AbstractController
     }
 
     /**
-     * Method show
-     *
-     * @param Album $album
-     * @param Request $request
-     *
-     * @return Response
+     * Displays one album (full page or AJAX fragment).
      */
     #[Route(path: '/{id}', name: 'album_show', methods: ['GET'])]
     public function show(?Album $album, Request $request): Response

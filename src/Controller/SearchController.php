@@ -9,8 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Song search controller.
+ */
 class SearchController extends AbstractController
 {
+    /**
+     * Renders the search form or returns matching songs list on submit.
+     */
     #[Route(path: '/search', name: 'search', methods: ['GET', 'POST'])]
     public function showSearch(SongRepository $songRepository, Request $request): Response
     {

@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Process\Process;
 
 /**
- * Album controller.
+ * Library scan orchestration controller.
  */
 #[Route(path: 'scan')]
 class ScanController extends AbstractController
@@ -18,13 +18,16 @@ class ScanController extends AbstractController
 
     private string $projectDir;
 
+    /**
+     * @param string $projectDir Symfony project directory.
+     */
     public function __construct(string $projectDir)
     {
         $this->projectDir = $projectDir;
     }
 
     /**
-     * Scan.
+     * Starts the asynchronous library scan command.
      */
     #[Route(path: '/', name: 'scan', methods: ['POST'])]
     public function scan(): JsonResponse
@@ -58,7 +61,7 @@ class ScanController extends AbstractController
     }
 
     /**
-     * Scan progress.
+     * Returns current scan status and temporary SQL file counters.
      */
     #[Route(path: '/progress', name: 'scan_progress', methods: ['GET'])]
     public function scanProgress(): JsonResponse
@@ -83,6 +86,9 @@ class ScanController extends AbstractController
         return new JsonResponse($response);
     }
 
+    /**
+     * Checks whether scan lock files are present.
+     */
     private function isScanRunning(): bool
     {
         return file_exists($this->projectDir.self::LOCK_FILE)

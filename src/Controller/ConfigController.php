@@ -11,17 +11,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Settings configuration controller.
+ */
 #[Route(path: '/config')]
 class ConfigController extends AbstractController
 {
     /**
-     * Method edit
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param Request $request
-     * @param Config $config
-     *
-     * @return JsonResponse
+     * Persists language/theme settings and returns JSON payload for AJAX UI updates.
      */
     #[Route(path: '/{id}/edit', name: 'config_edit', methods: ['POST'])]
     public function edit(EntityManagerInterface $entityManager, Request $request, Config $config): JsonResponse|RedirectResponse

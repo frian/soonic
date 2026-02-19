@@ -12,13 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
- * Settings controller.
+ * Application settings page controller.
  */
 #[Route(path: 'settings')]
 class SettingsController extends AbstractController
 {
     /**
-     * Show settings page.
+     * Displays collection statistics and the configuration form.
      */
     #[Route(path: '/', name: 'settings_index', methods: ['GET'])]
     public function index(

@@ -11,9 +11,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Radio stations CRUD controller.
+ */
 #[Route(path: '/radio')]
 class RadioController extends AbstractController
 {
+    /**
+     * Displays paginated radios list.
+     */
     #[Route(path: '/', name: 'radio_index', methods: ['GET'])]
     public function index(Request $request, RadioRepository $radioRepository): Response
     {
@@ -30,6 +36,9 @@ class RadioController extends AbstractController
         ]);
     }
 
+    /**
+     * Creates a new radio station entry.
+     */
     #[Route(path: '/new', name: 'radio_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -51,6 +60,9 @@ class RadioController extends AbstractController
         ]);
     }
 
+    /**
+     * Displays one radio station.
+     */
     #[Route(path: '/{id}', name: 'radio_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Radio $radio): Response
     {
@@ -59,6 +71,9 @@ class RadioController extends AbstractController
         ]);
     }
 
+    /**
+     * Updates an existing radio station.
+     */
     #[Route(path: '/{id}/edit', name: 'radio_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Radio $radio, EntityManagerInterface $entityManager): Response
     {
@@ -78,6 +93,9 @@ class RadioController extends AbstractController
         ]);
     }
 
+    /**
+     * Deletes a radio station.
+     */
     #[Route(path: '/{id}', name: 'radio_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function delete(Request $request, Radio $radio, EntityManagerInterface $entityManager): Response
     {

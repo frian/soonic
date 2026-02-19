@@ -2,20 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Language;
-use App\Form\LanguageType;
-use App\Repository\LanguageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Language management controller.
+ *
+ * Note: CRUD actions are intentionally commented out for now.
+ */
 #[Route(path: '/language')]
 class LanguageController extends AbstractController
 {
-    /*
-     * @Route("/", name="language_index", methods={"GET"})
-     */
+    // Legacy scaffold: index()
     // public function index(LanguageRepository $languageRepository): Response
     // {
     //     return $this->render('language/index.html.twig', [
@@ -23,9 +21,7 @@ class LanguageController extends AbstractController
     //     ]);
     // }
 
-    /*
-     * @Route("/new", name="language_new", methods={"GET","POST"})
-     */
+    // Legacy scaffold: new()
     // public function new(Request $request): Response
     // {
     //     $language = new Language();
@@ -46,9 +42,7 @@ class LanguageController extends AbstractController
     //     ]);
     // }
 
-    /*
-     * @Route("/{id}", name="language_show", methods={"GET"})
-     */
+    // Legacy scaffold: show()
     // public function show(Language $language): Response
     // {
     //     return $this->render('language/show.html.twig', [
@@ -56,9 +50,7 @@ class LanguageController extends AbstractController
     //     ]);
     // }
 
-    /*
-     * @Route("/{id}/edit", name="language_edit", methods={"GET","POST"})
-     */
+    // Legacy scaffold: edit()
     // public function edit(Request $request, Language $language): Response
     // {
     //     $form = $this->createForm(LanguageType::class, $language);
@@ -76,9 +68,7 @@ class LanguageController extends AbstractController
     //     ]);
     // }
 
-    /*
-     * @Route("/{id}", name="language_delete", methods={"DELETE"})
-     */
+    // Legacy scaffold: delete()
     // public function delete(Request $request, Language $language): Response
     // {
     //     if ($this->isCsrfTokenValid('delete'.$language->getId(), $request->request->get('_token'))) {
