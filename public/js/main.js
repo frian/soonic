@@ -449,11 +449,15 @@ $(function() {
 
         $button.toggleClass('running');
 
-        $.get({
+        $.ajax({
+            type: 'POST',
             url: scanUrl,
             cache: true,
+            dataType: 'json',
             success: function(data) {
-                // $("body").append(data);
+                if (data && data.status === 'already_running') {
+                    $button.addClass('running');
+                }
             },
             error: function() {
                 $button.toggleClass('running');

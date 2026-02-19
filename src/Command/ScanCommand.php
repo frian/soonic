@@ -52,7 +52,13 @@ class ScanCommand extends Command
 
         // -- get fs pathes
         $webPath = str_replace('\\', '/', $this->projectDir.'/public');
-        $lockFile = $webPath.'/'.self::APPNAME.'.lock';
+        $lockDir = str_replace('\\', '/', $this->projectDir.'/var/lock');
+        $lockFile = $lockDir.'/'.self::APPNAME.'.lock';
+
+        if (!is_dir($lockDir) && !@mkdir($lockDir, 0775, true) && !is_dir($lockDir)) {
+            $io->error('cannot create lock directory');
+            return Command::FAILURE;
+        }
         
         // -- exit if there is a lock file
         if (file_exists($lockFile)) {
