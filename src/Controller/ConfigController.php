@@ -4,13 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Config;
 use App\Form\ConfigType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/config')]
 class ConfigController extends AbstractController
@@ -18,43 +17,40 @@ class ConfigController extends AbstractController
     /**
      * Method edit
      *
-     * @param ManagerRegistry $doctrine
+     * @param EntityManagerInterface $entityManager
      * @param Request $request
      * @param Config $config
      *
      * @return JsonResponse
      */
-    #[Route(path: '/{id}/edit', name: 'config_edit', methods: ['GET', 'POST'])]    
-    public function edit(ManagerRegistry $doctrine, Request $request, Config $config): JsonResponse|RedirectResponse
+    #[Route(path: '/{id}/edit', name: 'config_edit', methods: ['POST'])]
+    public function edit(EntityManagerInterface $entityManager, Request $request, Config $config): JsonResponse|RedirectResponse
     {
         $form = $this->createForm(ConfigType::class, $config);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $doctrine->getManager()->flush();
-            $theme = $config->getTheme()?->getName();
-            $lang = $config->getLanguage()?->getCode();
+        if (!$form->isSubmitted()) {
+            return new JsonResponse(['status' => 'error', 'message' => 'form_not_submitted'], JsonResponse::HTTP_BAD_REQUEST);
+        }
 
-            if (!$theme || !$lang) {
-                return new JsonResponse(['data' => 'error'], JsonResponse::HTTP_BAD_REQUEST);
-            }
+        if (!$form->isValid()) {
+            return new JsonResponse(['status' => 'error', 'message' => 'invalid_form'], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+        }
 
-            $translations = Yaml::parse(file_get_contents('../translations/messages.'.$lang.'.yml'));
+        $entityManager->flush();
+        $theme = $config->getTheme()?->getName();
+        $lang = $config->getLanguage()?->getCode();
 
-            $responseConfig = [];
-            $responseConfig['theme'] = $theme;
-            $responseConfig['translations'] = $translations;
+        if (!$theme || !$lang) {
+            return new JsonResponse(['status' => 'error', 'message' => 'missing_config'], JsonResponse::HTTP_BAD_REQUEST);
+        }
 
-            return new JsonResponse(
-                ['data' => 'success',
-                'config' => $responseConfig,
+        return new JsonResponse([
+                'status' => 'success',
+                'config' => [
+                    'theme' => $theme,
+                    'language' => $lang,
+                ],
             ]);
-        }
-
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse(['data' => 'error']);
-        }
-        
-        return $this->redirectToRoute('settings_index');
     }
 }
