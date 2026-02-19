@@ -715,7 +715,7 @@ form {
   cursor: pointer;
 }
 
-.filter-input:not(:valid) ~ .input-reset {
+.filter-input:placeholder-shown ~ .input-reset {
   display: none;
 }
 
