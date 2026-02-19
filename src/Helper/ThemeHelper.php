@@ -2,35 +2,26 @@
 
 namespace App\Helper;
 
-use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\ConfigRepository;
 
 /**
- * A helper service for theme changing.
+ * Provides current theme name for Twig templates.
  */
 class ThemeHelper
 {
-    private $doctrine;
-
-    /**
-     * Constructor.
-     *
-     * @param ManagerRegistry $doctrine
-     */
-    public function __construct(ManagerRegistry $doctrine)
+    public function __construct(
+        private ConfigRepository $configRepository
+    )
     {
-        $this->doctrine = $doctrine;
     }
 
     /**
-     * get user theme.
-     *
-     * @return string $theme
+     * Returns configured theme name or default fallback.
      */
     public function get(): string
     {
-        $config = $this->doctrine->getRepository('App\Entity\Config')->find(1);
-        $theme = $config->getTheme();
+        $config = $this->configRepository->find(1);
 
-        return $theme;
+        return $config?->getTheme()?->getName() ?? 'default-clear';
     }
 }
