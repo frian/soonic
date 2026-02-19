@@ -32,6 +32,7 @@ search: ricerca
 search.placeholder: 'minimo 3 caratteri'
 settings: impostazioni
 songs.loadrandom: caricare 20 canzoni casuali
+songs: canzoni
 streamUrl: 'url del flusso'
 theme: tema
 title: titolo

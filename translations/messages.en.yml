@@ -32,6 +32,7 @@ search: search
 search.placeholder: 'min 3 chars'
 settings: settings
 songs.loadrandom: load 20 random songs
+songs: songs
 streamUrl: 'stream url'
 theme: theme
 title: title

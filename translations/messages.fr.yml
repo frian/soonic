@@ -32,6 +32,7 @@ search: chercher
 search.placeholder: 'min 3 caractères'
 settings: réglages
 songs.loadrandom: charger 20 chansons aléatoires
+songs: chansons
 streamUrl: 'url du flux'
 theme: thème
 title: titre
