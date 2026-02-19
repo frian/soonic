@@ -14,108 +14,60 @@ use Symfony\Component\Routing\Attribute\Route;
 class LibraryController extends AbstractController
 {
     /**
-     * Method library
-     * 
-     * Shows main page
-     *
-     * @param ArtistRepository $artistRepository
-     * @param Request $request
-     *
-     * @return Response
+     * Main library page (full or partial HTML for AJAX refresh).
      */
-    #[Route(path: '/', name: 'library', methods: ['GET'])]    
+    #[Route(path: '/', name: 'library', methods: ['GET'])]
     public function library(ArtistRepository $artistRepository, Request $request): Response
     {
+        $artists = $artistRepository->findAll();
+
         if ($request->isXmlHttpRequest()) {
             return $this->render('library/index-content.html.twig', [
-                'artists' => $artistRepository->findAll(),
+                'artists' => $artists,
             ]);
         }
 
         return $this->render('library/index.html.twig', [
-            'artists' => $artistRepository->findAll(),
+            'artists' => $artists,
         ]);
     }
 
     /**
-     * Method showArtistAlbums
-     * 
-     * Find albums from an artist.
-     *
-     * @param Artist $artist
-     *
-     * @return Response
+     * Returns albums navigation list for one artist.
      */
-    #[Route(path: '/albums/{artistSlug:artist}', name: 'artist_albums', methods: ['GET'])]    
+    #[Route(path: '/albums/{artistSlug:artist}', name: 'artist_albums', methods: ['GET'])]
     public function showArtistAlbums(Artist $artist): Response
     {
-        $response = new Response();
-
-        if (!$artist) {
-            $response->setStatusCode(404);
-            $albums = [];
-            $artistSlug = '';
-        } else {
-            $albums = $artist->getAlbums();
-            $artistSlug = $artist->getArtistSlug();
-        }
-
-        $content = $this->renderView('library/album-nav-list.html.twig', [
-            'albums' => $albums,
-            'artist' => $artistSlug,
+        return $this->render('library/album-nav-list.html.twig', [
+            'albums' => $artist->getAlbums(),
+            'artist' => $artist->getArtistSlug(),
         ]);
-
-        $response->setContent($content);
-        return $response;
     }
 
     /**
-     * Method showAlbumsSongs
-     *
-     * Find songs from an album from an artist.
-     * 
-     * @param ManagerRegistry $doctrine
-     * @param Artist $artist
-     * @param $albumSlug $albumSlug
-     *
-     * @return Response
+     * Returns songs list for one artist/album slug pair.
+     * Sends 404 when the album does not belong to the artist.
      */
-    #[Route(path: '/songs/{artistSlug:artist}/{albumSlug}', name: 'artist_albums_songs', methods: ['GET'])]    
-    public function showAlbumsSongs(AlbumRepository $albumRepository, SongRepository $songRepository, string $albumSlug, ?Artist $artist = null): Response
+    #[Route(path: '/songs/{artistSlug:artist}/{albumSlug}', name: 'artist_albums_songs', methods: ['GET'])]
+    public function showAlbumsSongs(AlbumRepository $albumRepository, SongRepository $songRepository, string $albumSlug, Artist $artist): Response
     {
-        $response = new Response();
-
-        if (!$artist) {
-            $response->setStatusCode(404);
-            $songs = [];
-        } else {
-            $album = $albumRepository->findOneBy(['albumSlug' => $albumSlug]);
-            if (!$album) {
-                $response->setStatusCode(404);
-                $songs = [];
-            } else {
-                $songs = $songRepository->findByArtistAndAlbum($artist->getName(), $album->getName());
-            }
+        $album = $albumRepository->findOneByArtistAndAlbumSlug($artist->getArtistSlug(), $albumSlug);
+        if (!$album) {
+            return $this->render('common/songs-list.html.twig', [
+                'songs' => [],
+            ], new Response('', Response::HTTP_NOT_FOUND));
         }
-
 
         return $this->render('common/songs-list.html.twig', [
-            'songs' => $songs,
+            'songs' => $songRepository->findByArtistAndAlbum($artist->getName(), $album->getName()),
         ]);
     }
 
     /**
-     * Method filterArtist
-     *
-     * List filtered artist entities.
-     * 
-     * @param ManagerRegistry $doctrine
-     * @param $filter $filter
-     *
-     * @return Response
+     * Returns filtered artists list for the left navigation.
      */
     #[Route(path: '/artist/filter/', name: 'artist_filter_all', methods: ['GET'])]
-    #[Route(path: '/artist/filter/{filter}', name: 'artist_filter', methods: ['GET'])]    
+    #[Route(path: '/artist/filter/{filter}', name: 'artist_filter', methods: ['GET'])]
     public function filterArtist(ArtistRepository $artistRepository, ?string $filter = null): Response
     {
         $artists = $artistRepository->findByFilter($filter);
@@ -126,18 +78,11 @@ class LibraryController extends AbstractController
     }
 
     /**
-     * Method randomSongs
-     *
-     * Load random songs.
-     * 
-     * @param ManagerRegistry $doctrine
-     * @param $number $number
-     *
-     * @return Response
+     * Returns a random songs selection.
      */
-    #[Route(path: '/songs/random', name: 'random_songs', methods: ['GET'])]    
+    #[Route(path: '/songs/random', name: 'random_songs', methods: ['GET'])]
     public function randomSongs(SongRepository $songRepository, int $number = 20): Response
-    {   
+    {
         $songs = $songRepository->getRandom($number);
 
         return $this->render('common/songs-list.html.twig', [

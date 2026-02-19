@@ -28,4 +28,16 @@ class AlbumRepository extends ServiceEntityRepository
           ->getQuery()
           ->getResult();
     }
+
+    public function findOneByArtistAndAlbumSlug(string $artistSlug, string $albumSlug): ?Album
+    {
+        return $this->createQueryBuilder('al')
+            ->join('al.artists', 'ar')
+            ->andWhere('ar.artistSlug = :artistSlug')
+            ->andWhere('al.albumSlug = :albumSlug')
+            ->setParameter('artistSlug', $artistSlug)
+            ->setParameter('albumSlug', $albumSlug)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }
