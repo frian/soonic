@@ -1,4 +1,8 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ include('common/_form_actions.html.twig', {
+        submit_label: button_label|default('save'|trans),
+        back_href: back_href|default(null),
+        back_label: back_label|default('back.tolist'|trans)
+    }) }}
 {{ form_end(form) }}

@@ -1,5 +1,7 @@
-<form method="post" action="{{ path('album_delete', {'id': album.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ album.id) }}">
-    <button class="btn">Delete</button>
-</form>
+{% if delete_action is defined and delete_action %}
+    <form method="post" action="{{ delete_action }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ album.id) }}">
+        <button class="button danger">{{ 'delete'|trans }}</button>
+    </form>
+{% endif %}

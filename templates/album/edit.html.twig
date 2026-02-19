@@ -1,13 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Album{% endblock %}
+{% block title %} - {{ 'edit'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Edit Album</h1>
+    <h1>{{ 'edit'|trans }}</h1>
 
-    {{ include('album/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('album/_form.html.twig', {
+        button_label: 'edit'|trans,
+        back_href: path('album_index'),
+        back_label: 'back.tolist'|trans
+    }) }}
 
-    <a href="{{ path('album_index') }}">back to list</a>
-
-    {{ include('album/_delete_form.html.twig') }}
+    {# Legacy CRUD delete route is not active in AlbumController. #}
 {% endblock %}

@@ -1,10 +1,7 @@
-{# album/index #}
 {% extends 'base.html.twig' %}
 
-{% block title %} - albums{% endblock %}
+{% block title %} - {{ 'albums'|trans }}{% endblock %}
 
 {% block body %}
-
     {{ include('album/index-content.html.twig') }}
-
 {% endblock %}

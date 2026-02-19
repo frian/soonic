@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Album{% endblock %}
+{% block title %} - {{ 'create'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Create new Album</h1>
+    <h1>{{ 'create'|trans }}</h1>
 
-    {{ include('album/_form.html.twig') }}
-
-    <a href="{{ path('album_index') }}">back to list</a>
+    {{ include('album/_form.html.twig', {
+        button_label: 'create'|trans,
+        back_href: path('album_index'),
+        back_label: 'back.tolist'|trans
+    }) }}
 {% endblock %}
