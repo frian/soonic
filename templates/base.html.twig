@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="{{ app.request.locale|default('en') }}">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,19 +19,19 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Muli:wght@300;400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-
         {% set theme = theme_helper.get() %}
 
-        {% set layout_css = 'css/layout.css' %}
-        {% set screen_css = 'css/screen.css' %}
-        {% set fontello_css = 'css/fontello-embedded.css' %}
+        {% set base_css_files = [
+            'css/layout.css',
+            'css/screen.css',
+            'css/fontello-embedded.css'
+        ] %}
         {% set theme_layout_css = 'css/themes/' ~ theme ~ '/layout.css' %}
         {% set theme_screen_css = 'css/themes/' ~ theme ~ '/screen.css' %}
 
-        <link href="/{{ layout_css }}?v={{ file_mtime(layout_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
-        <link href="/{{ screen_css }}?v={{ file_mtime(screen_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
-        <link href="/{{ fontello_css }}?v={{ file_mtime(fontello_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
+        {% for css_file in base_css_files %}
+            <link href="/{{ css_file }}?v={{ file_mtime(css_file) }}" media="screen, projection" rel="stylesheet" type="text/css" />
+        {% endfor %}
 
         {% if file_exists(theme_layout_css) %}
             <link id="layout-theme-css" href="/{{ theme_layout_css }}?v={{ file_mtime(theme_layout_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -42,9 +42,6 @@
         {% endif %}
 
         {% block stylesheets %}{% endblock %}
-
-
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% set current_route = app.current_route|default('') %}
@@ -55,12 +52,17 @@
 
         {% block body %}{% endblock %}
 
-        <script src="/js/jquery-4.0.0.min.js?v={{ file_mtime('js/jquery-4.0.0.min.js') }}"></script>
-        <script src="/js/lozad.min.js?v={{ file_mtime('js/lozad.min.js') }}"></script>
-        <script src="/js/main.js?v={{ file_mtime('js/main.js') }}"></script>
-        <script src="/js/album.js?v={{ file_mtime('js/album.js') }}"></script>
-        <script src="/js/player.js?v={{ file_mtime('js/player.js') }}"></script>
-        <script src="/js/radio.js?v={{ file_mtime('js/radio.js') }}"></script>
+        {% set js_files = [
+            'js/jquery-4.0.0.min.js',
+            'js/lozad.min.js',
+            'js/main.js',
+            'js/album.js',
+            'js/player.js',
+            'js/radio.js'
+        ] %}
+        {% for js_file in js_files %}
+            <script src="/{{ js_file }}?v={{ file_mtime(js_file) }}"></script>
+        {% endfor %}
 
         {% block javascripts %}
         {% endblock %}
