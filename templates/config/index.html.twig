@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Configs list</h1>
+{% block title %} - {{ 'settings'|trans }}{% endblock %}
 
-    <table>
+{% block body %}
+    <h1>{{ 'settings'|trans }}</h1>
+
+    <table class="form">
         <thead>
             <tr>
                 <th>Id</th>
@@ -13,25 +15,16 @@
         <tbody>
         {% for config in configs %}
             <tr>
-                <td><a href="{{ path('config_show', { 'id': config.id }) }}">{{ config.id }}</a></td>
+                <td>{{ config.id }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('config_show', { 'id': config.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('config_edit', { 'id': config.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                    <a class="button" href="{{ path('settings_index') }}">{{ 'edit'|trans }}</a>
                 </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no config found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('config_new') }}">Create a new config</a>
-        </li>
-    </ul>
 {% endblock %}

@@ -1,14 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Config creation</h1>
+{% block title %} - {{ 'create'|trans }}{% endblock %}
 
-    {{ form_start(form) }}
+{% block body %}
+    <h1>{{ 'create'|trans }}</h1>
+
+    {{ form_start(form, {
+        action: path('config_edit', { id: 1 }),
+        method: 'POST'
+    }) }}
         {{ form_widget(form) }}
         {{ include('common/_form_actions.html.twig', {
-            submit_label: 'Create',
-            back_href: path('config_index'),
-            back_label: 'Back to the list'
+            submit_label: 'create'|trans,
+            back_href: path('settings_index'),
+            back_label: 'back.tolist'|trans
         }) }}
     {{ form_end(form) }}
 {% endblock %}
