@@ -7,6 +7,12 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Table(
+    name: 'song',
+    uniqueConstraints: [
+        new ORM\UniqueConstraint(name: 'UNIQ_SONG_WEB_PATH', columns: ['web_path']),
+    ]
+)]
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 class Song
 {

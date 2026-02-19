@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AlbumRepository::class)]
 class Album
@@ -16,27 +17,39 @@ class Album
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $albumSlug = null;
 
+    #[Assert\PositiveOrZero]
     #[ORM\Column]
     private ?int $songCount = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 8)]
     #[ORM\Column(length: 8)]
     private ?string $duration = null;
 
+    #[Assert\Range(min: 1900, max: 2100)]
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $year = null;
 
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $genre = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 1024)]
     #[ORM\Column(length: 1024)]
     private ?string $path = null;
 
+    #[Assert\Length(max: 1024)]
     #[ORM\Column(length: 1024, nullable: true)]
     private ?string $coverArtPath = null;
 
@@ -70,7 +83,7 @@ class Album
 
     public function setName(string $name): self
     {
-        $this->name = $name;
+        $this->name = trim($name);
 
         return $this;
     }
@@ -82,7 +95,7 @@ class Album
 
     public function setAlbumSlug(string $albumSlug): self
     {
-        $this->albumSlug = $albumSlug;
+        $this->albumSlug = trim($albumSlug);
 
         return $this;
     }
@@ -106,7 +119,7 @@ class Album
 
     public function setDuration(string $duration): self
     {
-        $this->duration = $duration;
+        $this->duration = trim($duration);
 
         return $this;
     }
@@ -130,7 +143,7 @@ class Album
 
     public function setGenre(?string $genre): self
     {
-        $this->genre = $genre;
+        $this->genre = $genre === null ? null : trim($genre);
 
         return $this;
     }
@@ -142,7 +155,7 @@ class Album
 
     public function setPath(string $path): self
     {
-        $this->path = $path;
+        $this->path = trim($path);
 
         return $this;
     }
@@ -154,7 +167,7 @@ class Album
 
     public function setCoverArtPath(?string $coverArtPath): self
     {
-        $this->coverArtPath = $coverArtPath;
+        $this->coverArtPath = $coverArtPath === null ? null : trim($coverArtPath);
 
         return $this;
     }
