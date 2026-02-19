@@ -14,7 +14,7 @@ class SearchController extends AbstractController
     #[Route(path: '/search', name: 'search', methods: ['GET', 'POST'])]
     public function showSearch(SongRepository $songRepository, Request $request): Response
     {
-        $form = $this->createNamed('form', SearchType::class);
+        $form = $this->createForm(SearchType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
