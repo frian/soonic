@@ -16,6 +16,7 @@ class SearchType extends AbstractType
         $builder->add('keyword', TextType::class, [
             'required' => true,
             'trim' => true,
+            'empty_data' => '',
             'constraints' => [
                 new NotBlank(),
                 new Length(min: 3, max: 255),
@@ -24,6 +25,9 @@ class SearchType extends AbstractType
                 'id' => 'form-keyword',
                 'class' => 'filter-input',
                 'placeholder' => 'search.placeholder',
+                'minlength' => 3,
+                'maxlength' => 255,
+                'autocomplete' => 'off',
             ],
         ]);
     }
@@ -35,4 +39,3 @@ class SearchType extends AbstractType
         ]);
     }
 }
-

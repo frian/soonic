@@ -18,10 +18,18 @@ class ConfigType extends AbstractType
             ->add('language', EntityType::class, [
                 'class' => Language::class,
                 'choice_label' => 'name',
+                'choice_value' => 'id',
+                'placeholder' => 'select language',
+                'required' => true,
+                'query_builder' => static fn ($repository) => $repository->createQueryBuilder('l')->orderBy('l.name', 'ASC'),
             ])
             ->add('theme', EntityType::class, [
                 'class' => Theme::class,
                 'choice_label' => 'name',
+                'choice_value' => 'id',
+                'placeholder' => 'select theme',
+                'required' => true,
+                'query_builder' => static fn ($repository) => $repository->createQueryBuilder('t')->orderBy('t.name', 'ASC'),
             ])
         ;
     }
