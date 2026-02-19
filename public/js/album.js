@@ -1,23 +1,48 @@
 $(function() {
 
-    const debug = 1;
+    const debug = false;
+    let isLoadingAlbum = false;
 
-    if ($(".single-album-view")) {
-        if ($(".single-album-view").height() < $(".single-album-container").height() ) {
-            $(".single-album-container").height($(".single-album-view").height() - 40);
-            $(".single-album-container").css("overflow", "hidden");
-            $(".single-album-container").css("overflow-y", "scroll");
+    function adjustAlbumContainer() {
+        const $albumView = $(".single-album-view");
+        const $albumContainer = $(".single-album-container");
+
+        if (!$albumView.length || !$albumContainer.length) {
+            return;
+        }
+
+        if ($albumView.height() < $albumContainer.height()) {
+            $albumContainer
+                .height($albumView.height() - 40)
+                .css("overflow", "hidden")
+                .css("overflow-y", "scroll");
         }
     }
 
-    $(document).on("click", ".img-wrapper", function(e) {
+    if ($(".single-album-view").length) {
+        adjustAlbumContainer();
+    }
 
-        if (debug === 1) {
-            console.log('clicked on an album');
+    $(document).on("click", ".img-wrapper", function(e) {
+        e.preventDefault();
+
+        if (isLoadingAlbum) {
+            return;
+        }
+        isLoadingAlbum = true;
+
+        if (debug) {
+            console.log("clicked on an album");
         }
 
-        const url = "/album/" + $(this).parent().attr("data-album-id");
-        if (debug === 1) {
+        const albumId = $(this).closest("[data-album-id]").data("album-id");
+        if (!albumId) {
+            isLoadingAlbum = false;
+            return;
+        }
+
+        const url = "/album/" + albumId;
+        if (debug) {
             console.log("url : " + url);
         }
 
@@ -25,18 +50,22 @@ $(function() {
             url: url,
             cache: true,
             success: function(data) {
+                $(".single-album-view").remove();
                 $(document.body).append(data);
 
-                if ($(".single-album-view").height() < $(".single-album-container").height() ) {
-                    $(".single-album-container").height($(".single-album-view").height() - 40);
-                    $(".single-album-container").css("overflow", "hidden");
-                    $(".single-album-container").css("overflow-y", "scroll");
-                }
+                adjustAlbumContainer();
                 $(".single-album-view").css("top", $(window).scrollTop());
-                console.log("scrollTop : " + $(window).scrollTop());
+                if (debug) {
+                    console.log("scrollTop : " + $(window).scrollTop());
+                }
             },
-            error: function(data) {
-                console.log("error");
+            error: function() {
+                if (debug) {
+                    console.log("error");
+                }
+            },
+            complete: function() {
+                isLoadingAlbum = false;
             }
         });
     });
