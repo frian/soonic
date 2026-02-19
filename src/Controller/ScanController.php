@@ -39,17 +39,18 @@ class ScanController extends AbstractController
         }
 
         $environment = (string) $this->getParameter('kernel.environment');
-        $command = sprintf(
-            'nohup %s %s soonic:scan --no-interaction --env=%s > /dev/null 2>&1 &',
-            escapeshellarg(PHP_BINARY),
-            escapeshellarg($consolePath),
-            escapeshellarg($environment)
-        );
+        $process = new Process([
+            PHP_BINARY,
+            $consolePath,
+            'soonic:scan',
+            '--no-interaction',
+            '--env='.$environment,
+        ], $this->projectDir);
+        $process->disableOutput();
 
-        $process = Process::fromShellCommandline($command, $this->projectDir);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
+        try {
+            $process->start();
+        } catch (\Throwable) {
             return new JsonResponse(['status' => 'error', 'message' => 'scan_start_failed'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 

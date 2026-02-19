@@ -28,3 +28,6 @@
 /public/soonic*
 /tests/Command/testfiles
 ###< zikmiu ###
+
+# local music symlink
+/public/music
