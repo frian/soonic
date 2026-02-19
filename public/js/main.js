@@ -1,7 +1,7 @@
 $(function() {
     'use strict';
 
-    const debug = 1;
+    const debug = false;
     let screenWidth = $(window).width();
     let mobileMenuState = 'closed';
     let openView = null;
@@ -61,7 +61,7 @@ $(function() {
         $('#navigation-library, #navigation-radio-new').css('display', 'none');
         setSongInfoSize();
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on library');
             console.log("- openView = " + openView);
         }
@@ -77,7 +77,7 @@ $(function() {
     //     $(this).children(".lozad").fadeOut('fast').delay(3000).fadeIn('fast');
     // });
 
-    $   (document).on("click", "#albums-button", function(e) {
+    $(document).on("click", "#albums-button", function(e) {
 
         e.preventDefault();
 
@@ -105,7 +105,7 @@ $(function() {
         $('#navigation-albums, #navigation-radio-new, #navigation-search-form, #navigation-random').css('display', 'none');
         openView = '.albums-view';
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on albums');
             console.log("- openView = " + openView);
         }
@@ -144,7 +144,7 @@ $(function() {
         setSongInfoSize();
         openView = '.radios-view';
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on radio');
             console.log("- openView = " + openView);
         }
@@ -210,7 +210,7 @@ $(function() {
         setSongInfoSize();
         openView = '.radio-new-view';
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on new radio');
             console.log("- openView = " + openView);
         }
@@ -248,7 +248,7 @@ $(function() {
         setSongInfoSize();
         openView = '.settings-view';
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on settings');
             console.log("- openView = " + openView);
         }
@@ -274,7 +274,7 @@ $(function() {
             }
         });
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on random songs');
             console.log("- openView = " + openView);
         }
@@ -306,7 +306,7 @@ $(function() {
         $(".active").removeClass("active");
         $(this).addClass('active');
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on an artist in artist nav');
         }
     });
@@ -366,7 +366,7 @@ $(function() {
             });
         }, 300);
 
-        if (debug === 1) {
+        if (debug) {
             console.log('filetered artists');
         }
     });
@@ -402,7 +402,7 @@ $(function() {
             $(".mobile-songs-to-playlist-button").css('display', 'block');
         }
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on an album in artist nav');
         }
     });
@@ -422,7 +422,7 @@ $(function() {
             return;
         }
 
-        var form = $('#search-form');
+        const form = $('#search-form');
 
         $.ajax({
             type: form.attr('method'),
@@ -434,7 +434,7 @@ $(function() {
             }
         });
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on search');
         }
     });
@@ -457,14 +457,14 @@ $(function() {
         //     $(".mobile-songs-to-playlist-button").css('display', 'initial');
         //     hamburger.toggleClass("is-active");
         //
-        //     if (debug === 1) {
+        //     if (debug) {
         //         console.log('after hamburger');
         //     }
         //
         //     mobileMenuState = mobileMenuState == 'closed' ? 'open' : 'closed';
         // }
 
-        if (debug === 1) {
+        if (debug) {
             console.log('in loadSongPanel');
         }
     }
@@ -498,7 +498,7 @@ $(function() {
             return;
         }
 
-        $button.toggleClass('running');
+        $button.addClass('running');
 
         $.ajax({
             type: 'POST',
@@ -509,9 +509,18 @@ $(function() {
                 if (data && data.status === 'already_running') {
                     $button.addClass('running');
                 }
+
+                if (data && (data.status === 'running' || data.status === 'already_running')) {
+                    if (!scanLoop) {
+                        scanLoop = setInterval(scanTimer, 1000);
+                    }
+                } else {
+                    $button.removeClass('running');
+                    $button.text($button.data('initial-label') || initialLabel);
+                }
             },
             error: function() {
-                $button.toggleClass('running');
+                $button.removeClass('running');
                 $button.text($button.data('initial-label') || initialLabel);
             }
         });
@@ -521,9 +530,7 @@ $(function() {
         $("#num-albums").text("0");
         $button.text('scanning');
 
-        scanLoop = setInterval(scanTimer, 1000);
-
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on scan');
         }
     });
@@ -552,11 +559,11 @@ $(function() {
 
                 let href = "";
                 const cacheBuster = Date.now();
-                if ($('#screen-theme-css')) {
+                if ($('#screen-theme-css').length) {
                     href = "/css/themes/" + data.config.theme + "/screen.css?v=" + cacheBuster;
                     $('#screen-theme-css').attr('href', href );
                 }
-                if ($('#layout-theme-css')) {
+                if ($('#layout-theme-css').length) {
                     href = "/css/themes/" + data.config.theme + "/layout.css?v=" + cacheBuster;
                     $('#layout-theme-css').attr('href', href );
                 }
@@ -588,7 +595,7 @@ $(function() {
             }
         });
 
-        if (debug === 1) {
+        if (debug) {
             console.log('submitted settings form');
         }
     });
@@ -609,7 +616,7 @@ $(function() {
         });
         $('.filter-input').focus();
 
-        if (debug === 1) {
+        if (debug) {
             console.log('cleared artist filter');
         }
     });
@@ -635,7 +642,7 @@ $(function() {
             $("#playlist-infos").css('display', 'none');
         }
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on empty palylist');
         }
     });
@@ -653,7 +660,7 @@ $(function() {
         $(".mobile-songs-to-artists-button").css('display', 'initial');
         $(".mobile-songs-to-playlist-button").css('display', 'initial');
 
-        if (debug === 1) {
+        if (debug) {
             console.log('show songs list (forward)');
         }
     });
@@ -670,7 +677,7 @@ $(function() {
         $(".mobile-songs-to-playlist-button").css('display', 'none');
         $(".mobile-artists-to-songs-button").css('display', 'initial');
 
-        if (debug === 1) {
+        if (debug) {
             console.log('show artists list');
         }
     });
@@ -697,7 +704,7 @@ $(function() {
         $(".playlist").css('display', 'none');
         $(".mobile-songs-to-playlist-button").css('display', 'initial');
 
-        if (debug === 1) {
+        if (debug) {
             console.log('show songs list (backward)');
         }
     });
@@ -709,7 +716,7 @@ $(function() {
     $(".hamburger").on("click", function(e) {
 
         $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
-        mobileMenuState = mobileMenuState == 'closed' ? 'open' : 'closed';
+        mobileMenuState = mobileMenuState === 'closed' ? 'open' : 'closed';
 
         if (mobileMenuState === 'open') {
             setTimeout(function() {
@@ -720,18 +727,19 @@ $(function() {
                     }
                     else if (e.target.className.indexOf('hamburger') !== -1 ) {
                         $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
-                        mobileMenuState = mobileMenuState == 'closed' ? 'open' : 'closed';
+                        mobileMenuState = mobileMenuState === 'closed' ? 'open' : 'closed';
                     }
-                    if (!e.target.id.indexOf('Button') !== -1) {
+                    const targetId = (e.target.id || '').toLowerCase();
+                    if (targetId.indexOf('button') === -1) {
                         $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
-                        mobileMenuState = mobileMenuState == 'closed' ? 'open' : 'closed';
+                        mobileMenuState = mobileMenuState === 'closed' ? 'open' : 'closed';
                     }
                     $(document).off( "click", "body");
                 });
             }, 100);
         }
 
-        if (debug === 1) {
+        if (debug) {
             console.log('clicked on mobile menu');
         }
     });
@@ -740,12 +748,12 @@ $(function() {
     /**
      * check if we are scanning
      */
-    if ($(location).attr('pathname') === '/settings/') {
+    if (window.location.pathname === '/settings/') {
         $.get({
             url: '/scan/progress',
             cache: true,
             success: function(data) {
-                if (data.status == 'running') {
+                if (data.status === 'running') {
                     const $scanButton = $("#scan-button");
                     if (!$scanButton.hasClass('running')) {
                         $scanButton.toggleClass('running');
@@ -759,7 +767,7 @@ $(function() {
             }
         });
 
-        if (debug === 1) {
+        if (debug) {
             console.log('check if we are scanning');
         }
     }
@@ -773,7 +781,7 @@ $(function() {
             url: '/scan/progress',
             cache: true,
             success: function(data) {
-                if (data.status == 'stopped') {
+                if (data.status === 'stopped') {
                     if (scanLoop) {
                         clearInterval(scanLoop);
                         scanLoop = null;
@@ -820,7 +828,7 @@ $(function() {
     function setFilterInputSize() {
         let width;
         if (screenWidth < 1024) {
-            var buttonWidth = getElementOuterWidth($('#search-button'));
+            const buttonWidth = getElementOuterWidth($('#search-button'));
             width = (screenWidth - buttonWidth );
         }
         $('.form-element-container').width(width);
