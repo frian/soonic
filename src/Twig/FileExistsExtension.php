@@ -8,13 +8,21 @@ use Twig\TwigFunction;
 
 class FileExistsExtension extends AbstractExtension
 {
-    private $fileSystem;
-    private $projectDir;
+    private Filesystem $fileSystem;
+    private string $projectDir;
+    private string $publicDir;
+
+    /** @var array<string, bool> */
+    private array $existsCache = [];
+
+    /** @var array<string, int> */
+    private array $mtimeCache = [];
 
     public function __construct(Filesystem $fileSystem, string $projectDir)
     {
         $this->fileSystem = $fileSystem;
         $this->projectDir = $projectDir;
+        $this->publicDir = rtrim($projectDir, '/').'/public';
     }
 
     public function getFunctions(): array
@@ -32,11 +40,19 @@ class FileExistsExtension extends AbstractExtension
      */
     public function fileExists(string $path): bool
     {
-        if (!$this->fileSystem->isAbsolutePath($path)) {
-            $path = "{$this->projectDir}/public/{$path}";
+        $resolvedPath = $this->resolvePublicPath($path);
+        if ($resolvedPath === null) {
+            return false;
         }
 
-        return $this->fileSystem->exists($path);
+        if (array_key_exists($resolvedPath, $this->existsCache)) {
+            return $this->existsCache[$resolvedPath];
+        }
+
+        $exists = $this->fileSystem->exists($resolvedPath);
+        $this->existsCache[$resolvedPath] = $exists;
+
+        return $exists;
     }
 
     /**
@@ -46,16 +62,52 @@ class FileExistsExtension extends AbstractExtension
      */
     public function fileMtime(string $path): int
     {
-        if (!$this->fileSystem->isAbsolutePath($path)) {
-            $path = "{$this->projectDir}/public/{$path}";
-        }
-
-        if (!$this->fileSystem->exists($path)) {
+        $resolvedPath = $this->resolvePublicPath($path);
+        if ($resolvedPath === null) {
             return 0;
         }
 
-        $mtime = @filemtime($path);
+        if (array_key_exists($resolvedPath, $this->mtimeCache)) {
+            return $this->mtimeCache[$resolvedPath];
+        }
 
-        return $mtime === false ? 0 : $mtime;
+        if (!$this->fileExists($resolvedPath)) {
+            $this->mtimeCache[$resolvedPath] = 0;
+            return 0;
+        }
+
+        $mtime = @filemtime($resolvedPath);
+        $timestamp = $mtime === false ? 0 : $mtime;
+        $this->mtimeCache[$resolvedPath] = $timestamp;
+
+        return $timestamp;
+    }
+
+    private function resolvePublicPath(string $path): ?string
+    {
+        if ($this->fileSystem->isAbsolutePath($path)) {
+            $resolved = realpath($path);
+            if ($resolved === false || !$this->isInsidePublicDir($resolved)) {
+                return null;
+            }
+
+            return $resolved;
+        }
+
+        $path = ltrim($path, '/');
+        $candidate = $this->publicDir.'/'.$path;
+        $resolved = realpath($candidate);
+
+        if ($resolved === false || !$this->isInsidePublicDir($resolved)) {
+            return null;
+        }
+
+        return $resolved;
+    }
+
+    private function isInsidePublicDir(string $absolutePath): bool
+    {
+        return str_starts_with($absolutePath, $this->publicDir.'/')
+            || $absolutePath === $this->publicDir;
     }
 }
