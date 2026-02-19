@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ConfigRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ConfigRepository::class)]
 class Config
@@ -13,11 +14,13 @@ class Config
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[Assert\NotNull]
+    #[ORM\OneToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Language $language = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[Assert\NotNull]
+    #[ORM\OneToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Theme $theme = null;
 
