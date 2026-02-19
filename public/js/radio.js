@@ -1,48 +1,58 @@
 $(function() {
 
-    let playerStatus = "paused";
+    function setRadioPlaying($button) {
+        $button
+            .removeClass("icon-play")
+            .addClass("icon-pause activePlayer")
+            .closest("tr, li, .radio-item")
+            .addClass("active-radio");
+    }
+
+    function setRadioPaused($button) {
+        $button
+            .removeClass("icon-pause activePlayer")
+            .addClass("icon-play")
+            .closest("tr, li, .radio-item")
+            .removeClass("active-radio");
+    }
 
     /**
      * Play / Pause currently loaded radio
      */
     $(document).on("click", ".radio-play", function(e) {
+        e.preventDefault();
+
+        const $button = $(this);
+        const radioPlayer = $button.next()[0];
+        if (!radioPlayer) {
+            return;
+        }
 
         // -- find currently active player and pause it
-        const activePlayerButton = $("i.activePlayer")[0];
+        const $activePlayerButton = $(".radios-view i.activePlayer").first();
+        const activePlayer = $activePlayerButton.length ? $activePlayerButton.next()[0] : null;
 
-        let activePlayer = null;
-
-        if (activePlayerButton) {
-            activePlayer = $(activePlayerButton).next()[0];
+        if (activePlayer) {
             activePlayer.pause();
-            $(activePlayerButton).removeClass("icon-pause");
-            $(activePlayerButton).addClass("icon-play");
-            $(activePlayerButton).removeClass("activePlayer");
-            playerStatus = "paused";
-            $(activePlayerButton).parent().parent().removeClass("active-radio");
+            setRadioPaused($activePlayerButton);
         }
 
-        let radioPlayer = $(this).next()[0];
-
-        if (radioPlayer == activePlayer) {
-            playerStatus = "playing";
+        // -- if we clicked the active one, this means toggle to pause only
+        if (radioPlayer === activePlayer) {
+            return;
         }
 
-
-        if (playerStatus === "paused") {
-            radioPlayer.play();
-            playerStatus = "playing";
-            $(this).removeClass("icon-play");
-            $(this).addClass("icon-pause");
-            $(this).addClass("activePlayer");
-            $(this).parent().parent().addClass("active-radio");
+        const playPromise = radioPlayer.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+            playPromise
+                .then(function() {
+                    setRadioPlaying($button);
+                })
+                .catch(function() {
+                    setRadioPaused($button);
+                });
         } else {
-            radioPlayer.pause();
-            playerStatus = "paused";
-            $(this).removeClass("icon-pause");
-            $(this).addClass("icon-play");
-            $(this).removeClass("activePlayer");
-            $(this).parent().parent().removeClass("active-radio");
+            setRadioPlaying($button);
         }
     });
 });
