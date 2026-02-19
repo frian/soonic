@@ -13,4 +13,18 @@
     {% else %}
     no radios found    
     {% endfor %}
+
+    {% if totalPages > 1 %}
+        <nav class="radios-pagination" aria-label="Radios pagination">
+            {% if currentPage > 1 %}
+                <a href="{{ path('radio_index', { page: currentPage - 1 }) }}" class="button" data-page="{{ currentPage - 1 }}">Previous</a>
+            {% endif %}
+
+            <span class="radios-pagination-current">{{ currentPage }}/{{ totalPages }}</span>
+
+            {% if currentPage < totalPages %}
+                <a href="{{ path('radio_index', { page: currentPage + 1 }) }}" class="button" data-page="{{ currentPage + 1 }}">Next</a>
+            {% endif %}
+        </nav>
+    {% endif %}
 </section>

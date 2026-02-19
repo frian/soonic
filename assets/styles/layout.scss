@@ -79,6 +79,20 @@ table {
     overflow-y: scroll;
 }
 
+.radios-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 16px 12px 24px;
+    font-size: 16px;
+
+    .button {
+        min-width: 100px;
+        padding: 6px 12px;
+    }
+}
+
 
 /*
   --  5 .Songs and playlist panels --------------------------------------------

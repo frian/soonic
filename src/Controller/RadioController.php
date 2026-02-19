@@ -15,10 +15,18 @@ use Symfony\Component\Routing\Attribute\Route;
 class RadioController extends AbstractController
 {
     #[Route(path: '/', name: 'radio_index', methods: ['GET'])]
-    public function index(RadioRepository $radioRepository): Response
+    public function index(Request $request, RadioRepository $radioRepository): Response
     {
+        $limit = 24;
+        $page = max(1, $request->query->getInt('page', 1));
+        $total = $radioRepository->countAll();
+        $totalPages = max(1, (int) ceil($total / $limit));
+        $page = min($page, $totalPages);
+
         return $this->render('radio/index.html.twig', [
-            'radios' => $radioRepository->findAll(),
+            'radios' => $radioRepository->findPaginated($page, $limit),
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
         ]);
     }
 

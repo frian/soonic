@@ -19,32 +19,28 @@ class RadioRepository extends ServiceEntityRepository
         parent::__construct($registry, Radio::class);
     }
 
-    // /**
-    //  * @return Radio[] Returns an array of Radio objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function countAll(): int
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+        return (int) $this->createQueryBuilder('r')
+            ->select('COUNT(r.id)')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Radio
+    /**
+     * @return Radio[]
+     */
+    public function findPaginated(int $page, int $limit): array
     {
+        $page = max(1, $page);
+        $limit = max(1, $limit);
+
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->orderBy('r.name', 'ASC')
+            ->addOrderBy('r.id', 'ASC')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
 }

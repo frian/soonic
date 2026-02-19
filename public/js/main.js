@@ -131,7 +131,7 @@ $(function() {
                 url: url,
                 cache: true,
                 success: function(data) {
-                    $(document.body).append(data);
+                    upsertRadiosView(data);
                 },
                 error: function(data) {
                     console.log("error");
@@ -148,6 +148,33 @@ $(function() {
             console.log('clicked on radio');
             console.log("- openView = " + openView);
         }
+    });
+
+    /**
+     * Load one radios pagination page
+     */
+    $(document).on("click", ".radios-pagination a", function(e) {
+        e.preventDefault();
+
+        const url = $(this).attr('href');
+        if (!url) {
+            return;
+        }
+
+        $.ajax({
+            url: url,
+            cache: false,
+            success: function(data) {
+                upsertRadiosView(data);
+                $('.library-view').css('display', 'none');
+                $('.radios-view').css('display', 'block');
+                openView = '.radios-view';
+                setSongInfoSize();
+            },
+            error: function() {
+                console.log("error");
+            }
+        });
     });
 
 
@@ -439,6 +466,19 @@ $(function() {
 
         if (debug === 1) {
             console.log('in loadSongPanel');
+        }
+    }
+
+    function upsertRadiosView(data) {
+        const $incoming = $('<div>').html(data).find('.radios-view').first();
+        if (!$incoming.length) {
+            return;
+        }
+
+        if ($('.radios-view').length) {
+            $('.radios-view').replaceWith($incoming);
+        } else {
+            $(document.body).append($incoming);
         }
     }
 
