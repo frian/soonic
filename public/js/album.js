@@ -2,6 +2,13 @@ $(function() {
 
     const debug = false;
     let isLoadingAlbum = false;
+    let currentAlbumRequest = null;
+
+    function logDebug(message) {
+        if (debug) {
+            console.log(message);
+        }
+    }
 
     function adjustAlbumContainer() {
         const $albumView = $(".single-album-view");
@@ -31,9 +38,7 @@ $(function() {
         }
         isLoadingAlbum = true;
 
-        if (debug) {
-            console.log("clicked on an album");
-        }
+        logDebug("clicked on an album");
 
         const albumId = $(this).closest("[data-album-id]").data("album-id");
         if (!albumId) {
@@ -42,11 +47,13 @@ $(function() {
         }
 
         const url = "/album/" + albumId;
-        if (debug) {
-            console.log("url : " + url);
+        logDebug("url : " + url);
+
+        if (currentAlbumRequest && currentAlbumRequest.readyState !== 4) {
+            currentAlbumRequest.abort();
         }
 
-        $.ajax({
+        currentAlbumRequest = $.ajax({
             url: url,
             cache: true,
             success: function(data) {
@@ -55,17 +62,14 @@ $(function() {
 
                 adjustAlbumContainer();
                 $(".single-album-view").css("top", $(window).scrollTop());
-                if (debug) {
-                    console.log("scrollTop : " + $(window).scrollTop());
-                }
+                logDebug("scrollTop : " + $(window).scrollTop());
             },
             error: function() {
-                if (debug) {
-                    console.log("error");
-                }
+                logDebug("album load error");
             },
             complete: function() {
                 isLoadingAlbum = false;
+                currentAlbumRequest = null;
             }
         });
     });

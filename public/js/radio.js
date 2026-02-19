@@ -1,5 +1,13 @@
 $(function() {
 
+    const debug = false;
+
+    function logDebug(message) {
+        if (debug) {
+            console.log(message);
+        }
+    }
+
     function setRadioPlaying($button) {
         $button
             .removeClass("icon-play")
@@ -47,12 +55,23 @@ $(function() {
             playPromise
                 .then(function() {
                     setRadioPlaying($button);
+                    logDebug("radio playing");
                 })
                 .catch(function() {
                     setRadioPaused($button);
+                    logDebug("radio play() failed");
                 });
         } else {
             setRadioPlaying($button);
+            logDebug("radio playing");
         }
+    });
+
+    $(document).on("error stalled abort", ".radios-view audio", function() {
+        const $button = $(this).prev(".radio-play");
+        if ($button.length) {
+            setRadioPaused($button);
+        }
+        logDebug("radio stream error/stalled");
     });
 });

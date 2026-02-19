@@ -7,6 +7,12 @@ $(function() {
     let openView = null;
     let scanLoop = null;
 
+    function logDebug(message) {
+        if (debug) {
+            console.log(message);
+        }
+    }
+
     _init();
 
     // Recompute after full load/fonts: prevents occasional wrong topbar layout on cached reloads.
@@ -96,8 +102,8 @@ $(function() {
                     $(document.body).append(data);
                     observer.observe();
                 },
-                error: function(data) {
-                    console.log("error");
+                error: function() {
+                    logDebug("albums load error");
                 }
             });
         }
@@ -133,8 +139,8 @@ $(function() {
                 success: function(data) {
                     upsertRadiosView(data);
                 },
-                error: function(data) {
-                    console.log("error");
+                error: function() {
+                    logDebug("radios load error");
                 }
             });
         }
@@ -172,7 +178,7 @@ $(function() {
                 setSongInfoSize();
             },
             error: function() {
-                console.log("error");
+                logDebug("radios pagination error");
             }
         });
     });
@@ -199,8 +205,8 @@ $(function() {
                 success: function(data) {
                     $(document.body).append(data);
                 },
-                error: function(data) {
-                    console.log("error");
+                error: function() {
+                    logDebug("radio new load error");
                 }
             });
         }
@@ -238,8 +244,8 @@ $(function() {
                 success: function(data) {
                     $(document.body).append(data);
                 },
-                error: function(data) {
-                    console.log("error");
+                error: function() {
+                    logDebug("settings load error");
                 }
             });
         }
@@ -269,8 +275,8 @@ $(function() {
             url: url,
             cache: true,
             success: loadSongPanel,
-            error: function(data) {
-                console.log("error");
+            error: function() {
+                logDebug("random songs load error");
             }
         });
 
@@ -429,8 +435,8 @@ $(function() {
             url: form.attr('action'),
             data: form.serialize(),
             success: loadSongPanel,
-            error: function(data) {
-                console.log("error");
+            error: function() {
+                logDebug("search error");
             }
         });
 
@@ -590,8 +596,8 @@ $(function() {
                     }
                 });
             },
-            error:function(data) {
-                console.log(data);
+            error:function() {
+                logDebug("settings submit error");
             }
         });
 
@@ -692,7 +698,7 @@ $(function() {
         $(".mobile-artists-to-songs-button").css('display', 'none');
         $(".mobile-songs-to-playlist-button").css('display', 'none');
         $(".mobile-playlist-to-songs-button").css('display', 'initial');
-        console.log('clicked 3');
+        logDebug('show playlist');
     });
 
 
@@ -714,27 +720,21 @@ $(function() {
      * handle mobile menu
      */
     $(".hamburger").on("click", function(e) {
+        e.preventDefault();
 
         $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
         mobileMenuState = mobileMenuState === 'closed' ? 'open' : 'closed';
 
         if (mobileMenuState === 'open') {
             setTimeout(function() {
-                $(document).on( "click", "body", function(e) {
-                    e.preventDefault();
-                    if (e.target.id === 'form-keyword') {
+                $(document).one("click.mobileMenu", function(event) {
+                    const $target = $(event.target);
+                    if ($target.closest(".topbar-nav, .top-nav, .hamburger").length) {
                         return;
                     }
-                    else if (e.target.className.indexOf('hamburger') !== -1 ) {
-                        $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
-                        mobileMenuState = mobileMenuState === 'closed' ? 'open' : 'closed';
-                    }
-                    const targetId = (e.target.id || '').toLowerCase();
-                    if (targetId.indexOf('button') === -1) {
-                        $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
-                        mobileMenuState = mobileMenuState === 'closed' ? 'open' : 'closed';
-                    }
-                    $(document).off( "click", "body");
+
+                    $(".topbar-nav, .top-nav, .hamburger").removeClass("is-active");
+                    mobileMenuState = 'closed';
                 });
             }, 100);
         }

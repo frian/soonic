@@ -6,14 +6,18 @@ $(function() {
     let playerStatus = "paused";
     let contextMenuClickTimer = null;
 
+    function logDebug(message) {
+        if (debug) {
+            console.log(message);
+        }
+    }
+
     /**
      * Play / Pause currently loaded song
      */
     $(document).on("click", "#play-pause-button", function(e) {
 
-        if (debug) {
-            console.log('clicked on Play / Pause');
-        }
+        logDebug('clicked on Play / Pause');
         playPause();
     });
 
@@ -23,9 +27,7 @@ $(function() {
      */
     $(document).on("click", "#songs tbody tr, #playlist tbody tr", function(e) {
 
-        if (debug) {
-            console.log('clicked on a song');
-        }
+        logDebug('clicked on a song');
 
         $("tbody .playing").removeClass('playing');
         loadSong($(this));
@@ -108,9 +110,7 @@ $(function() {
      */
     $(document).on("click", ".icon-to-end", function(e) {
 
-        if (debug) {
-            console.log('clicked on next song');
-        }
+        logDebug('clicked on next song');
         playNext();
     });
 
@@ -120,9 +120,7 @@ $(function() {
      */
     $(document).on("click", ".icon-to-start", function(e) {
 
-        if (debug) {
-            console.log('clicked on previous song');
-        }
+        logDebug('clicked on previous song');
         playNext('backward');
     });
 
@@ -132,9 +130,7 @@ $(function() {
      */
     $(document).on("click", ".progressbar", function(e) {
 
-        if (debug) {
-            console.log('clicked on progress bar');
-        }
+        logDebug('clicked on progress bar');
 
         const player = document.getElementById("player");
         if (!Number.isFinite(player.duration) || player.duration <= 0) {
@@ -149,9 +145,7 @@ $(function() {
 
         $(".progress-indicator").width(percent + "%");
 
-        if (debug) {
-            console.log("jumpTime : " + toDuration(jumpTime));
-        }
+        logDebug("jumpTime : " + toDuration(jumpTime));
     });
 
 
@@ -185,11 +179,15 @@ $(function() {
      */
     $('#player').on('ended', function() {
 
-        if (debug) {
-            console.log('song ended');
-            console.log("running playNext");
-        }
+        logDebug('song ended');
+        logDebug("running playNext");
         playNext();
+    });
+
+    $("#player").on("error stalled abort", function() {
+        playerStatus = "paused";
+        $("#play-pause-button").removeClass('icon-pause').addClass('icon-play');
+        logDebug('player error/stalled');
     });
 
 
@@ -228,9 +226,7 @@ $(function() {
 
         updatePlaylistInfo($copy);
 
-        if (debug) {
-            console.log('clicked on add to playlist');
-        }
+        logDebug('clicked on add to playlist');
 
         setTimeout(function() {
             $button.removeData('adding');
@@ -246,9 +242,7 @@ $(function() {
         updatePlaylistInfo($(this).parent(), 'remove');
         $(this).parent().remove();
 
-        if (debug) {
-            console.log('remove song from playlist');
-        }
+        logDebug('remove song from playlist');
     });
 
 
@@ -258,33 +252,25 @@ $(function() {
      */
     function playNext(direction) {
 
-        if (debug) {
-            console.log('- in playNext');
-        }
+        logDebug('- in playNext');
 
         if ($("tbody .playing").length) {
 
             const current = $("tbody .playing");
 
-            if (debug) {
-                console.log('current : ' + current);
-            }
+            logDebug('current : ' + current);
 
             let next = null;
 
             if (!direction) {
                 next = current.next('tr');
 
-                if (debug) {
-                    console.log('get next song');
-                }
+                logDebug('get next song');
             }
             else {
                 next = current.prev('tr');
 
-                if (debug) {
-                    console.log('get prev song');
-                }
+                logDebug('get prev song');
             }
 
             if (next.length) {
@@ -293,26 +279,20 @@ $(function() {
                 loadSong(next);
             }
             else {
-                if (debug) {
-                    console.log('NO next song');
-                    console.log('playerStatus : ' + playerStatus);
-                }
+                logDebug('NO next song');
+                logDebug('playerStatus : ' + playerStatus);
 
                 $("#play-pause-button").removeClass('icon-pause').addClass('icon-play');
                 playerStatus = "paused";
             }
         }
         else {
-            if (debug) {
-                console.log('NO next song');
-            }
+            logDebug('NO next song');
 
             $("#play-pause-button").removeClass('icon-pause').addClass('icon-play');
             playerStatus = "paused";
 
-            if (debug) {
-                console.log('playerStatus : ' + playerStatus);
-            }
+            logDebug('playerStatus : ' + playerStatus);
         }
     }
 
@@ -326,26 +306,35 @@ $(function() {
         const $this = $("#play-pause-button");
 
         if (!$(src).attr('src')) {
-            if (debug) {
-                console.log("No source");
-            }
+            logDebug("No source");
             return;
         }
 
         if (playerStatus === "paused") {
-            player.play();
-            playerStatus = "playing";
-            $this.removeClass('icon-play').addClass('icon-pause');
+            const playPromise = player.play();
+            if (playPromise && typeof playPromise.catch === "function") {
+                playPromise
+                    .then(function() {
+                        playerStatus = "playing";
+                        $this.removeClass('icon-play').addClass('icon-pause');
+                    })
+                    .catch(function() {
+                        playerStatus = "paused";
+                        $this.removeClass('icon-pause').addClass('icon-play');
+                        logDebug('player play() failed');
+                    });
+            } else {
+                playerStatus = "playing";
+                $this.removeClass('icon-play').addClass('icon-pause');
+            }
         } else {
             player.pause();
             playerStatus = "paused";
             $this.removeClass('icon-pause').addClass('icon-play');
         }
 
-        if (debug) {
-            console.log('in playPause');
-            console.log("- playerStatus = " + playerStatus);
-        }
+        logDebug('in playPause');
+        logDebug("- playerStatus = " + playerStatus);
     }
 
     /**
@@ -370,15 +359,24 @@ $(function() {
         $("#song-artist").text(' by ' + artist);
         $("#duration").text(duration);
 
-        player.play();
-
-        if ($("#play-pause-button").attr("class") === 'icon-play') {
-            $("#play-pause-button").attr("class", "icon-pause");
+        const playPromise = player.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+            playPromise
+                .then(function() {
+                    $("#play-pause-button").removeClass("icon-play").addClass("icon-pause");
+                    playerStatus = "playing";
+                })
+                .catch(function() {
+                    $("#play-pause-button").removeClass("icon-pause").addClass("icon-play");
+                    playerStatus = "paused";
+                    logDebug('loadSong play() failed');
+                });
+        } else {
+            $("#play-pause-button").removeClass("icon-play").addClass("icon-pause");
+            playerStatus = "playing";
         }
 
-        if (debug) {
-            console.log('in loadSong');
-        }
+        logDebug('in loadSong');
     }
 
     /**
@@ -462,9 +460,7 @@ $(function() {
         }
         document.getElementById("playlist-infos").style.display = display;
 
-        if (debug) {
-            console.log('in updatePlaylistInfo');
-        }
+        logDebug('in updatePlaylistInfo');
     }
 
     /**
