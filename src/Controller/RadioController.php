@@ -32,8 +32,9 @@ class RadioController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($radio);
             $entityManager->flush();
+            $this->addFlash('success', 'Radio added successfully.');
 
-            return $this->redirectToRoute('radio_index');
+            return $this->redirectToRoute('radio_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('radio/new.html.twig', [
@@ -42,7 +43,7 @@ class RadioController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}', name: 'radio_show', methods: ['GET'])]
+    #[Route(path: '/{id}', name: 'radio_show', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function show(Radio $radio): Response
     {
         return $this->render('radio/show.html.twig', [
@@ -50,7 +51,7 @@ class RadioController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}/edit', name: 'radio_edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/{id}/edit', name: 'radio_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Radio $radio, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(RadioType::class, $radio);
@@ -58,8 +59,9 @@ class RadioController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $this->addFlash('success', 'Radio updated successfully.');
 
-            return $this->redirectToRoute('radio_index');
+            return $this->redirectToRoute('radio_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('radio/edit.html.twig', [
@@ -68,14 +70,15 @@ class RadioController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/{id}', name: 'radio_delete', methods: ['DELETE'])]
+    #[Route(path: '/{id}', name: 'radio_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function delete(Request $request, Radio $radio, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$radio->getId(), $request->request->get('_token'))) {
             $entityManager->remove($radio);
             $entityManager->flush();
+            $this->addFlash('success', 'Radio deleted successfully.');
         }
 
-        return $this->redirectToRoute('radio_index');
+        return $this->redirectToRoute('radio_index', [], Response::HTTP_SEE_OTHER);
     }
 }
