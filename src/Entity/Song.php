@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SongRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SongRepository::class)]
 class Song
@@ -14,24 +15,35 @@ class Song
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 1024)]
     #[ORM\Column(length: 1024)]
     private ?string $path = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 1024)]
     #[ORM\Column(length: 1024)]
     private ?string $webPath = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 512)]
     #[ORM\Column(length: 512)]
     private ?string $title = null;
 
+    #[Assert\Positive]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $trackNumber = null;
 
+    #[Assert\Range(min: 1900, max: 2100)]
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
     private ?int $year = null;
 
+    #[Assert\Length(max: 64)]
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $genre = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/^\d{1,2}:\d{2}(:\d{2})?$/')]
     #[ORM\Column(length: 8)]
     private ?string $duration = null;
 
@@ -55,7 +67,7 @@ class Song
 
     public function setPath(string $path): self
     {
-        $this->path = $path;
+        $this->path = trim($path);
 
         return $this;
     }
@@ -67,7 +79,7 @@ class Song
 
     public function setWebPath(string $webPath): self
     {
-        $this->webPath = $webPath;
+        $this->webPath = trim($webPath);
 
         return $this;
     }
@@ -79,7 +91,7 @@ class Song
 
     public function setTitle(string $title): self
     {
-        $this->title = $title;
+        $this->title = trim($title);
 
         return $this;
     }
@@ -115,7 +127,7 @@ class Song
 
     public function setGenre(?string $genre): self
     {
-        $this->genre = $genre;
+        $this->genre = $genre === null ? null : trim($genre);
 
         return $this;
     }
@@ -125,9 +137,9 @@ class Song
         return $this->duration;
     }
 
-    public function setDuration(int $duration): self
+    public function setDuration(string $duration): self
     {
-        $this->duration = $duration;
+        $this->duration = trim($duration);
 
         return $this;
     }
@@ -137,7 +149,7 @@ class Song
         return $this->album;
     }
 
-    public function setAlbum(?Album $album): self
+    public function setAlbum(Album $album): self
     {
         $this->album = $album;
 
@@ -149,7 +161,7 @@ class Song
         return $this->artist;
     }
 
-    public function setArtist(?Artist $artist): self
+    public function setArtist(Artist $artist): self
     {
         $this->artist = $artist;
 
