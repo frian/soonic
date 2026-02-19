@@ -7,7 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Table(
+    name: 'artist',
+    uniqueConstraints: [
+        new ORM\UniqueConstraint(name: 'UNIQ_ARTIST_SLUG', columns: ['artist_slug']),
+    ]
+)]
 #[ORM\Entity(repositoryClass: ArtistRepository::class)]
 class Artist
 {
@@ -16,24 +23,29 @@ class Artist
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $artistSlug = null;
 
+    #[Assert\PositiveOrZero]
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $albumCount = null;
 
     #[ORM\Column(length: 1024, nullable: true)]
-    private ?string $coveArtPath = null;
+    private ?string $coverArtPath = null;
 
     #[ORM\ManyToMany(targetEntity: Album::class, inversedBy: 'artists')]
     private Collection $albums;
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return $this->name ?? '';
     }
 
     public function __construct()
@@ -53,7 +65,7 @@ class Artist
 
     public function setName(string $name): self
     {
-        $this->name = $name;
+        $this->name = trim($name);
 
         return $this;
     }
@@ -65,7 +77,7 @@ class Artist
 
     public function setArtistSlug(string $artistSlug): self
     {
-        $this->artistSlug = $artistSlug;
+        $this->artistSlug = trim($artistSlug);
 
         return $this;
     }
@@ -82,14 +94,14 @@ class Artist
         return $this;
     }
 
-    public function getCoveArtPath(): ?string
+    public function getCoverArtPath(): ?string
     {
-        return $this->coveArtPath;
+        return $this->coverArtPath;
     }
 
-    public function setCoveArtPath(?string $coveArtPath): self
+    public function setCoverArtPath(?string $coverArtPath): self
     {
-        $this->coveArtPath = $coveArtPath;
+        $this->coverArtPath = $coverArtPath;
 
         return $this;
     }
