@@ -15,9 +15,6 @@
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
 
-        <link href="/css/layout.css" media="screen, projection" rel="stylesheet" type="text/css" />
-        <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
-        <link href="/css/fontello-embedded.css" media="screen, projection" rel="stylesheet" type="text/css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Muli:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -26,12 +23,22 @@
 
         {% set theme = theme_helper.get() %}
 
-        {% if file_exists('css/themes/' ~ theme ~ '/layout.css') %}
-            <link id="layout-theme-css" href="/css/themes/{{ theme }}/layout.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        {% set layout_css = 'css/layout.css' %}
+        {% set screen_css = 'css/screen.css' %}
+        {% set fontello_css = 'css/fontello-embedded.css' %}
+        {% set theme_layout_css = 'css/themes/' ~ theme ~ '/layout.css' %}
+        {% set theme_screen_css = 'css/themes/' ~ theme ~ '/screen.css' %}
+
+        <link href="/{{ layout_css }}?v={{ file_mtime(layout_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="/{{ screen_css }}?v={{ file_mtime(screen_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
+        <link href="/{{ fontello_css }}?v={{ file_mtime(fontello_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
+
+        {% if file_exists(theme_layout_css) %}
+            <link id="layout-theme-css" href="/{{ theme_layout_css }}?v={{ file_mtime(theme_layout_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
         {% endif %}
 
-        {% if file_exists('css/themes/' ~ theme ~ '/screen.css') %}
-            <link id="screen-theme-css" href="/css/themes/{{ theme }}/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+        {% if file_exists(theme_screen_css) %}
+            <link id="screen-theme-css" href="/{{ theme_screen_css }}?v={{ file_mtime(theme_screen_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
         {% endif %}
 
         {% block stylesheets %}{% endblock %}
@@ -48,12 +55,12 @@
 
         {% block body %}{% endblock %}
 
-        <script src="/js/jquery-4.0.0.min.js"></script>
-        <script src="/js/lozad.min.js"></script>
-        <script src="/js/main.js"></script>
-        <script src="/js/album.js"></script>
-        <script src="/js/player.js"></script>
-        <script src="/js/radio.js"></script>
+        <script src="/js/jquery-4.0.0.min.js?v={{ file_mtime('js/jquery-4.0.0.min.js') }}"></script>
+        <script src="/js/lozad.min.js?v={{ file_mtime('js/lozad.min.js') }}"></script>
+        <script src="/js/main.js?v={{ file_mtime('js/main.js') }}"></script>
+        <script src="/js/album.js?v={{ file_mtime('js/album.js') }}"></script>
+        <script src="/js/player.js?v={{ file_mtime('js/player.js') }}"></script>
+        <script src="/js/radio.js?v={{ file_mtime('js/radio.js') }}"></script>
 
         {% block javascripts %}
         {% endblock %}

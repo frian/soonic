@@ -9,6 +9,17 @@ $(function() {
 
     _init();
 
+    // Recompute after full load/fonts: prevents occasional wrong topbar layout on cached reloads.
+    $(window).on('load', function() {
+        setSongInfoSize();
+    });
+
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function() {
+            setSongInfoSize();
+        });
+    }
+
     // Accessibility: make custom role=button controls keyboard-activable.
     $(document).on("keydown", '[role="button"]', function(e) {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -500,12 +511,13 @@ $(function() {
             success: function(data) {
 
                 let href = "";
+                const cacheBuster = Date.now();
                 if ($('#screen-theme-css')) {
-                    href = "/css/themes/" + data.config.theme + "/screen.css";
+                    href = "/css/themes/" + data.config.theme + "/screen.css?v=" + cacheBuster;
                     $('#screen-theme-css').attr('href', href );
                 }
                 if ($('#layout-theme-css')) {
-                    href = "/css/themes/" + data.config.theme + "/layout.css";
+                    href = "/css/themes/" + data.config.theme + "/layout.css?v=" + cacheBuster;
                     $('#layout-theme-css').attr('href', href );
                 }
 
@@ -745,14 +757,24 @@ $(function() {
     }
 
     function setSongInfoSize() {
-        let width;
-        if (screenWidth < 1024) {
-            width = screenWidth - ($('.logo').outerWidth() + $('#player-container').outerWidth() + $('.hamburger').outerWidth() + 50);
+        const $songInfo = $('.song-info');
+        if (!$songInfo.length) {
+            return;
         }
-        else {
-            width = screenWidth - ($('.logo').outerWidth() + $('#player-container').outerWidth() + $('.topbar-nav').outerWidth() + 50);
-        }
-        $('.song-info').width(width);
+
+        const logoWidth = getElementOuterWidth($('.logo').first());
+        const playerWidth = getElementOuterWidth($('#player-container'));
+        const sideWidth = screenWidth < 1024
+            ? getElementOuterWidth($('.hamburger').first())
+            : getElementOuterWidth($('.topbar-nav').first());
+
+        const rawWidth = screenWidth - (logoWidth + playerWidth + sideWidth + 50);
+        const width = Math.max(140, Math.floor(rawWidth));
+
+        $songInfo.css({
+            width: 'auto',
+            maxWidth: width + 'px'
+        });
     }
 
     function setFilterInputSize() {
