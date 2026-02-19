@@ -5,6 +5,7 @@ $(function() {
     let screenWidth = $(window).width();
     let mobileMenuState = 'closed';
     let openView = null;
+    let scanLoop = null;
 
     _init();
 
@@ -437,27 +438,35 @@ $(function() {
     $(document).on("click", "#scan-button", function(e) {
 
         e.preventDefault();
+        const $button = $(this);
+        const scanUrl = $button.attr('href') || '/scan/';
+        const initialLabel = $button.text();
+        $button.data('initial-label', initialLabel);
 
-        if ($("#scan-button").hasClass('running')) {
+        if ($button.hasClass('running')) {
             return;
         }
 
-        $("#scan-button").toggleClass('running');
+        $button.toggleClass('running');
 
         $.get({
-            url: '/scan',
+            url: scanUrl,
             cache: true,
             success: function(data) {
                 // $("body").append(data);
+            },
+            error: function() {
+                $button.toggleClass('running');
+                $button.text($button.data('initial-label') || initialLabel);
             }
         });
 
         $("#num-files").text("0");
         $("#num-artists").text("0");
         $("#num-albums").text("0");
-        $("#scan-button").text('scanning');
+        $button.text('scanning');
 
-        $loop = setInterval(scanTimer, 1000);
+        scanLoop = setInterval(scanTimer, 1000);
 
         if (debug === 1) {
             console.log('clicked on scan');
@@ -676,14 +685,20 @@ $(function() {
      * check if we are scanning
      */
     if ($(location).attr('pathname') === '/settings/') {
-        let loop;
         $.get({
             url: '/scan/progress',
             cache: true,
             success: function(data) {
                 if (data.status == 'running') {
-                    $("#scan-button").toggleClass('running');
-                    loop = setInterval(scanTimer, 1000);
+                    const $scanButton = $("#scan-button");
+                    if (!$scanButton.hasClass('running')) {
+                        $scanButton.toggleClass('running');
+                    }
+                    $scanButton.data('initial-label', $scanButton.data('initial-label') || $scanButton.text());
+                    $scanButton.text('scanning');
+                    if (!scanLoop) {
+                        scanLoop = setInterval(scanTimer, 1000);
+                    }
                 }
             }
         });
@@ -703,8 +718,15 @@ $(function() {
             cache: true,
             success: function(data) {
                 if (data.status == 'stopped') {
-                    clearInterval($loop);
-                    $("#scan-button").toggleClass('running');
+                    if (scanLoop) {
+                        clearInterval(scanLoop);
+                        scanLoop = null;
+                    }
+                    const $scanButton = $("#scan-button");
+                    if ($scanButton.hasClass('running')) {
+                        $scanButton.toggleClass('running');
+                    }
+                    $scanButton.text($scanButton.data('initial-label') || 'scan');
                 }
                 $("#num-files").text(data.data.song);
                 $("#num-artists").text(data.data.artist);
