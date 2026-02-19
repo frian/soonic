@@ -30,7 +30,7 @@ class ScanController extends AbstractController
         $projectDir = $this->projectDir;
         $lockFile = $projectDir.'/public/soonic.lock';
 
-        $command = $projectDir.'/bin/console soonic:scan --guess';
+        $command = $projectDir.'/bin/console soonic:scan';
 
         if (!file_exists($lockFile)) {
             exec("/usr/bin/php $command > /dev/null 2>&1 &");
