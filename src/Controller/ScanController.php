@@ -39,6 +39,11 @@ class ScanController extends AbstractController
             return new JsonResponse(['status' => 'error', 'message' => 'invalid_request'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
+        $csrfToken = (string) ($request->headers->get('X-CSRF-Token') ?? $request->request->get('_token') ?? '');
+        if (!$this->isCsrfTokenValid('scan_action', $csrfToken)) {
+            return new JsonResponse(['status' => 'error', 'message' => 'invalid_csrf_token'], JsonResponse::HTTP_FORBIDDEN);
+        }
+
         if ($this->isScanRunning()) {
             return new JsonResponse(['status' => 'already_running']);
         }

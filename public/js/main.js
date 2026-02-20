@@ -497,6 +497,7 @@ $(function() {
         e.preventDefault();
         const $button = $(this);
         const scanUrl = $button.attr('href') || '/scan/';
+        const csrfToken = $button.data('csrf-token') || '';
         const initialLabel = $button.text();
         $button.data('initial-label', initialLabel);
 
@@ -511,6 +512,7 @@ $(function() {
             url: scanUrl,
             cache: true,
             dataType: 'json',
+            headers: csrfToken ? { 'X-CSRF-Token': csrfToken } : {},
             success: function(data) {
                 if (data && data.status === 'already_running') {
                     $button.addClass('running');

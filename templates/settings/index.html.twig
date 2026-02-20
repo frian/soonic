@@ -18,7 +18,12 @@
             </tbody>
         </table>
         <div class="button-wrapper">
-            <a id="scan-button" class="button" href="{{ path('scan') }}">{{ 'scan'|trans }}</a>
+            <a
+                id="scan-button"
+                class="button"
+                href="{{ path('scan') }}"
+                data-csrf-token="{{ csrf_token('scan_action') }}"
+            >{{ 'scan'|trans }}</a>
         </div>
     </section>
 

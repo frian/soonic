@@ -26,7 +26,14 @@ class ScanControllerTest extends NoMusicWebTestCase
     public function testScanRouteAcceptsPostAndReturnsJsonStatus(): void
     {
         $client = static::createClient();
-        $client->request('POST', '/scan/', [], [], ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest']);
+        $crawler = $client->request('GET', '/settings/');
+        $csrfToken = (string) $crawler->filter('#scan-button')->attr('data-csrf-token');
+        $this->assertNotSame('', $csrfToken);
+
+        $client->request('POST', '/scan/', [], [], [
+            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest',
+            'HTTP_X_CSRF_TOKEN' => $csrfToken,
+        ]);
 
         $this->assertResponseFormatSame('json');
 
