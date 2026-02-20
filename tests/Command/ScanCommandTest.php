@@ -18,6 +18,7 @@ class ScanCommandTest extends KernelTestCase
     private string $lockFilePath;
     private string $testSymlinkPath;
     private string $advancedTestFilesPath;
+    private string $musicBackupPath;
 
     protected function setUp(): void
     {
@@ -27,9 +28,10 @@ class ScanCommandTest extends KernelTestCase
         $this->projectDir = Path::normalize(dirname(__DIR__, 2));
         $this->musicPath = Path::normalize($this->projectDir.'/public/music');
         $this->renamedMusicPath = Path::normalize($this->projectDir.'/public/music_renamed_for_tests');
-        $this->lockFilePath = Path::normalize($this->projectDir.'/public/soonic.lock');
+        $this->lockFilePath = Path::normalize($this->projectDir.'/var/lock/soonic.lock');
         $this->testSymlinkPath = Path::normalize($this->musicPath.'/test');
         $this->advancedTestFilesPath = Path::normalize($this->projectDir.'/tests/Command/testfiles');
+        $this->musicBackupPath = Path::normalize($this->projectDir.'/public/music_backup_for_tests');
     }
 
     protected function tearDown(): void
@@ -44,6 +46,13 @@ class ScanCommandTest extends KernelTestCase
 
         if ($this->filesystem->exists($this->renamedMusicPath) && !$this->filesystem->exists($this->musicPath)) {
             $this->filesystem->rename($this->renamedMusicPath, $this->musicPath);
+        }
+
+        if ($this->filesystem->exists($this->musicBackupPath)) {
+            if ($this->filesystem->exists($this->musicPath)) {
+                $this->filesystem->remove($this->musicPath);
+            }
+            $this->filesystem->rename($this->musicBackupPath, $this->musicPath);
         }
 
         parent::tearDown();
@@ -69,6 +78,7 @@ class ScanCommandTest extends KernelTestCase
     public function testCommandWarnsWhenAlreadyRunning(): void
     {
         $tester = $this->createCommandTester();
+        $this->filesystem->mkdir(dirname($this->lockFilePath));
         $this->filesystem->touch($this->lockFilePath);
 
         $output = $this->executeAndGetOutput($tester);
@@ -77,6 +87,7 @@ class ScanCommandTest extends KernelTestCase
 
     public function testCommandWorksWithoutAudioFilesForAllVerbosityLevels(): void
     {
+        $this->prepareEmptyMusicDirectory();
         $tester = $this->createCommandTester();
 
         $output = $this->executeAndGetOutput($tester);
@@ -102,6 +113,19 @@ class ScanCommandTest extends KernelTestCase
         $this->assertStringContainsString('Summary', $output);
         $this->assertStringContainsString('analysed 0 files', $output);
         $this->assertStringContainsString('no audio file found', $output);
+    }
+
+    private function prepareEmptyMusicDirectory(): void
+    {
+        if ($this->filesystem->exists($this->musicBackupPath)) {
+            self::fail('Temporary music backup path already exists: '.$this->musicBackupPath);
+        }
+
+        if ($this->filesystem->exists($this->musicPath)) {
+            $this->filesystem->rename($this->musicPath, $this->musicBackupPath);
+        }
+
+        $this->filesystem->mkdir($this->musicPath);
     }
 
     public function testAdvancedCommandWithBugFiles(): void
@@ -209,4 +233,5 @@ class ScanCommandTest extends KernelTestCase
 
         return $tester->getDisplay();
     }
+
 }
