@@ -4,11 +4,9 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
-RUN_TESTS=1
 RUN_TESTSUITES=1
 
 if [[ "${1:-}" == "--fast" ]]; then
-  RUN_TESTS=0
   RUN_TESTSUITES=0
 fi
 
@@ -47,15 +45,11 @@ print_step "Doctrine checks"
 php bin/console doctrine:schema:validate
 php bin/console doctrine:migrations:status
 
-if [[ "$RUN_TESTS" -eq 1 ]]; then
-  print_step "PHPUnit (full)"
-  php bin/phpunit
-fi
-
 if [[ "$RUN_TESTSUITES" -eq 1 ]]; then
   print_step "PHPUnit suites"
   php bin/phpunit --testsuite no-music
   php bin/phpunit --testsuite with-music
+  php bin/phpunit --testsuite scan
 fi
 
 print_step "All checks passed"
