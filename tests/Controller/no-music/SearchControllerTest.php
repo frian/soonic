@@ -42,7 +42,7 @@ class SearchControllerTest extends NoMusicWebTestCase
 
         $crawler = $client->submit($form);
 
-        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(422);
         $this->assertSelectorExists('#search-form');
         $this->assertSelectorNotExists('i.icon-plus');
     }
@@ -58,7 +58,7 @@ class SearchControllerTest extends NoMusicWebTestCase
 
         $crawler = $client->submit($form);
 
-        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(422);
         $this->assertSelectorExists('#search-form');
         $this->assertSelectorNotExists('i.icon-plus');
     }

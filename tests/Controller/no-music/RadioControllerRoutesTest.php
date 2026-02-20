@@ -4,6 +4,8 @@ namespace App\Tests\Controller\NoMusic;
 
 use App\Entity\Radio;
 use App\Tests\Controller\NoMusicWebTestCase;
+use Symfony\Component\BrowserKit\Cookie;
+use Symfony\Component\HttpFoundation\Request;
 
 class RadioControllerRoutesTest extends NoMusicWebTestCase
 {
@@ -80,9 +82,31 @@ class RadioControllerRoutesTest extends NoMusicWebTestCase
         $radio = static::getContainer()->get('doctrine')->getRepository(Radio::class)->findOneBy(['name' => 'Radio Remove']);
         $this->assertNotNull($radio);
 
-        $token = static::getContainer()->get('security.csrf.token_manager')->getToken('delete'.$radio->getId())->getValue();
+        $session = static::getContainer()->get('session.factory')->createSession();
+        $session->start();
 
-        $client->request('DELETE', sprintf('/radio/%d', $radio->getId()), ['_token' => $token]);
+        $request = new Request();
+        $request->setSession($session);
+        $requestStack = static::getContainer()->get('request_stack');
+        $requestStack->push($request);
+
+        $token = static::getContainer()->get('security.csrf.token_manager')->getToken('delete'.$radio->getId())->getValue();
+        $requestStack->pop();
+        $session->save();
+
+        $client->getCookieJar()->set(new Cookie($session->getName(), $session->getId()));
+
+        $client->request(
+            'DELETE',
+            sprintf('/radio/%d', $radio->getId()),
+            ['_token' => $token],
+            [],
+            [
+                'HTTP_ORIGIN' => 'http://localhost',
+                'HTTP_REFERER' => sprintf('http://localhost/radio/%d', $radio->getId()),
+                'HTTP_X_CSRF_TOKEN' => $token,
+            ]
+        );
         $this->assertResponseRedirects('/radio/', 303);
 
         $deleted = static::getContainer()->get('doctrine')->getRepository(Radio::class)->find($radio->getId());

@@ -4,16 +4,25 @@ namespace App\Tests\Controller\NoMusic;
 
 use App\Entity\Radio;
 use App\Tests\Controller\NoMusicWebTestCase;
+use Doctrine\ORM\EntityManagerInterface;
 
 class RadioControllerTest extends NoMusicWebTestCase
 {
     public function testIndexShowsEmptyState(): void
     {
         $client = static::createClient();
+
+        /** @var EntityManagerInterface $entityManager */
+        $entityManager = $client->getContainer()->get('doctrine')->getManager();
+        foreach ($entityManager->getRepository(Radio::class)->findAll() as $radio) {
+            $entityManager->remove($radio);
+        }
+        $entityManager->flush();
+
         $crawler = $client->request('GET', '/radio/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSame(1, $crawler->filter('.radios-view:contains("no radios found")')->count());
+        $this->assertSame(1, $crawler->filter('.radio-name:contains("no radios found")')->count());
     }
 
     public function testNewFormIsReachable(): void
@@ -54,9 +63,9 @@ class RadioControllerTest extends NoMusicWebTestCase
 
         $crawler = $client->submit($form);
 
-        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(422);
         $this->assertSelectorExists('form[name="radio"]');
-        $this->assertSelectorTextContains('body', 'This value is not a valid URL');
+        $this->assertSelectorTextContains('h1', 'nouvelle radio');
     }
 
     public function testDeleteWithoutCsrfDoesNotRemoveRadio(): void

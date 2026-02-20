@@ -34,7 +34,7 @@ class Config
         return $this->language;
     }
 
-    public function setLanguage(Language $language): self
+    public function setLanguage(?Language $language): self
     {
         $this->language = $language;
 
@@ -46,7 +46,7 @@ class Config
         return $this->theme;
     }
 
-    public function setTheme(Theme $theme): self
+    public function setTheme(?Theme $theme): self
     {
         $this->theme = $theme;
 
