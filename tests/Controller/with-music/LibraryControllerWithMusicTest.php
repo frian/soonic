@@ -62,6 +62,10 @@ class LibraryControllerWithMusicTest extends WithMusicWebTestCase
         $crawler = $client->request('GET', '/songs/random');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSame(20, $crawler->filterXPath('//i[@class="icon-plus"]')->count());
+        $rows = $crawler->filter('#songs tbody tr[data-path]');
+        $this->assertSame(20, $rows->count());
+
+        $paths = $rows->each(static fn ($node): string => (string) $node->attr('data-path'));
+        $this->assertCount(20, array_unique($paths));
     }
 }
