@@ -191,7 +191,7 @@ class AddRadiosCommand extends Command
 
         $file = new \SplFileObject($path, 'r');
         $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY | \SplFileObject::DROP_NEW_LINE);
-        $file->setCsvControl($delimiter);
+        $file->setCsvControl($delimiter, '"', '\\');
 
         $headerMap = null;
         foreach ($file as $row) {

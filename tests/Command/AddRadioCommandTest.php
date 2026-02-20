@@ -6,7 +6,6 @@ use App\Command\AddRadioCommand;
 use App\Entity\Radio;
 use App\Repository\RadioRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Validator\Validation;
@@ -14,14 +13,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class AddRadioCommandTest extends \PHPUnit\Framework\TestCase
 {
-    private EntityManagerInterface&MockObject $entityManager;
-    private RadioRepository&MockObject $radioRepository;
+    private EntityManagerInterface $entityManager;
+    private RadioRepository $radioRepository;
     private ValidatorInterface $validator;
 
     protected function setUp(): void
     {
-        $this->entityManager = $this->createMock(EntityManagerInterface::class);
-        $this->radioRepository = $this->createMock(RadioRepository::class);
+        $this->entityManager = $this->createStub(EntityManagerInterface::class);
+        $this->radioRepository = $this->createStub(RadioRepository::class);
         $this->validator = Validation::createValidatorBuilder()->enableAttributeMapping()->getValidator();
     }
 
@@ -38,13 +37,14 @@ class AddRadioCommandTest extends \PHPUnit\Framework\TestCase
 
     public function testFailsWhenNameAlreadyExists(): void
     {
-        $this->radioRepository
+        $radioRepository = $this->createMock(RadioRepository::class);
+        $radioRepository
             ->expects($this->once())
             ->method('findOneBy')
             ->with(['name' => 'Radio One'])
             ->willReturn(new Radio());
 
-        $command = new AddRadioCommand($this->entityManager, $this->radioRepository, $this->validator);
+        $command = new AddRadioCommand($this->entityManager, $radioRepository, $this->validator);
         $tester = new CommandTester($command);
 
         $status = $tester->execute([
@@ -58,21 +58,23 @@ class AddRadioCommandTest extends \PHPUnit\Framework\TestCase
 
     public function testAddsRadioSuccessfully(): void
     {
-        $this->radioRepository
+        $radioRepository = $this->createMock(RadioRepository::class);
+        $radioRepository
             ->expects($this->exactly(2))
             ->method('findOneBy')
             ->willReturn(null);
 
-        $this->entityManager
+        $entityManager = $this->createMock(EntityManagerInterface::class);
+        $entityManager
             ->expects($this->once())
             ->method('persist')
             ->with($this->isInstanceOf(Radio::class));
 
-        $this->entityManager
+        $entityManager
             ->expects($this->once())
             ->method('flush');
 
-        $command = new AddRadioCommand($this->entityManager, $this->radioRepository, $this->validator);
+        $command = new AddRadioCommand($entityManager, $radioRepository, $this->validator);
         $tester = new CommandTester($command);
 
         $status = $tester->execute([

@@ -27,7 +27,7 @@ class ResetCommandTest extends \PHPUnit\Framework\TestCase
 
     public function testFailsInProdEnvironment(): void
     {
-        $kernel = $this->createMock(KernelInterface::class);
+        $kernel = $this->createStub(KernelInterface::class);
         $kernel->method('getEnvironment')->willReturn('prod');
 
         $_SERVER['DATABASE_URL'] = 'mysql://user:pass@127.0.0.1:3306/soonic';
@@ -43,7 +43,7 @@ class ResetCommandTest extends \PHPUnit\Framework\TestCase
 
     public function testFailsWhenDatabaseDoesNotMatchEnvironment(): void
     {
-        $kernel = $this->createMock(KernelInterface::class);
+        $kernel = $this->createStub(KernelInterface::class);
         $kernel->method('getEnvironment')->willReturn('test');
 
         $_SERVER['DATABASE_URL'] = 'mysql://user:pass@127.0.0.1:3306/soonic';
