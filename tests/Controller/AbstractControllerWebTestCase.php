@@ -2,9 +2,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Album;
-use App\Entity\Artist;
-use App\Entity\Song;
+use App\Tests\Support\MusicDatasetSeeder;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -112,44 +110,6 @@ abstract class AbstractControllerWebTestCase extends WebTestCase
     private static function seedMusicDataset(): void
     {
         $entityManager = self::getContainer()->get('doctrine')->getManager();
-
-        $artist = (new Artist())
-            ->setName('DIRE STRAITS')
-            ->setArtistSlug('dire-straits')
-            ->setAlbumCount(1)
-            ->setCoverArtPath(null);
-
-        $album = (new Album())
-            ->setName('Dire Straits')
-            ->setAlbumSlug('dire-straits')
-            ->setSongCount(25)
-            ->setDuration('59:59')
-            ->setYear(1978)
-            ->setGenre('Rock')
-            ->setPath('/music/dire-straits')
-            ->setCoverArtPath(null);
-
-        $album->addArtist($artist);
-
-        $entityManager->persist($artist);
-        $entityManager->persist($album);
-
-        for ($i = 1; $i <= 25; ++$i) {
-            $title = $i === 1 ? 'SULTANS OF SWING' : sprintf('DIRE STRAITS TRACK %02d', $i);
-            $song = (new Song())
-                ->setPath(sprintf('/tmp/dire-straits/%02d.mp3', $i))
-                ->setWebPath(sprintf('/music/dire-straits/%02d.mp3', $i))
-                ->setTitle($title)
-                ->setTrackNumber($i)
-                ->setYear(1978)
-                ->setGenre('Rock')
-                ->setDuration('03:30')
-                ->setArtist($artist)
-                ->setAlbum($album);
-
-            $entityManager->persist($song);
-        }
-
-        $entityManager->flush();
+        MusicDatasetSeeder::seed($entityManager);
     }
 }
