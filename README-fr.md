@@ -123,6 +123,7 @@ Notes importantes:
 
 - `with-music` prépare sa propre base de test et injecte un dataset musique de test
 - les tests utilisent `APP_ENV=test` et la base `soonic_test`
+- les suites controller reconstruisent la base de test avant seed (drop/create/schema/fixtures)
 
 ## Qualité / Lint utiles
 

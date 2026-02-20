@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 /**
  * Application settings page controller.
  */
-#[Route(path: 'settings')]
+#[Route(path: '/settings')]
 class SettingsController extends AbstractController
 {
     /**

@@ -11,7 +11,7 @@ use Symfony\Component\Process\Process;
 /**
  * Library scan orchestration controller.
  */
-#[Route(path: 'scan')]
+#[Route(path: '/scan')]
 class ScanController extends AbstractController
 {
     private const LOCK_FILE = '/var/lock/soonic.lock';

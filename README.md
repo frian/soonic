@@ -123,6 +123,7 @@ Important notes:
 
 - `with-music` prepares its own test DB and injects a dedicated music dataset
 - tests run with `APP_ENV=test` and target `soonic_test`
+- controller suites rebuild the test database before seeding (drop/create/schema/fixtures)
 
 ## Quality / Lint Commands
 
