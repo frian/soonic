@@ -26,7 +26,9 @@ class ConfigControllerTest extends NoMusicWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertResponseFormatSame('json');
-        $this->assertJsonContains(['status' => 'success']);
-        $this->assertJsonContains(['config' => ['theme' => 'default-dark', 'language' => 'fr']]);
+        $payload = json_decode((string) $client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $this->assertSame('success', $payload['status'] ?? null);
+        $this->assertSame('default-dark', $payload['config']['theme'] ?? null);
+        $this->assertSame('fr', $payload['config']['language'] ?? null);
     }
 }

@@ -13,7 +13,7 @@ class SearchControllerTest extends NoMusicWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('#search-form');
-        $this->assertSelectorExists('#form-keyword');
+        $this->assertSelectorExists('input[name="search[keyword]"]');
     }
 
     public function testSearchReturnsEmptyStateWhenNoSongMatches(): void
