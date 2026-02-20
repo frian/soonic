@@ -12,13 +12,17 @@ final class ScanDataWriter
         fputcsv($file, $fields, ';', '"', '\\');
     }
 
+    /**
+     * @param array<int, string> $slugs
+     * @param-out array<int, string> $slugs
+     */
     public function slugify(string $string, array &$slugs): string
     {
         $string = mb_strtolower($string);
-        $string = preg_replace('/\s+-\s+/', '-', $string);
-        $string = preg_replace('/&/', 'and', $string);
-        $string = preg_replace('|[\s+\/]|', '-', $string);
-        $string = preg_replace('/-+/', '-', $string);
+        $string = preg_replace('/\s+-\s+/', '-', $string) ?? $string;
+        $string = preg_replace('/&/', 'and', $string) ?? $string;
+        $string = preg_replace('|[\s+\/]|', '-', $string) ?? $string;
+        $string = preg_replace('/-+/', '-', $string) ?? $string;
 
         $slug = $string;
         $slugCount = 1;
