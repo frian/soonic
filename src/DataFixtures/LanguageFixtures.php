@@ -8,40 +8,36 @@ use Doctrine\Persistence\ObjectManager;
 
 class LanguageFixtures extends Fixture
 {
-
-    public const LANGUAGE_REFERENCE = 'language';
+    public const REFERENCE_EN = 'language_en';
+    public const REFERENCE_FR = 'language_fr';
+    public const REFERENCE_IT = 'language_it';
 
     public function load(ObjectManager $manager): void
     {
         $languages = [
-            0 => [
+            self::REFERENCE_EN => [
                 'name' => 'english',
                 'code' => 'en',
             ],
-            1 => [
+            self::REFERENCE_FR => [
                 'name' => 'français',
                 'code' => 'fr',
             ],
-            2 => [
+            self::REFERENCE_IT => [
                 'name' => 'italiano',
                 'code' => 'it',
             ],
         ];
 
-        /*
-    	 * Add languages
-    	 */
-        foreach ($languages as $index => $languageData) {
-            // create language
+        foreach ($languages as $reference => $languageData) {
             $language = new Language();
             $language->setName($languageData['name']);
             $language->setCode($languageData['code']);
 
-            // add reference for further fixtures
-            $this->addReference('language'.$index, $language);
-
+            $this->addReference($reference, $language);
             $manager->persist($language);
-            $manager->flush();
         }
+
+        $manager->flush();
     }
 }

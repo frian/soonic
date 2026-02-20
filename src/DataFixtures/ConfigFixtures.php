@@ -11,14 +11,15 @@ use Doctrine\Persistence\ObjectManager;
 
 class ConfigFixtures extends Fixture implements DependentFixtureInterface
 {
+    public const REFERENCE_CONFIG = 'config';
+
     public function load(ObjectManager $manager): void
     {
         $config = new Config();
-        $config->setLanguage($this->getReference('language1', Language::class));
-        $config->setTheme($this->getReference('theme0', Theme::class));
+        $config->setLanguage($this->getReference(LanguageFixtures::REFERENCE_FR, Language::class));
+        $config->setTheme($this->getReference(ThemeFixtures::REFERENCE_DEFAULT_DARK, Theme::class));
 
-        // add reference for further fixtures
-        $this->addReference('config', $config);
+        $this->addReference(self::REFERENCE_CONFIG, $config);
 
         $manager->persist($config);
         $manager->flush();

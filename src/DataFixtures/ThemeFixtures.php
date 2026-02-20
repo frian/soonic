@@ -8,30 +8,28 @@ use Doctrine\Persistence\ObjectManager;
 
 class ThemeFixtures extends Fixture
 {
+    public const REFERENCE_DEFAULT_DARK = 'theme_default_dark';
+    public const REFERENCE_DEFAULT_CLEAR = 'theme_default_clear';
+
     public function load(ObjectManager $manager): void
     {
         $themes = [
-            0 => [
+            self::REFERENCE_DEFAULT_DARK => [
                 'name' => 'default-dark',
             ],
-            1 => [
+            self::REFERENCE_DEFAULT_CLEAR => [
                 'name' => 'default-clear',
             ],
         ];
 
-        /*
-    	 * Add themes
-    	 */
-        foreach ($themes as $index => $themeData) {
-            // create theme
+        foreach ($themes as $reference => $themeData) {
             $theme = new Theme();
             $theme->setName($themeData['name']);
 
-            // add reference for further fixtures
-            $this->addReference('theme'.$index, $theme);
-
+            $this->addReference($reference, $theme);
             $manager->persist($theme);
-            $manager->flush();
         }
+
+        $manager->flush();
     }
 }
