@@ -31,4 +31,30 @@ class ConfigControllerTest extends NoMusicWebTestCase
         $this->assertSame('default-dark', $payload['config']['theme'] ?? null);
         $this->assertSame('fr', $payload['config']['language'] ?? null);
     }
+
+    public function testConfigEditReturnsUnprocessableEntityWhenFormIsInvalid(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/settings/');
+
+        $form = $crawler->filter('#settings-form')->form();
+        $form['config[language]'] = '';
+        $form['config[theme]'] = '';
+        $client->submit($form);
+
+        $this->assertResponseStatusCodeSame(422);
+        $this->assertResponseFormatSame('json');
+
+        $payload = json_decode((string) $client->getResponse()->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        $this->assertSame('error', $payload['status'] ?? null);
+        $this->assertSame('invalid_form', $payload['message'] ?? null);
+    }
+
+    public function testConfigEditReturnsNotFoundWhenConfigDoesNotExist(): void
+    {
+        $client = static::createClient();
+        $client->request('POST', '/config/999/edit');
+
+        $this->assertResponseStatusCodeSame(404);
+    }
 }
