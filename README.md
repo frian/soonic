@@ -111,6 +111,12 @@ Fast mode (without PHPUnit suites):
 bin/check --fast
 ```
 
+CI mode (no DB checks, no PHPUnit suites):
+
+```bash
+bin/check --ci
+```
+
 PHPUnit suites:
 
 ```bash
@@ -135,6 +141,11 @@ php bin/console lint:container
 php bin/console doctrine:schema:validate
 php bin/console doctrine:migrations:status
 ```
+
+## CI
+
+A GitHub Actions workflow is available in `.github/workflows/ci.yml`.
+It runs dependency installation and `bin/check --ci` on pushes and pull requests.
 
 ## Useful Project Structure
 

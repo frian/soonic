@@ -111,6 +111,12 @@ Mode rapide (sans tests PHPUnit):
 bin/check --fast
 ```
 
+Mode CI (sans checks DB, sans suites PHPUnit):
+
+```bash
+bin/check --ci
+```
+
 Suites PHPUnit:
 
 ```bash
@@ -135,6 +141,11 @@ php bin/console lint:container
 php bin/console doctrine:schema:validate
 php bin/console doctrine:migrations:status
 ```
+
+## CI
+
+Un workflow GitHub Actions est disponible dans `.github/workflows/ci.yml`.
+Il installe les dépendances puis exécute `bin/check --ci` sur push et pull request.
 
 ## Arborescence utile
 
