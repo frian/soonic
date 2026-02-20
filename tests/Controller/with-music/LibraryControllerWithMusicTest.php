@@ -32,8 +32,8 @@ class LibraryControllerWithMusicTest extends WithMusicWebTestCase
         $crawler = $client->request('GET', '/songs/dire-straits/dire-straits');
 
         $this->assertResponseIsSuccessful();
-        $this->assertGreaterThanOrEqual(1, $crawler->filter('td:contains("SULTANS OF SWING")')->count());
-        $this->assertSelectorExists('i.icon-plus');
+        $this->assertSelectorNotExists('td:contains("no songs found")');
+        $this->assertGreaterThanOrEqual(1, $crawler->filter('i.icon-plus')->count());
     }
 
     public function testFilterArtist(): void

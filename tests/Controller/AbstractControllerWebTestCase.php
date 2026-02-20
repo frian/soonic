@@ -54,7 +54,7 @@ abstract class AbstractControllerWebTestCase extends WebTestCase
         ]);
 
         self::runCommand($application, 'doctrine:database:create');
-        self::runCommand($application, 'doctrine:migrations:migrate', ['--no-interaction' => true]);
+        self::runCommand($application, 'doctrine:schema:create');
         self::runCommand($application, 'doctrine:fixtures:load', ['--no-interaction' => true]);
 
         if (static::seedMode() === 'with-music') {

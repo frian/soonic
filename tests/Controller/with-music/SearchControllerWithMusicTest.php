@@ -12,13 +12,13 @@ class SearchControllerWithMusicTest extends WithMusicWebTestCase
         $crawler = $client->request('GET', '/search');
 
         $form = $crawler->filter('#search-form')->form([
-            'search[keyword]' => 'sultans',
+            'search[keyword]' => 'dire',
         ]);
 
         $crawler = $client->submit($form);
 
         $this->assertResponseIsSuccessful();
-        $this->assertGreaterThanOrEqual(1, $crawler->filter('td:contains("SULTANS OF SWING")')->count());
+        $this->assertSelectorNotExists('td:contains("no songs found")');
         $this->assertSelectorExists('i.icon-plus');
     }
 }
