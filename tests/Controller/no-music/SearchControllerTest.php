@@ -1,0 +1,33 @@
+<?php
+
+namespace App\Tests\Controller\NoMusic;
+
+use App\Tests\Controller\NoMusicWebTestCase;
+
+class SearchControllerTest extends NoMusicWebTestCase
+{
+    public function testSearchFormIsReachable(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/search');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('#search-form');
+        $this->assertSelectorExists('#form-keyword');
+    }
+
+    public function testSearchReturnsEmptyStateWhenNoSongMatches(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/search');
+
+        $form = $crawler->filter('#search-form')->form([
+            'search[keyword]' => 'dire',
+        ]);
+
+        $crawler = $client->submit($form);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame(1, $crawler->filter('body:contains("no songs found")')->count());
+    }
+}

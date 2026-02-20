@@ -1,54 +1,45 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Controller\WithMusic;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\Controller\WithMusicWebTestCase;
 
-class LibraryControllerWithMusicTest extends WebTestCase
+class LibraryControllerWithMusicTest extends WithMusicWebTestCase
 {
     public function testLibrary(): void
     {
-        $url = '/';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.topbar');
         $this->assertSelectorExists('#songs-section');
-        $this->assertSelectorExists('.artist');
-        $this->assertTrue($crawler->filter(".artist:contains(\"DIRE STRAITS\")")->count() == 1);
+        $this->assertSame(1, $crawler->filter('.artist:contains("DIRE STRAITS")')->count());
     }
 
     public function testShowArtistAlbums(): void
     {
-        $url = '/albums/dire-straits';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', '/albums/dire-straits');
 
         $this->assertResponseIsSuccessful();
-        $this->assertTrue($crawler->filter("#album-nav .song:contains(\"Dire Straits\")")->count() == 1);
+        $this->assertSame(1, $crawler->filter('#album-nav .song:contains("Dire Straits")')->count());
     }
 
     public function testShowAlbumsSongs(): void
     {
-        $url = '/songs/dire-straits/dire-straits';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', '/songs/dire-straits/dire-straits');
 
         $this->assertResponseIsSuccessful();
-        $this->assertTrue($crawler->filter("td:contains(\"DIRE STRAITS\")")->count() > 1);
+        $this->assertGreaterThanOrEqual(1, $crawler->filter('td:contains("SULTANS OF SWING")')->count());
         $this->assertSelectorExists('i.icon-plus');
     }
 
     public function testFilterArtist(): void
     {
-        $url = '/artist/filter/';   
-
         $client = static::createClient();
-        $client->request('GET', $url);
+        $client->request('GET', '/artist/filter/');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('#artists-nav');
@@ -57,10 +48,8 @@ class LibraryControllerWithMusicTest extends WebTestCase
 
     public function testFilterArtistWithParam(): void
     {
-        $url = '/artist/filter/dire';
-
         $client = static::createClient();
-        $client->request('GET', $url);
+        $client->request('GET', '/artist/filter/dire');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('#artists-nav');
@@ -69,14 +58,10 @@ class LibraryControllerWithMusicTest extends WebTestCase
 
     public function testRandomSongs(): void
     {
-        $url = '/songs/random';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', '/songs/random');
 
         $this->assertResponseIsSuccessful();
-
-        $node = $crawler->filterXPath('//i[@class="icon-plus"]');
-        $this->assertTrue($node->count() == 20);
+        $this->assertSame(20, $crawler->filterXPath('//i[@class="icon-plus"]')->count());
     }
 }

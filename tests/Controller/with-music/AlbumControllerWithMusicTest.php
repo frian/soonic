@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Controller\WithMusic;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\Controller\WithMusicWebTestCase;
 
-class AlbumControllerWithMusicTest extends WebTestCase
+class AlbumControllerWithMusicTest extends WithMusicWebTestCase
 {
     public function testIndex(): void
     {
-        $url = '/album/';
-
         $client = static::createClient();
-        $client->request('GET', $url);
+        $client->request('GET', '/album/');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.albums-view');
@@ -20,10 +18,8 @@ class AlbumControllerWithMusicTest extends WebTestCase
 
     public function testAlbumView(): void
     {
-        $url = '/album/1';
-
         $client = static::createClient();
-        $client->request('GET', $url);
+        $client->request('GET', '/album/1');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.single-album-view');

@@ -1,24 +1,32 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Controller\NoMusic;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Tests\Controller\NoMusicWebTestCase;
 
-class ConfigControllerTest extends WebTestCase
+class ConfigControllerTest extends NoMusicWebTestCase
 {
-    public function testEdit(): void
+    public function testSettingsPageDisplaysForm(): void
     {
-        $url = '/config/1/edit';
-
         $client = static::createClient();
-        $client->request('GET', $url);
+        $client->request('GET', '/settings/');
 
-        $this->assertResponseStatusCodeSame(302);
-        $this->assertTrue($client->getResponse() instanceof RedirectResponse);
-
-        $client->followRedirect();
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.settings-view');
+        $this->assertSelectorExists('#settings-form');
+    }
+
+    public function testConfigEditPersistsCurrentSelectionAndReturnsJson(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/settings/');
+
+        $form = $crawler->filter('#settings-form')->form();
+        $client->submit($form);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseFormatSame('json');
+        $this->assertJsonContains(['status' => 'success']);
+        $this->assertJsonContains(['config' => ['theme' => 'default-dark', 'language' => 'fr']]);
     }
 }

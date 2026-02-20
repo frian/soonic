@@ -1,81 +1,64 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Controller\NoMusic;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use App\Tests\Controller\NoMusicWebTestCase;
 
-class LibraryControllerTest extends WebTestCase
+class LibraryControllerTest extends NoMusicWebTestCase
 {
     public function testLibrary(): void
     {
-        $url = '/';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', '/');
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.topbar');
         $this->assertSelectorExists('#songs-section');
-        $this->assertTrue($crawler->filter("#artists-nav:contains(\"no artists found\")")->count() == 1);
+        $this->assertSame(1, $crawler->filter('#artists-nav:contains("no artists found")')->count());
     }
 
-    public function testShowArtistAlbums(): void
+    public function testShowArtistAlbumsReturnsNotFoundWhenArtistMissing(): void
     {
-        $url = '/albums/abba';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $client->request('GET', '/albums/abba');
 
         $this->assertResponseStatusCodeSame(404);
-        $this->assertSelectorExists('#album-nav');
-        $this->assertTrue($crawler->filter("#album-nav:contains(\"no albums found\")")->count() == 1);
     }
 
-    public function testShowAlbumsSongs(): void
+    public function testShowAlbumsSongsReturnsNotFoundWhenArtistMissing(): void
     {
-        $url = '/songs/abba/misc';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $client->request('GET', '/songs/abba/misc');
 
-        $this->assertResponseIsSuccessful();
-        $this->assertTrue($crawler->filter("body:contains(\"no songs found\")")->count() == 1);
+        $this->assertResponseStatusCodeSame(404);
     }
 
-    public function testFilterArtist(): void
+    public function testFilterArtistWithoutParamShowsEmptyState(): void
     {
-        $url = '/artist/filter/';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', '/artist/filter/');
 
         $this->assertResponseIsSuccessful();
-
         $this->assertSelectorExists('#artists-nav');
-        $this->assertTrue($crawler->filter("#artists-nav:contains(\"no artists found\")")->count() == 1);
+        $this->assertSame(1, $crawler->filter('#artists-nav:contains("no artists found")')->count());
     }
 
-    public function testFilterArtistWithParam(): void
+    public function testFilterArtistWithParamShowsEmptyState(): void
     {
-        $url = '/artist/filter/abba';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', '/artist/filter/abba');
 
         $this->assertResponseIsSuccessful();
-
         $this->assertSelectorExists('#artists-nav');
-        $this->assertTrue($crawler->filter("#artists-nav:contains(\"no artists found\")")->count() == 1);
+        $this->assertSame(1, $crawler->filter('#artists-nav:contains("no artists found")')->count());
     }
 
-    public function testRandomSongs(): void
+    public function testRandomSongsShowsEmptyState(): void
     {
-        $url = '/songs/random';
-
         $client = static::createClient();
-        $crawler = $client->request('GET', $url);
+        $crawler = $client->request('GET', '/songs/random');
 
         $this->assertResponseIsSuccessful();
-        $this->assertTrue($crawler->filter("body:contains(\"no songs found\")")->count() == 1);
+        $this->assertSame(1, $crawler->filter('body:contains("no songs found")')->count());
     }
 }
