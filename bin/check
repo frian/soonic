@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT_DIR"
+
+RUN_TESTS=1
+RUN_TESTSUITES=1
+
+if [[ "${1:-}" == "--fast" ]]; then
+  RUN_TESTS=0
+  RUN_TESTSUITES=0
+fi
+
+print_step() {
+  printf '\n==> %s\n' "$1"
+}
+
+print_step "Composer validation"
+composer validate --no-check-publish
+
+print_step "PHP syntax check (src, tests)"
+find src tests -name "*.php" -print0 | xargs -0 -n1 php -l >/dev/null
+echo "PHP syntax OK"
+
+if command -v node >/dev/null 2>&1; then
+  print_step "Node syntax check (public/js)"
+  find public/js -name "*.js" -print0 | xargs -0 -n1 node --check >/dev/null
+  echo "Node syntax OK"
+else
+  echo "Node not found: JS syntax check skipped"
+fi
+
+if command -v npm >/dev/null 2>&1; then
+  print_step "SCSS lint"
+  npm run lint:scss
+else
+  echo "npm not found: SCSS lint skipped"
+fi
+
+print_step "Symfony lint"
+php bin/console lint:twig templates
+php bin/console lint:yaml config
+php bin/console lint:container
+
+print_step "Doctrine checks"
+php bin/console doctrine:schema:validate
+php bin/console doctrine:migrations:status
+
+if [[ "$RUN_TESTS" -eq 1 ]]; then
+  print_step "PHPUnit (full)"
+  php bin/phpunit
+fi
+
+if [[ "$RUN_TESTSUITES" -eq 1 ]]; then
+  print_step "PHPUnit suites"
+  php bin/phpunit --testsuite no-music
+  php bin/phpunit --testsuite with-music
+fi
+
+print_step "All checks passed"
