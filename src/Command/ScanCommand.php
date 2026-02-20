@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Scan\ScanArtifactsManager;
+use App\Scan\ScanDataWriter;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,7 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Exception;
 use Doctrine\ORM\EntityManagerInterface;
-use RuntimeException;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 #[AsCommand(
@@ -18,15 +19,13 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 )]
 class ScanCommand extends Command
 {
-    private const APPNAME = 'soonic';
-
-    private EntityManagerInterface $entityManager;
-    private string $projectDir;
-
-    public function __construct(EntityManagerInterface $entityManager, string $projectDir)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly string $projectDir,
+        private readonly ScanArtifactsManager $artifactsManager,
+        private readonly ScanDataWriter $dataWriter
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->projectDir = $projectDir;
         parent::__construct();
     }
 
@@ -50,40 +49,28 @@ class ScanCommand extends Command
         // -- get verbosity level
         $verbosity = $io->getVerbosity();
 
-        // -- get fs pathes
-        $webPath = str_replace('\\', '/', $this->projectDir.'/public');
-        $scanDir = str_replace('\\', '/', $this->projectDir.'/var/scan');
-        $lockDir = str_replace('\\', '/', $this->projectDir.'/var/lock');
-        $lockFile = $lockDir.'/'.self::APPNAME.'.lock';
+        $webPath = $this->artifactsManager->getPublicPath();
 
-        if (!is_dir($scanDir) && !@mkdir($scanDir, 0775, true) && !is_dir($scanDir)) {
-            $io->error('cannot create scan directory');
-            return Command::FAILURE;
-        }
+        try {
+            $this->artifactsManager->ensureRuntimeDirectories();
+            $this->artifactsManager->acquireLock();
+        } catch (\RuntimeException $e) {
+            if ($e->getMessage() === 'already running') {
+                $io->warning('already running');
+            } else {
+                $io->error($e->getMessage());
+            }
 
-        if (!is_dir($lockDir) && !@mkdir($lockDir, 0775, true) && !is_dir($lockDir)) {
-            $io->error('cannot create lock directory');
-            return Command::FAILURE;
-        }
-        
-        // -- exit if there is a lock file
-        if (file_exists($lockFile)) {
-            $io->warning('already running');
-            return Command::FAILURE;
-        }
-
-        // -- create lock file
-        if (@touch($lockFile) === false) {
-            $io->error('cannot create lock file');
             return Command::FAILURE;
         }
 
         $logFile = null;
+        $sqlFile = [];
 
         try {
             // -- open log file
-            $logFilePath = $scanDir.'/'.self::APPNAME.'.log';
-            $logFile = $this->openFile($logFilePath, $io);
+            $logFilePath = $this->artifactsManager->getLogFilePath();
+            $logFile = $this->artifactsManager->openLogFile();
 
         // -- get entity manager
         $em = $this->entityManager;
@@ -159,17 +146,15 @@ class ScanCommand extends Command
          * -- Prepare needed files ------------------------------------------------------------------------------------
          */
         // -- open sql files
-        $sqlFilesPathes = [];
-        foreach ($tables as $table) {
-            $sqlFilesPathes[$table] = str_replace('\\', '/', $scanDir.'/'.self::APPNAME.'-'.$table.'.sql');
-            $sqlFile[$table] = $this->openFile($sqlFilesPathes[$table], $io);
-        }
+        $openedSqlFiles = $this->artifactsManager->openSqlFiles($tables);
+        $sqlFilesPathes = $openedSqlFiles['paths'];
+        $sqlFile = $openedSqlFiles['handles'];
 
         // -- write headers
-        $this->writeCsvRow($sqlFile['song'], ['id', 'album_id', 'artist_id', 'path', 'web_path', 'title', 'track_number', 'year', 'genre', 'duration']);
-        $this->writeCsvRow($sqlFile['album'], ['id', 'name', 'album_slug', 'song_count', 'duration', 'year', 'genre', 'path', 'cover_art_path']);
-        $this->writeCsvRow($sqlFile['artist'], ['id', 'name', 'artist_slug', 'album_count', 'cover_art_path']);
-        $this->writeCsvRow($sqlFile['artist_album'], ['artist_id', 'album_id']);
+        $this->dataWriter->writeCsvRow($sqlFile['song'], ['id', 'album_id', 'artist_id', 'path', 'web_path', 'title', 'track_number', 'year', 'genre', 'duration']);
+        $this->dataWriter->writeCsvRow($sqlFile['album'], ['id', 'name', 'album_slug', 'song_count', 'duration', 'year', 'genre', 'path', 'cover_art_path']);
+        $this->dataWriter->writeCsvRow($sqlFile['artist'], ['id', 'name', 'artist_slug', 'album_count', 'cover_art_path']);
+        $this->dataWriter->writeCsvRow($sqlFile['artist_album'], ['artist_id', 'album_id']);
 
 
         // -- get iterator
@@ -206,10 +191,10 @@ class ScanCommand extends Command
                 if ($currentFolder !== $previousFolder) {
                     if ($previousFolder !== null) {
                         if (!empty($songs)) {
-                            $results = $this->addAlbumIds($songs, $albumId, $sqlFile['artist_album'], $sqlFile['song']);
+                            $results = $this->dataWriter->addAlbumIds($songs, $albumId, $sqlFile['artist_album'], $sqlFile['song']);
                             $albumId = $results['album_id'];
                             $songs = $results['songs'];
-                            $this->buildAlbumTags($songs, $albumsSlugs, $sqlFile['album'], $io, $verbosity);
+                            $this->dataWriter->buildAlbumTags($songs, $albumsSlugs, $sqlFile['album'], $io, $verbosity);
                         }
 
                         $songs = [];
@@ -356,10 +341,10 @@ class ScanCommand extends Command
 
         // -- handle last folder
         if (!empty($songs)) {
-            $results = $this->addAlbumIds($songs, $albumId, $sqlFile['artist_album'], $sqlFile['song']);
+            $results = $this->dataWriter->addAlbumIds($songs, $albumId, $sqlFile['artist_album'], $sqlFile['song']);
             $albumId = $results['album_id'];
             $songs = $results['songs'];
-            $this->buildAlbumTags($songs, $albumsSlugs, $sqlFile['album'], $io, $verbosity);
+            $this->dataWriter->buildAlbumTags($songs, $albumsSlugs, $sqlFile['album'], $io, $verbosity);
         }
 
         // -- output warnings
@@ -368,7 +353,7 @@ class ScanCommand extends Command
             if ($verbosity < OutputInterface::VERBOSITY_VERY_VERBOSE) {
                 $io->warning( [
                     'some files have missing tags', 
-                    'check ' . str_replace($this->projectDir.'/', '', $logFilePath) . ' or run with -vv'
+                    'check '.$this->artifactsManager->toProjectRelativePath($logFilePath).' or run with -vv'
                 ]);
             }
         }
@@ -380,13 +365,13 @@ class ScanCommand extends Command
         // -- write artist tags to sql file
         // -- name,artist_slug,album_count,cover_art_path
         foreach ($artists as $artist => $albumCount) {
-            $this->writeCsvRow($sqlFile['artist'], [
-                '',
-                $artist,
-                $this->slugify($artist, $artistsSlugs),
-                $albumCount,
-                '',
-            ]);
+                $this->dataWriter->writeCsvRow($sqlFile['artist'], [
+                    '',
+                    $artist,
+                    $this->dataWriter->slugify($artist, $artistsSlugs),
+                    $albumCount,
+                    '',
+                ]);
         }
 
         /*
@@ -483,151 +468,11 @@ class ScanCommand extends Command
             $io->error($e->getMessage());
             return Command::FAILURE;
         } finally {
-            if (isset($sqlFile) && is_array($sqlFile)) {
-                foreach ($sqlFile as $handle) {
-                    if (is_resource($handle)) {
-                        fclose($handle);
-                    }
-                }
-            }
+            $this->artifactsManager->closeHandles($sqlFile);
             if (is_resource($logFile)) {
                 fclose($logFile);
             }
-            if (file_exists($lockFile)) {
-                @unlink($lockFile);
-            }
-        }
-    }
-
-    private function openFile(string $filePath, SymfonyStyle $io): mixed
-    {
-        $file = @fopen($filePath, 'w');
-        if ($file === false) {
-            $io->error("cannot open file: $filePath");
-            throw new RuntimeException("cannot open file: $filePath");
-        }
-
-        return $file;
-    }
-
-    private function addAlbumIds(array $songs, int $albumId, mixed $sqlArtistAlbumFile, mixed $sqlSongFile): array
-    {
-        $albums = [];
-        $ids = [];
-        foreach ($songs as $song) {
-            if (!in_array($song['album'], $albums)) {
-                array_push($albums, $song['album']);
-                $ids[$song['album']] = ++$albumId;
-            }
-        }
-
-        $artistAlbumValues = [];
-        foreach ($songs as &$song) {
-            // -- set song album_id
-            $song['album_id'] = $ids[$song['album']];
-
-            // -- write songs to sql
-            $this->writeCsvRow($sqlSongFile, [
-                '',
-                $song['album_id'],
-                $song['artist_id'],
-                $song['path'],
-                $song['web_path'],
-                $song['title'],
-                $song['track_number'],
-                $song['year'],
-                $song['genre'],
-                $song['duration'],
-            ]);
-
-            // -- set artist_album values
-            $artistAlbumValue = $song['artist_id'].';'.$song['album_id'];
-            if (!in_array($artistAlbumValue, $artistAlbumValues)) {
-                array_push($artistAlbumValues, $artistAlbumValue);
-            }
-        }
-
-        // -- write artist_album to sql
-        foreach ($artistAlbumValues as $value) {
-            $parts = explode(';', $value);
-            $this->writeCsvRow($sqlArtistAlbumFile, [$parts[0], $parts[1]]);
-        }
-
-        return ['album_id' => $albumId, 'songs' => $songs];
-    }
-    
-    private function buildAlbumTags(array $songs, array &$albumsSlugs, mixed $sqlAlbumFile, SymfonyStyle $io, int $verbosity): void
-    {
-        $albumSingleTags = ['year', 'genre', 'album_path'];
-        $albumsTags = [];
-        foreach ($songs as $song) {
-            if (!array_key_exists('albums', $albumsTags)) {
-                $albumsTags['albums'] = [];
-            }
-            if (!in_array($song['album'], $albumsTags['albums'])) {
-                array_push($albumsTags['albums'], $song['album']);
-            }
-
-            if (!array_key_exists('artists', $albumsTags)) {
-                $albumsTags['artists'] = [];
-            }
-            if (!in_array($song['artist'], $albumsTags['artists'])) {
-                array_push($albumsTags['artists'], $song['artist']);
-            }
-
-            if (!array_key_exists('durations', $albumsTags)) {
-                $albumsTags['durations'] = [];
-            }
-            array_push($albumsTags['durations'], $song['duration']);
-        }
-
-        foreach ($albumsTags['albums'] as $album) {
-            $albumTags = [];
-            foreach ($songs as $song) {
-                if ($song['album'] === $album) {
-                    foreach ($albumSingleTags as $tag) {
-                        if (!array_key_exists($song[$tag], $albumTags)) {
-                            $albumTags[$tag] = $song[$tag];
-                        }
-                    }
-
-                    $albumTags['album'] = $album;
-
-                    if (!array_key_exists('artists', $albumTags)) {
-                        $albumTags['artists'] = [];
-                    }
-                    if (!in_array($song['artist'], $albumTags['artists'])) {
-                        array_push($albumTags['artists'], $song['artist']);
-                    }
-
-                    if (!array_key_exists('durations', $albumTags)) {
-                        $albumTags['durations'] = [];
-                    }
-                    array_push($albumTags['durations'], $song['duration']);
-                }
-            }
-            if (count($albumTags['artists']) > 1) {
-                $albumTags['artist'] = 'Various';
-            } else {
-                $albumTags['artist'] = $albumTags['artists'][0];
-            }
-
-            // -- write album to sql
-            $this->writeCsvRow($sqlAlbumFile, [
-                '',
-                $albumTags['album'],
-                $this->slugify($albumTags['album'], $albumsSlugs),
-                count($albumTags['durations']),
-                $this->getAlbumDuration($albumTags['durations']),
-                $albumTags['year'],
-                $albumTags['genre'],
-                $albumTags['album_path'],
-                '', // -- cover art path
-            ]);
-
-            if ($verbosity >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
-                $io->text(" added album ".$albumTags['album_path']);
-            }
+            $this->artifactsManager->releaseLock();
         }
     }
 
@@ -663,51 +508,6 @@ class ScanCommand extends Command
         return ++$skipCount;
     }
 
-    private function slugify(string $string, array &$slugs): string
-    {
-        $string = mb_strtolower($string);
-        $string = preg_replace('/\s+-\s+/', '-', $string);
-        $string = preg_replace('/&/', 'and', $string);
-        $string = preg_replace('|[\s+\/]|', '-', $string);
-        $string = preg_replace('/-+/', '-', $string);
-
-        $slug = $string;
-        $slugCount = 1;
-        while (in_array($slug, $slugs)) {
-            $slug = $string.'-'.$slugCount;
-            ++$slugCount;
-        }
-        array_push($slugs, $slug);
-
-        return $slug;
-    }
-
-    private function getAlbumDuration(array $durations): string
-    {
-        $secs = 0;
-        foreach ($durations as $duration) {
-            $durationParts = explode(':', $duration);
-            $numDurationParts = count($durationParts);
-            if ($numDurationParts === 1) {
-                $secs += (int) $durationParts[0];
-            } elseif ($numDurationParts === 2) {
-                $secs += (int) $durationParts[0] * 60;
-                $secs += (int) $durationParts[1];
-            } elseif ($numDurationParts === 3) {
-                $secs += (int) $durationParts[0] * 3600;
-                $secs += (int) $durationParts[1] * 60;
-                $secs += (int) $durationParts[2];
-            }
-        }
-        $secs = $secs > 9 ? $secs : 0 .$secs;
-
-        return $secs;
-    }
-
-    private function writeCsvRow(mixed $file, array $fields): void
-    {
-        fputcsv($file, $fields, ';', '"', '\\');
-    }
 
     private function setLocalInfile(EntityManagerInterface $em, bool $enabled, SymfonyStyle $io, int $verbosity): void
     {
