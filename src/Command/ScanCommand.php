@@ -52,8 +52,14 @@ class ScanCommand extends Command
 
         // -- get fs pathes
         $webPath = str_replace('\\', '/', $this->projectDir.'/public');
+        $scanDir = str_replace('\\', '/', $this->projectDir.'/var/scan');
         $lockDir = str_replace('\\', '/', $this->projectDir.'/var/lock');
         $lockFile = $lockDir.'/'.self::APPNAME.'.lock';
+
+        if (!is_dir($scanDir) && !@mkdir($scanDir, 0775, true) && !is_dir($scanDir)) {
+            $io->error('cannot create scan directory');
+            return Command::FAILURE;
+        }
 
         if (!is_dir($lockDir) && !@mkdir($lockDir, 0775, true) && !is_dir($lockDir)) {
             $io->error('cannot create lock directory');
@@ -76,7 +82,7 @@ class ScanCommand extends Command
 
         try {
             // -- open log file
-            $logFilePath = $webPath.'/'.self::APPNAME.'.log';
+            $logFilePath = $scanDir.'/'.self::APPNAME.'.log';
             $logFile = $this->openFile($logFilePath, $io);
 
         // -- get entity manager
@@ -155,7 +161,7 @@ class ScanCommand extends Command
         // -- open sql files
         $sqlFilesPathes = [];
         foreach ($tables as $table) {
-            $sqlFilesPathes[$table] = str_replace('\\', '/', $webPath.'/'.self::APPNAME.'-'.$table.'.sql');
+            $sqlFilesPathes[$table] = str_replace('\\', '/', $scanDir.'/'.self::APPNAME.'-'.$table.'.sql');
             $sqlFile[$table] = $this->openFile($sqlFilesPathes[$table], $io);
         }
 

@@ -26,7 +26,7 @@ class ScanControllerTest extends NoMusicWebTestCase
     public function testScanRouteAcceptsPostAndReturnsJsonStatus(): void
     {
         $client = static::createClient();
-        $client->request('POST', '/scan/');
+        $client->request('POST', '/scan/', [], [], ['HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest']);
 
         $this->assertResponseFormatSame('json');
 

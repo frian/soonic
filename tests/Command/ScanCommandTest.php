@@ -145,7 +145,7 @@ class ScanCommandTest extends KernelTestCase
         $this->assertStringContainsString('░', $output);
         $this->assertStringNotContainsString('no audio file found', $output);
         $this->assertStringContainsString('[WARNING] some files have missing tags', $output);
-        $this->assertStringContainsString('check public/soonic.log or run with -vv', $output);
+        $this->assertStringContainsString('check var/scan/soonic.log or run with -vv', $output);
 
         $output = $this->executeAndGetOutput($tester, OutputInterface::VERBOSITY_VERBOSE);
         $tester->assertCommandIsSuccessful();
@@ -153,7 +153,7 @@ class ScanCommandTest extends KernelTestCase
         $this->assertStringContainsString('Scanning', $output);
         $this->assertStringContainsString('░', $output);
         $this->assertStringContainsString('[WARNING] some files have missing tags', $output);
-        $this->assertStringContainsString('check public/soonic.log or run with -vv', $output);
+        $this->assertStringContainsString('check var/scan/soonic.log or run with -vv', $output);
         $this->assertStringContainsString('Loading db', $output);
         $this->assertStringContainsString('Summary', $output);
         $this->assertStringNotContainsString('analysed 0 files', $output);
