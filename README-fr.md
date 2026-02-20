@@ -135,6 +135,7 @@ Notes importantes:
 
 ```bash
 composer validate --no-check-publish
+vendor/bin/phpstan analyse --configuration=phpstan.neon.dist
 php bin/console lint:twig templates
 php bin/console lint:yaml config
 php bin/console lint:container

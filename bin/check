@@ -39,6 +39,14 @@ print_step "PHP syntax check (src, tests)"
 find src tests -name "*.php" -print0 | xargs -0 -n1 php -l >/dev/null
 echo "PHP syntax OK"
 
+if [[ -x "vendor/bin/phpstan" ]]; then
+  print_step "PHPStan"
+  vendor/bin/phpstan analyse --configuration=phpstan.neon.dist --no-progress
+else
+  print_step "PHPStan skipped"
+  echo "vendor/bin/phpstan not found (install with: composer require --dev phpstan/phpstan)"
+fi
+
 if command -v node >/dev/null 2>&1; then
   print_step "Node syntax check (public/js)"
   find public/js -name "*.js" -print0 | xargs -0 -n1 node --check >/dev/null
