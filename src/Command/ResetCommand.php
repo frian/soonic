@@ -132,12 +132,7 @@ class ResetCommand extends Command
 
     private function resolveDatabaseName(): ?string
     {
-        $databaseUrl = (string) (
-            $_SERVER['DATABASE_URL']
-            ?? $_ENV['DATABASE_URL']
-            ?? getenv('DATABASE_URL')
-            ?? ''
-        );
+        $databaseUrl = (string) ($_SERVER['DATABASE_URL'] ?? $_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL'));
 
         if ($databaseUrl === '') {
             return null;

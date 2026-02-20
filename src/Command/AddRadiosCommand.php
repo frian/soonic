@@ -163,7 +163,7 @@ class AddRadiosCommand extends Command
 
     private function resolvePath(string $rawPath): string
     {
-        if ($rawPath[0] === '/' || preg_match('/^[A-Za-z]:[\\\/]/', $rawPath) === 1) {
+        if ($rawPath[0] === '/' || preg_match('/^[A-Za-z]:[\\\\\\/]/', $rawPath) === 1) {
             return $rawPath;
         }
 

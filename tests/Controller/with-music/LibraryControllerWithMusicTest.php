@@ -71,7 +71,7 @@ class LibraryControllerWithMusicTest extends WithMusicWebTestCase
         $this->assertLessThanOrEqual(20, $rowCount);
 
         preg_match_all('/\bdata-path="([^"]*)"/', $content, $matches);
-        $paths = $matches[1] ?? [];
+        $paths = $matches[1];
         $this->assertCount($rowCount, $paths);
         $this->assertCount($rowCount, array_unique($paths));
     }

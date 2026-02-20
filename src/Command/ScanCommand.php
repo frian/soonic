@@ -21,7 +21,6 @@ class ScanCommand extends Command
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly string $projectDir,
         private readonly ScanArtifactsManager $artifactsManager,
         private readonly ScanDataWriter $dataWriter
     )
@@ -93,7 +92,7 @@ class ScanCommand extends Command
                 $io->write('<soonic_info>.</soonic_info>');
             }
 
-            if ($table != 'albums_artists') {
+            if ($table !== 'artist_album') {
                 $query = "ALTER TABLE $table AUTO_INCREMENT = 1;";
                 $em->getConnection()->prepare($query)->executeStatement();
             }
@@ -136,7 +135,9 @@ class ScanCommand extends Command
 
         $albumsTags = [];
 
+        /** @var array<int, string> $albumsSlugs */
         $albumsSlugs = [];
+        /** @var array<int, string> $artistsSlugs */
         $artistsSlugs = [];
 
         $hasError = false;
@@ -265,9 +266,7 @@ class ScanCommand extends Command
                     }
                 } else {
                     $fileHasWarning = true;
-                    if (!in_array('track_number', $fileWarningTags, true)) {
-                        array_push($fileWarningTags, 'track_number');
-                    }
+                    $fileWarningTags[] = 'track_number';
 
                     $tags['track_number'] = null;
                 }
@@ -276,9 +275,7 @@ class ScanCommand extends Command
                     if (empty($trackTags['date'])) {
                         if (empty($trackTags['creation_date'])) {
                             $fileHasWarning = true;
-                            if (!in_array('year', $fileWarningTags, true)) {
-                                array_push($fileWarningTags, 'year');
-                            }
+                            $fileWarningTags[] = 'year';
                             $tags['year'] = null;
                         } else {
                             $tags['year'] = $trackTags['creation_date'][0];
@@ -295,9 +292,7 @@ class ScanCommand extends Command
                 } else {
                     $tags['genre'] = null;
                     $fileHasWarning = true;
-                    if (!in_array('genre', $fileWarningTags, true)) {
-                        array_push($fileWarningTags, 'genre');
-                    }
+                    $fileWarningTags[] = 'genre';
                 }
 
                 $tags['web_path'] = preg_replace("|^$webPath|", '', $file);
@@ -453,9 +448,9 @@ class ScanCommand extends Command
             if ($duration < 60) {
                 $output_duration = $duration.'s';
             } elseif ($duration < 3600) {
-                $output_duration = gmdate('i\ms\s', $duration);
+                $output_duration = gmdate('i\ms\s', (int) $duration);
             } else {
-                $output_duration = gmdate('H\hi\ms\s', $duration);
+                $output_duration = gmdate('H\hi\ms\s', (int) $duration);
             }
 
             $io->writeln(" [INFO]   in $output_duration");

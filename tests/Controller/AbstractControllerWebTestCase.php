@@ -37,7 +37,7 @@ abstract class AbstractControllerWebTestCase extends WebTestCase
 
     abstract protected static function seedMode(): string;
 
-    private static function rebuildDatabase(): void
+    protected static function rebuildDatabase(): void
     {
         self::ensureKernelShutdown();
         $kernel = self::bootKernel();
@@ -64,12 +64,7 @@ abstract class AbstractControllerWebTestCase extends WebTestCase
 
     private static function assertSafeTestDatabase(): void
     {
-        $databaseUrl = (string) (
-            $_SERVER['DATABASE_URL']
-            ?? $_ENV['DATABASE_URL']
-            ?? getenv('DATABASE_URL')
-            ?? ''
-        );
+        $databaseUrl = (string) ($_SERVER['DATABASE_URL'] ?? $_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL'));
 
         if ($databaseUrl === '') {
             throw new \RuntimeException('DATABASE_URL is empty in test environment.');
@@ -107,7 +102,7 @@ abstract class AbstractControllerWebTestCase extends WebTestCase
         }
     }
 
-    private static function seedMusicDataset(): void
+    protected static function seedMusicDataset(): void
     {
         $entityManager = self::getContainer()->get('doctrine')->getManager();
         MusicDatasetSeeder::seed($entityManager);

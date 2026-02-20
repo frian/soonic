@@ -5,3 +5,5 @@ parameters:
         - tests
     tmpDir: var/cache/phpstan
     treatPhpDocTypesAsCertain: false
+    ignoreErrors:
+        - '#Property App\\Entity\\[A-Za-z]+::\$id \(int\|null\) is never assigned int so it can be removed from the property type#'

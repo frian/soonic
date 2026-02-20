@@ -9,7 +9,6 @@ use Twig\TwigFunction;
 class FileExistsExtension extends AbstractExtension
 {
     private Filesystem $fileSystem;
-    private string $projectDir;
     private string $publicDir;
 
     /** @var array<string, bool> */
@@ -21,7 +20,6 @@ class FileExistsExtension extends AbstractExtension
     public function __construct(Filesystem $fileSystem, string $projectDir)
     {
         $this->fileSystem = $fileSystem;
-        $this->projectDir = $projectDir;
         $this->publicDir = rtrim($projectDir, '/').'/public';
     }
 
@@ -34,7 +32,7 @@ class FileExistsExtension extends AbstractExtension
     }
 
     /**
-     * @param string An absolute or relative to public folder path
+     * @param string $path Absolute path or path relative to the public directory
      *
      * @return bool True if file exists, false otherwise
      */
@@ -56,7 +54,7 @@ class FileExistsExtension extends AbstractExtension
     }
 
     /**
-     * @param string An absolute or relative to public folder path
+     * @param string $path Absolute path or path relative to the public directory
      *
      * @return int Unix timestamp of file modification time, 0 if file does not exist
      */
