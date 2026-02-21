@@ -21,11 +21,11 @@ $topbar-border-size: 1px !default;
     }
 
     .logo {
-        padding: 0 10px;
-        margin-top: -4px;
+        padding: 0 5px;
+        // margin-top: -4px;
         width: 51px;
         background-repeat: no-repeat;
-        background-size: 31px 31px;
+        background-size: 40px 40px;
         background-position: center;
         border: #{$debug}px solid red;
     }
