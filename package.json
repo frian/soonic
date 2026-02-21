@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@fontsource/lato": "^5.2.7",
+    "@fontsource/material-icons": "^5.2.7",
     "@fontsource/mulish": "^5.2.8",
     "postcss-scss": "^4.0.9",
     "stylelint": "^16.15.0",
