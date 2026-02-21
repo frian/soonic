@@ -2,7 +2,8 @@
     {% for album in albums %}
         <div class="album-container" data-album-id="{{ album.id }}" data-artist="" data-album="{{ album.albumSlug }}">
             <div class="img-wrapper">
-                <img class="lozad" data-src="{{ album.path }}/cover.jpg" alt="{{ album.name }}">
+                {% set coverSrc = album.coverArtPath ?: '/img/cover.jpg' %}
+                <img class="lozad" data-src="{{ coverSrc }}" alt="{{ album.name }}">
             </div>
 
             <div class="album-infos">

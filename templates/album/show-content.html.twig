@@ -4,7 +4,8 @@
     <div class="single-album-view view">
         <div class="single-album-container">
             <div class="img-wrapper">
-                <img class="single-album" src="{{ album.path }}/cover.jpg" alt="{{ album.name }}">
+                {% set coverSrc = album.coverArtPath ?: '/img/cover.jpg' %}
+                <img class="single-album" src="{{ coverSrc }}" alt="{{ album.name }}">
             </div>
             <div class="album-title">
                 {{ album.name }}
