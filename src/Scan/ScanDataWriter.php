@@ -7,6 +7,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class ScanDataWriter
 {
+    private const ALBUM_COVER_FILENAMES = [
+        'cover.jpg',
+        'cover.png',
+        'folder.jpg',
+        'folder.png',
+        'album.jpg',
+        'album.png',
+        'front.jpg',
+        'front.png',
+    ];
+
     public function writeCsvRow(mixed $file, array $fields): void
     {
         fputcsv($file, $fields, ';', '"', '\\');
@@ -114,7 +125,7 @@ final class ScanDataWriter
      */
     public function buildAlbumTags(array $songs, array &$albumsSlugs, mixed $sqlAlbumFile, SymfonyStyle $io, int $verbosity): void
     {
-        $albumSingleTags = ['year', 'genre', 'album_path'];
+        $albumSingleTags = ['year', 'genre', 'album_path', 'album_fs_path'];
         $albumsTags = [];
 
         foreach ($songs as $song) {
@@ -152,6 +163,10 @@ final class ScanDataWriter
                 }
             }
             $albumTags['artist'] = count($albumTags['artists']) > 1 ? 'Various' : $albumTags['artists'][0];
+            $coverArtPath = $this->resolveAlbumCoverArtPath(
+                (string) $albumTags['album_path'],
+                (string) $albumTags['album_fs_path']
+            );
 
             $this->writeCsvRow($sqlAlbumFile, [
                 '',
@@ -162,12 +177,26 @@ final class ScanDataWriter
                 $albumTags['year'],
                 $albumTags['genre'],
                 $albumTags['album_path'],
-                '',
+                $coverArtPath,
             ]);
 
             if ($verbosity >= OutputInterface::VERBOSITY_VERY_VERBOSE) {
                 $io->text(' added album '.$albumTags['album_path']);
             }
         }
+    }
+
+    private function resolveAlbumCoverArtPath(string $albumPath, string $albumFsPath): ?string
+    {
+        $normalizedAlbumPath = rtrim($albumPath, '/');
+        $normalizedAlbumFsPath = rtrim(str_replace('\\', '/', $albumFsPath), '/');
+
+        foreach (self::ALBUM_COVER_FILENAMES as $filename) {
+            if (is_file($normalizedAlbumFsPath.'/'.$filename)) {
+                return $normalizedAlbumPath.'/'.$filename;
+            }
+        }
+
+        return null;
     }
 }

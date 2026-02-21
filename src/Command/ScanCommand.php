@@ -319,6 +319,7 @@ class ScanCommand extends Command
                 $tags['path'] = $file;
 
                 $tags['album_path'] = preg_replace("|^$webPath|", '', pathinfo($file, PATHINFO_DIRNAME));
+                $tags['album_fs_path'] = pathinfo($file, PATHINFO_DIRNAME);
 
                 if ($fileHasWarning) {
                     $hasWarning = true;
