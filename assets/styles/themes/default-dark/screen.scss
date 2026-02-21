@@ -48,3 +48,9 @@ body {
     border-color: #0a8a2a;
     box-shadow: 0 0 0 3px rgb(10 138 42 / 30%);
 }
+
+.topbar {
+    .logo {
+        background-image: url("/default-dark-logo.png");
+    }
+}

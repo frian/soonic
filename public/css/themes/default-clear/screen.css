@@ -182,4 +182,8 @@ body {
   background: linear-gradient(to bottom right, #dddddd, rgba(221, 221, 221, 0.8));
 }
 
+.topbar .logo {
+  background-image: url("/default-clear-logo.png");
+}
+
 /*# sourceMappingURL=screen.css.map */

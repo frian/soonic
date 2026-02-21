@@ -45,3 +45,9 @@ body::before {
     );
     z-index: -1;
 }
+
+.topbar {
+    .logo {
+        background-image: url("/guitar-dark-logo.png");
+    }
+}

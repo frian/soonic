@@ -114,11 +114,11 @@
 .topbar .logo {
   padding: 0 10px;
   margin-top: -4px;
+  width: 51px;
+  background-repeat: no-repeat;
+  background-size: 31px 31px;
+  background-position: center;
   border: 0px solid red;
-}
-.topbar .logo > img {
-  vertical-align: middle;
-  width: 31px;
 }
 .topbar [class^=icon-] {
   display: inline-block;
