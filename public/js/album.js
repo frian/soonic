@@ -3,6 +3,9 @@ $(function() {
     const debug = false;
     let isLoadingAlbum = false;
     let currentAlbumRequest = null;
+    let pageScrollWasLocked = false;
+    let bodyOverflowBeforeAlbum = "";
+    let htmlOverflowBeforeAlbum = "";
 
     function logDebug(message) {
         if (debug) {
@@ -28,10 +31,35 @@ $(function() {
 
     function closeSingleAlbumView() {
         $(".single-album-view").remove();
+        unlockPageScroll();
+    }
+
+    function lockPageScroll() {
+        if (pageScrollWasLocked) {
+            return;
+        }
+
+        bodyOverflowBeforeAlbum = $("body").css("overflow");
+        htmlOverflowBeforeAlbum = $("html").css("overflow");
+
+        $("body").css("overflow", "hidden");
+        $("html").css("overflow", "hidden");
+        pageScrollWasLocked = true;
+    }
+
+    function unlockPageScroll() {
+        if (!pageScrollWasLocked) {
+            return;
+        }
+
+        $("body").css("overflow", bodyOverflowBeforeAlbum || "");
+        $("html").css("overflow", htmlOverflowBeforeAlbum || "");
+        pageScrollWasLocked = false;
     }
 
     if ($(".single-album-view").length) {
         adjustAlbumContainer();
+        lockPageScroll();
     }
 
 
@@ -73,6 +101,7 @@ $(function() {
                 $(document.body).append(data);
 
                 adjustAlbumContainer();
+                lockPageScroll();
                 logDebug("scrollTop : " + $(window).scrollTop());
             },
             error: function() {
