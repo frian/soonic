@@ -141,6 +141,16 @@ a.active {
     }
 }
 
+.single-album-container {
+    .album-songs {
+        tbody {
+            tr:nth-child(even) {
+                background-color: $bg-alternate;
+            }
+        }
+    }
+}
+
 /*
   --  7. Radios ---------------------------------------------------------------
 */

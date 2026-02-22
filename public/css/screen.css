@@ -302,7 +302,6 @@ h2 {
   --  4. Views ----------------------------------------------------------------
 */
 .single-album-view {
-  border: 1px solid red;
   background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -318,6 +317,9 @@ h2 {
 */
 .single-album-container {
   color: #111;
+}
+.single-album-container .album-songs tbody tr:nth-child(even) {
+  background-color: #ddd;
 }
 
 /*

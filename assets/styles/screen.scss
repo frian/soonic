@@ -94,7 +94,6 @@ h2 {
   --  4. Views ----------------------------------------------------------------
 */
 .single-album-view {
-    border: 1px solid red;
     background-color: rgb(255 255 255 / 80%);
 }
 
@@ -114,6 +113,14 @@ h2 {
 */
 .single-album-container {
     color: $fg-color;
+
+    .album-songs {
+        tbody {
+            tr:nth-child(even) {
+                background-color: $bg-alternate;
+            }
+        }
+    }
 }
 
 

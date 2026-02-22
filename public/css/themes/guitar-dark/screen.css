@@ -103,6 +103,10 @@ a.active {
   color: #aaa;
 }
 
+.single-album-container .album-songs tbody tr:nth-child(even) {
+  background-color: #111;
+}
+
 /*
   --  7. Radios ---------------------------------------------------------------
 */

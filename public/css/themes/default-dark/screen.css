@@ -92,7 +92,7 @@ a.active {
   background-color: #333;
 }
 .list tbody tr:nth-child(even) {
-  background-color: #111;
+  background-color: #222;
 }
 .list tr.playing,
 .list tr.selected {
@@ -101,6 +101,10 @@ a.active {
 .list .icon-plus,
 .list .icon-minus {
   color: #aaa;
+}
+
+.single-album-container .album-songs tbody tr:nth-child(even) {
+  background-color: #222;
 }
 
 /*
@@ -112,7 +116,7 @@ a.active {
 
 .radio:nth-child(4n+2),
 .radio:nth-child(4n+3) {
-  background-color: #111;
+  background-color: #222;
 }
 
 /*
@@ -199,7 +203,6 @@ body {
   --  4. Views ----------------------------------------------------------------
 */
 .single-album-view {
-  border: 1px solid red;
   background-color: rgba(0, 0, 0, 0.8);
 }
 
