@@ -72,9 +72,6 @@ table {
     overflow-y: scroll;
 }
 
-.single-album-view {
-    border: 1px solid red;
-}
 
 .radios-view {
     font-size: 0;
@@ -282,7 +279,6 @@ img.lozad {
   --  6.1 Single album view ---------------------------------------------------
 */
 .single-album-container {
-    border: 1px solid lime;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -342,7 +338,6 @@ img.lozad {
 
         td {
             padding: 5px;
-            border: 1px solid red;
         }
 
         .icon-plus {
