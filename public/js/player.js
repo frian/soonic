@@ -16,7 +16,7 @@ $(function() {
     function showPlaylistFlash(action, options) {
         options = options || {};
 
-        if (!options.force && $(window).width() > 1024) {
+        if (!options.force && $(window).width() >= 1024) {
             return;
         }
 
@@ -300,7 +300,7 @@ $(function() {
         $button.data('adding', true);
 
         // -- add song
-        if (!addSongToPlaylist($button.parent(), { forceFlash: $(e.target).is("i.icon-plus") })) {
+        if (!addSongToPlaylist($button.parent())) {
             setTimeout(function() {
                 $button.removeData('adding');
             }, 120);
