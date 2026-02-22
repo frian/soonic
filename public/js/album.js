@@ -21,12 +21,13 @@ $(function() {
             return;
         }
 
-        if ($albumView.height() < $albumContainer.height()) {
-            $albumContainer
-                .height($albumView.height() - 40)
-                .css("overflow", "hidden")
-                .css("overflow-y", "scroll");
-        }
+        // Layout/scroll is handled by CSS (container max-height + scrollable songs wrapper).
+        // Clear any inline styles from previous logic.
+        $albumContainer.css({
+            height: "",
+            overflow: "",
+            "overflow-y": ""
+        });
     }
 
     function closeSingleAlbumView() {

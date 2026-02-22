@@ -506,6 +506,10 @@ img.lozad {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
+  max-height: min(600px, 100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 .single-album-container .img-wrapper {
   position: relative;
@@ -529,6 +533,17 @@ img.lozad {
   text-align: center;
   padding-bottom: 10px;
   border-bottom: 1px solid #ccc;
+}
+.single-album-container .album-songs-section {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.single-album-container .album-songs-wrapper {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 .single-album-container .album-songs {
   width: 100%;
@@ -1019,10 +1034,12 @@ table.form tr td.button-row {
   .single-album-container {
     display: grid;
     grid-template-columns: 600px minmax(0, 1fr);
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto auto minmax(0, 1fr);
     column-gap: 24px;
     row-gap: 12px;
     width: min(1240px, 100% - 40px);
+    height: min(600px, 100vh - 40px);
+    max-height: min(600px, 100vh - 40px);
   }
   .single-album-container > .img-wrapper {
     grid-column: 1;
@@ -1034,7 +1051,7 @@ table.form tr td.button-row {
   }
   .single-album-container > .album-title,
 .single-album-container > .album-artist,
-.single-album-container > div:not(.img-wrapper) {
+.single-album-container > .album-songs-section {
     grid-column: 2;
   }
   .single-album-container > .album-title {
@@ -1043,6 +1060,9 @@ table.form tr td.button-row {
   }
   .single-album-container > .album-artist {
     padding-top: 0;
+  }
+  .single-album-container > .album-songs-section {
+    min-height: 0;
   }
 }
 /*
