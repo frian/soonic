@@ -91,7 +91,7 @@ $(function() {
         $('.library-view').css('display', 'none');
 
         if ($('.albums-view').length) {
-            $('.albums-view').css('display', 'block');
+            $('.albums-view').css('display', '');
         } else {
             const url = "/album/";
             $.ajax({
