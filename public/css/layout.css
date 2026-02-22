@@ -1011,6 +1011,40 @@ table.form tr td.button-row {
 /*
   -- Media query 1200px -------------------------------------------------------
 */
+@media all and (min-width: 1024px) {
+  /* --  6.1 Single album view -- */
+  .single-album-container {
+    display: grid;
+    grid-template-columns: 600px minmax(0, 1fr);
+    grid-template-rows: auto auto 1fr;
+    column-gap: 24px;
+    row-gap: 12px;
+    width: min(1240px, 100% - 40px);
+  }
+  .single-album-container > .img-wrapper {
+    grid-column: 1;
+    grid-row: 1/4;
+    width: 600px;
+    height: 600px;
+    padding-top: 0;
+    align-self: start;
+  }
+  .single-album-container > .album-title,
+.single-album-container > .album-artist,
+.single-album-container > div:not(.img-wrapper) {
+    grid-column: 2;
+  }
+  .single-album-container > .album-title {
+    align-self: end;
+    padding-bottom: 0;
+  }
+  .single-album-container > .album-artist {
+    padding-top: 0;
+  }
+}
+/*
+  -- Media query 1200px -------------------------------------------------------
+*/
 @media all and (min-width: 1200px) {
   /* --  2. Topbar -- */
   /* --  3. Artists navigation -- */
