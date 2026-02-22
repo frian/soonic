@@ -26,12 +26,24 @@ $(function() {
         }
     }
 
+    function closeSingleAlbumView() {
+        $(".single-album-view").remove();
+    }
+
     if ($(".single-album-view").length) {
         adjustAlbumContainer();
     }
 
+
+    /**
+     * show album
+     */
     $(document).on("click", ".img-wrapper", function(e) {
         e.preventDefault();
+
+        if ($(this).closest(".single-album-view").length) {
+            return;
+        }
 
         if (isLoadingAlbum) {
             return;
@@ -71,6 +83,20 @@ $(function() {
                 currentAlbumRequest = null;
             }
         });
+    });
+
+    $(document).on("click", ".single-album-view", function(e) {
+        if ($(e.target).closest(".single-album-container").length) {
+            return;
+        }
+
+        closeSingleAlbumView();
+    });
+
+    $(document).on("keydown", function(e) {
+        if (e.key === "Escape") {
+            closeSingleAlbumView();
+        }
     });
 
 
