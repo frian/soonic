@@ -20,6 +20,15 @@
                     <tbody>
                         {% for song in album.songs %}
                             <tr>
+                                <td class="add">
+                                    <i 
+                                        class="icon-plus" 
+                                        role="button" 
+                                        tabindex="0" 
+                                        aria-label="{{ 'playlist.add'|trans|default('Add song to playlist') }}" 
+                                        title="{{ 'playlist.add'|trans|default('Add song to playlist') }}">
+                                    </i>
+                                </td>
                                 <td>{{ song.trackNumber }}</td>
                                 <td>{{ song.title }}</td>
                                 <td>{{ song.duration }}</td>
