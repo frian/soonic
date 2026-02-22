@@ -21,6 +21,8 @@ name: nom
 playlist: playlist
 playlist.add: 'ajouter à la playlist'
 playlist.remove: 'retirer de la playlist'
+playlist.flash.add: 'Morceau ajouté à la playlist'
+playlist.flash.remove: 'Morceau retiré de la playlist'
 radio: radio
 radios: radios
 radio.new: 'nouvelle radio'

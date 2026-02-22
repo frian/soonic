@@ -1,0 +1,29 @@
+<script>
+    window.soonicTranslations = Object.assign({}, window.soonicTranslations || {}, {{ {
+        player: {
+            playlist: {
+                flash: {
+                    add: 'playlist.flash.add'|trans,
+                    remove: 'playlist.flash.remove'|trans
+                }
+            }
+        }
+    }|json_encode|raw }});
+
+    if (typeof window.t !== 'function') {
+        window.t = function(key, fallback) {
+            const translations = window.soonicTranslations || {};
+            const parts = String(key || '').split('.');
+            let value = translations;
+
+            for (let i = 0; i < parts.length; i++) {
+                if (value == null || typeof value !== 'object' || !(parts[i] in value)) {
+                    return fallback || key;
+                }
+                value = value[parts[i]];
+            }
+
+            return typeof value === 'string' ? value : (fallback || key);
+        };
+    }
+</script>

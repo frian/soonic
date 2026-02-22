@@ -5,11 +5,50 @@ $(function() {
 
     let playerStatus = "paused";
     let contextMenuClickTimer = null;
+    let playlistFlashTimer = null;
 
     function logDebug(message) {
         if (debug) {
             console.log(message);
         }
+    }
+
+    function showPlaylistFlash(action) {
+        if ($(window).width() <= 1024) {
+            return;
+        }
+
+        const fallbackMessages = {
+            add: 'Song added to playlist',
+            remove: 'Song removed from playlist'
+        };
+        const translationKey = action === 'remove'
+            ? 'player.playlist.flash.remove'
+            : 'player.playlist.flash.add';
+        const message = typeof window.t === 'function'
+            ? window.t(translationKey, fallbackMessages[action])
+            : fallbackMessages[action];
+
+        if (!message) {
+            return;
+        }
+
+        let $flash = $("#playlist-flash-message");
+        if (!$flash.length) {
+            $flash = $("<div>", { id: "playlist-flash-message" });
+            $("body").append($flash);
+        }
+
+        if (playlistFlashTimer) {
+            clearTimeout(playlistFlashTimer);
+            playlistFlashTimer = null;
+        }
+
+        $flash.stop(true, true).text(message).fadeIn(80);
+        playlistFlashTimer = setTimeout(function() {
+            $flash.fadeOut(120);
+            playlistFlashTimer = null;
+        }, 1000);
     }
 
     /**
@@ -91,10 +130,12 @@ $(function() {
                         $icon.attr('class', 'icon-minus');
                         updatePlaylistInfo($copy);
                         $("#playlist tbody").append($copy);
+                        showPlaylistFlash('add');
                     }
                     else if ($target.is("#remove-from-playlist")) {
                         updatePlaylistInfo($selected, 'remove');
                         $selected.remove();
+                        showPlaylistFlash('remove');
                     }
                 }
 
@@ -225,6 +266,7 @@ $(function() {
         }
 
         updatePlaylistInfo($copy);
+        showPlaylistFlash('add');
 
         logDebug('clicked on add to playlist');
 
@@ -241,6 +283,7 @@ $(function() {
         e.stopPropagation();
         updatePlaylistInfo($(this).parent(), 'remove');
         $(this).parent().remove();
+        showPlaylistFlash('remove');
 
         logDebug('remove song from playlist');
     });

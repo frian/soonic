@@ -47,6 +47,8 @@
 
         {% block body %}{% endblock %}
 
+        {{ include('common/js-translations.html.twig') }}
+
         {% set js_files = [
             'js/jquery-4.0.0.min.js',
             'js/lozad.min.js',
