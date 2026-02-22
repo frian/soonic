@@ -55,56 +55,56 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 }
 
 @font-face {
-  font-family: "Lato";
+  font-family: Lato;
   src: url("/fonts/lato/lato-latin-300-normal.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Lato";
+  font-family: Lato;
   src: url("/fonts/lato/lato-latin-400-normal.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Lato";
+  font-family: Lato;
   src: url("/fonts/lato/lato-latin-700-normal.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Lato";
+  font-family: Lato;
   src: url("/fonts/lato/lato-latin-900-normal.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Muli";
+  font-family: Muli;
   src: url("/fonts/muli/mulish-latin-300-normal.woff2") format("woff2");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Muli";
+  font-family: Muli;
   src: url("/fonts/muli/mulish-latin-400-normal.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Muli";
+  font-family: Muli;
   src: url("/fonts/muli/mulish-latin-600-normal.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Muli";
+  font-family: Muli;
   src: url("/fonts/muli/mulish-latin-700-normal.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
@@ -118,7 +118,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   font-display: swap;
 }
 .material-icons {
-  font-family: "Material Icons";
+  font-family: "Material Icons", sans-serif;
   font-weight: 400;
   font-style: normal;
   font-size: 24px;
@@ -290,6 +290,14 @@ h2 {
 /*
   --  2/3/5. Topbar + Artists nav + Songs/playlist ----------------------------
 */
+#playlist-flash-message {
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
 /*
   --  6. Albums view ----------------------------------------------------------
 */

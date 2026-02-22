@@ -778,6 +778,18 @@ table.form tr td.button-row {
   display: none;
 }
 
+#playlist-flash-message {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: none;
+  padding: 10px 16px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
 /*
   -- Media query 500px --------------------------------------------------------
 */
