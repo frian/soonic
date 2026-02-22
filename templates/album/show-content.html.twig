@@ -19,7 +19,16 @@
                 <table class="album-songs">
                     <tbody>
                         {% for song in album.songs %}
-                            <tr>
+                            <tr
+                                data-path="{{ song.webPath }}"
+                                data-duration="{{ song.duration }}"
+                                data-track-number="{{ song.trackNumber }}"
+                                data-artist="{{ song.artist }}"
+                                data-title="{{ song.title }}"
+                                data-album="{{ album.name }}"
+                                data-year="{{ song.year }}"
+                                data-genre="{{ song.genre }}"
+                            >
                                 <td class="add">
                                     <i 
                                         class="icon-plus" 

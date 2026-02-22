@@ -13,8 +13,10 @@ $(function() {
         }
     }
 
-    function showPlaylistFlash(action) {
-        if ($(window).width() >= 1024) {
+    function showPlaylistFlash(action, options) {
+        options = options || {};
+
+        if (!options.force && $(window).width() > 1024) {
             return;
         }
 
@@ -49,6 +51,66 @@ $(function() {
             $flash.fadeOut(120);
             playlistFlashTimer = null;
         }, 1000);
+    }
+
+    function buildPlaylistRowFromAlbumSong($row) {
+        const $copy = $("<tr>", {
+            "data-path": $row.data("path"),
+            "data-duration": $row.data("duration")
+        });
+
+        $copy.append(
+            $("<td>", { "class": "add" }).append(
+                $("<i>", {
+                    "class": "icon-minus",
+                    role: "button",
+                    tabindex: 0
+                })
+            )
+        );
+        $copy.append($("<td>").text($row.data("track-number") || ""));
+        $copy.append($("<td>").text($row.data("artist") || ""));
+        $copy.append($("<td>").text($row.data("title") || ""));
+        $copy.append($("<td>").text($row.data("album") || ""));
+        $copy.append($("<td>").text($row.data("duration") || ""));
+        $copy.append($("<td>").text($row.data("year") || ""));
+        $copy.append($("<td>").text($row.data("genre") || ""));
+
+        return $copy;
+    }
+
+    function addSongToPlaylist($sourceRow, options) {
+        options = options || {};
+        const path = $sourceRow.data("path");
+
+        if (!path || playlistContainsPath(path)) {
+            return false;
+        }
+
+        let $copy = null;
+
+        if ($sourceRow.closest(".album-songs").length) {
+            $copy = buildPlaylistRowFromAlbumSong($sourceRow);
+        } else {
+            $copy = $sourceRow.clone();
+            const $icon = $copy.find(".icon-plus");
+            if ($copy.hasClass('playing')) {
+                $copy.removeClass('playing');
+            }
+            $copy.removeClass("selected");
+            $icon.attr('class', 'icon-minus');
+        }
+
+        $("#playlist tbody").append($copy);
+
+        if ($("#playlist").height() + 20 > $("#playlist-section").height()) {
+            $('.playlist-container').scrollTop($('.playlist-container').prop("scrollHeight"));
+        }
+
+        updatePlaylistInfo($copy);
+        showPlaylistFlash('add', { force: options.forceFlash === true });
+
+        return true;
     }
 
     /**
@@ -118,19 +180,11 @@ $(function() {
 
                 if ($target.length && $selected.length) {
                     if ($target.is("#add-to-playlist")) {
-                        if (playlistContainsPath($selected.data("path"))) {
+                        if (!addSongToPlaylist($selected)) {
                             $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
                             $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
                             return;
                         }
-
-                        const $copy = $selected.clone();
-                        $copy.removeClass("selected");
-                        const $icon = $copy.find(".icon-plus");
-                        $icon.attr('class', 'icon-minus');
-                        updatePlaylistInfo($copy);
-                        $("#playlist tbody").append($copy);
-                        showPlaylistFlash('add');
                     }
                     else if ($target.is("#remove-from-playlist")) {
                         updatePlaylistInfo($selected, 'remove');
@@ -246,33 +300,24 @@ $(function() {
         $button.data('adding', true);
 
         // -- add song
-        if (playlistContainsPath($button.parent().data("path"))) {
+        if (!addSongToPlaylist($button.parent(), { forceFlash: $(e.target).is("i.icon-plus") })) {
             setTimeout(function() {
                 $button.removeData('adding');
             }, 120);
             return;
         }
 
-        const $copy = $button.parent().clone();
-        const $icon = $copy.find(".icon-plus");
-        if ($copy.hasClass('playing')) {
-            $copy.removeClass('playing');
-        }
-        $icon.attr('class', 'icon-minus');
-        $("#playlist tbody").append($copy);
-
-        if ($("#playlist").height() + 20 > $("#playlist-section").height()) {
-            $('.playlist-container').scrollTop($('.playlist-container').prop("scrollHeight"));
-        }
-
-        updatePlaylistInfo($copy);
-        showPlaylistFlash('add');
-
         logDebug('clicked on add to playlist');
 
         setTimeout(function() {
             $button.removeData('adding');
         }, 120);
+    });
+
+    $(document).on("click", ".album-songs .icon-plus", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        addSongToPlaylist($(this).closest("tr"), { forceFlash: true });
     });
 
 
