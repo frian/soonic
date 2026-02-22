@@ -539,6 +539,9 @@ img.lozad {
   padding: 5px;
   border: 1px solid red;
 }
+.single-album-container .album-songs .icon-plus {
+  cursor: pointer;
+}
 .single-album-container .album-songs td:nth-child(1), .single-album-container .album-songs td:nth-child(3) {
   text-align: center;
 }
