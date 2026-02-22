@@ -396,11 +396,19 @@ class ScanCommand extends Command
             }
     
             
-            // -- bulk load collection
+            // -- bulk load collection (explicit columns to avoid table column-order mismatches)
+            $loadDataColumns = [
+                'song' => '(id, album_id, artist_id, path, web_path, title, track_number, year, genre, duration)',
+                'album' => '(id, name, album_slug, song_count, duration, year, genre, path, cover_art_path)',
+                'artist' => '(id, name, artist_slug, album_count, cover_art_path)',
+                'artist_album' => '(artist_id, album_id)',
+            ];
+
             foreach ($tables as $table) {
                 $query = "LOAD DATA LOCAL INFILE '".$sqlFilesPathes[$table]."'".
                     ' INTO TABLE '.$table." CHARACTER SET UTF8 FIELDS TERMINATED BY ';' ".
-                    " ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;";
+                    " ENCLOSED BY '\"' LINES TERMINATED BY '\n' IGNORE 1 ROWS ".
+                    $loadDataColumns[$table].';';
                 $em->getConnection()->prepare($query)->executeStatement();
     
                 if ($verbosity >= OutputInterface::VERBOSITY_VERBOSE) {
