@@ -14,7 +14,7 @@ $(function() {
     }
 
     function showPlaylistFlash(action) {
-        if ($(window).width() <= 1024) {
+        if ($(window).width() >= 1024) {
             return;
         }
 
