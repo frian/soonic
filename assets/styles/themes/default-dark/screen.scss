@@ -3,10 +3,11 @@
 */
 
 $theme-fg-color : #eee;
+$theme-bg-color : #111;
 
 @use "../base" with (
     $fg-color: $theme-fg-color,
-    $bg-color: #111,
+    $bg-color: $theme-bg-color,
     $hover-active: #060,
     $bg-alternate: #111,
     $header-color: #333,
@@ -52,6 +53,7 @@ body {
 */
 .single-album-container {
     color: $theme-fg-color;
+    background-color: $theme-bg-color ;
 }
 
 
