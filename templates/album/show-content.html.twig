@@ -45,6 +45,16 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                <div class="album-actions">
+                    <button
+                        type="button"
+                        class="button add-album-to-playlist"
+                        aria-label="{{ 'playlist.add'|trans|default('Add to playlist') }}"
+                        title="{{ 'playlist.add'|trans|default('Add to playlist') }}"
+                    >
+                        {{ 'playlist.add'|trans|default('Add to playlist') }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>

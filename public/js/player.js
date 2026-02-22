@@ -22,11 +22,15 @@ $(function() {
 
         const fallbackMessages = {
             add: 'Song added to playlist',
-            remove: 'Song removed from playlist'
+            remove: 'Song removed from playlist',
+            albumAdd: 'Album added to playlist'
         };
-        const translationKey = action === 'remove'
-            ? 'player.playlist.flash.remove'
-            : 'player.playlist.flash.add';
+        const translationKeys = {
+            add: 'player.playlist.flash.add',
+            remove: 'player.playlist.flash.remove',
+            albumAdd: 'player.playlist.flash.albumAdd'
+        };
+        const translationKey = translationKeys[action] || translationKeys.add;
         const message = typeof window.t === 'function'
             ? window.t(translationKey, fallbackMessages[action])
             : fallbackMessages[action];
@@ -108,9 +112,25 @@ $(function() {
         }
 
         updatePlaylistInfo($copy);
-        showPlaylistFlash('add', { force: options.forceFlash === true });
+        if (options.suppressFlash !== true) {
+            showPlaylistFlash('add', { force: options.forceFlash === true });
+        }
 
         return true;
+    }
+
+    function addAlbumToPlaylist($albumView) {
+        let addedCount = 0;
+
+        $albumView.find(".album-songs tbody tr").each(function() {
+            if (addSongToPlaylist($(this), { suppressFlash: true })) {
+                addedCount++;
+            }
+        });
+
+        if (addedCount > 0) {
+            showPlaylistFlash('albumAdd', { force: true });
+        }
     }
 
     /**
@@ -318,6 +338,12 @@ $(function() {
         e.preventDefault();
         e.stopPropagation();
         addSongToPlaylist($(this).closest("tr"), { forceFlash: true });
+    });
+
+    $(document).on("click", ".add-album-to-playlist", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        addAlbumToPlaylist($(this).closest(".single-album-view"));
     });
 
 

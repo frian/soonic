@@ -23,6 +23,7 @@ playlist.add: 'Aggiungi alla playlist'
 playlist.remove: 'rimuovi dalla playlist'
 playlist.flash.add: 'Brano aggiunto alla playlist'
 playlist.flash.remove: 'Brano rimosso dalla playlist'
+playlist.flash.album_add: 'Album aggiunto alla playlist'
 radio: radio
 radios: radio
 radio.new: 'nuova radio'

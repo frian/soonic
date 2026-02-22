@@ -544,6 +544,9 @@ img.lozad {
 .single-album-container .album-songs td:nth-child(1), .single-album-container .album-songs td:nth-child(3) {
   text-align: center;
 }
+.single-album-container .album-actions {
+  text-align: center;
+}
 
 /*
   --  7. Radios ---------------------------------------------------------------
