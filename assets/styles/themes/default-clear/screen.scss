@@ -2,8 +2,10 @@
   -- Default clear theme -------------------------------------------------------
 */
 
+$theme-fg-color: #111;
+
 @use "../base" with (
-    $fg-color: #111,
+    $fg-color: $theme-fg-color,
     $bg-color: #eee,
     $hover-active: #90ee90,
     $bg-alternate: #c8c8c8,
@@ -21,6 +23,10 @@
     $context-menu-hover-bg: rgba(191,255,0, 0.8)
 );
 
+
+/*
+  --  1. Global ---------------------------------------------------------------
+*/
 body {
     background: linear-gradient(
         to bottom right,
@@ -28,6 +34,7 @@ body {
         rgb(221 221 221 / 80%)
     );
 }
+
 
 .topbar {
     .logo {

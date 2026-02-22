@@ -2,8 +2,10 @@
   -- Default dark theme -------------------------------------------------------
 */
 
+$theme-fg-color : #eee;
+
 @use "../base" with (
-    $fg-color: #eee,
+    $fg-color: $theme-fg-color,
     $bg-color: #111,
     $hover-active: #060,
     $bg-alternate: #111,
@@ -23,6 +25,10 @@
     $mobile-button-bg: #111
 );
 
+
+/*
+  --  1. Global ---------------------------------------------------------------
+*/
 body {
     background: linear-gradient(
         to bottom right,
@@ -31,6 +37,28 @@ body {
     );
 }
 
+
+/*
+  --  4. Views ----------------------------------------------------------------
+*/
+.single-album-view {
+    border: 1px solid red;
+    background-color: rgb(0 0 0 / 80%);
+}
+
+
+/*
+  --  6.1 Single album view ---------------------------------------------------
+*/
+.single-album-container {
+    color: $theme-fg-color;
+}
+
+
+
+/*
+  --  8. Settings-view --------------------------------------------------------
+*/
 .settings-view .library-info select {
     border-color: #555;
     background-color: #1a1a1a;
@@ -48,6 +76,7 @@ body {
     border-color: #0a8a2a;
     box-shadow: 0 0 0 3px rgb(10 138 42 / 30%);
 }
+
 
 .topbar {
     .logo {

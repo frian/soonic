@@ -188,10 +188,31 @@ form div div input {
 /*
   -- Default dark theme -------------------------------------------------------
 */
+/*
+  --  1. Global ---------------------------------------------------------------
+*/
 body {
   background: linear-gradient(to bottom right, #111111, rgba(17, 17, 17, 0.9));
 }
 
+/*
+  --  4. Views ----------------------------------------------------------------
+*/
+.single-album-view {
+  border: 1px solid red;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/*
+  --  6.1 Single album view ---------------------------------------------------
+*/
+.single-album-container {
+  color: #eee;
+}
+
+/*
+  --  8. Settings-view --------------------------------------------------------
+*/
 .settings-view .library-info select {
   border-color: #555;
   background-color: #1a1a1a;

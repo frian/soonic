@@ -178,6 +178,9 @@ form div div input {
 /*
   -- Default clear theme -------------------------------------------------------
 */
+/*
+  --  1. Global ---------------------------------------------------------------
+*/
 body {
   background: linear-gradient(to bottom right, #dddddd, rgba(221, 221, 221, 0.8));
 }
