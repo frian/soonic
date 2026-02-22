@@ -61,7 +61,6 @@ $(function() {
                 $(document.body).append(data);
 
                 adjustAlbumContainer();
-                $(".single-album-view").css("top", $(window).scrollTop());
                 logDebug("scrollTop : " + $(window).scrollTop());
             },
             error: function() {
