@@ -119,7 +119,7 @@ class ScanCommand extends Command
         }
 
         // -- file types
-        $types = ['mp3', 'mp4', 'oga', 'wma', 'wav', 'mpg', 'mpc', 'm4a', 'm4p', 'flac'];
+        $types = ['mp3', 'mp4', 'oga', 'ogg', 'opus', 'wav', 'aac', 'm4a', 'webm', 'flac'];
         // -- counters
         $fileCount = 0;
         $skipCount = 0;
