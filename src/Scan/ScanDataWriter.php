@@ -24,6 +24,14 @@ final class ScanDataWriter
     }
 
     /**
+     * @return array<int, string>
+     */
+    public function getAlbumCoverFilenames(): array
+    {
+        return self::ALBUM_COVER_FILENAMES;
+    }
+
+    /**
      * @param array<int, string> $slugs
      * @param-out array<int, string> $slugs
      */
