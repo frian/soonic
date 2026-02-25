@@ -19,6 +19,7 @@ class ScanCommandTest extends KernelTestCase
     private string $testSymlinkPath;
     private string $advancedTestFilesPath;
     private string $musicBackupPath;
+    private bool $originalMusicPathExisted = false;
 
     protected function setUp(): void
     {
@@ -29,18 +30,28 @@ class ScanCommandTest extends KernelTestCase
         $this->musicPath = Path::normalize($this->projectDir.'/public/music');
         $this->renamedMusicPath = Path::normalize($this->projectDir.'/public/music_renamed_for_tests');
         $this->lockFilePath = Path::normalize($this->projectDir.'/var/lock/soonic.lock');
-        $this->testSymlinkPath = Path::normalize($this->musicPath.'/test');
+        $this->testSymlinkPath = Path::normalize($this->musicPath.'/__soonic_scan_fixture_'.str_replace('.', '_', uniqid('', true)));
         $this->advancedTestFilesPath = Path::normalize($this->projectDir.'/tests/Command/testfiles');
         $this->musicBackupPath = Path::normalize($this->projectDir.'/public/music_backup_for_tests');
+
+        // Make tests resilient to interrupted previous runs.
+        if ($this->pathExistsOrIsLink($this->lockFilePath)) {
+            $this->filesystem->remove($this->lockFilePath);
+        }
+        if ($this->pathExistsOrIsLink($this->testSymlinkPath)) {
+            $this->filesystem->remove($this->testSymlinkPath);
+        }
+
+        $this->isolateMusicDirectory();
     }
 
     protected function tearDown(): void
     {
-        if ($this->filesystem->exists($this->lockFilePath)) {
+        if ($this->pathExistsOrIsLink($this->lockFilePath)) {
             $this->filesystem->remove($this->lockFilePath);
         }
 
-        if ($this->filesystem->exists($this->testSymlinkPath)) {
+        if ($this->pathExistsOrIsLink($this->testSymlinkPath)) {
             $this->filesystem->remove($this->testSymlinkPath);
         }
 
@@ -49,10 +60,13 @@ class ScanCommandTest extends KernelTestCase
         }
 
         if ($this->filesystem->exists($this->musicBackupPath)) {
-            if ($this->filesystem->exists($this->musicPath)) {
+            if ($this->pathExistsOrIsLink($this->musicPath)) {
                 $this->filesystem->remove($this->musicPath);
             }
             $this->filesystem->rename($this->musicBackupPath, $this->musicPath);
+        } elseif (!$this->originalMusicPathExisted && $this->pathExistsOrIsLink($this->musicPath)) {
+            // Restore the original "missing public/music" state if it did not exist.
+            $this->filesystem->remove($this->musicPath);
         }
 
         parent::tearDown();
@@ -60,14 +74,6 @@ class ScanCommandTest extends KernelTestCase
 
     public function testCommandFailsWhenMusicFolderIsMissing(): void
     {
-        if (!$this->filesystem->exists($this->musicPath) || (!is_dir($this->musicPath) && !is_link($this->musicPath))) {
-            self::markTestSkipped('Missing usable public/music path.');
-        }
-
-        if ($this->filesystem->exists($this->renamedMusicPath)) {
-            self::markTestSkipped('public/music_renamed_for_tests already exists; refusing to overwrite.');
-        }
-
         $tester = $this->createCommandTester();
         $this->filesystem->rename($this->musicPath, $this->renamedMusicPath);
 
@@ -117,14 +123,9 @@ class ScanCommandTest extends KernelTestCase
 
     private function prepareEmptyMusicDirectory(): void
     {
-        if ($this->filesystem->exists($this->musicBackupPath)) {
-            self::fail('Temporary music backup path already exists: '.$this->musicBackupPath);
+        if ($this->pathExistsOrIsLink($this->musicPath)) {
+            $this->filesystem->remove($this->musicPath);
         }
-
-        if ($this->filesystem->exists($this->musicPath)) {
-            $this->filesystem->rename($this->musicPath, $this->musicBackupPath);
-        }
-
         $this->filesystem->mkdir($this->musicPath);
     }
 
@@ -137,6 +138,9 @@ class ScanCommandTest extends KernelTestCase
         }
 
         $tester = $this->createCommandTester();
+        if ($this->pathExistsOrIsLink($this->testSymlinkPath)) {
+            $this->filesystem->remove($this->testSymlinkPath);
+        }
         $this->filesystem->symlink($bugFolder, $this->testSymlinkPath);
 
         $output = $this->executeAndGetOutput($tester);
@@ -183,6 +187,9 @@ class ScanCommandTest extends KernelTestCase
         }
 
         $tester = $this->createCommandTester();
+        if ($this->pathExistsOrIsLink($this->testSymlinkPath)) {
+            $this->filesystem->remove($this->testSymlinkPath);
+        }
         $this->filesystem->symlink($okFolder, $this->testSymlinkPath);
 
         $output = $this->executeAndGetOutput($tester);
@@ -232,6 +239,30 @@ class ScanCommandTest extends KernelTestCase
         $tester->execute([], $options);
 
         return $tester->getDisplay();
+    }
+
+    private function pathExistsOrIsLink(string $path): bool
+    {
+        return $this->filesystem->exists($path) || is_link($path);
+    }
+
+    private function isolateMusicDirectory(): void
+    {
+        if ($this->pathExistsOrIsLink($this->musicBackupPath)) {
+            self::fail('Temporary music backup path already exists: '.$this->musicBackupPath);
+        }
+
+        if ($this->pathExistsOrIsLink($this->renamedMusicPath)) {
+            self::fail('Temporary renamed music path already exists: '.$this->renamedMusicPath);
+        }
+
+        $this->originalMusicPathExisted = $this->pathExistsOrIsLink($this->musicPath);
+
+        if ($this->originalMusicPathExisted) {
+            $this->filesystem->rename($this->musicPath, $this->musicBackupPath);
+        }
+
+        $this->filesystem->mkdir($this->musicPath);
     }
 
 }
