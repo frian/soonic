@@ -2,8 +2,8 @@
   -- Default dark theme -------------------------------------------------------
 */
 
-$theme-fg-color : #eee;
-$theme-bg-color : #111;
+$theme-fg-color: #eee;
+$theme-bg-color: #111;
 
 @use "../base" with (
     $fg-color: $theme-fg-color,
