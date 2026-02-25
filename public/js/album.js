@@ -51,7 +51,6 @@ $(function() {
         bodyWidthBeforeAlbum = $("body").css("width");
         pageScrollTopBeforeAlbum = window.scrollY || $(window).scrollTop() || 0;
 
-        $("body").css("overflow", "hidden");
         $("html").css("overflow", "hidden");
         $("body").css({
             position: "fixed",
