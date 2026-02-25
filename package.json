@@ -13,7 +13,7 @@
     "@fontsource/material-icons": "^5.2.7",
     "@fontsource/mulish": "^5.2.8",
     "postcss-scss": "^4.0.9",
-    "stylelint": "^16.15.0",
-    "stylelint-config-standard-scss": "^14.0.0"
+    "stylelint": "^17.4.0",
+    "stylelint-config-standard-scss": "^17.0.0"
   }
 }
