@@ -147,5 +147,9 @@ $(function() {
         }
     });
 
+    $(document).on("soonic:closeAlbumOverlay", function() {
+        closeSingleAlbumView();
+    });
+
 
 });

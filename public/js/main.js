@@ -57,6 +57,7 @@ $(function() {
     $(document).on("click", "#library-button", function(e) {
 
         e.preventDefault();
+        $(document).trigger("soonic:closeAlbumOverlay");
 
         $(openView).css('display', 'none');
         openView = null;
@@ -86,6 +87,7 @@ $(function() {
     $(document).on("click", "#albums-button", function(e) {
 
         e.preventDefault();
+        $(document).trigger("soonic:closeAlbumOverlay");
 
         $(openView).css('display', 'none');
         $('.library-view').css('display', 'none');
@@ -124,6 +126,7 @@ $(function() {
     $(document).on("click", "#radio-button", function(e) {
 
         e.preventDefault();
+        $(document).trigger("soonic:closeAlbumOverlay");
 
         $(openView).css('display', 'none');
         $('.library-view').css('display', 'none');
@@ -190,6 +193,7 @@ $(function() {
     $(document).on("click", "#radio-new-button", function(e) {
 
         e.preventDefault();
+        $(document).trigger("soonic:closeAlbumOverlay");
 
         $(openView).css('display', 'none');
         $('.library-view').css('display', 'none');
@@ -229,6 +233,7 @@ $(function() {
     $(document).on("click", "#settings-button", function(e) {
 
         e.preventDefault();
+        $(document).trigger("soonic:closeAlbumOverlay");
 
         $(openView).css('display', 'none');
         $('.library-view').css('display', 'none');
