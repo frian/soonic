@@ -72,6 +72,12 @@ table {
     overflow-y: scroll;
 }
 
+.single-album-view {
+    position: fixed;
+    left: 0;
+    z-index: 200;
+}
+
 
 .radios-view {
     font-size: 0;

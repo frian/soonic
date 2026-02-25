@@ -4,8 +4,12 @@ $(function() {
     let isLoadingAlbum = false;
     let currentAlbumRequest = null;
     let pageScrollWasLocked = false;
+    let pageScrollTopBeforeAlbum = 0;
     let bodyOverflowBeforeAlbum = "";
     let htmlOverflowBeforeAlbum = "";
+    let bodyPositionBeforeAlbum = "";
+    let bodyTopBeforeAlbum = "";
+    let bodyWidthBeforeAlbum = "";
 
     function logDebug(message) {
         if (debug) {
@@ -42,9 +46,18 @@ $(function() {
 
         bodyOverflowBeforeAlbum = $("body").css("overflow");
         htmlOverflowBeforeAlbum = $("html").css("overflow");
+        bodyPositionBeforeAlbum = $("body").css("position");
+        bodyTopBeforeAlbum = $("body").css("top");
+        bodyWidthBeforeAlbum = $("body").css("width");
+        pageScrollTopBeforeAlbum = window.scrollY || $(window).scrollTop() || 0;
 
         $("body").css("overflow", "hidden");
         $("html").css("overflow", "hidden");
+        $("body").css({
+            position: "fixed",
+            top: (-pageScrollTopBeforeAlbum) + "px",
+            width: "100%"
+        });
         pageScrollWasLocked = true;
     }
 
@@ -55,6 +68,12 @@ $(function() {
 
         $("body").css("overflow", bodyOverflowBeforeAlbum || "");
         $("html").css("overflow", htmlOverflowBeforeAlbum || "");
+        $("body").css({
+            position: bodyPositionBeforeAlbum || "",
+            top: bodyTopBeforeAlbum || "",
+            width: bodyWidthBeforeAlbum || ""
+        });
+        window.scrollTo(0, pageScrollTopBeforeAlbum);
         pageScrollWasLocked = false;
     }
 

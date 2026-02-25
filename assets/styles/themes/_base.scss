@@ -63,6 +63,7 @@ h2 {
   --  2. Topbar ---------------------------------------------------------------
 */
 .topbar {
+    background-color: $bg-color;
     border-bottom-color: $border-color;
 
     .song-artist {

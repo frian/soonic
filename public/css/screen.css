@@ -290,6 +290,10 @@ h2 {
 /*
   --  2/3/5. Topbar + Artists nav + Songs/playlist ----------------------------
 */
+.topbar {
+  background-color: #eee;
+}
+
 #playlist-flash-message {
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.85);

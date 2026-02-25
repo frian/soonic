@@ -99,6 +99,11 @@
 }
 
 .topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 300;
   height: 49px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
@@ -334,6 +339,12 @@ table {
   flex-wrap: wrap;
   align-content: flex-start;
   overflow-y: scroll;
+}
+
+.single-album-view {
+  position: fixed;
+  left: 0;
+  z-index: 200;
 }
 
 .radios-view {

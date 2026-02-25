@@ -3,6 +3,11 @@ $topbar-size: 49px !default;
 $topbar-border-size: 1px !default;
 
 .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 300;
     height: $topbar-size;
     border-bottom-width: $topbar-border-size;
     border-bottom-style: solid;
