@@ -148,6 +148,17 @@ h2 {
         font-size: 4em;
     }
 
+    .radio-edit-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+
+        .material-icons {
+            font-size: 1.3rem;
+        }
+    }
+
     &.active-radio {
         background-color: $hover-active;
     }

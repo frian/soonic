@@ -1,6 +1,14 @@
 <section id="radios" class="radios-view view">
     {% for radio in radios %}
         <section class="radio clearfix">
+            <a
+                class="radio-edit-link"
+                href="{{ path('radio_edit', { id: radio.id }) }}"
+                aria-label="{{ 'edit'|trans }}"
+                title="{{ 'edit'|trans }}"
+            >
+                <span class="material-icons" aria-hidden="true">edit</span>
+            </a>
             <div class="button-wrapper">
                 <i class="icon-play radio-play" role="button" tabindex="0" aria-label="Play radio" title="Play radio"></i>
                 <audio preload="none">

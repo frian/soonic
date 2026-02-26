@@ -574,6 +574,7 @@ img.lozad {
 .radio {
   font-size: 16px;
   box-sizing: border-box;
+  position: relative;
   border: 0px solid red;
 }
 .radio .radio-name, .radio .radio-url {
@@ -605,6 +606,13 @@ img.lozad {
   box-sizing: border-box;
   padding: 0;
   border: 0px solid yellow;
+}
+.radio .radio-edit-link {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  line-height: 1;
+  z-index: 1;
 }
 
 label[for=appbundle_radio_enabled], [id=appbundle_radio_enabled],

@@ -322,6 +322,18 @@ $(function() {
         pushHistoryIfNeeded(url);
     });
 
+    $(document).on("click", ".radios-view .radio-edit-link", function(e) {
+        const url = $(this).attr('href');
+        if (!url) {
+            return;
+        }
+
+        e.preventDefault();
+        loadRadioSubview(url, '.radio-edit-view');
+        setRadioFormNavState();
+        pushHistoryIfNeeded(url);
+    });
+
     $(document).on("click", ".radio-show-view a, .radio-edit-view a, .radio-new-view a", function(e) {
         const url = $(this).attr('href');
         if (!url || !/^\/radio(?:\/\d+(?:\/edit)?|\/new|\/)?(?:\?.*)?$/.test(url)) {

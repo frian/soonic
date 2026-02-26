@@ -364,6 +364,7 @@ img.lozad {
 .radio {
     font-size: 16px;
     box-sizing: border-box;
+    position: relative;
     border: #{$debug}px solid red;
 
     .radio-name, .radio-url {
@@ -398,6 +399,14 @@ img.lozad {
         box-sizing: border-box;
         padding: 0;
         border: #{$debug}px solid yellow;
+    }
+
+    .radio-edit-link {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        line-height: 1;
+        z-index: 1;
     }
 }
 
