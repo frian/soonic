@@ -42,6 +42,7 @@ html, body {
 body {
     color: $fg-color;
     background-color: $bg-color;
+    background-attachment: fixed;
 }
 
 // body:before {

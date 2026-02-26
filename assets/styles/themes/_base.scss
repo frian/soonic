@@ -27,6 +27,7 @@ $mobile-button-bg: null !default;
 body {
     color: $fg-color;
     background-color: $bg-color;
+    background-attachment: fixed;
 }
 
 a {

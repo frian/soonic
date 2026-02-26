@@ -261,6 +261,7 @@ html, body {
 body {
   color: #111;
   background-color: #eee;
+  background-attachment: fixed;
 }
 
 a {
