@@ -787,6 +787,13 @@ $(function() {
         }
     });
 
+    $(document).on("submit", ".radio-delete-form", function(e) {
+        const message = $(this).data('confirm') || 'Delete this radio?';
+        if (!window.confirm(message)) {
+            e.preventDefault();
+        }
+    });
+
 
     /**
      * reload artist artist on clear filter form

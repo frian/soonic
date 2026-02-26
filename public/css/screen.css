@@ -475,10 +475,15 @@ form div div input {
   background: linear-gradient(to top, rgba(34, 34, 34, 0.2), rgba(51, 51, 51, 0.1));
 }
 
+.button.danger {
+  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
+}
+
 .button:hover {
   background: linear-gradient(to top, rgba(34, 34, 34, 0.1), rgba(51, 51, 51, 0));
 }
-.button:hover.danger:hover {
+
+.button.danger:hover {
   background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
 }
 

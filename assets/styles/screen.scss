@@ -295,12 +295,16 @@ form div div input {
     background: $default-gradient;
 }
 
+.button.danger {
+    background: $red-gradient;
+}
+
 .button:hover {
     background: $hover-gradient;
+}
 
-    &.danger:hover {
-        background: $red-gradient;
-    }
+.button.danger:hover {
+    background: $red-gradient;
 }
 
 .running {

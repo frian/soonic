@@ -160,8 +160,16 @@ form div div input {
   background: linear-gradient(to top, #dddddd, rgba(204, 204, 204, 0.9));
 }
 
+.button.danger {
+  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
+}
+
 .button:hover {
   background: linear-gradient(to top, lightgreen, rgba(144, 238, 144, 0.5));
+}
+
+.button.danger:hover {
+  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
 }
 
 /*

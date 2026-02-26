@@ -220,8 +220,16 @@ form div div input {
     background: $default-gradient;
 }
 
+.button.danger {
+    background: linear-gradient(to top, rgb(204 0 0 / 100%), rgb(204 0 0 / 50%));
+}
+
 .button:hover {
     background: $hover-gradient;
+}
+
+.button.danger:hover {
+    background: linear-gradient(to top, rgb(204 0 0 / 100%), rgb(204 0 0 / 50%));
 }
 
 /*

@@ -31,4 +31,17 @@
         </table>
         {{ form_rest(edit_form) }}
     {{ form_end(edit_form, { render_rest: false }) }}
+
+    <div class="button-wrapper">
+        <form
+            method="post"
+            action="{{ path('radio_delete', { id: radio.id }) }}"
+            class="radio-delete-form"
+            data-confirm="{{ 'radio.delete.confirm'|trans|default('Delete this radio?') }}"
+        >
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ radio.id) }}">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="button danger">{{ 'delete'|trans|default('Delete') }}</button>
+        </form>
+    </div>
 </div>
