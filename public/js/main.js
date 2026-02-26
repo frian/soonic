@@ -67,6 +67,8 @@ $(function() {
             $('#library-button').trigger('click');
         } else if (path === '/album/') {
             $('#albums-button').trigger('click');
+        } else if (/^\/album\/\d+$/.test(path)) {
+            $('#albums-button').trigger('click');
         } else if (path === '/radio/') {
             loadRadioPage(fullUrl);
             $('#navigation-library, #navigation-albums, #navigation-radio-new, #navigation-settings').css('display', 'list-item');

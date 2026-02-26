@@ -17,6 +17,23 @@ $(function() {
         }
     }
 
+    function isAlbumShowPath(pathname) {
+        return /^\/album\/\d+$/.test(pathname || window.location.pathname);
+    }
+
+    function pushAlbumHistory(url) {
+        if (!window.history || !window.history.pushState || !url) {
+            return;
+        }
+
+        const currentUrl = window.location.pathname + window.location.search;
+        if (url === currentUrl) {
+            return;
+        }
+
+        window.history.pushState({ url: url }, "", url);
+    }
+
     function adjustAlbumContainer() {
         const $albumView = $(".single-album-view");
         const $albumContainer = $(".single-album-container");
@@ -34,7 +51,19 @@ $(function() {
         });
     }
 
-    function closeSingleAlbumView() {
+    function closeSingleAlbumView(options) {
+        const opts = options || {};
+
+        if (!opts.fromHistory && isAlbumShowPath() && $(".albums-view").length && window.history && window.history.back) {
+            window.history.back();
+            return;
+        }
+
+        if (!opts.fromHistory && isAlbumShowPath() && !$(".albums-view").length) {
+            window.location.href = "/album/";
+            return;
+        }
+
         $(".single-album-view").remove();
         unlockPageScroll();
     }
@@ -79,16 +108,15 @@ $(function() {
     if ($(".single-album-view").length) {
         adjustAlbumContainer();
         lockPageScroll();
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState({ url: window.location.pathname + window.location.search }, "", window.location.pathname + window.location.search);
+        }
     }
 
+    function openAlbumOverlay(albumId, options) {
+        const opts = options || {};
 
-    /**
-     * show album
-     */
-    $(document).on("click", ".img-wrapper", function(e) {
-        e.preventDefault();
-
-        if ($(this).closest(".single-album-view").length) {
+        if (!albumId) {
             return;
         }
 
@@ -96,14 +124,6 @@ $(function() {
             return;
         }
         isLoadingAlbum = true;
-
-        logDebug("clicked on an album");
-
-        const albumId = $(this).closest("[data-album-id]").data("album-id");
-        if (!albumId) {
-            isLoadingAlbum = false;
-            return;
-        }
 
         const url = "/album/" + albumId;
         logDebug("url : " + url);
@@ -121,6 +141,9 @@ $(function() {
 
                 adjustAlbumContainer();
                 lockPageScroll();
+                if (!opts.fromHistory) {
+                    pushAlbumHistory(url);
+                }
                 logDebug("scrollTop : " + $(window).scrollTop());
             },
             error: function() {
@@ -131,6 +154,31 @@ $(function() {
                 currentAlbumRequest = null;
             }
         });
+    }
+
+
+    /**
+     * show album
+     */
+    $(document).on("click", ".img-wrapper", function(e) {
+        e.preventDefault();
+
+        if ($(this).closest(".single-album-view").length) {
+            return;
+        }
+
+        if (isLoadingAlbum) {
+            return;
+        }
+
+        logDebug("clicked on an album");
+
+        const albumId = $(this).closest("[data-album-id]").data("album-id");
+        if (!albumId) {
+            return;
+        }
+
+        openAlbumOverlay(albumId);
     });
 
     $(document).on("click", ".single-album-view", function(e) {
@@ -149,6 +197,19 @@ $(function() {
 
     $(document).on("soonic:closeAlbumOverlay", function() {
         closeSingleAlbumView();
+    });
+
+    $(window).on("popstate", function() {
+        const pathname = window.location.pathname;
+
+        if (isAlbumShowPath(pathname) && $(".albums-view").length) {
+            const match = pathname.match(/^\/album\/(\d+)$/);
+            if (match) {
+                openAlbumOverlay(match[1], { fromHistory: true });
+            }
+        } else if (!isAlbumShowPath(pathname) && $(".single-album-view").length) {
+            closeSingleAlbumView({ fromHistory: true });
+        }
     });
 
 
