@@ -217,6 +217,7 @@ form div div input {
 
 .button {
     color: $fg-color;
+    cursor: pointer;
     background: $default-gradient;
     transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
 }
