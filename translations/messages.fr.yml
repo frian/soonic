@@ -1,4 +1,5 @@
 album: album
+album.play: 'lire l''album'
 albums: albums
 artist: artiste
 artists: artistes

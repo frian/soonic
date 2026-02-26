@@ -50,6 +50,14 @@
                 <div class="album-actions">
                     <button
                         type="button"
+                        class="button play-album"
+                        aria-label="{{ 'album.play'|trans|default('Play album') }}"
+                        title="{{ 'album.play'|trans|default('Play album') }}"
+                    >
+                        {{ 'album.play'|trans|default('Play album') }}
+                    </button>
+                    <button
+                        type="button"
                         class="button add-album-to-playlist"
                         aria-label="{{ 'playlist.add'|trans|default('Add to playlist') }}"
                         title="{{ 'playlist.add'|trans|default('Add to playlist') }}"

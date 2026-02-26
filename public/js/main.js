@@ -654,6 +654,22 @@ $(function() {
         }
     }
 
+    $(document).on("soonic:updateSongPanel", function(e, payload) {
+        if (!payload) {
+            return;
+        }
+
+        if (typeof payload.html === "string") {
+            loadSongPanel(payload.html);
+            return;
+        }
+
+        if (payload.tbody) {
+            $("#songs tbody").remove();
+            $("#songs").append(payload.tbody);
+        }
+    });
+
     function upsertRadiosView(data) {
         const $incoming = $('<div>').html(data).find('.radios-view').first();
         if (!$incoming.length) {

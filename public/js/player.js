@@ -83,6 +83,32 @@ $(function() {
         return $copy;
     }
 
+    function buildSongsRowFromAlbumSong($row) {
+        const $copy = $("<tr>", {
+            "data-path": $row.data("path"),
+            "data-duration": $row.data("duration")
+        });
+
+        $copy.append(
+            $("<td>", { "class": "add" }).append(
+                $("<i>", {
+                    "class": "icon-plus",
+                    role: "button",
+                    tabindex: 0
+                })
+            )
+        );
+        $copy.append($("<td>").text($row.data("track-number") || ""));
+        $copy.append($("<td>").text($row.data("artist") || ""));
+        $copy.append($("<td>").text($row.data("title") || ""));
+        $copy.append($("<td>").text($row.data("album") || ""));
+        $copy.append($("<td>").text($row.data("duration") || ""));
+        $copy.append($("<td>").text($row.data("year") || ""));
+        $copy.append($("<td>").text($row.data("genre") || ""));
+
+        return $copy;
+    }
+
     function addSongToPlaylist($sourceRow, options) {
         options = options || {};
         const path = $sourceRow.data("path");
@@ -130,6 +156,29 @@ $(function() {
 
         if (addedCount > 0) {
             showPlaylistFlash('albumAdd', { force: true });
+        }
+    }
+
+    function playAlbumFromOverlay($albumView) {
+        const $tbody = $("<tbody>");
+
+        $albumView.find(".album-songs tbody tr").each(function() {
+            const $row = $(this);
+            if (!$row.data("path")) {
+                return;
+            }
+            $tbody.append(buildSongsRowFromAlbumSong($row));
+        });
+
+        if (!$tbody.children().length) {
+            return;
+        }
+
+        $(document).trigger("soonic:updateSongPanel", [{ tbody: $tbody }]);
+
+        const $firstSong = $tbody.find("tr").first();
+        if ($firstSong.length) {
+            $firstSong.trigger("click");
         }
     }
 
@@ -344,6 +393,12 @@ $(function() {
         e.preventDefault();
         e.stopPropagation();
         addAlbumToPlaylist($(this).closest(".single-album-view"));
+    });
+
+    $(document).on("click", ".play-album", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        playAlbumFromOverlay($(this).closest(".single-album-view"));
     });
 
 

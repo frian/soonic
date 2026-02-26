@@ -1,4 +1,5 @@
 album: album
+album.play: 'riproduci album'
 albums: album
 artist: artist
 artists: artisti
