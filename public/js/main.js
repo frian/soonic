@@ -40,19 +40,71 @@ $(function() {
         }
     }
 
+    function upsertSingleView(data, selector) {
+        const $incoming = $('<div>').html(data).find(selector).first();
+        if (!$incoming.length) {
+            return false;
+        }
+
+        if ($(selector).length) {
+            $(selector).replaceWith($incoming);
+        } else {
+            $(document.body).append($incoming);
+        }
+
+        return true;
+    }
+
+    function setRadioListNavState() {
+        $('#navigation-library, #navigation-albums, #navigation-radio-new, #navigation-settings').css('display', 'list-item');
+        $('#navigation-radios, #navigation-random, #navigation-search-form').css('display', 'none');
+    }
+
+    function setRadioFormNavState() {
+        $('#navigation-library, #navigation-albums, #navigation-radios, #navigation-settings').css('display', 'list-item');
+        $('#navigation-random, #navigation-radio-new, #navigation-search-form').css('display', 'none');
+    }
+
+    function hideRadioViews() {
+        $('.radios-view, .radio-new-view, .radio-show-view, .radio-edit-view').css('display', 'none');
+    }
+
+    function activateRadioSubview(selector) {
+        $(document).trigger("soonic:closeAlbumOverlay");
+        $(openView).css('display', 'none');
+        $('.library-view').css('display', 'none');
+        hideRadioViews();
+        $(selector).css('display', 'block');
+        openView = selector;
+        setSongInfoSize();
+    }
+
     function loadRadioPage(url) {
         $.ajax({
             url: url,
             cache: false,
             success: function(data) {
                 upsertRadiosView(data);
-                $('.library-view').css('display', 'none');
-                $('.radios-view').css('display', 'block');
-                openView = '.radios-view';
-                setSongInfoSize();
+                activateRadioSubview('.radios-view');
             },
             error: function() {
                 logDebug("radios pagination error");
+            }
+        });
+    }
+
+    function loadRadioSubview(url, selector) {
+        $.ajax({
+            url: url,
+            cache: false,
+            success: function(data) {
+                if (!upsertSingleView(data, selector)) {
+                    return;
+                }
+                activateRadioSubview(selector);
+            },
+            error: function() {
+                logDebug("radio subview load error");
             }
         });
     }
@@ -71,10 +123,15 @@ $(function() {
             $('#albums-button').trigger('click');
         } else if (path === '/radio/') {
             loadRadioPage(fullUrl);
-            $('#navigation-library, #navigation-albums, #navigation-radio-new, #navigation-settings').css('display', 'list-item');
-            $('#navigation-radios, #navigation-random, #navigation-search-form').css('display', 'none');
+            setRadioListNavState();
         } else if (path === '/radio/new') {
             $('#radio-new-button').trigger('click');
+        } else if (/^\/radio\/\d+\/edit$/.test(path)) {
+            loadRadioSubview(fullUrl, '.radio-edit-view');
+            setRadioFormNavState();
+        } else if (/^\/radio\/\d+$/.test(path)) {
+            loadRadioSubview(fullUrl, '.radio-show-view');
+            setRadioFormNavState();
         } else if (path === '/settings/') {
             $('#settings-button').trigger('click');
         }
@@ -225,7 +282,7 @@ $(function() {
         $('.library-view').css('display', 'none');
 
         if ($('.radios-view').length) {
-            $('.radios-view').css('display', 'block');
+            activateRadioSubview('.radios-view');
         } else {
             const url = "/radio/";
 
@@ -234,17 +291,14 @@ $(function() {
                 cache: true,
                 success: function(data) {
                     upsertRadiosView(data);
+                    activateRadioSubview('.radios-view');
                 },
                 error: function() {
                     logDebug("radios load error");
                 }
             });
         }
-
-        $('#navigation-library, #navigation-albums, #navigation-radio-new, #navigation-settings').css('display', 'list-item');
-        $('#navigation-radios, #navigation-random, #navigation-search-form').css('display', 'none');
-        setSongInfoSize();
-        openView = '.radios-view';
+        setRadioListNavState();
         pushHistoryIfNeeded($(this).attr('href') || '/radio/');
 
         if (debug) {
@@ -268,6 +322,33 @@ $(function() {
         pushHistoryIfNeeded(url);
     });
 
+    $(document).on("click", ".radio-show-view a, .radio-edit-view a, .radio-new-view a", function(e) {
+        const url = $(this).attr('href');
+        if (!url || !/^\/radio(?:\/\d+(?:\/edit)?|\/new|\/)?(?:\?.*)?$/.test(url)) {
+            return;
+        }
+
+        e.preventDefault();
+
+        if (/^\/radio\/(?:\?.*)?$/.test(url) || /^\/radio\/\?/.test(url)) {
+            loadRadioPage(url);
+            setRadioListNavState();
+        } else if (/^\/radio\/new$/.test(url)) {
+            loadRadioSubview(url, '.radio-new-view');
+            setRadioFormNavState();
+        } else if (/^\/radio\/\d+\/edit$/.test(url)) {
+            loadRadioSubview(url, '.radio-edit-view');
+            setRadioFormNavState();
+        } else if (/^\/radio\/\d+$/.test(url)) {
+            loadRadioSubview(url, '.radio-show-view');
+            setRadioFormNavState();
+        } else {
+            return;
+        }
+
+        pushHistoryIfNeeded(url);
+    });
+
 
     /**
      * Load new radio page
@@ -281,7 +362,7 @@ $(function() {
         $('.library-view').css('display', 'none');
 
         if ($('.radio-new-view').length) {
-            $('.radio-new-view').css('display', 'block');
+            activateRadioSubview('.radio-new-view');
         } else {
             const url = "/radio/new";
 
@@ -289,18 +370,15 @@ $(function() {
                 url: url,
                 cache: true,
                 success: function(data) {
-                    $(document.body).append(data);
+                    upsertSingleView(data, '.radio-new-view');
+                    activateRadioSubview('.radio-new-view');
                 },
                 error: function() {
                     logDebug("radio new load error");
                 }
             });
         }
-
-        $('#navigation-library, #navigation-albums, #navigation-radios, #navigation-settings').css('display', 'list-item');
-        $('#navigation-random, #navigation-radio-new').css('display', 'none');
-        setSongInfoSize();
-        openView = '.radio-new-view';
+        setRadioFormNavState();
         pushHistoryIfNeeded($(this).attr('href') || '/radio/new');
 
         if (debug) {
