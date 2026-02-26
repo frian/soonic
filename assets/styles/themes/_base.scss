@@ -11,6 +11,7 @@ $border-color: #666 !default;
 $default-gradient: linear-gradient(to top, rgb(221 221 221 / 100%), rgb(204 204 204 / 90%)) !default;
 $hover-gradient: linear-gradient(to top, rgb(144 238 144 / 100%), rgb(144 238 144 / 50%)) !default;
 $red-gradient: linear-gradient(to top, rgb(204 0 0 / 100%), rgb(204 0 0 / 50%)) !default;
+$red-gradient-dark: linear-gradient(to top, rgb(140 0 0 / 100%), rgb(140 0 0 / 60%)) !default;
 $song-artist-color: #333 !default;
 $progressbar-color: $border-color !default;
 $filter-input-bg: white !default;
@@ -225,7 +226,7 @@ form div div input {
 }
 
 .button.danger {
-    background: $red-gradient;
+    background: $red-gradient-dark;
 }
 
 .button:focus-visible,

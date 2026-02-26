@@ -479,7 +479,7 @@ form div div input {
 }
 
 .button.danger {
-  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
+  background: linear-gradient(to top, #8c0000, rgba(140, 0, 0, 0.6));
 }
 
 .button:focus-visible,
