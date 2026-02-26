@@ -158,20 +158,40 @@ form div div input {
 .button {
   color: #111;
   background: linear-gradient(to top, #dddddd, rgba(204, 204, 204, 0.9));
+  transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
 }
 
 .button.danger {
   background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
 }
 
-.button:hover {
-  background: linear-gradient(to top, lightgreen, rgba(144, 238, 144, 0.5));
+.button:focus-visible,
+[role=button]:focus-visible,
+.radio-edit-link:focus-visible {
+  outline: 2px solid #666;
+  outline-offset: 2px;
 }
 
-.button.danger:hover {
-  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
+.button:active,
+[role=button]:active,
+.radio-edit-link:active {
+  transform: translateY(1px);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    background: linear-gradient(to top, lightgreen, rgba(144, 238, 144, 0.5));
+  }
+
+  .button.danger:hover {
+    background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
+  }
+
+  [role=button]:hover,
+.radio-edit-link:hover {
+    opacity: 0.85;
+  }
+}
 /*
   -- 13. Context menus --------------------------------------------------------
 */

@@ -218,18 +218,39 @@ form div div input {
 .button {
     color: $fg-color;
     background: $default-gradient;
+    transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
 }
 
 .button.danger {
     background: linear-gradient(to top, rgb(204 0 0 / 100%), rgb(204 0 0 / 50%));
 }
 
-.button:hover {
-    background: $hover-gradient;
+.button:focus-visible,
+[role="button"]:focus-visible,
+.radio-edit-link:focus-visible {
+    outline: 2px solid $border-color;
+    outline-offset: 2px;
 }
 
-.button.danger:hover {
-    background: linear-gradient(to top, rgb(204 0 0 / 100%), rgb(204 0 0 / 50%));
+.button:active,
+[role="button"]:active,
+.radio-edit-link:active {
+    transform: translateY(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .button:hover {
+        background: $hover-gradient;
+    }
+
+    .button.danger:hover {
+        background: linear-gradient(to top, rgb(204 0 0 / 100%), rgb(204 0 0 / 50%));
+    }
+
+    [role="button"]:hover,
+    .radio-edit-link:hover {
+        opacity: 0.85;
+    }
 }
 
 /*
