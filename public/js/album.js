@@ -54,12 +54,12 @@ $(function() {
     function closeSingleAlbumView(options) {
         const opts = options || {};
 
-        if (!opts.fromHistory && isAlbumShowPath() && $(".albums-view").length && window.history && window.history.back) {
+        if (!opts.force && !opts.fromHistory && isAlbumShowPath() && $(".albums-view").length && window.history && window.history.back) {
             window.history.back();
             return;
         }
 
-        if (!opts.fromHistory && isAlbumShowPath() && !$(".albums-view").length) {
+        if (!opts.force && !opts.fromHistory && isAlbumShowPath() && !$(".albums-view").length) {
             window.location.href = "/album/";
             return;
         }
@@ -196,7 +196,7 @@ $(function() {
     });
 
     $(document).on("soonic:closeAlbumOverlay", function() {
-        closeSingleAlbumView();
+        closeSingleAlbumView({ force: true });
     });
 
     $(window).on("popstate", function() {
