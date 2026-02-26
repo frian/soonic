@@ -6,6 +6,7 @@ $(function() {
     let mobileMenuState = 'closed';
     let openView = null;
     let scanLoop = null;
+    let isHistoryNavigation = false;
 
     function logDebug(message) {
         if (debug) {
@@ -13,7 +14,76 @@ $(function() {
         }
     }
 
+    function pushHistoryIfNeeded(url) {
+        if (isHistoryNavigation || !window.history || !window.history.pushState || !url) {
+            return;
+        }
+
+        const currentUrl = window.location.pathname + window.location.search;
+        if (url === currentUrl) {
+            return;
+        }
+
+        window.history.pushState({ url: url }, "", url);
+    }
+
+    function upsertLibraryView(data) {
+        const $incoming = $('<div>').html(data).find('.library-view').first();
+        if (!$incoming.length) {
+            return;
+        }
+
+        if ($('.library-view').length) {
+            $('.library-view').replaceWith($incoming);
+        } else {
+            $(document.body).append($incoming);
+        }
+    }
+
+    function loadRadioPage(url) {
+        $.ajax({
+            url: url,
+            cache: false,
+            success: function(data) {
+                upsertRadiosView(data);
+                $('.library-view').css('display', 'none');
+                $('.radios-view').css('display', 'block');
+                openView = '.radios-view';
+                setSongInfoSize();
+            },
+            error: function() {
+                logDebug("radios pagination error");
+            }
+        });
+    }
+
+    function restoreViewFromLocation() {
+        const path = window.location.pathname;
+        const fullUrl = path + window.location.search;
+
+        isHistoryNavigation = true;
+
+        if (path === '/') {
+            $('#library-button').trigger('click');
+        } else if (path === '/album/') {
+            $('#albums-button').trigger('click');
+        } else if (path === '/radio/') {
+            loadRadioPage(fullUrl);
+            $('#navigation-library, #navigation-albums, #navigation-radio-new, #navigation-settings').css('display', 'list-item');
+            $('#navigation-radios, #navigation-random, #navigation-search-form').css('display', 'none');
+        } else if (path === '/radio/new') {
+            $('#radio-new-button').trigger('click');
+        } else if (path === '/settings/') {
+            $('#settings-button').trigger('click');
+        }
+
+        isHistoryNavigation = false;
+    }
+
     _init();
+    if (window.history && window.history.replaceState) {
+        window.history.replaceState({ url: window.location.pathname + window.location.search }, "", window.location.pathname + window.location.search);
+    }
 
     // Recompute after full load/fonts: prevents occasional wrong topbar layout on cached reloads.
     $(window).on('load', function() {
@@ -25,6 +95,10 @@ $(function() {
             setSongInfoSize();
         });
     }
+
+    $(window).on("popstate", function() {
+        restoreViewFromLocation();
+    });
 
     // Accessibility: make custom role=button controls keyboard-activable.
     $(document).on("keydown", '[role="button"]', function(e) {
@@ -62,11 +136,27 @@ $(function() {
         $(openView).css('display', 'none');
         openView = null;
 
-        $('.library-view').css('display', 'block');
+        if ($('.library-view').length) {
+            $('.library-view').css('display', 'block');
+        } else {
+            $.ajax({
+                url: '/',
+                cache: true,
+                success: function(data) {
+                    upsertLibraryView(data);
+                    $('.library-view').css('display', 'block');
+                    setSongInfoSize();
+                },
+                error: function() {
+                    logDebug("library load error");
+                }
+            });
+        }
 
         $('#navigation-random, #navigation-albums, #navigation-radios, #navigation-settings, #navigation-search-form' ).css('display', 'list-item');
         $('#navigation-library, #navigation-radio-new').css('display', 'none');
         setSongInfoSize();
+        pushHistoryIfNeeded($(this).attr('href') || '/');
 
         if (debug) {
             console.log('clicked on library');
@@ -112,6 +202,7 @@ $(function() {
         $('#navigation-library, #navigation-radios, #navigation-settings').css('display', 'list-item');
         $('#navigation-albums, #navigation-radio-new, #navigation-search-form, #navigation-random').css('display', 'none');
         openView = '.albums-view';
+        pushHistoryIfNeeded($(this).attr('href') || '/album/');
 
         if (debug) {
             console.log('clicked on albums');
@@ -152,6 +243,7 @@ $(function() {
         $('#navigation-radios, #navigation-random, #navigation-search-form').css('display', 'none');
         setSongInfoSize();
         openView = '.radios-view';
+        pushHistoryIfNeeded($(this).attr('href') || '/radio/');
 
         if (debug) {
             console.log('clicked on radio');
@@ -170,20 +262,8 @@ $(function() {
             return;
         }
 
-        $.ajax({
-            url: url,
-            cache: false,
-            success: function(data) {
-                upsertRadiosView(data);
-                $('.library-view').css('display', 'none');
-                $('.radios-view').css('display', 'block');
-                openView = '.radios-view';
-                setSongInfoSize();
-            },
-            error: function() {
-                logDebug("radios pagination error");
-            }
-        });
+        loadRadioPage(url);
+        pushHistoryIfNeeded(url);
     });
 
 
@@ -219,6 +299,7 @@ $(function() {
         $('#navigation-random, #navigation-radio-new').css('display', 'none');
         setSongInfoSize();
         openView = '.radio-new-view';
+        pushHistoryIfNeeded($(this).attr('href') || '/radio/new');
 
         if (debug) {
             console.log('clicked on new radio');
@@ -258,6 +339,7 @@ $(function() {
         $('#navigation-library, #navigation-albums, #navigation-radios').css('display', 'list-item');
         setSongInfoSize();
         openView = '.settings-view';
+        pushHistoryIfNeeded($(this).attr('href') || '/settings/');
 
         if (debug) {
             console.log('clicked on settings');
@@ -777,6 +859,10 @@ $(function() {
         if (debug) {
             console.log('check if we are scanning');
         }
+    }
+
+    if (window.location.pathname !== '/') {
+        restoreViewFromLocation();
     }
 
 
