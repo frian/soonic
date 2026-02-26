@@ -1,15 +1,15 @@
 {% set placeholder = 'search.placeholder'|trans %}
 {% set searchLabel = 'search'|trans %}
 
-{% if form is defined %}
-{{ form_start(form, { attr: { id: 'search-form' }, action: path('search'), method: 'POST' }) }}
+{% if search_form is defined %}
+{{ form_start(search_form, { attr: { id: 'search-form' }, action: path('search'), method: 'POST' }) }}
 {% else %}
 <form id="search-form" name="search" method="post" action="{{ path('search') }}">
 {% endif %}
 
     <div class="form-element-container">
-        {% if form is defined %}
-            {{ form_widget(form.keyword, {
+        {% if search_form is defined %}
+            {{ form_widget(search_form.keyword, {
                 attr: {
                     id: 'form-keyword',
                     class: 'filter-input',
@@ -27,8 +27,8 @@
         <span class="material-icons" aria-hidden="true">search</span>
     </button>
 
-{% if form is defined %}
-{{ form_end(form) }}
+{% if search_form is defined %}
+{{ form_end(search_form) }}
 {% else %}
 </form>
 {% endif %}

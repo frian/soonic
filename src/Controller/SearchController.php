@@ -37,8 +37,10 @@ class SearchController extends AbstractController
             ]);
         }
 
+        $statusCode = $form->isSubmitted() ? Response::HTTP_UNPROCESSABLE_ENTITY : Response::HTTP_OK;
+
         return $this->render('common/search.html.twig', [
-            'form' => $form,
-        ]);
+            'search_form' => $form->createView(),
+        ], new Response('', $statusCode));
     }
 }
