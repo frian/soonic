@@ -228,6 +228,7 @@ body {
   background-image: url("../../../images/guitar-dark/guitar.jpg");
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
 }
 
 body::before {

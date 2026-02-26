@@ -228,6 +228,7 @@ form div div input {
 */
 body {
   background: linear-gradient(to bottom right, #111111, rgba(17, 17, 17, 0.9));
+  background-attachment: fixed;
 }
 
 /*

@@ -218,6 +218,7 @@ form div div input {
 */
 body {
   background: linear-gradient(to bottom right, #dddddd, rgba(221, 221, 221, 0.8));
+  background-attachment: fixed;
 }
 
 .topbar .logo {
