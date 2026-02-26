@@ -148,6 +148,10 @@ php bin/console doctrine:migrations:status
 A GitHub Actions workflow is available in `.github/workflows/ci.yml`.
 It runs dependency installation and `bin/check --ci` on pushes and pull requests.
 
+## License
+
+This project is licensed under the MIT License. See `LICENSE`.
+
 ## Useful Project Structure
 
 - `src/Controller`: HTTP controllers
