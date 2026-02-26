@@ -1,34 +1,7 @@
-<section class="radio-new-view">
-    <h1>{{ 'radio.new'|trans }}</h1>
+{% extends 'base.html.twig' %}
 
-    {{ form_start(form, {
-        action: path('radio_new'),
-        method: 'POST',
-        attr: { id: 'radio_save' }
-    }) }}
-        <table class="form">
-            <tr>
-                <td>{{ form_label(form.name) }}</td>
-                <td>{{ form_widget(form.name) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.streamUrl) }}</td>
-                <td>{{ form_widget(form.streamUrl) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(form.homepageUrl) }}</td>
-                <td>{{ form_widget(form.homepageUrl) }}</td>
-            </tr>
-            <tr>
-                <td colspan="2" class="button-row">
-                    {{ include('common/_form_actions.html.twig', {
-                        submit_label: 'create'|trans,
-                        back_href: path('radio_index'),
-                        back_label: 'back.tolist'|trans
-                    }) }}
-                </td>
-            </tr>
-        </table>
-        {{ form_rest(form) }}
-    {{ form_end(form, { render_rest: false }) }}
-</section>
+{% block title %} - {{ 'radio.new'|trans }}{% endblock %}
+
+{% block body %}
+    {{ include('radio/new-content.html.twig') }}
+{% endblock %}

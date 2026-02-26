@@ -3,37 +3,5 @@
 {% block title %} - {{ radio.name }}{% endblock %}
 
 {% block body %}
-    <h1>{{ radio.name }}</h1>
-
-    <table class="form">
-        <tbody>
-            <tr>
-                <th>{{ 'name'|trans|default('Name') }}</th>
-                <td>{{ radio.name }}</td>
-            </tr>
-            <tr>
-                <th>Stream URL</th>
-                <td><a href="{{ radio.streamUrl }}" target="_blank" rel="noopener noreferrer">{{ radio.streamUrl }}</a></td>
-            </tr>
-            <tr>
-                <th>Homepage URL</th>
-                <td>
-                    {% if radio.homepageUrl %}
-                        <a href="{{ radio.homepageUrl }}" target="_blank" rel="noopener noreferrer">{{ radio.homepageUrl }}</a>
-                    {% else %}
-                        -
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ radio.id }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="button-wrapper">
-        <a class="button" href="{{ path('radio_index') }}">{{ 'back.tolist'|trans }}</a>
-        <a class="button" href="{{ path('radio_edit', { id: radio.id }) }}">{{ 'edit'|trans }}</a>
-    </div>
+    {{ include('radio/show-content.html.twig') }}
 {% endblock %}

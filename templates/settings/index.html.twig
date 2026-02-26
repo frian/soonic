@@ -1,58 +1,7 @@
-<div class="settings-view view">
-    <section class="settings clearfix">
-        <h2>{{ 'library'|trans }}</h2>
-        <table class="library-info">
-            <tbody>
-                <tr>
-                    <td>{{ 'files'|trans }}</td>
-                    <td id="num-files">{{ infos.songs }}</td>
-                </tr>
-                <tr>
-                    <td>{{ 'artists'|trans }}</td>
-                    <td id="num-artists">{{ infos.artists }}</td>
-                </tr>
-                <tr>
-                    <td>{{ 'albums'|trans }}</td>
-                    <td id="num-albums">{{ infos.albums }}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="button-wrapper">
-            <a
-                id="scan-button"
-                class="button"
-                href="{{ path('scan') }}"
-                data-csrf-token="{{ csrf_token('scan_action') }}"
-            >{{ 'scan'|trans }}</a>
-        </div>
-    </section>
+{% extends 'base.html.twig' %}
 
-    <section class="settings clearfix">
-        <h2>{{ 'settings'|trans }}</h2>
-        {{ form_start(edit_form, {
-            'action': path('config_edit', { 'id': 1 }),
-            'method': 'POST',
-            'attr': {'id': 'settings-form'}
-        }) }}
-            <table class="library-info">
-                <tbody>
-                    <tr>
-                        <td>{{ form_label(edit_form.language, 'language'|trans) }}</td>
-                        <td>{{ form_widget(edit_form.language) }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form_label(edit_form.theme, 'theme'|trans) }}</td>
-                        <td>{{ form_widget(edit_form.theme) }}</td>
-                    </tr>
-                </tbody>
-            </table>
+{% block title %} - {{ 'settings'|trans }}{% endblock %}
 
-            {{ form_rest(edit_form) }}
-
-            <div class="button-wrapper">
-                <input id="settings-form-button" class="button" type="button" value="{{ 'save'|trans }}"/>
-            </div>
-
-        {{ form_end(edit_form, {'render_rest': false}) }}
-    </section>
-</div>
+{% block body %}
+    {{ include('settings/index-content.html.twig') }}
+{% endblock %}

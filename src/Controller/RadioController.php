@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class RadioController extends AbstractController
 {
     /**
-     * Displays paginated radios list.
+     * Displays paginated radios list (full page or AJAX fragment).
      */
     #[Route(path: '/', name: 'radio_index', methods: ['GET'])]
     public function index(Request $request, RadioRepository $radioRepository): Response
@@ -29,15 +29,21 @@ class RadioController extends AbstractController
         $totalPages = max(1, (int) ceil($total / $limit));
         $page = min($page, $totalPages);
 
-        return $this->render('radio/index.html.twig', [
+        $parameters = [
             'radios' => $radioRepository->findPaginated($page, $limit),
             'currentPage' => $page,
             'totalPages' => $totalPages,
-        ]);
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('radio/index-content.html.twig', $parameters);
+        }
+
+        return $this->render('radio/index.html.twig', $parameters);
     }
 
     /**
-     * Creates a new radio station entry.
+     * Creates a new radio station entry (full page or AJAX fragment).
      */
     #[Route(path: '/new', name: 'radio_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -54,25 +60,37 @@ class RadioController extends AbstractController
             return $this->redirectToRoute('radio_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('radio/new.html.twig', [
+        $parameters = [
             'radio' => $radio,
             'form' => $form,
-        ]);
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('radio/new-content.html.twig', $parameters);
+        }
+
+        return $this->render('radio/new.html.twig', $parameters);
     }
 
     /**
-     * Displays one radio station.
+     * Displays one radio station (full page or AJAX fragment).
      */
     #[Route(path: '/{id}', name: 'radio_show', requirements: ['id' => '\d+'], methods: ['GET'])]
-    public function show(Radio $radio): Response
+    public function show(Radio $radio, Request $request): Response
     {
-        return $this->render('radio/show.html.twig', [
+        $parameters = [
             'radio' => $radio,
-        ]);
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('radio/show-content.html.twig', $parameters);
+        }
+
+        return $this->render('radio/show.html.twig', $parameters);
     }
 
     /**
-     * Updates an existing radio station.
+     * Updates an existing radio station (full page or AJAX fragment).
      */
     #[Route(path: '/{id}/edit', name: 'radio_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
     public function edit(Request $request, Radio $radio, EntityManagerInterface $entityManager): Response
@@ -87,10 +105,16 @@ class RadioController extends AbstractController
             return $this->redirectToRoute('radio_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('radio/edit.html.twig', [
+        $parameters = [
             'radio' => $radio,
             'edit_form' => $form,
-        ]);
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('radio/edit-content.html.twig', $parameters);
+        }
+
+        return $this->render('radio/edit.html.twig', $parameters);
     }
 
     /**

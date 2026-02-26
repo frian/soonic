@@ -3,36 +3,5 @@
 {% block title %} - {{ 'radio.edit'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>{{ 'radio.edit'|trans }}</h1>
-
-    {{ form_start(edit_form, {
-        action: path('radio_edit', {'id': radio.id}),
-        method: 'POST',
-        attr: { id: 'radio_save' }
-    }) }}
-        <table class="form">
-            <tr>
-                <td>{{ form_label(edit_form.name) }}</td>
-                <td>{{ form_widget(edit_form.name) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(edit_form.streamUrl) }}</td>
-                <td>{{ form_widget(edit_form.streamUrl) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(edit_form.homepageUrl) }}</td>
-                <td>{{ form_widget(edit_form.homepageUrl) }}</td>
-            </tr>
-            <tr>
-                <td colspan="2" class="button-row">
-                    {{ include('common/_form_actions.html.twig', {
-                        submit_label: 'edit'|trans,
-                        back_href: path('radio_index'),
-                        back_label: 'back.tolist'|trans
-                    }) }}
-                </td>
-            </tr>
-        </table>
-        {{ form_rest(edit_form) }}
-    {{ form_end(edit_form, { render_rest: false }) }}
+    {{ include('radio/edit-content.html.twig') }}
 {% endblock %}

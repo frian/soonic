@@ -8,6 +8,7 @@ use App\Repository\ConfigRepository;
 use App\Repository\SongRepository;
 use App\Form\ConfigType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -25,7 +26,8 @@ class SettingsController extends AbstractController
         SongRepository $songRepository,
         ArtistRepository $artistRepository,
         AlbumRepository $albumRepository,
-        ConfigRepository $configRepository
+        ConfigRepository $configRepository,
+        Request $request
     ): Response
     {
         $infos = [
@@ -40,9 +42,15 @@ class SettingsController extends AbstractController
         }
         $editForm = $this->createForm(ConfigType::class, $config);
 
-        return $this->render('settings/index.html.twig', [
+        $parameters = [
             'infos' => $infos,
             'edit_form' => $editForm->createView(),
-        ]);
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            return $this->render('settings/index-content.html.twig', $parameters);
+        }
+
+        return $this->render('settings/index.html.twig', $parameters);
     }
 }
