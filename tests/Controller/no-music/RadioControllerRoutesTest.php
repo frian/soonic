@@ -112,4 +112,33 @@ class RadioControllerRoutesTest extends NoMusicWebTestCase
         $deleted = static::getContainer()->get('doctrine')->getRepository(Radio::class)->find($radio->getId());
         $this->assertNull($deleted);
     }
+
+    public function testDeleteFromEditFormPostRemovesRadio(): void
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/radio/new');
+
+        $createForm = $crawler->filter('form[name="radio"]')->form([
+            'radio[name]' => 'Radio Delete Post',
+            'radio[streamUrl]' => 'https://example.com/delete-post',
+            'radio[homepageUrl]' => 'https://example.com',
+        ]);
+        $client->submit($createForm);
+
+        /** @var Radio|null $radio */
+        $radio = static::getContainer()->get('doctrine')->getRepository(Radio::class)->findOneBy(['name' => 'Radio Delete Post']);
+        $this->assertNotNull($radio);
+
+        $crawler = $client->request('GET', sprintf('/radio/%d/edit', $radio->getId()));
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('form.radio-delete-form');
+
+        $deleteForm = $crawler->filter('form.radio-delete-form')->form();
+        $client->submit($deleteForm);
+
+        $this->assertResponseRedirects('/radio/', 303);
+
+        $deleted = static::getContainer()->get('doctrine')->getRepository(Radio::class)->find($radio->getId());
+        $this->assertNull($deleted);
+    }
 }
