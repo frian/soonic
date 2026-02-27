@@ -96,8 +96,8 @@ a.active {
 .list tbody tr:nth-child(even) {
   background-color: #c8c8c8;
 }
-.list tr.playing,
-.list tr.selected {
+.list tbody tr.playing,
+.list tbody tr.selected {
   background-color: #90ee90;
 }
 .list .icon-plus,

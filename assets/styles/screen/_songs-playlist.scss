@@ -42,7 +42,8 @@ $hover-active: #ddd !default;
         }
     }
 
-    tr.playing, tr.selected {
+    tbody tr.playing,
+    tbody tr.selected {
         background-color: $hover-active;
     }
 

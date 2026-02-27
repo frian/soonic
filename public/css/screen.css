@@ -241,7 +241,8 @@ a.active {
 .list tbody tr:nth-child(even) {
   background-color: #ddd;
 }
-.list tr.playing, .list tr.selected {
+.list tbody tr.playing,
+.list tbody tr.selected {
   background-color: #ddd;
 }
 .list .icon-plus, .list .icon-minus {
