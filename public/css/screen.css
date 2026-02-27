@@ -318,6 +318,10 @@ h2 {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
+.albums-view .album-container:nth-child(even) .album-infos {
+  background-color: #ddd;
+}
+
 /*
   --  6.1 Single album view ---------------------------------------------------
 */

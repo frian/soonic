@@ -155,6 +155,10 @@ a.active {
     }
 }
 
+.albums-view .album-container:nth-child(even) .album-infos {
+    background-color: $bg-alternate;
+}
+
 /*
   --  7. Radios ---------------------------------------------------------------
 */

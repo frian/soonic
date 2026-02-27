@@ -109,6 +109,10 @@ a.active {
   background-color: #c8c8c8;
 }
 
+.albums-view .album-container:nth-child(even) .album-infos {
+  background-color: #c8c8c8;
+}
+
 /*
   --  7. Radios ---------------------------------------------------------------
 */

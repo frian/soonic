@@ -113,6 +113,10 @@ h2 {
     }
 }
 
+.albums-view .album-container:nth-child(even) .album-infos {
+    background-color: $bg-alternate;
+}
+
 
 /*
   --  6.1 Single album view ---------------------------------------------------
