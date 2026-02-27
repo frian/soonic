@@ -120,7 +120,7 @@ class RadioController extends AbstractController
     /**
      * Deletes a radio station.
      */
-    #[Route(path: '/{id}', name: 'radio_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    #[Route(path: '/{id}', name: 'radio_delete', requirements: ['id' => '\d+'], methods: ['POST', 'DELETE'])]
     public function delete(Request $request, Radio $radio, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$radio->getId(), $request->request->get('_token'))) {
