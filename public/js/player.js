@@ -471,10 +471,9 @@ $(function() {
     function playPause() {
 
         const player = document.getElementById("player");
-        const src = document.getElementById("audio-source");
         const $this = $("#play-pause-button");
 
-        if (!$(src).attr('src')) {
+        if (!player.getAttribute('src')) {
             logDebug("No source");
             return;
         }
@@ -518,10 +517,9 @@ $(function() {
         const artist = values[2];
         const title = values[3];
         const duration = values[5];
-        const audioSource = document.getElementById("audio-source");
         const player = document.getElementById("player");
 
-        $(audioSource).attr('src', path);
+        player.setAttribute('src', path);
         player.load();
 
         $("#song-title").text(title);
