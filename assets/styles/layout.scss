@@ -646,7 +646,10 @@ table.form {
     transform: translateX(-50%);
     z-index: 9999;
     display: none;
-    padding: 10px 16px;
+    height: 50px;
+    padding: 0 16px;
+    line-height: 50px;
+    text-align: center;
     pointer-events: none;
     white-space: nowrap;
 }

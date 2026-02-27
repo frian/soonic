@@ -64,6 +64,10 @@ nav.topbar-nav a:hover .icon-cog {
   background: linear-gradient(to top, #006600, rgba(0, 102, 0, 0.5));
 }
 
+#playlist-flash-message {
+  background: #060;
+}
+
 /*
   --  3. Artists navigation ---------------------------------------------------
 */
