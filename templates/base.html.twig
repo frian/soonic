@@ -61,8 +61,5 @@
             <script src="/{{ js_file }}?v={{ file_mtime(js_file) }}"></script>
         {% endfor %}
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
     </body>
 </html>
