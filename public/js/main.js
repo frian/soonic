@@ -28,7 +28,13 @@ $(function() {
     }
 
     function upsertLibraryView(data) {
-        const $incoming = $('<div>').html(data).find('.library-view').first();
+        let $incoming = $('<div>').html(data).find('.library-view').first();
+        if (!$incoming.length) {
+            $incoming = $('<div>', {
+                'class': 'library-view view'
+            }).html(data);
+        }
+
         if (!$incoming.length) {
             return;
         }
@@ -193,6 +199,7 @@ $(function() {
         $(document).trigger("soonic:closeAlbumOverlay");
 
         $(openView).css('display', 'none');
+        $('.albums-view').css('display', 'none');
         openView = null;
 
         if ($('.library-view').length) {
@@ -203,6 +210,7 @@ $(function() {
                 cache: true,
                 success: function(data) {
                     upsertLibraryView(data);
+                    $('.albums-view').css('display', 'none');
                     $('.library-view').css('display', 'block');
                     setSongInfoSize();
                 },
