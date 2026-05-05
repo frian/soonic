@@ -1,16 +1,39 @@
 $(function() {
     'use strict';
 
-    const debug = false;
+    const debug = true;
 
     let playerStatus = "paused";
     let contextMenuClickTimer = null;
     let playlistFlashTimer = null;
+    let activePlaybackScope = "#songs tbody";
 
     function logDebug(message) {
         if (debug) {
             console.log(message);
         }
+    }
+
+    function getPlaybackScopeSelector() {
+        return activePlaybackScope || "#songs tbody";
+    }
+
+    function syncAlbumPlaying(path) {
+        const $albumRows = $(".album-songs tbody tr");
+
+        if (!$albumRows.length) {
+            return;
+        }
+
+        $albumRows.removeClass("playing");
+
+        if (!path) {
+            return;
+        }
+
+        $albumRows.filter(function() {
+            return $(this).data("path") === path;
+        }).first().addClass("playing");
     }
 
     function showPlaylistFlash(action, options) {
@@ -200,6 +223,7 @@ $(function() {
         logDebug('clicked on a song');
 
         $("tbody .playing").removeClass('playing');
+        activePlaybackScope = "#" + $(this).closest("table").attr("id") + " tbody";
         loadSong($(this));
         playerStatus = "playing";
         $(this).addClass('playing');
@@ -423,9 +447,12 @@ $(function() {
 
         logDebug('- in playNext');
 
-        if ($("tbody .playing").length) {
+        const playbackScopeSelector = getPlaybackScopeSelector();
+        const $playingRows = $(playbackScopeSelector + " .playing");
 
-            const current = $("tbody .playing");
+        if ($playingRows.length) {
+
+            const current = $playingRows.first();
 
             logDebug('current : ' + current);
 
@@ -521,6 +548,7 @@ $(function() {
 
         player.setAttribute('src', path);
         player.load();
+        syncAlbumPlaying(path);
 
         $("#song-title").text(title);
         $("#song-artist").text(' by ' + artist);

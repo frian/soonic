@@ -112,6 +112,9 @@ a.active {
 .single-album-container .album-songs tbody tr:nth-child(even) {
   background-color: #111;
 }
+.single-album-container .album-songs tbody tr.playing {
+  background-color: #060;
+}
 
 .albums-view .album-container:nth-child(even) .album-infos {
   background-color: #111;

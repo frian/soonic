@@ -51,3 +51,9 @@ $hover-active: #ddd !default;
         color: #aaa;
     }
 }
+
+.album-songs {
+    tbody tr.playing {
+        background-color: $hover-active;
+    }
+}

@@ -249,6 +249,10 @@ a.active {
   color: #aaa;
 }
 
+.album-songs tbody tr.playing {
+  background-color: #ddd;
+}
+
 /*
   -- Default styling ----------------------------------------------------------
 */
