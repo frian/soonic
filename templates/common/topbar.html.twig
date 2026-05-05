@@ -1,32 +1,30 @@
 <section class="topbar">
     <div class="logo" role="img" aria-label="Soonic"></div>
 
-    {% if is_library_route|default(false) %}
-        <div id="player-container">
-            <i class="icon-to-start" aria-hidden="true"></i>
-            <i id="play-pause-button" class="icon-play" role="button" tabindex="0" aria-label="Play / Pause" title="Play / Pause"></i>
-            <i class="icon-to-end" aria-hidden="true"></i>
+    <div id="player-container">
+        <i class="icon-to-start" aria-hidden="true"></i>
+        <i id="play-pause-button" class="icon-play" role="button" tabindex="0" aria-label="Play / Pause" title="Play / Pause"></i>
+        <i class="icon-to-end" aria-hidden="true"></i>
 
-            <audio id="player" preload="none"></audio>
+        <audio id="player" preload="none"></audio>
 
-            <div class="time-info-container">
-                <div class="time-info">
-                    <span id="current-time">00:00 /</span>
-                    <span id="duration"> 00:00</span>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progressbar">
-                        <div class="progress-indicator"></div>
-                    </div>
+        <div class="time-info-container">
+            <div class="time-info">
+                <span id="current-time">00:00 /</span>
+                <span id="duration"> 00:00</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progressbar">
+                    <div class="progress-indicator"></div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="song-info">
-            <span id="song-title" class="song-title"></span>
-            <span id="song-artist" class="song-artist"></span>
-        </div>
-    {% endif %}
+    <div class="song-info">
+        <span id="song-title" class="song-title"></span>
+        <span id="song-artist" class="song-artist"></span>
+    </div>
 
     <nav class="topbar-nav" id="top-bar-nav">
         <ul class="top-nav">
