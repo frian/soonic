@@ -24,14 +24,16 @@
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
-###> zikmiu ###
+###> soonic ###
 /public/soonic*
 /tests/Command/testfiles
-###< zikmiu ###
-
-# local music symlink
-/public/music
+/public/music/*
+###< soonic ###
 
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
+
+###> dev ###
+/bs-config.js
+###< dev ###
