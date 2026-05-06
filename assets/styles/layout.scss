@@ -493,6 +493,12 @@ ul.top-nav {
 
     li {
         float: left;
+
+        &.spacer {
+            width: 10px;
+            height: $topbar-size;
+            display: none;
+        }
     }
 }
 
@@ -702,6 +708,12 @@ table.form {
         display: block;
 
         // width: 200px;
+    }
+
+    ul.top-nav {
+        li.spacer {
+            display: initial;
+        }
     }
 
     nav.topbar-nav {

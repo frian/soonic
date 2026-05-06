@@ -683,6 +683,11 @@ ul.top-nav.is-active form input[type=submit] {
 ul.top-nav li {
   float: left;
 }
+ul.top-nav li.spacer {
+  width: 10px;
+  height: 49px;
+  display: none;
+}
 
 /*
   -- 10. Small screen buttons -------------------------------------------------
@@ -860,6 +865,10 @@ table.form tr td.button-row {
 
   .song-info {
     display: block;
+  }
+
+  ul.top-nav li.spacer {
+    display: initial;
   }
 
   nav.topbar-nav {

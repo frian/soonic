@@ -92,6 +92,12 @@ nav.topbar-nav {
     }
 }
 
+ul.top-nav {
+    li.spacer {
+        background: $default-gradient;
+    }
+}
+
 #playlist-flash-message {
     background: $hover-active;
 }
