@@ -477,8 +477,10 @@ ul.top-nav {
         form {
             width: 100%;
 
-            input[type='text'] {
-                width: 90%;
+            &#search-form input[type='text'] {
+                box-sizing: border-box;
+                outline-offset: -5px;
+                width: (100%);
             }
 
             input[type='submit'] {

@@ -674,8 +674,10 @@ ul.top-nav.is-active li a .icon-cog {
 ul.top-nav.is-active form {
   width: 100%;
 }
-ul.top-nav.is-active form input[type=text] {
-  width: 90%;
+ul.top-nav.is-active form#search-form input[type=text] {
+  box-sizing: border-box;
+  outline-offset: -5px;
+  width: 100%;
 }
 ul.top-nav.is-active form input[type=submit] {
   float: right;
