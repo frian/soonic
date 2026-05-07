@@ -231,10 +231,8 @@ $(function() {
         setSongInfoSize();
         pushHistoryIfNeeded($(this).attr('href') || '/');
 
-        if (debug) {
-            console.log('clicked on library');
-            console.log("- openView = " + openView);
-        }
+        logDebug('clicked on library');
+        logDebug("- openView = " + openView);
     });
 
     /**
@@ -277,10 +275,8 @@ $(function() {
         openView = '.albums-view';
         pushHistoryIfNeeded($(this).attr('href') || '/album/');
 
-        if (debug) {
-            console.log('clicked on albums');
-            console.log("- openView = " + openView);
-        }
+        logDebug('clicked on albums');
+        logDebug("- openView = " + openView);
     });
 
 
@@ -315,10 +311,8 @@ $(function() {
         setRadioListNavState();
         pushHistoryIfNeeded($(this).attr('href') || '/radio/');
 
-        if (debug) {
-            console.log('clicked on radio');
-            console.log("- openView = " + openView);
-        }
+        logDebug('clicked on radio');
+        logDebug("- openView = " + openView);
     });
 
     /**
@@ -407,10 +401,8 @@ $(function() {
         setRadioFormNavState();
         pushHistoryIfNeeded($(this).attr('href') || '/radio/new');
 
-        if (debug) {
-            console.log('clicked on new radio');
-            console.log("- openView = " + openView);
-        }
+        logDebug('clicked on new radio');
+        logDebug("- openView = " + openView);
     });
 
 
@@ -447,10 +439,8 @@ $(function() {
         openView = '.settings-view';
         pushHistoryIfNeeded($(this).attr('href') || '/settings/');
 
-        if (debug) {
-            console.log('clicked on settings');
-            console.log("- openView = " + openView);
-        }
+        logDebug('clicked on settings');
+        logDebug("- openView = " + openView);
     });
 
 
@@ -473,10 +463,8 @@ $(function() {
             }
         });
 
-        if (debug) {
-            console.log('clicked on random songs');
-            console.log("- openView = " + openView);
-        }
+        logDebug('clicked on random songs');
+        logDebug("- openView = " + openView);
     });
 
 
@@ -505,9 +493,7 @@ $(function() {
         $(".active").removeClass("active");
         $(this).addClass('active');
 
-        if (debug) {
-            console.log('clicked on an artist in artist nav');
-        }
+        logDebug('clicked on an artist in artist nav');
     });
 
 
@@ -565,9 +551,7 @@ $(function() {
             });
         }, 300);
 
-        if (debug) {
-            console.log('filetered artists');
-        }
+        logDebug('filetered artists');
     });
 
 
@@ -601,9 +585,7 @@ $(function() {
             $(".mobile-songs-to-playlist-button").css('display', 'block');
         }
 
-        if (debug) {
-            console.log('clicked on an album in artist nav');
-        }
+        logDebug('clicked on an album in artist nav');
     });
 
 
@@ -635,9 +617,7 @@ $(function() {
 
         closeMobileMenu();
 
-        if (debug) {
-            console.log('submitted search');
-        }
+        logDebug('submitted search');
     });
 
 
@@ -665,9 +645,7 @@ $(function() {
         //     mobileMenuState = mobileMenuState == 'closed' ? 'open' : 'closed';
         // }
 
-        if (debug) {
-            console.log('in loadSongPanel');
-        }
+        logDebug('in loadSongPanel');
     }
 
     $(document).on("soonic:updateSongPanel", function(e, payload) {
@@ -749,9 +727,7 @@ $(function() {
         $("#num-albums").text("0");
         $button.text('scanning');
 
-        if (debug) {
-            console.log('clicked on scan');
-        }
+        logDebug('clicked on scan');
     });
 
 
@@ -814,9 +790,7 @@ $(function() {
             }
         });
 
-        if (debug) {
-            console.log('submitted settings form');
-        }
+        logDebug('submitted settings form');
     });
 
     $(document).on("submit", ".radio-delete-form", function(e) {
@@ -842,9 +816,7 @@ $(function() {
         });
         $('.filter-input').focus();
 
-        if (debug) {
-            console.log('cleared artist filter');
-        }
+        logDebug('cleared artist filter');
     });
 
 
@@ -868,9 +840,7 @@ $(function() {
             $("#playlist-infos").css('display', 'none');
         }
 
-        if (debug) {
-            console.log('clicked on empty palylist');
-        }
+        logDebug('clicked on empty palylist');
     });
 
 
@@ -886,9 +856,7 @@ $(function() {
         $(".mobile-songs-to-artists-button").css('display', 'initial');
         $(".mobile-songs-to-playlist-button").css('display', 'initial');
 
-        if (debug) {
-            console.log('show songs list (forward)');
-        }
+        logDebug('show songs list (forward)');
     });
 
 
@@ -903,9 +871,7 @@ $(function() {
         $(".mobile-songs-to-playlist-button").css('display', 'none');
         $(".mobile-artists-to-songs-button").css('display', 'initial');
 
-        if (debug) {
-            console.log('show artists list');
-        }
+        logDebug('show artists list');
     });
 
 
@@ -930,9 +896,7 @@ $(function() {
         $(".playlist").css('display', 'none');
         $(".mobile-songs-to-playlist-button").css('display', 'initial');
 
-        if (debug) {
-            console.log('show songs list (backward)');
-        }
+        logDebug('show songs list (backward)');
     });
 
 
@@ -960,9 +924,7 @@ $(function() {
             }, 100);
         }
 
-        if (debug) {
-            console.log('clicked on mobile menu');
-        }
+        logDebug('clicked on mobile menu');
     });
 
     $(document).on("click", ".top-nav a", function() {
@@ -992,9 +954,7 @@ $(function() {
             }
         });
 
-        if (debug) {
-            console.log('check if we are scanning');
-        }
+        logDebug('check if we are scanning');
     }
 
     if (window.location.pathname !== '/') {
