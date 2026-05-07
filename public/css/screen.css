@@ -451,6 +451,11 @@ input[type=text] {
   border: 1px solid #555;
 }
 
+#search-form input[type=text]:focus-visible,
+#filter:focus-visible {
+  outline: 2px solid #666;
+}
+
 .input-reset {
   background-color: #ddd;
 }
