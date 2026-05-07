@@ -44,7 +44,7 @@ h2 {
   --  2. Topbar ---------------------------------------------------------------
 */
 .topbar {
-  background-color: #eee;
+  background: linear-gradient(to top, #dddddd, rgba(204, 204, 204, 0.9));
   border-bottom-color: #666;
 }
 .topbar .song-artist {
@@ -62,10 +62,6 @@ nav.topbar-nav a:hover {
 }
 nav.topbar-nav a:hover .icon-cog {
   background: linear-gradient(to top, lightgreen, rgba(144, 238, 144, 0.5));
-}
-
-ul.top-nav li.spacer {
-  background: linear-gradient(to top, #dddddd, rgba(204, 204, 204, 0.9));
 }
 
 #playlist-flash-message {

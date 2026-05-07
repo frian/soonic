@@ -491,12 +491,6 @@ ul.top-nav {
 
     li {
         float: left;
-
-        &.spacer {
-            width: 10px;
-            height: $topbar-size;
-            display: none;
-        }
     }
 }
 
@@ -703,12 +697,6 @@ table.form {
 
     .song-info {
         display: block;
-    }
-
-    ul.top-nav {
-        li.spacer {
-            display: initial;
-        }
     }
 
     nav.topbar-nav {
