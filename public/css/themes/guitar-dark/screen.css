@@ -82,7 +82,7 @@ nav.topbar-nav a:hover .icon-cog {
   background-color: black;
 }
 
-a.active {
+.artists-navigation a.active {
   background-color: #060;
 }
 

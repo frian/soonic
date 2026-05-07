@@ -205,7 +205,7 @@ nav.topbar-nav a:hover {
   padding: 0 0 0 10px;
 }
 
-a.active {
+.artists-navigation a.active {
   background-color: #ddd;
 }
 
