@@ -588,7 +588,6 @@ $(function() {
     /**
      * Returns search results
      * Updates the songs panel
-     * TODO: search on smallscreen
      */
     $(document).on("submit", "#search-form", function(e) {
 
@@ -610,6 +609,16 @@ $(function() {
                 logDebug("search error");
             }
         });
+
+        // -- show song list on small screens
+        if (screenWidth < 1024) {
+            $(".songs").css('display', 'block');
+            $(".playlist").css('display', 'none');
+            $(".artists-navigation").css('display', 'none');
+            $(".mobile-artists-to-songs-button").css('display', 'none');
+            $(".mobile-songs-to-artists-button").css('display', 'initial');
+            $(".mobile-songs-to-playlist-button").css('display', 'initial');
+        }
 
         closeMobileMenu();
 
