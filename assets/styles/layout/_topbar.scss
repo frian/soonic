@@ -92,7 +92,7 @@ $topbar-border-size: 1px !default;
     }
 
     .material-icons {
-        line-height: 49px;
+        line-height: $topbar-size;
     }
 
     #radio-new-button {
@@ -117,15 +117,15 @@ $topbar-border-size: 1px !default;
         vertical-align: middle;
         position: relative;
         width: 130px;
-        height: 39px;
+        height: $topbar-size;
         padding: 0 10px;
         border: #{$debug}px solid lime;
     }
 
     input[type="submit"] {
         display: inline-block;
-        height: 49px;
-        line-height: 49px;
+        height: $topbar-size;
+        line-height: $topbar-size;
         vertical-align: top;
         border: #{$debug}px solid lime;
     }
@@ -170,4 +170,17 @@ nav.topbar-nav {
 #navigation-radio-new,
 #navigation-back-to-radio-index {
     display: none;
+}
+
+
+/*
+  -- Media query 1024px -------------------------------------------------------
+*/
+@media all and (min-width: 1024px) {
+
+    #search-form {
+        input[type="text"] {
+            height: 39px;
+        }
+    }
 }

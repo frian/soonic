@@ -194,7 +194,7 @@
   vertical-align: middle;
   position: relative;
   width: 130px;
-  height: 39px;
+  height: 49px;
   padding: 0 10px;
   border: 0px solid lime;
 }
@@ -239,6 +239,14 @@ nav.topbar-nav a {
   display: none;
 }
 
+/*
+  -- Media query 1024px -------------------------------------------------------
+*/
+@media all and (min-width: 1024px) {
+  #search-form input[type=text] {
+    height: 39px;
+  }
+}
 .artists-navigation {
   float: left;
   width: 100%;

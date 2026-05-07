@@ -141,10 +141,6 @@ a.active {
 /*
   -- 11. Forms ----------------------------------------------------------------
 */
-#navigation-search-form {
-  background-color: #c8c8c8;
-}
-
 input[type=text] {
   color: #111;
   background-color: #eee;

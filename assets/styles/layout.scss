@@ -621,8 +621,8 @@ table.form {
 
 .button {
     box-sizing: border-box;
-    height: 49px;
-    line-height: 49px;
+    height: $topbar-size;
+    line-height: $topbar-size;
     display: inline-block;
     padding: 0 20px;
     border: 0;

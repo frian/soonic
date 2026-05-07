@@ -17,7 +17,6 @@ $progressbar-color: $border-color !default;
 $filter-input-bg: white !default;
 $scrollbar-track-bg: #111 !default;
 $scrollbar-thumb-border-bg: $fg-color !default;
-$navigation-searchform-bg: $bg-color !default;
 $context-menu-bg: white !default;
 $context-menu-hover-bg: rgb(191 255 0 / 80%) !default;
 $hamburger-color: null !default;
@@ -205,10 +204,6 @@ a.active {
 /*
   -- 11. Forms ----------------------------------------------------------------
 */
-#navigation-search-form {
-    background-color: $navigation-searchform-bg;
-}
-
 input[type="text"] {
     color: $fg-color;
     background-color: $bg-color;
