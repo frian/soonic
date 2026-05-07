@@ -937,6 +937,8 @@ $(function() {
         $(".topbar-nav, .top-nav, .hamburger").toggleClass("is-active");
         mobileMenuState = mobileMenuState === 'closed' ? 'open' : 'closed';
 
+        setFilterInputSize();
+
         if (mobileMenuState === 'open') {
             setTimeout(function() {
                 $(document).one("click.mobileMenu", function(event) {
@@ -1042,7 +1044,7 @@ $(function() {
     }
 
     function setFilterInputSize() {
-        let width;
+        let width = "";
         if (screenWidth < 1024) {
             const buttonWidth = getElementOuterWidth($('#search-button'));
             width = (screenWidth - buttonWidth );
