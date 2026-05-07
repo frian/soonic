@@ -14,6 +14,12 @@ $(function() {
         }
     }
 
+    function closeMobileMenu() {
+        $(".topbar-nav, .top-nav, .hamburger").removeClass("is-active");
+        mobileMenuState = 'closed';
+        $(document).off("click.mobileMenu");
+    }
+
     function pushHistoryIfNeeded(url) {
         if (isHistoryNavigation || !window.history || !window.history.pushState || !url) {
             return;
@@ -606,7 +612,7 @@ $(function() {
      * Updates the songs panel
      * TODO: search on smallscreen
      */
-    $(document).on("click", "#search-button", function(e) {
+    $(document).on("submit", "#search-form", function(e) {
 
         e.preventDefault();
 
@@ -615,7 +621,7 @@ $(function() {
             return;
         }
 
-        const form = $('#search-form');
+        const form = $(this);
 
         $.ajax({
             type: form.attr('method'),
@@ -627,8 +633,10 @@ $(function() {
             }
         });
 
+        closeMobileMenu();
+
         if (debug) {
-            console.log('clicked on search');
+            console.log('submitted search');
         }
     });
 
@@ -947,8 +955,7 @@ $(function() {
                         return;
                     }
 
-                    $(".topbar-nav, .top-nav, .hamburger").removeClass("is-active");
-                    mobileMenuState = 'closed';
+                    closeMobileMenu();
                 });
             }, 100);
         }
@@ -956,6 +963,10 @@ $(function() {
         if (debug) {
             console.log('clicked on mobile menu');
         }
+    });
+
+    $(document).on("click", ".top-nav a", function() {
+        closeMobileMenu();
     });
 
 
