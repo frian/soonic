@@ -150,8 +150,6 @@ thead {
     tr {
         td {
             height: $mobileButtonSize;
-
-            // padding-left: 10px!important;
         }
 
         td:nth-child(1) {
@@ -312,14 +310,12 @@ img.lozad {
     }
 
     .album-title {
-        // border: 1px solid green;
         padding: 10px 0;
         text-align: center;
 
     }
 
     .album-artist {
-        // border: 1px solid red;
         text-align: center;
         padding-bottom: 10px;
         border-bottom: 1px solid #ccc;
@@ -665,13 +661,12 @@ table.form {
   -- Media query 500px --------------------------------------------------------
 */
 @media all and (min-width: 500px) {
+
     /* --  4. Views -- */
     .album-container {
         flex-basis: 33.33%;
         max-width: 33.33%;
         width: 33.33%;
-
-        // padding-top: 33.33%;
     }
 }
 
@@ -680,13 +675,12 @@ table.form {
   -- Media query 700px --------------------------------------------------------
 */
 @media all and (min-width: 700px) {
+
     /* --  4. Views -- */
     .album-container {
         flex-basis: 25%;
         max-width: 25%;
         width: 25%;
-
-        // padding-top: 25%;
     }
 }
 
@@ -960,11 +954,6 @@ table.form {
   -- Media query 1200px -------------------------------------------------------
 */
 @media all and (min-width: 1200px) {
-    /* --  2. Topbar -- */
-    .song-info {
-        // width: 400px;
-    }
-
 
     /* --  3. Artists navigation -- */
     $nav-width: 360px;
@@ -1005,8 +994,6 @@ table.form {
         flex-basis: 16.66%;
         max-width: 16.66%;
         width: 16.66%;
-
-        // padding-top: 16.66%;
     }
 
 
@@ -1034,7 +1021,6 @@ table.form {
             }
         }
     }
-
 }
 
 
@@ -1042,10 +1028,6 @@ table.form {
   -- Media query 1600px -------------------------------------------------------
 */
 @media all and (min-width: 1600px) {
-    /* --  2. Topbar -- */
-    .song-info {
-        // width: 600px;
-    }
 
     #search-form {
         input[type="text"] {
@@ -1058,7 +1040,5 @@ table.form {
         flex-basis: 12.5%;
         max-width: 12.5%;
         width: 12.5%;
-
-        // padding-top: 12.5%;
     }
 }

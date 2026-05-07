@@ -241,10 +241,6 @@ $(function() {
     const observer = lozad();
     observer.observe();
 
-    // $(document).on("click", ".album-container-content", function(e) {
-    //     $(this).children(".lozad").fadeOut('fast').delay(3000).fadeIn('fast');
-    // });
-
     $(document).on("click", "#albums-button", function(e) {
 
         e.preventDefault();
@@ -628,22 +624,6 @@ $(function() {
 
         $("#songs tbody").remove();
         $("#songs").append(data);
-        // if ($("#top-bar-nav").hasClass('is-active')) {
-        //     $("#top-bar-nav").toggleClass('is-active');
-        //     $(".top-nav").toggleClass('is-active');
-        //     $(".songs").css('display', 'initial');
-        //     $(".playlist").css('display', 'none');
-        //     $(".artists-navigation").css('display', 'none');
-        //     $(".mobile-songs-to-artists-button").css('display', 'initial');
-        //     $(".mobile-songs-to-playlist-button").css('display', 'initial');
-        //     hamburger.toggleClass("is-active");
-        //
-        //     if (debug) {
-        //         console.log('after hamburger');
-        //     }
-        //
-        //     mobileMenuState = mobileMenuState == 'closed' ? 'open' : 'closed';
-        // }
 
         logDebug('in loadSongPanel');
     }

@@ -1090,7 +1090,6 @@ table.form tr td.button-row {
   -- Media query 1200px -------------------------------------------------------
 */
 @media all and (min-width: 1200px) {
-  /* --  2. Topbar -- */
   /* --  3. Artists navigation -- */
   .artists-navigation {
     width: 360px;
@@ -1139,7 +1138,6 @@ table.form tr td.button-row {
   -- Media query 1600px -------------------------------------------------------
 */
 @media all and (min-width: 1600px) {
-  /* --  2. Topbar -- */
   #search-form input[type=text] {
     width: 200px;
   }
