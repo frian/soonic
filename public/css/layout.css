@@ -857,7 +857,7 @@ table.form tr td.button-row {
 /*
   -- Media query 1024px -------------------------------------------------------
 */
-@media all and (min-width: 1023px) {
+@media all and (min-width: 1024px) {
   /* --  2. Topbar -- */
   .topbar .logo > span {
     display: inline-block;
@@ -913,6 +913,24 @@ table.form tr td.button-row {
   }
   .artists-navigation > ul {
     margin-top: 5px;
+  }
+
+  /* --  4. Views -- */
+  .album-container {
+    flex-basis: 20%;
+    max-width: 20%;
+    width: 20%;
+  }
+
+  .album-infos {
+    font-size: 1em;
+  }
+  .album-infos > div {
+    padding: 0 10px;
+    text-align: center;
+  }
+  .album-infos .album-info-artist {
+    line-height: 1.3em;
   }
 
   /* --  5. Songs and playlist panels -- */
@@ -994,22 +1012,38 @@ table.form tr td.button-row {
     display: none;
   }
 
-  /* --  4. Views -- */
-  .album-container {
-    flex-basis: 20%;
-    max-width: 20%;
-    width: 20%;
+  /* --  6.1 Single album view -- */
+  .single-album-container {
+    display: grid;
+    grid-template-columns: 600px minmax(0, 1fr);
+    grid-template-rows: auto auto minmax(0, 1fr);
+    gap: 12px 24px;
+    width: min(1240px, 100% - 40px);
+    height: min(600px, 100vh - 40px);
+    max-height: min(600px, 100vh - 40px);
   }
-
-  .album-infos {
-    font-size: 1em;
+  .single-album-container > .img-wrapper {
+    grid-column: 1;
+    grid-row: 1/4;
+    width: 600px;
+    height: 600px;
+    padding-top: 0;
+    align-self: start;
   }
-  .album-infos > div {
-    padding: 0 10px;
-    text-align: center;
+  .single-album-container > .album-title,
+.single-album-container > .album-artist,
+.single-album-container > .album-songs-section {
+    grid-column: 2;
   }
-  .album-infos .album-info-artist {
-    line-height: 1.3em;
+  .single-album-container > .album-title {
+    align-self: end;
+    padding-bottom: 0;
+  }
+  .single-album-container > .album-artist {
+    padding-top: 0;
+  }
+  .single-album-container > .album-songs-section {
+    min-height: 0;
   }
 
   /* --  7. Radios -- */
@@ -1050,44 +1084,6 @@ table.form tr td.button-row {
   table.form tr td.button-row {
     text-align: center;
     padding-top: 20px;
-  }
-}
-/*
-  -- Media query 1200px -------------------------------------------------------
-*/
-@media all and (min-width: 1024px) {
-  /* --  6.1 Single album view -- */
-  .single-album-container {
-    display: grid;
-    grid-template-columns: 600px minmax(0, 1fr);
-    grid-template-rows: auto auto minmax(0, 1fr);
-    gap: 12px 24px;
-    width: min(1240px, 100% - 40px);
-    height: min(600px, 100vh - 40px);
-    max-height: min(600px, 100vh - 40px);
-  }
-  .single-album-container > .img-wrapper {
-    grid-column: 1;
-    grid-row: 1/4;
-    width: 600px;
-    height: 600px;
-    padding-top: 0;
-    align-self: start;
-  }
-  .single-album-container > .album-title,
-.single-album-container > .album-artist,
-.single-album-container > .album-songs-section {
-    grid-column: 2;
-  }
-  .single-album-container > .album-title {
-    align-self: end;
-    padding-bottom: 0;
-  }
-  .single-album-container > .album-artist {
-    padding-top: 0;
-  }
-  .single-album-container > .album-songs-section {
-    min-height: 0;
   }
 }
 /*

@@ -694,7 +694,8 @@ table.form {
 /*
   -- Media query 1024px -------------------------------------------------------
 */
-@media all and (min-width: 1023px) {
+@media all and (min-width: 1024px) {
+
     /* --  2. Topbar -- */
     .topbar {
         .logo {
@@ -706,8 +707,6 @@ table.form {
 
     .song-info {
         display: block;
-
-        // width: 200px;
     }
 
     ul.top-nav {
@@ -765,6 +764,27 @@ table.form {
 
         > ul {
             margin-top: 5px;
+        }
+    }
+
+
+    /* --  4. Views -- */
+    .album-container {
+        flex-basis: 20%;
+        max-width: 20%;
+        width: 20%;
+    }
+
+    .album-infos {
+        font-size: 1em;
+
+        > div {
+            padding: 0 10px;
+            text-align: center;
+        }
+
+        .album-info-artist {
+            line-height: 1.3em;
         }
     }
 
@@ -842,23 +862,42 @@ table.form {
     }
 
 
-    /* --  4. Views -- */
-    .album-container {
-        flex-basis: 20%;
-        max-width: 20%;
-        width: 20%;
-    }
+    /* --  6.1 Single album view -- */
+    .single-album-container {
+        display: grid;
+        grid-template-columns: 600px minmax(0, 1fr);
+        grid-template-rows: auto auto minmax(0, 1fr);
+        gap: 12px 24px;
+        width: min(1240px, calc(100% - 40px));
+        height: min(600px, calc(100vh - 40px));
+        max-height: min(600px, calc(100vh - 40px));
 
-    .album-infos {
-        font-size: 1em;
-
-        > div {
-            padding: 0 10px;
-            text-align: center;
+        > .img-wrapper {
+            grid-column: 1;
+            grid-row: 1 / 4;
+            width: 600px;
+            height: 600px;
+            padding-top: 0;
+            align-self: start;
         }
 
-        .album-info-artist {
-            line-height: 1.3em;
+        > .album-title,
+        > .album-artist,
+        > .album-songs-section {
+            grid-column: 2;
+        }
+
+        > .album-title {
+            align-self: end;
+            padding-bottom: 0;
+        }
+
+        > .album-artist {
+            padding-top: 0;
+        }
+
+        > .album-songs-section {
+            min-height: 0;
         }
     }
 
@@ -916,49 +955,6 @@ table.form {
     }
 }
 
-/*
-  -- Media query 1200px -------------------------------------------------------
-*/
-@media all and (min-width: 1024px) {
-    /* --  6.1 Single album view -- */
-    .single-album-container {
-        display: grid;
-        grid-template-columns: 600px minmax(0, 1fr);
-        grid-template-rows: auto auto minmax(0, 1fr);
-        gap: 12px 24px;
-        width: min(1240px, calc(100% - 40px));
-        height: min(600px, calc(100vh - 40px));
-        max-height: min(600px, calc(100vh - 40px));
-
-        > .img-wrapper {
-            grid-column: 1;
-            grid-row: 1 / 4;
-            width: 600px;
-            height: 600px;
-            padding-top: 0;
-            align-self: start;
-        }
-
-        > .album-title,
-        > .album-artist,
-        > .album-songs-section {
-            grid-column: 2;
-        }
-
-        > .album-title {
-            align-self: end;
-            padding-bottom: 0;
-        }
-
-        > .album-artist {
-            padding-top: 0;
-        }
-
-        > .album-songs-section {
-            min-height: 0;
-        }
-    }
-}
 
 /*
   -- Media query 1200px -------------------------------------------------------
