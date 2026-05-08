@@ -12,6 +12,86 @@ $(function() {
     let bodyTopBeforeAlbum = "";
     let bodyWidthBeforeAlbum = "";
 
+    
+    /**
+     * Init album overlay when landing directly on an album page
+     */
+    if ($(".single-album-view").length) {
+        adjustAlbumContainer();
+        lockPageScroll();
+        if (window.history && window.history.replaceState) {
+            window.history.replaceState({ url: window.location.pathname + window.location.search }, "", window.location.pathname + window.location.search);
+        }
+    }
+
+    /**
+     * show album
+     */
+    $(document).on("click", ".img-wrapper", function(e) {
+        e.preventDefault();
+
+        if ($(this).closest(".single-album-view").length) {
+            return;
+        }
+
+        if (isLoadingAlbum) {
+            return;
+        }
+
+        logDebug("clicked on an album");
+
+        const albumId = $(this).closest("[data-album-id]").data("album-id");
+        if (!albumId) {
+            return;
+        }
+
+        openAlbumOverlay(albumId);
+    });
+
+    /**
+     * close album on overlay click
+     */
+    $(document).on("click", ".single-album-view", function(e) {
+        if ($(e.target).closest(".single-album-container").length) {
+            return;
+        }
+
+        closeSingleAlbumView();
+    });
+
+    /**
+     * close album on escape
+     */
+    $(document).on("keydown", function(e) {
+        if (e.key === "Escape") {
+            closeSingleAlbumView();
+        }
+    });
+
+    /**
+     * close album from external events
+     */
+    $(document).on("soonic:closeAlbumOverlay", function() {
+        closeSingleAlbumView({ force: true });
+    });
+
+    /**
+     * handle album history navigation
+     */
+    $(window).on("popstate", function() {
+        const pathname = window.location.pathname;
+
+        if (isAlbumShowPath(pathname) && $(".albums-view").length) {
+            const match = pathname.match(/^\/album\/(\d+)$/);
+            if (match) {
+                openAlbumOverlay(match[1], { fromHistory: true });
+            }
+        } else if (!isAlbumShowPath(pathname) && $(".single-album-view").length) {
+            closeSingleAlbumView({ fromHistory: true });
+        }
+    });
+
+
     function logDebug(message) {
         if (debug) {
             console.log(message);
@@ -106,14 +186,6 @@ $(function() {
         pageScrollWasLocked = false;
     }
 
-    if ($(".single-album-view").length) {
-        adjustAlbumContainer();
-        lockPageScroll();
-        if (window.history && window.history.replaceState) {
-            window.history.replaceState({ url: window.location.pathname + window.location.search }, "", window.location.pathname + window.location.search);
-        }
-    }
-
     function openAlbumOverlay(albumId, options) {
         const opts = options || {};
 
@@ -156,62 +228,4 @@ $(function() {
             }
         });
     }
-
-
-    /**
-     * show album
-     */
-    $(document).on("click", ".img-wrapper", function(e) {
-        e.preventDefault();
-
-        if ($(this).closest(".single-album-view").length) {
-            return;
-        }
-
-        if (isLoadingAlbum) {
-            return;
-        }
-
-        logDebug("clicked on an album");
-
-        const albumId = $(this).closest("[data-album-id]").data("album-id");
-        if (!albumId) {
-            return;
-        }
-
-        openAlbumOverlay(albumId);
-    });
-
-    $(document).on("click", ".single-album-view", function(e) {
-        if ($(e.target).closest(".single-album-container").length) {
-            return;
-        }
-
-        closeSingleAlbumView();
-    });
-
-    $(document).on("keydown", function(e) {
-        if (e.key === "Escape") {
-            closeSingleAlbumView();
-        }
-    });
-
-    $(document).on("soonic:closeAlbumOverlay", function() {
-        closeSingleAlbumView({ force: true });
-    });
-
-    $(window).on("popstate", function() {
-        const pathname = window.location.pathname;
-
-        if (isAlbumShowPath(pathname) && $(".albums-view").length) {
-            const match = pathname.match(/^\/album\/(\d+)$/);
-            if (match) {
-                openAlbumOverlay(match[1], { fromHistory: true });
-            }
-        } else if (!isAlbumShowPath(pathname) && $(".single-album-view").length) {
-            closeSingleAlbumView({ fromHistory: true });
-        }
-    });
-
-
 });

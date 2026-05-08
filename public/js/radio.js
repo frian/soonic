@@ -4,51 +4,9 @@ $(function() {
     const debug = true;
     let radioFlashTimer = null;
 
-    function logDebug(message) {
-        if (debug) {
-            console.log(message);
-        }
-    }
-
-    function showRadioFlash() {
-        const message = typeof window.t === 'function'
-            ? window.t('radio.flash.error', 'Radio stream unavailable')
-            : 'Radio stream unavailable';
-
-        let $flash = $("#radio-flash-message");
-        if (!$flash.length) {
-            $flash = $("<div>", { id: "radio-flash-message" });
-            $("body").append($flash);
-        }
-
-        if (radioFlashTimer) {
-            clearTimeout(radioFlashTimer);
-            radioFlashTimer = null;
-        }
-
-        $flash.stop(true, true).text(message).fadeIn(80);
-        radioFlashTimer = setTimeout(function() {
-            $flash.fadeOut(120);
-            radioFlashTimer = null;
-        }, 1800);
-    }
-
-    function setRadioPlaying($button) {
-        $button
-            .removeClass("icon-play")
-            .addClass("icon-pause activePlayer")
-            .closest("tr, li, .radio-item")
-            .addClass("active-radio");
-    }
-
-    function setRadioPaused($button) {
-        $button
-            .removeClass("icon-pause activePlayer")
-            .addClass("icon-play")
-            .closest("tr, li, .radio-item")
-            .removeClass("active-radio");
-    }
-
+    /**
+     * Pause radio from external controls
+     */
     $(document).on("soonic:pauseRadio", function() {
         const $activePlayerButton = $(".radios-view i.activePlayer").first();
         const activePlayer = $activePlayerButton.length ? $activePlayerButton.next()[0] : null;
@@ -109,15 +67,9 @@ $(function() {
         }
     });
 
-    function handleRadioStreamError(audio) {
-        const $button = $(audio).prev(".radio-play");
-        if ($button.length) {
-            setRadioPaused($button);
-        }
-        showRadioFlash();
-        logDebug("radio stream error/stalled");
-    }
-
+    /**
+     * Handle radio stream errors
+     */
     ["error", "stalled", "abort"].forEach(function(eventName) {
         document.addEventListener(eventName, function(e) {
             const audio = $(e.target).is(".radios-view audio")
@@ -129,4 +81,59 @@ $(function() {
             }
         }, true);
     });
+
+
+    function logDebug(message) {
+        if (debug) {
+            console.log(message);
+        }
+    }
+
+    function showRadioFlash() {
+        const message = typeof window.t === 'function'
+            ? window.t('radio.flash.error', 'Radio stream unavailable')
+            : 'Radio stream unavailable';
+
+        let $flash = $("#radio-flash-message");
+        if (!$flash.length) {
+            $flash = $("<div>", { id: "radio-flash-message" });
+            $("body").append($flash);
+        }
+
+        if (radioFlashTimer) {
+            clearTimeout(radioFlashTimer);
+            radioFlashTimer = null;
+        }
+
+        $flash.stop(true, true).text(message).fadeIn(80);
+        radioFlashTimer = setTimeout(function() {
+            $flash.fadeOut(120);
+            radioFlashTimer = null;
+        }, 1800);
+    }
+
+    function setRadioPlaying($button) {
+        $button
+            .removeClass("icon-play")
+            .addClass("icon-pause activePlayer")
+            .closest("tr, li, .radio-item")
+            .addClass("active-radio");
+    }
+
+    function setRadioPaused($button) {
+        $button
+            .removeClass("icon-pause activePlayer")
+            .addClass("icon-play")
+            .closest("tr, li, .radio-item")
+            .removeClass("active-radio");
+    }
+
+    function handleRadioStreamError(audio) {
+        const $button = $(audio).prev(".radio-play");
+        if ($button.length) {
+            setRadioPaused($button);
+        }
+        showRadioFlash();
+        logDebug("radio stream error/stalled");
+    }
 });

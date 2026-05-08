@@ -8,6 +8,223 @@ $(function() {
     let playlistFlashTimer = null;
     let activePlaybackScope = "#songs tbody";
 
+    /**
+     * Play / Pause currently loaded song
+     */
+    $(document).on("click", "#play-pause-button", function(e) {
+
+        logDebug('clicked on Play / Pause');
+        playPause();
+    });
+
+    /**
+     * load and play a song from the songs list or the playlist
+     */
+    $(document).on("click", "#songs tbody tr, #playlist tbody tr", function(e) {
+
+        logDebug('clicked on a song');
+
+        $("tbody .playing").removeClass('playing');
+        activePlaybackScope = "#" + $(this).closest("table").attr("id") + " tbody";
+        loadSong($(this));
+        playerStatus = "playing";
+        $(this).addClass('playing');
+
+        $('#play-pause-button').removeClass('icon-play').addClass('icon-pause');
+
+        if ($(window).width() < 500) {
+            $(".song-info").css('display', 'none');
+        }
+    });
+
+    /**
+     * Context menu
+     */
+    $(document).on("contextmenu", "#songs tbody tr, #playlist tbody tr", function(e) {
+
+        e.preventDefault();
+
+        const $currentItem = $(this);
+
+        // -- if we right-clic two times, remove class and listener
+        $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
+        $(document).off("click.playlistContext");
+        if (contextMenuClickTimer) {
+            clearTimeout(contextMenuClickTimer);
+            contextMenuClickTimer = null;
+        }
+
+        $currentItem.addClass("selected");
+
+        let contextMenu = '.songs-context-menu';
+        const tableId = $currentItem.closest('table').attr('id');
+
+        if (tableId === 'playlist') {
+            contextMenu = '.playlist-context-menu';
+        }
+
+        $(contextMenu).css('display', 'block');
+        $(contextMenu).css('top', e.pageY);
+        $(contextMenu).css('left', e.pageX);
+
+        contextMenuClickTimer = setTimeout(function() {
+            $(document).one("click.playlistContext", function(e) {
+                const $target = $(e.target).closest("#add-to-playlist, #remove-from-playlist");
+                const $selected = $("#songs tbody tr.selected, #playlist tbody tr.selected").first();
+
+                if ($target.length && $selected.length) {
+                    if ($target.is("#add-to-playlist")) {
+                        if (!addSongToPlaylist($selected)) {
+                            $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
+                            $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
+                            return;
+                        }
+                    }
+                    else if ($target.is("#remove-from-playlist")) {
+                        updatePlaylistInfo($selected, 'remove');
+                        $selected.remove();
+                        showPlaylistFlash('remove');
+                    }
+                }
+
+                $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
+                $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
+            });
+        }, 100);
+    });
+
+    /**
+     * play next song in songslist
+     */
+    $(document).on("click", ".icon-to-end", function(e) {
+
+        logDebug('clicked on next song');
+        playNext();
+    });
+
+    /**
+     * play previous song in songslist
+     */
+    $(document).on("click", ".icon-to-start", function(e) {
+
+        logDebug('clicked on previous song');
+        playNext('backward');
+    });
+
+    /**
+     * move progress bar
+     */
+    $(document).on("click", ".progressbar", function(e) {
+
+        logDebug('clicked on progress bar');
+
+        const player = document.getElementById("player");
+        if (!Number.isFinite(player.duration) || player.duration <= 0) {
+            return;
+        }
+        const offset = $(this).offset();
+        const xVal = e.pageX - offset.left;
+        const percent = (xVal / $(this).width()) * 100;
+        const jumpTime = player.duration * percent / 100;
+
+        player.currentTime = jumpTime;
+
+        $(".progress-indicator").width(percent + "%");
+
+        logDebug("jumpTime : " + toDuration(jumpTime));
+    });
+
+    /**
+     * bind player media events
+     */
+    bindPlayerEvents();
+    $(document).on("soonic:topbarReplaced", function() {
+        bindPlayerEvents();
+    });
+
+    /**
+     * Add song to playlist
+     */
+    $(document).on("click", "#songs .add", function(e) {
+        e.stopPropagation();
+        const $button = $(this);
+
+        // -- prevent duplicate inserts on very fast repeated clicks
+        if ($button.data('adding') === true) {
+            return;
+        }
+        $button.data('adding', true);
+
+        // -- add song
+        if (!addSongToPlaylist($button.parent())) {
+            setTimeout(function() {
+                $button.removeData('adding');
+            }, 120);
+            return;
+        }
+
+        logDebug('clicked on add to playlist');
+
+        setTimeout(function() {
+            $button.removeData('adding');
+        }, 120);
+    });
+
+    /**
+     * Add album song to playlist
+     */
+    $(document).on("click", ".album-songs .icon-plus", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        addSongToPlaylist($(this).closest("tr"), { forceFlash: true });
+    });
+
+    /**
+     * Add album to playlist
+     */
+    $(document).on("click", ".add-album-to-playlist", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        addAlbumToPlaylist($(this).closest(".single-album-view"));
+    });
+
+    /**
+     * Play album
+     */
+    $(document).on("click", ".play-album", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        playAlbumFromOverlay($(this).closest(".single-album-view"));
+    });
+
+    /**
+     * Remove song from playlist
+     */
+    $(document).on("click", "#playlist .add", function(e) {
+        e.stopPropagation();
+        updatePlaylistInfo($(this).parent(), 'remove');
+        $(this).parent().remove();
+        showPlaylistFlash('remove');
+
+        logDebug('remove song from playlist');
+    });
+
+    /**
+     * Pause player from external controls
+     */
+    $(document).on("soonic:pausePlayer", function() {
+        const player = document.getElementById("player");
+        if (!player || player.paused) {
+            return;
+        }
+
+        player.pause();
+        playerStatus = "paused";
+        $("#play-pause-button").removeClass('icon-pause').addClass('icon-play');
+        logDebug('player paused');
+    });
+
+
     function logDebug(message) {
         if (debug) {
             console.log(message);
@@ -205,244 +422,44 @@ $(function() {
         }
     }
 
-    /**
-     * Play / Pause currently loaded song
-     */
-    $(document).on("click", "#play-pause-button", function(e) {
+    function bindPlayerEvents() {
+        $("#player").off(".soonicPlayer");
+        $("#player").on("timeupdate.soonicPlayer", function() {
 
-        logDebug('clicked on Play / Pause');
-        playPause();
-    });
+            $("#current-time").text(toDuration(this.currentTime) + ' /');
 
+            if (!Number.isFinite(this.duration) || this.duration <= 0) {
+                return;
+            }
 
-    /**
-     * load and play a song from the songs list or the playlist
-     */
-    $(document).on("click", "#songs tbody tr, #playlist tbody tr", function(e) {
+            let percentagePlayed = (this.currentTime / this.duration);
 
-        logDebug('clicked on a song');
+            if (percentagePlayed > 1) {
+                percentagePlayed = 1;
+            } else if (percentagePlayed < 0) {
+                percentagePlayed = 0;
+            }
 
-        $("tbody .playing").removeClass('playing');
-        activePlaybackScope = "#" + $(this).closest("table").attr("id") + " tbody";
-        loadSong($(this));
-        playerStatus = "playing";
-        $(this).addClass('playing');
+            percentagePlayed = percentagePlayed * 100;
 
-        $('#play-pause-button').removeClass('icon-play').addClass('icon-pause');
-
-        if ($(window).width() < 500) {
-            $(".song-info").css('display', 'none');
-        }
-    });
+            $(".progress-indicator").width(percentagePlayed + '%');
+        });
 
 
-    /**
-     * Context menu
-     */
-    $(document).on("contextmenu", "#songs tbody tr, #playlist tbody tr", function(e) {
+        $("#player").on("ended.soonicPlayer", function() {
 
-        e.preventDefault();
+            logDebug('song ended');
+            logDebug("running playNext");
+            playNext();
+        });
 
-        const $currentItem = $(this);
+        $("#player").on("error.soonicPlayer stalled.soonicPlayer abort.soonicPlayer", function() {
+            playerStatus = "paused";
+            $("#play-pause-button").removeClass('icon-pause').addClass('icon-play');
+            logDebug('player error/stalled');
+        });
+    }
 
-        // -- if we right-clic two times, remove class and listener
-        $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
-        $(document).off("click.playlistContext");
-        if (contextMenuClickTimer) {
-            clearTimeout(contextMenuClickTimer);
-            contextMenuClickTimer = null;
-        }
-
-        $currentItem.addClass("selected");
-
-        let contextMenu = '.songs-context-menu';
-        const tableId = $currentItem.closest('table').attr('id');
-
-        if (tableId === 'playlist') {
-            contextMenu = '.playlist-context-menu';
-        }
-
-        $(contextMenu).css('display', 'block');
-        $(contextMenu).css('top', e.pageY);
-        $(contextMenu).css('left', e.pageX);
-
-        contextMenuClickTimer = setTimeout(function() {
-            $(document).one("click.playlistContext", function(e) {
-                const $target = $(e.target).closest("#add-to-playlist, #remove-from-playlist");
-                const $selected = $("#songs tbody tr.selected, #playlist tbody tr.selected").first();
-
-                if ($target.length && $selected.length) {
-                    if ($target.is("#add-to-playlist")) {
-                        if (!addSongToPlaylist($selected)) {
-                            $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
-                            $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
-                            return;
-                        }
-                    }
-                    else if ($target.is("#remove-from-playlist")) {
-                        updatePlaylistInfo($selected, 'remove');
-                        $selected.remove();
-                        showPlaylistFlash('remove');
-                    }
-                }
-
-                $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
-                $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
-            });
-        }, 100);
-    });
-
-
-    /**
-     * play next song in songslist
-     */
-    $(document).on("click", ".icon-to-end", function(e) {
-
-        logDebug('clicked on next song');
-        playNext();
-    });
-
-
-    /**
-     * play previous song in songslist
-     */
-    $(document).on("click", ".icon-to-start", function(e) {
-
-        logDebug('clicked on previous song');
-        playNext('backward');
-    });
-
-
-    /**
-     * move progress bar
-     */
-    $(document).on("click", ".progressbar", function(e) {
-
-        logDebug('clicked on progress bar');
-
-        const player = document.getElementById("player");
-        if (!Number.isFinite(player.duration) || player.duration <= 0) {
-            return;
-        }
-        const offset = $(this).offset();
-        const xVal = e.pageX - offset.left;
-        const percent = (xVal / $(this).width()) * 100;
-        const jumpTime = player.duration * percent / 100;
-
-        player.currentTime = jumpTime;
-
-        $(".progress-indicator").width(percent + "%");
-
-        logDebug("jumpTime : " + toDuration(jumpTime));
-    });
-
-
-    /**
-     * show time elapsed
-     */
-    $("#player").on("timeupdate", function() {
-
-        $("#current-time").text(toDuration(this.currentTime) + ' /');
-
-        if (!Number.isFinite(this.duration) || this.duration <= 0) {
-            return;
-        }
-
-        let percentagePlayed = (this.currentTime / this.duration);
-
-        if (percentagePlayed > 1) {
-            percentagePlayed = 1;
-        } else if (percentagePlayed < 0) {
-            percentagePlayed = 0;
-        }
-
-        percentagePlayed = percentagePlayed * 100;
-
-        $(".progress-indicator").width(percentagePlayed + '%');
-    });
-
-
-    /**
-     * on song end, play next song
-     */
-    $('#player').on('ended', function() {
-
-        logDebug('song ended');
-        logDebug("running playNext");
-        playNext();
-    });
-
-    $("#player").on("error stalled abort", function() {
-        playerStatus = "paused";
-        $("#play-pause-button").removeClass('icon-pause').addClass('icon-play');
-        logDebug('player error/stalled');
-    });
-
-
-    /**
-     * Add song to playlist
-     */
-    $(document).on("click", "#songs .add", function(e) {
-        e.stopPropagation();
-        const $button = $(this);
-
-        // -- prevent duplicate inserts on very fast repeated clicks
-        if ($button.data('adding') === true) {
-            return;
-        }
-        $button.data('adding', true);
-
-        // -- add song
-        if (!addSongToPlaylist($button.parent())) {
-            setTimeout(function() {
-                $button.removeData('adding');
-            }, 120);
-            return;
-        }
-
-        logDebug('clicked on add to playlist');
-
-        setTimeout(function() {
-            $button.removeData('adding');
-        }, 120);
-    });
-
-    $(document).on("click", ".album-songs .icon-plus", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        addSongToPlaylist($(this).closest("tr"), { forceFlash: true });
-    });
-
-    $(document).on("click", ".add-album-to-playlist", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        addAlbumToPlaylist($(this).closest(".single-album-view"));
-    });
-
-    $(document).on("click", ".play-album", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        playAlbumFromOverlay($(this).closest(".single-album-view"));
-    });
-
-
-    /**
-     * Remove song from playlist
-     */
-    $(document).on("click", "#playlist .add", function(e) {
-        e.stopPropagation();
-        updatePlaylistInfo($(this).parent(), 'remove');
-        $(this).parent().remove();
-        showPlaylistFlash('remove');
-
-        logDebug('remove song from playlist');
-    });
-
-
-
-    /**
-     * play next song (forward or backward)
-     */
     function playNext(direction) {
 
         logDebug('- in playNext');
@@ -492,9 +509,6 @@ $(function() {
         }
     }
 
-    /**
-     * Play / Pause currently loaded song
-     */
     function playPause() {
 
         const player = document.getElementById("player");
@@ -534,21 +548,6 @@ $(function() {
         logDebug("- playerStatus = " + playerStatus);
     }
 
-    $(document).on("soonic:pausePlayer", function() {
-        const player = document.getElementById("player");
-        if (!player || player.paused) {
-            return;
-        }
-
-        player.pause();
-        playerStatus = "paused";
-        $("#play-pause-button").removeClass('icon-pause').addClass('icon-play');
-        logDebug('player paused');
-    });
-
-    /**
-     * load song
-     */
     function loadSong(song) {
 
         const path = song.data("path");
@@ -589,9 +588,6 @@ $(function() {
         logDebug('in loadSong');
     }
 
-    /**
-     * 00:00:00, 00:00 to seconds
-     */
     function toSeconds(str)  {
 
         const arr = str.split(':').map(Number);
@@ -606,9 +602,6 @@ $(function() {
         return (arr[0] * 3600) + (arr[1] * 60) + arr[2];
     }
 
-    /**
-     * seconds to 00:00:00, 00:00
-     */
     function toDuration(secs) {
 
         secs = Math.round(secs);
@@ -632,9 +625,6 @@ $(function() {
         return durationParts.map(function (i) { return i.toString().length === 2 ? i : '0' + i; }).join(':');
     }
 
-    /**
-     * Update playlist num files and duration
-     */
     function updatePlaylistInfo(item, action) {
 
         action = action || 'add';
@@ -673,9 +663,6 @@ $(function() {
         logDebug('in updatePlaylistInfo');
     }
 
-    /**
-     * true when a song with the same path already exists in playlist
-     */
     function playlistContainsPath(path) {
 
         let found = false;
