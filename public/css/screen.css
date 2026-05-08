@@ -300,7 +300,8 @@ h2 {
   background-color: #eee;
 }
 
-#playlist-flash-message {
+#playlist-flash-message,
+#radio-flash-message {
   border-radius: 6px;
   background: #ddd;
   color: #fff;

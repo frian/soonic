@@ -29,6 +29,7 @@ radio: radio
 radios: radios
 radio.new: 'new radio'
 radio.edit: 'edit radio'
+radio.flash.error: 'Radio stream unavailable'
 random: random
 save: save
 scan: 'scan library'

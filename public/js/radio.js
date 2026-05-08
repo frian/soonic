@@ -2,11 +2,35 @@ $(function() {
     'use strict';
 
     const debug = true;
+    let radioFlashTimer = null;
 
     function logDebug(message) {
         if (debug) {
             console.log(message);
         }
+    }
+
+    function showRadioFlash() {
+        const message = typeof window.t === 'function'
+            ? window.t('radio.flash.error', 'Radio stream unavailable')
+            : 'Radio stream unavailable';
+
+        let $flash = $("#radio-flash-message");
+        if (!$flash.length) {
+            $flash = $("<div>", { id: "radio-flash-message" });
+            $("body").append($flash);
+        }
+
+        if (radioFlashTimer) {
+            clearTimeout(radioFlashTimer);
+            radioFlashTimer = null;
+        }
+
+        $flash.stop(true, true).text(message).fadeIn(80);
+        radioFlashTimer = setTimeout(function() {
+            $flash.fadeOut(120);
+            radioFlashTimer = null;
+        }, 1800);
     }
 
     function setRadioPlaying($button) {
@@ -61,6 +85,7 @@ $(function() {
                 })
                 .catch(function() {
                     setRadioPaused($button);
+                    showRadioFlash();
                     logDebug("radio play() failed");
                 });
         } else {
@@ -74,6 +99,7 @@ $(function() {
         if ($button.length) {
             setRadioPaused($button);
         }
+        showRadioFlash();
         logDebug("radio stream error/stalled");
     }
 

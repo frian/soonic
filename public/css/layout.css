@@ -786,7 +786,8 @@ table.form tr td.button-row {
   display: none;
 }
 
-#playlist-flash-message {
+#playlist-flash-message,
+#radio-flash-message {
   position: fixed;
   top: 12px;
   left: 50%;

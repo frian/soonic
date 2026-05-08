@@ -29,6 +29,7 @@ radio: radio
 radios: radios
 radio.new: 'nouvelle radio'
 radio.edit: 'modifier la radio'
+radio.flash.error: 'Flux radio indisponible'
 random: aléatoire
 scan: scanner la bibliothèque
 save: enregistrer

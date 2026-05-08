@@ -61,7 +61,8 @@ nav.topbar-nav a:hover {
   background: linear-gradient(to top, #006600, rgba(0, 102, 0, 0.5));
 }
 
-#playlist-flash-message {
+#playlist-flash-message,
+#radio-flash-message {
   background: #060;
 }
 

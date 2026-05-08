@@ -78,7 +78,8 @@ h2 {
     background-color: $bg-color;
 }
 
-#playlist-flash-message {
+#playlist-flash-message,
+#radio-flash-message {
     border-radius: 6px;
     background: $hover-active;
     color: #fff;
