@@ -139,6 +139,89 @@ test('topbar next and previous controls move the playing row', async ({ page }) 
     await expect(page.locator('#song-title')).toHaveText('First Song');
 });
 
+test('keyboard shortcuts focus search, control player, and navigate lists', async ({ page }) => {
+    await mockAudioPlayback(page);
+    await seedSongRows(page);
+
+    await page.keyboard.press('/');
+    await expect(page.locator('#form-keyword')).toBeFocused();
+    await page.locator('#form-keyword').evaluate(function(input) {
+        input.blur();
+    });
+
+    await page.evaluate(function() {
+        document.querySelector('#player').setAttribute('src', '/music/test.mp3');
+    });
+    await page.keyboard.press('p');
+    await expect(page.locator('#play-pause-button')).toHaveClass(/icon-pause/);
+    await page.keyboard.press('p');
+    await expect(page.locator('#play-pause-button')).toHaveClass(/icon-play/);
+
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('#songs tbody tr').first()).toHaveClass(/keyboard-selected/);
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('#songs tbody tr').nth(1)).toHaveClass(/keyboard-selected/);
+    await page.keyboard.press('ArrowRight');
+    await expect(page.locator('#songs tbody tr').nth(1)).toHaveClass(/playing/);
+
+    await page.keyboard.press('b');
+    await expect(page.locator('#songs tbody tr').first()).toHaveClass(/playing/);
+    await page.keyboard.press('n');
+    await expect(page.locator('#songs tbody tr').nth(1)).toHaveClass(/playing/);
+});
+
+test('keyboard shortcut removes selected playlist song', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await seedSongRows(page);
+
+    await page.locator('#songs tbody tr .add').first().dispatchEvent('click');
+    await page.locator('#songs tbody tr .add').nth(1).dispatchEvent('click');
+    await expect(page.locator('#playlist tbody tr')).toHaveCount(2);
+
+    await page.keyboard.press('ArrowDown');
+    await expect(page.locator('#playlist tbody tr').first()).toHaveClass(/keyboard-selected/);
+
+    await page.keyboard.press('Backspace');
+    await expect(page.locator('#playlist tbody tr')).toHaveCount(1);
+});
+
+test('keyboard navigation starts from active artist and clears active state', async ({ page }) => {
+    await page.evaluate(function() {
+        document.querySelector('.songs').style.display = 'none';
+        document.querySelector('.playlist').style.display = 'none';
+        const artists = document.querySelectorAll('.artists-navigation a');
+
+        artists.forEach(function(artist) {
+            artist.classList.remove('active', 'keyboard-selected');
+        });
+        artists[2].classList.add('active');
+    });
+
+    await page.keyboard.press('ArrowDown');
+
+    await expect(page.locator('.artists-navigation a').nth(2)).not.toHaveClass(/active/);
+    await expect(page.locator('.artists-navigation a').nth(3)).toHaveClass(/keyboard-selected/);
+    await expect(page.locator('.artists-navigation a.active')).toHaveCount(0);
+});
+
+test('keyboard navigation stays in artists list after opening artist albums', async ({ page }) => {
+    await seedSongRows(page);
+    await page.evaluate(function() {
+        const artists = document.querySelectorAll('.artists-navigation a.artist');
+
+        artists.forEach(function(artist) {
+            artist.classList.remove('active', 'keyboard-selected');
+        });
+        artists[2].classList.add('active');
+    });
+
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowDown');
+
+    await expect(page.locator('.artists-navigation a.artist').nth(3)).toHaveClass(/keyboard-selected/);
+    await expect(page.locator('#songs tbody tr.keyboard-selected')).toHaveCount(0);
+});
+
 test('empty playlist resets playlist info', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await seedSongRows(page);

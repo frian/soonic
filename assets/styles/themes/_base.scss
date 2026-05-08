@@ -136,7 +136,8 @@ nav.topbar-nav {
     }
 
     tbody tr.playing,
-    tbody tr.selected {
+    tbody tr.selected,
+    tbody tr.keyboard-selected {
         background-color: $hover-active;
     }
 
@@ -144,6 +145,10 @@ nav.topbar-nav {
     .icon-minus {
         color: #aaa;
     }
+}
+
+.artists-navigation a.keyboard-selected {
+    background-color: $hover-active;
 }
 
 .single-album-container {

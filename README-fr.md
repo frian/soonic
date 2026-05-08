@@ -75,6 +75,22 @@ Lint SCSS:
 npm run lint:scss
 ```
 
+## Navigation clavier
+
+Les raccourcis clavier sont gérés dans `public/js/keyboard.js`.
+
+- `/` ou `Ctrl/Cmd + K` : focus recherche
+- `P` : play / pause du player topbar
+- `N` / `B` : morceau suivant / précédent
+- `R`, `A`, `L`, `F` : ouvrir radios, albums, bibliothèque, ou focus filtre artiste
+- `ArrowUp` / `ArrowDown` : déplacer la sélection clavier dans la liste courante
+- `ArrowRight` : activer l'élément sélectionné
+- `ArrowLeft` / `Esc` : retour ou fermeture des éléments temporaires
+- `Backspace` / `Delete` : retirer le morceau sélectionné de la playlist
+- `Enter` / `Space` : activer les contrôles focusés avec `role="button"`
+
+La sélection clavier utilise `.keyboard-selected`, séparée de `.active` et `.playing`.
+
 ## Commandes métier
 
 Scan bibliothèque:

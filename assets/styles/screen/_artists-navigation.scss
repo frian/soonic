@@ -26,6 +26,7 @@ $filter-input-bg: black !default;
     }
 }
 
-.artists-navigation a.active {
+.artists-navigation a.active,
+.artists-navigation a.keyboard-selected {
     background-color: $hover-active;
 }

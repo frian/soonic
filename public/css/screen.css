@@ -205,7 +205,8 @@ nav.topbar-nav a:hover {
   padding: 0 0 0 10px;
 }
 
-.artists-navigation a.active {
+.artists-navigation a.active,
+.artists-navigation a.keyboard-selected {
   background-color: #ddd;
 }
 
@@ -242,7 +243,8 @@ nav.topbar-nav a:hover {
   background-color: #ddd;
 }
 .list tbody tr.playing,
-.list tbody tr.selected {
+.list tbody tr.selected,
+.list tbody tr.keyboard-selected {
   background-color: #ddd;
 }
 .list .icon-plus, .list .icon-minus {

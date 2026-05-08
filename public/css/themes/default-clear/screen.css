@@ -99,12 +99,17 @@ nav.topbar-nav a:hover {
   background-color: #c8c8c8;
 }
 .list tbody tr.playing,
-.list tbody tr.selected {
+.list tbody tr.selected,
+.list tbody tr.keyboard-selected {
   background-color: #90ee90;
 }
 .list .icon-plus,
 .list .icon-minus {
   color: #aaa;
+}
+
+.artists-navigation a.keyboard-selected {
+  background-color: #90ee90;
 }
 
 .single-album-container .album-songs tbody tr:nth-child(even) {

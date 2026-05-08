@@ -75,6 +75,22 @@ Lint SCSS:
 npm run lint:scss
 ```
 
+## Keyboard Navigation
+
+Keyboard shortcuts are handled in `public/js/keyboard.js`.
+
+- `/` or `Ctrl/Cmd + K`: focus search
+- `P`: play / pause the topbar player
+- `N` / `B`: next / previous song
+- `R`, `A`, `L`, `F`: open radios, albums, library, or focus the artist filter
+- `ArrowUp` / `ArrowDown`: move the keyboard selection in the current list
+- `ArrowRight`: activate the selected item
+- `ArrowLeft` / `Esc`: go back or close transient UI
+- `Backspace` / `Delete`: remove the selected playlist song
+- `Enter` / `Space`: activate focused controls with `role="button"`
+
+Keyboard selection uses `.keyboard-selected`, kept separate from `.active` and `.playing`.
+
 ## Business Commands
 
 Scan library:

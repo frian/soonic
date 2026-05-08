@@ -56,7 +56,8 @@
             'js/main.js',
             'js/album.js',
             'js/player.js',
-            'js/radio.js'
+            'js/radio.js',
+            'js/keyboard.js'
         ] %}
         {% for js_file in js_files %}
             <script src="/{{ js_file }}?v={{ file_mtime(js_file) }}"></script>

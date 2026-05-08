@@ -43,7 +43,8 @@ $hover-active: #ddd !default;
     }
 
     tbody tr.playing,
-    tbody tr.selected {
+    tbody tr.selected,
+    tbody tr.keyboard-selected {
         background-color: $hover-active;
     }
 
