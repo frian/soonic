@@ -141,11 +141,6 @@
 .topbar .icon-to-end {
   margin-left: -2px;
 }
-.topbar .icon-cog {
-  height: 100%;
-  font-size: 26px;
-  text-align: center;
-}
 .topbar .time-info {
   display: block;
   height: 30px;
@@ -226,11 +221,6 @@ nav.topbar-nav a {
   height: 49px;
   line-height: 49px;
   border: 0px solid lime;
-}
-
-.icon-cog {
-  float: right;
-  padding: 0 10px;
 }
 
 #navigation-library,
@@ -318,10 +308,6 @@ table {
 
 .is-hidden {
   display: none;
-}
-
-.no-padding {
-  padding: 0;
 }
 
 /*
@@ -464,21 +450,6 @@ thead {
   height: 0;
   padding-top: 100%;
   cursor: pointer;
-}
-.album-container .album-controls {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  cursor: pointer;
-}
-.album-container .album-controls .material-icons {
-  font-size: 36px;
-  padding-left: 10px;
-  vertical-align: middle;
-}
-.album-container .album-controls .material-icons-big {
-  font-size: 50px;
-  padding-left: 0;
 }
 
 img.lozad {
@@ -650,10 +621,6 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
   text-align: right;
 }
 
-.info {
-  border: 0px solid red;
-}
-
 /*
   --  9. Mobile menu ----------------------------------------------------------
 */
@@ -675,9 +642,6 @@ ul.top-nav.is-active li {
 ul.top-nav.is-active li a {
   width: 100%;
   text-align: center;
-}
-ul.top-nav.is-active li a .icon-cog {
-  float: none;
 }
 ul.top-nav.is-active form {
   width: 100%;

@@ -39,11 +39,6 @@ table {
     display: none;
 }
 
-.no-padding {
-    padding: 0;
-}
-
-
 
 /*
   --  2/3. Topbar + Artists navigation ----------------------------------------
@@ -224,24 +219,6 @@ thead {
         height: 0;
         padding-top: 100%;
         cursor: pointer;
-    }
-
-    .album-controls {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        cursor: pointer;
-
-        .material-icons {
-            font-size: 36px;
-            padding-left: 10px;
-            vertical-align: middle;
-        }
-
-        .material-icons-big {
-            font-size: 50px;
-            padding-left: 0;
-        }
     }
 }
 
@@ -441,10 +418,6 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
     }
 }
 
-.info {
-    border: #{$debug}px solid red;
-}
-
 
 /*
   --  9. Mobile menu ----------------------------------------------------------
@@ -467,10 +440,6 @@ ul.top-nav {
             a {
                 width: 100%;
                 text-align: center;
-
-                .icon-cog {
-                    float: none;
-                }
             }
         }
 

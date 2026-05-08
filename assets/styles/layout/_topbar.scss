@@ -56,12 +56,6 @@ $topbar-border-size: 1px !default;
         margin-left: -2px;
     }
 
-    .icon-cog {
-        height: 100%;
-        font-size: 26px;
-        text-align: center;
-    }
-
     .time-info {
         display: block;
         height: 30px;
@@ -158,11 +152,6 @@ nav.topbar-nav {
         line-height: $topbar-size;
         border: #{$debug}px solid lime;
     }
-}
-
-.icon-cog {
-    float: right;
-    padding: 0 10px;
 }
 
 // -- set menu items visibility

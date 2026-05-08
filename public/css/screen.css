@@ -317,10 +317,6 @@ h2 {
 /*
   --  6. Albums view ----------------------------------------------------------
 */
-.album-container .album-controls {
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
 .albums-view .album-container:nth-child(even) .album-infos {
   background-color: #ddd;
 }
