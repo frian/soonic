@@ -506,6 +506,8 @@ $(function() {
         }
 
         if (playerStatus === "paused") {
+            $(document).trigger("soonic:pauseRadio");
+
             const playPromise = player.play();
             if (playPromise && typeof playPromise.catch === "function") {
                 playPromise
@@ -532,6 +534,18 @@ $(function() {
         logDebug("- playerStatus = " + playerStatus);
     }
 
+    $(document).on("soonic:pausePlayer", function() {
+        const player = document.getElementById("player");
+        if (!player || player.paused) {
+            return;
+        }
+
+        player.pause();
+        playerStatus = "paused";
+        $("#play-pause-button").removeClass('icon-pause').addClass('icon-play');
+        logDebug('player paused');
+    });
+
     /**
      * load song
      */
@@ -548,6 +562,7 @@ $(function() {
 
         player.setAttribute('src', path);
         player.load();
+        $(document).trigger("soonic:pauseRadio");
         syncAlbumPlaying(path);
 
         $("#song-title").text(title);

@@ -49,6 +49,19 @@ $(function() {
             .removeClass("active-radio");
     }
 
+    $(document).on("soonic:pauseRadio", function() {
+        const $activePlayerButton = $(".radios-view i.activePlayer").first();
+        const activePlayer = $activePlayerButton.length ? $activePlayerButton.next()[0] : null;
+
+        if (!activePlayer || activePlayer.paused) {
+            return;
+        }
+
+        activePlayer.pause();
+        setRadioPaused($activePlayerButton);
+        logDebug("radio paused");
+    });
+
     /**
      * Play / Pause currently loaded radio
      */
@@ -75,6 +88,8 @@ $(function() {
         if (radioPlayer === activePlayer) {
             return;
         }
+
+        $(document).trigger("soonic:pausePlayer");
 
         const playPromise = radioPlayer.play();
         if (playPromise && typeof playPromise.catch === "function") {
