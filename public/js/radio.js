@@ -1,7 +1,7 @@
 $(function() {
     'use strict';
 
-    const debug = false;
+    const debug = true;
 
     function logDebug(message) {
         if (debug) {
@@ -44,6 +44,7 @@ $(function() {
         if (activePlayer) {
             activePlayer.pause();
             setRadioPaused($activePlayerButton);
+            logDebug("radio paused");
         }
 
         // -- if we clicked the active one, this means toggle to pause only
@@ -68,11 +69,23 @@ $(function() {
         }
     });
 
-    $(document).on("error stalled abort", ".radios-view audio", function() {
-        const $button = $(this).prev(".radio-play");
+    function handleRadioStreamError(audio) {
+        const $button = $(audio).prev(".radio-play");
         if ($button.length) {
             setRadioPaused($button);
         }
         logDebug("radio stream error/stalled");
+    }
+
+    ["error", "stalled", "abort"].forEach(function(eventName) {
+        document.addEventListener(eventName, function(e) {
+            const audio = $(e.target).is(".radios-view audio")
+                ? e.target
+                : $(e.target).closest(".radios-view audio").get(0);
+
+            if (audio) {
+                handleRadioStreamError(audio);
+            }
+        }, true);
     });
 });
