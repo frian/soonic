@@ -46,6 +46,7 @@ $(function() {
             return;
         }
 
+        $(radioPlayer).removeData("stream-error-handled");
         $(document).trigger("soonic:pausePlayer");
 
         const playPromise = radioPlayer.play();
@@ -57,7 +58,7 @@ $(function() {
                 })
                 .catch(function() {
                     setRadioPaused($button);
-                    showRadioFlash();
+                    showRadioStreamError(radioPlayer);
                     logDebug("radio play() failed");
                 });
         } else {
@@ -112,12 +113,29 @@ $(function() {
             .removeClass("active-radio");
     }
 
+    function showRadioStreamError(audio) {
+        const $audio = $(audio);
+
+        if ($audio.data("stream-error-handled")) {
+            return false;
+        }
+
+        $audio.data("stream-error-handled", true);
+        showRadioFlash();
+
+        return true;
+    }
+
     function handleRadioStreamError(audio) {
         const $button = $(audio).prev(".radio-play");
         if ($button.length) {
             setRadioPaused($button);
         }
-        showRadioFlash();
+
+        if (!showRadioStreamError(audio)) {
+            return;
+        }
+
         logDebug("radio stream error/stalled");
     }
 });
