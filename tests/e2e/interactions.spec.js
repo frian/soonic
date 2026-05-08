@@ -9,6 +9,7 @@ test.beforeEach(async ({ page }) => {
 
     await page.goto('/');
     await expect(page).toHaveTitle(/Soonic/);
+    await hideSymfonyToolbar(page);
 
     page.errors = errors;
 });
@@ -82,6 +83,96 @@ test('topbar player pauses active radio', async ({ page }) => {
     await expect(page.locator('#play-pause-button')).toHaveClass(/icon-pause/);
 });
 
+test('radio pauses active topbar player', async ({ page }) => {
+    await mockAudioPlayback(page);
+    await page.evaluate(function() {
+        document.querySelector('#player').setAttribute('src', '/music/test.mp3');
+    });
+
+    await page.locator('#play-pause-button').click();
+    await expect(page.locator('#play-pause-button')).toHaveClass(/icon-pause/);
+
+    await page.locator('#radio-button').click();
+    await expect(page.locator('.radios-view')).toBeVisible();
+
+    await ensureRadioExists(page);
+    await page.locator('.radio-play').first().click();
+
+    await expect(page.locator('.radio-play').first()).toHaveClass(/icon-pause/);
+    await expect(page.locator('#play-pause-button')).toHaveClass(/icon-play/);
+});
+
+test('topbar player play pause and play failure update the button', async ({ page }) => {
+    await mockAudioPlayback(page);
+    await page.evaluate(function() {
+        document.querySelector('#player').setAttribute('src', '/music/test.mp3');
+    });
+
+    await page.locator('#play-pause-button').click();
+    await expect(page.locator('#play-pause-button')).toHaveClass(/icon-pause/);
+
+    await page.locator('#play-pause-button').click();
+    await expect(page.locator('#play-pause-button')).toHaveClass(/icon-play/);
+
+    await page.evaluate(function() {
+        document.querySelector('#player').__soonicRejectPlay = true;
+    });
+
+    await page.locator('#play-pause-button').click();
+    await expect(page.locator('#play-pause-button')).toHaveClass(/icon-play/);
+});
+
+test('topbar next and previous controls move the playing row', async ({ page }) => {
+    await mockAudioPlayback(page);
+    await seedSongRows(page);
+
+    await page.locator('#songs tbody tr').first().click();
+    await expect(page.locator('#songs tbody tr').first()).toHaveClass(/playing/);
+    await expect(page.locator('#song-title')).toHaveText('First Song');
+
+    await page.locator('.icon-to-end').first().click();
+    await expect(page.locator('#songs tbody tr').nth(1)).toHaveClass(/playing/);
+    await expect(page.locator('#song-title')).toHaveText('Second Song');
+
+    await page.locator('.icon-to-start').first().click();
+    await expect(page.locator('#songs tbody tr').first()).toHaveClass(/playing/);
+    await expect(page.locator('#song-title')).toHaveText('First Song');
+});
+
+test('empty playlist resets playlist info', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await seedSongRows(page);
+
+    await page.locator('#songs tbody tr .add').first().dispatchEvent('click');
+    await page.locator('#songs tbody tr .add').nth(1).dispatchEvent('click');
+
+    await expect(page.locator('#playlist tbody tr')).toHaveCount(2);
+    await expect(page.locator('#playlist-num-files')).toHaveText('2');
+
+    await page.locator('.icon-trash').first().dispatchEvent('click');
+
+    await expect(page.locator('#playlist tbody tr')).toHaveCount(0);
+    await expect(page.locator('#playlist-num-files')).toHaveText('0');
+    await expect(page.locator('#playlist-duration')).toHaveText('00:00');
+});
+
+test('switching radios pauses the previous radio', async ({ page }) => {
+    await page.locator('#radio-button').click();
+    await expect(page.locator('.radios-view')).toBeVisible();
+
+    await ensureTwoRadiosExist(page);
+    await mockAudioPlayback(page);
+
+    const radios = page.locator('.radio-play');
+
+    await radios.first().click();
+    await expect(radios.first()).toHaveClass(/icon-pause/);
+
+    await radios.nth(1).click();
+    await expect(radios.first()).toHaveClass(/icon-play/);
+    await expect(radios.nth(1)).toHaveClass(/icon-pause/);
+});
+
 test('album overlay opens, closes, and closes on browser back', async ({ page }) => {
     await page.locator('#albums-button').click();
     await expect(page.locator('.albums-view')).toBeVisible();
@@ -100,6 +191,35 @@ test('album overlay opens, closes, and closes on browser back', async ({ page })
 
     await page.goBack();
     await expect(page.locator('.single-album-view')).toHaveCount(0);
+});
+
+test('album artist link is navigable from overlay', async ({ page }) => {
+    await page.locator('#albums-button').click();
+    await expect(page.locator('.albums-view')).toBeVisible();
+
+    const firstAlbum = page.locator('.albums-view .album-container .img-wrapper').first();
+    await expect(firstAlbum).toBeVisible();
+
+    await firstAlbum.click();
+    await expect(page.locator('.single-album-view')).toBeVisible();
+
+    const artistLink = page.locator('.single-album-view a[href^="/artist/"]').first();
+    test.skip(await artistLink.count() === 0, 'No artist link in the current album fixture.');
+
+    const href = await artistLink.getAttribute('href');
+    await artistLink.click();
+    await expect(page).toHaveURL(new RegExp(href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$'));
+});
+
+test('album pagination link keeps albums view visible', async ({ page }) => {
+    await page.locator('#albums-button').click();
+    await expect(page.locator('.albums-view')).toBeVisible();
+
+    const paginationLink = page.locator('.albums-view .pagination a, .albums-pagination a').first();
+    test.skip(await paginationLink.count() === 0, 'No album pagination in the current fixture.');
+
+    await paginationLink.click();
+    await expect(page.locator('.albums-view')).toBeVisible();
 });
 
 test('mobile menu closes after link click and search submit', async ({ page }) => {
@@ -121,6 +241,82 @@ test('mobile menu closes after link click and search submit', async ({ page }) =
     await expect(page.locator('.top-nav')).not.toHaveClass(/is-active/);
 });
 
+test('desktop search updates the songs panel and keeps menu state stable', async ({ page }) => {
+    await mockSearchResults(page);
+
+    await page.locator('#form-keyword').fill('test');
+    await page.locator('#search-form').evaluate(function(form) {
+        form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    });
+
+    await expect(page.locator('#songs tbody tr')).toHaveCount(1);
+    await expect(page.locator('#songs tbody tr').first()).toContainText('Search Song');
+    await expect(page.locator('.top-nav')).not.toHaveClass(/is-active/);
+});
+
+test('empty search clears keyword without updating songs panel', async ({ page }) => {
+    await seedSongRows(page);
+    await page.locator('#form-keyword').fill('ab');
+
+    await page.locator('#search-form').evaluate(function(form) {
+        form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    });
+
+    await expect(page.locator('#form-keyword')).toHaveValue('');
+    await expect(page.locator('#songs tbody tr')).toHaveCount(2);
+});
+
+test('mobile panel controls switch artists songs and playlist views', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await seedSongRows(page);
+
+    await page.locator('.mobile-artists-to-songs-button').dispatchEvent('click');
+    await expect(page.locator('.songs')).toBeVisible();
+    await expect(page.locator('.playlist')).not.toBeVisible();
+
+    await page.locator('.mobile-songs-to-playlist-button').dispatchEvent('click');
+    await expect(page.locator('.playlist')).toBeVisible();
+    await expect(page.locator('.songs')).not.toBeVisible();
+
+    await page.locator('.mobile-playlist-to-songs-button').dispatchEvent('click');
+    await expect(page.locator('.songs')).toBeVisible();
+    await expect(page.locator('.playlist')).not.toBeVisible();
+
+    await page.locator('.mobile-songs-to-artists-button').dispatchEvent('click');
+    await expect(page.locator('.artists-navigation')).toBeVisible();
+});
+
+test('responsive breakpoints keep topbar controls usable', async ({ page }) => {
+    for (const width of [390, 700, 1023, 1024, 1280]) {
+        await page.setViewportSize({ width: width, height: 844 });
+        await page.reload();
+        await hideSymfonyToolbar(page);
+
+        await expect(page.locator('#play-pause-button')).toBeVisible();
+        if (width < 1024) {
+            await page.locator('.hamburger').click();
+        }
+        await expect(page.locator('#form-keyword')).toBeVisible();
+    }
+});
+
+async function hideSymfonyToolbar(page) {
+    await page.addStyleTag({
+        content: '.sf-toolbar { display: none !important; pointer-events: none !important; }'
+    });
+}
+
+test('radio pagination link keeps radio list visible', async ({ page }) => {
+    await page.locator('#radio-button').click();
+    await expect(page.locator('.radios-view')).toBeVisible();
+
+    const paginationLink = page.locator('.radios-pagination a').first();
+    test.skip(await paginationLink.count() === 0, 'No radio pagination in the current fixture.');
+
+    await paginationLink.click();
+    await expect(page.locator('.radios-view')).toBeVisible();
+});
+
 async function ensureRadioExists(page) {
     await page.evaluate(function() {
         if (document.querySelector('.radios-view .radio-play')) {
@@ -140,6 +336,30 @@ async function ensureRadioExists(page) {
     });
 }
 
+async function ensureTwoRadiosExist(page) {
+    await page.evaluate(function() {
+        const radiosView = document.querySelector('.radios-view');
+        const currentCount = document.querySelectorAll('.radios-view .radio-play').length;
+
+        if (!radiosView || currentCount >= 2) {
+            return;
+        }
+
+        for (let i = currentCount; i < 2; i++) {
+            radiosView.insertAdjacentHTML('afterbegin', [
+                '<section class="radio clearfix">',
+                '<div class="button-wrapper">',
+                '<i class="icon-play radio-play" role="button" tabindex="0" aria-label="Play radio" title="Play radio"></i>',
+                '<audio preload="none"><source src="https://example.invalid/stream-' + i + '.mp3" type="audio/mpeg"></audio>',
+                '</div>',
+                '<div class="radio-name">Test radio ' + i + '</div>',
+                '<div class="radio-url">-</div>',
+                '</section>'
+            ].join(''));
+        }
+    });
+}
+
 async function mockAudioPlayback(page) {
     await page.evaluate(function() {
         if (window.__soonicAudioMocked) {
@@ -154,9 +374,14 @@ async function mockAudioPlayback(page) {
             }
         });
         HTMLMediaElement.prototype.play = function() {
+            if (this.__soonicRejectPlay) {
+                this.__soonicPaused = true;
+                return Promise.reject(new Error('Invalid test media'));
+            }
+
             this.__soonicPaused = false;
 
-            if (this.closest('.radios-view') && this.__soonicRejectPlay) {
+            if (this.closest('.radios-view') && this.__soonicRejectRadioPlay) {
                 ['error', 'stalled', 'abort'].forEach(function(eventName) {
                     this.dispatchEvent(new Event(eventName));
                 }, this);
@@ -184,6 +409,58 @@ async function countFlashCalls(page) {
         };
 
         const audio = document.querySelector('.radios-view audio');
-        audio.__soonicRejectPlay = true;
+        audio.__soonicRejectRadioPlay = true;
+    });
+}
+
+async function seedSongRows(page) {
+    await page.evaluate(function() {
+        document.querySelector('.songs').style.display = 'block';
+        document.querySelector('.playlist').style.display = 'block';
+        document.querySelector('#songs tbody').innerHTML = [
+            '<tr data-path="/music/first.mp3" data-duration="03:00">',
+            '<td class="add"><i class="icon-plus" role="button" tabindex="0"></i></td>',
+            '<td>1</td>',
+            '<td>Test Artist</td>',
+            '<td>First Song</td>',
+            '<td>Test Album</td>',
+            '<td>03:00</td>',
+            '<td>2026</td>',
+            '<td>Test</td>',
+            '</tr>',
+            '<tr data-path="/music/second.mp3" data-duration="02:30">',
+            '<td class="add"><i class="icon-plus" role="button" tabindex="0"></i></td>',
+            '<td>2</td>',
+            '<td>Test Artist</td>',
+            '<td>Second Song</td>',
+            '<td>Test Album</td>',
+            '<td>02:30</td>',
+            '<td>2026</td>',
+            '<td>Test</td>',
+            '</tr>'
+        ].join('');
+    });
+}
+
+async function mockSearchResults(page) {
+    await page.route('**/search**', function(route) {
+        route.fulfill({
+            status: 200,
+            contentType: 'text/html',
+            body: [
+                '<tbody>',
+                '<tr data-path="/music/search.mp3" data-duration="01:00">',
+                '<td class="add"><i class="icon-plus" role="button" tabindex="0"></i></td>',
+                '<td>1</td>',
+                '<td>Search Artist</td>',
+                '<td>Search Song</td>',
+                '<td>Search Album</td>',
+                '<td>01:00</td>',
+                '<td>2026</td>',
+                '<td>Search</td>',
+                '</tr>',
+                '</tbody>'
+            ].join('')
+        });
     });
 }
