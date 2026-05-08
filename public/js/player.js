@@ -282,32 +282,14 @@ $(function() {
     }
 
     function buildPlaylistRowFromAlbumSong($row) {
-        const $copy = $("<tr>", {
-            "data-path": $row.data("path"),
-            "data-duration": $row.data("duration")
-        });
-
-        $copy.append(
-            $("<td>", { "class": "add" }).append(
-                $("<i>", {
-                    "class": "icon-minus",
-                    role: "button",
-                    tabindex: 0
-                })
-            )
-        );
-        $copy.append($("<td>").text($row.data("track-number") || ""));
-        $copy.append($("<td>").text($row.data("artist") || ""));
-        $copy.append($("<td>").text($row.data("title") || ""));
-        $copy.append($("<td>").text($row.data("album") || ""));
-        $copy.append($("<td>").text($row.data("duration") || ""));
-        $copy.append($("<td>").text($row.data("year") || ""));
-        $copy.append($("<td>").text($row.data("genre") || ""));
-
-        return $copy;
+        return buildAlbumSongRow($row, "icon-minus");
     }
 
     function buildSongsRowFromAlbumSong($row) {
+        return buildAlbumSongRow($row, "icon-plus");
+    }
+
+    function buildAlbumSongRow($row, iconClass) {
         const $copy = $("<tr>", {
             "data-path": $row.data("path"),
             "data-duration": $row.data("duration")
@@ -316,7 +298,7 @@ $(function() {
         $copy.append(
             $("<td>", { "class": "add" }).append(
                 $("<i>", {
-                    "class": "icon-plus",
+                    "class": iconClass,
                     role: "button",
                     tabindex: 0
                 })
