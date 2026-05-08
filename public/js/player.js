@@ -1,11 +1,10 @@
 $(function() {
     'use strict';
 
-    const debug = true;
+    const debug = false;
 
     let playerStatus = "paused";
     let contextMenuClickTimer = null;
-    let playlistFlashTimer = null;
     let activePlaybackScope = "#songs tbody";
 
     /**
@@ -279,22 +278,7 @@ $(function() {
             return;
         }
 
-        let $flash = $("#playlist-flash-message");
-        if (!$flash.length) {
-            $flash = $("<div>", { id: "playlist-flash-message" });
-            $("body").append($flash);
-        }
-
-        if (playlistFlashTimer) {
-            clearTimeout(playlistFlashTimer);
-            playlistFlashTimer = null;
-        }
-
-        $flash.stop(true, true).text(message).fadeIn(80);
-        playlistFlashTimer = setTimeout(function() {
-            $flash.fadeOut(120);
-            playlistFlashTimer = null;
-        }, 1000);
+        window.showSoonicFlash("playlist-flash-message", message, 1000);
     }
 
     function buildPlaylistRowFromAlbumSong($row) {
