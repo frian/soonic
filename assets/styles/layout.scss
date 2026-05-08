@@ -629,7 +629,6 @@ table.form {
   -- Media query 500px --------------------------------------------------------
 */
 @media all and (min-width: 500px) {
-
     /* --  4. Views -- */
     .album-container {
         flex-basis: 33.33%;
@@ -643,7 +642,6 @@ table.form {
   -- Media query 700px --------------------------------------------------------
 */
 @media all and (min-width: 700px) {
-
     /* --  4. Views -- */
     .album-container {
         flex-basis: 25%;
@@ -677,7 +675,6 @@ table.form {
   -- Media query 1024px -------------------------------------------------------
 */
 @media all and (min-width: 1024px) {
-
     /* --  2. Topbar -- */
     .topbar {
         .logo {
@@ -936,14 +933,12 @@ table.form {
   -- Media query 1200px -------------------------------------------------------
 */
 @media all and (min-width: 1200px) {
-
     /* --  3. Artists navigation -- */
     $nav-width: 360px;
 
     .artists-navigation {
         width: $nav-width;
     }
-
 
     /* --  5. Songs and playlist panels -- */
     thead {
@@ -970,14 +965,12 @@ table.form {
         }
     }
 
-
     /* --  4. Views -- */
     .album-container {
         flex-basis: 16.66%;
         max-width: 16.66%;
         width: 16.66%;
     }
-
 
     /* --  6. Album voew -- */
     .album-infos {
@@ -1010,7 +1003,6 @@ table.form {
   -- Media query 1600px -------------------------------------------------------
 */
 @media all and (min-width: 1600px) {
-
     #search-form {
         input[type="text"] {
             width: 200px;
