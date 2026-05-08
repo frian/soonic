@@ -6,7 +6,9 @@
     "build:scss:watch": "sass --watch assets/styles:public/css",
     "check:scss": "npm run lint:scss && npm run build:scss",
     "lint:scss": "stylelint \"assets/styles/**/*.scss\"",
-    "lint:scss:fix": "stylelint \"assets/styles/**/*.scss\" --fix"
+    "lint:scss:fix": "stylelint \"assets/styles/**/*.scss\" --fix",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "devDependencies": {
     "@fontsource/lato": "^5.2.7",
