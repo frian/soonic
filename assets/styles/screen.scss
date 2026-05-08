@@ -126,6 +126,7 @@ h2 {
     .radio-name {
         font-family: Lato, sans-serif;
         font-weight: 300;
+        font-size: 1.5em;
         border: #{$debug}px solid red;
     }
 
@@ -136,7 +137,7 @@ h2 {
 
     .icon-play, .icon-pause {
         cursor: pointer;
-        font-size: 4em;
+        font-size: 3em;
     }
 
     .radio-edit-link {
@@ -346,6 +347,18 @@ form div div input {
             &:hover {
                 background-color: $hover-active;
             }
+        }
+    }
+}
+
+
+/*
+  -- Media query 700px --------------------------------------------------------
+*/
+@media all and (min-width: 700px) {
+    .radio {
+        .icon-play, .icon-pause {
+            font-size: 4em;
         }
     }
 }

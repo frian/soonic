@@ -338,6 +338,7 @@ h2 {
 .radio .radio-name {
   font-family: Lato, sans-serif;
   font-weight: 300;
+  font-size: 1.5em;
   border: 0px solid red;
 }
 .radio .radio-url {
@@ -346,7 +347,7 @@ h2 {
 }
 .radio .icon-play, .radio .icon-pause {
   cursor: pointer;
-  font-size: 4em;
+  font-size: 3em;
 }
 .radio .radio-edit-link {
   display: inline-flex;
@@ -540,6 +541,14 @@ form div div input {
   background-color: #ddd;
 }
 
+/*
+  -- Media query 700px --------------------------------------------------------
+*/
+@media all and (min-width: 700px) {
+  .radio .icon-play, .radio .icon-pause {
+    font-size: 4em;
+  }
+}
 /*
   -- Media query 1024px -------------------------------------------------------
 */

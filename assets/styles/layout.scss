@@ -339,6 +339,7 @@ img.lozad {
     font-size: 16px;
     box-sizing: border-box;
     position: relative;
+    height: 80px;
     border: #{$debug}px solid red;
 
     .radio-name, .radio-url {
@@ -351,24 +352,25 @@ img.lozad {
     }
 
     .radio-name {
-        height: 100px;
+        height: 80px;
         padding-left: 30px;
-        line-height: 100px;
+        line-height: 80px;
         border: #{$debug}px solid lime;
     }
 
     .radio-url {
-        height: 50px;
-        line-height: 50px;
-        padding: 0 10px 0 20px;
+        display: none;
+        height: 75px;
+        line-height: 75px;
+        padding: 0 10px 0 30px;
         border: #{$debug}px solid cyan;
     }
 
     .button-wrapper {
         float: left;
-        height: 150px;
-        line-height: 150px;
-        width: 150px;
+        height: 80px;
+        line-height: 80px;
+        width: 80px;
         text-align: center;
         box-sizing: border-box;
         padding: 0;
@@ -647,6 +649,26 @@ table.form {
         flex-basis: 25%;
         max-width: 25%;
         width: 25%;
+    }
+
+    /* --  7. Radios -- */
+    .radio {
+        height: auto;
+
+        .radio-name {
+            height: 75px;
+            line-height: 75px;
+        }
+
+        .radio-url {
+            display: block;
+        }
+
+        .button-wrapper {
+            height: 150px;
+            line-height: 150px;
+            width: 150px;
+        }
     }
 }
 

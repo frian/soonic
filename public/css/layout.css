@@ -555,6 +555,7 @@ img.lozad {
   font-size: 16px;
   box-sizing: border-box;
   position: relative;
+  height: 80px;
   border: 0px solid red;
 }
 .radio .radio-name, .radio .radio-url {
@@ -566,22 +567,23 @@ img.lozad {
   box-sizing: border-box;
 }
 .radio .radio-name {
-  height: 100px;
+  height: 80px;
   padding-left: 30px;
-  line-height: 100px;
+  line-height: 80px;
   border: 0px solid lime;
 }
 .radio .radio-url {
-  height: 50px;
-  line-height: 50px;
-  padding: 0 10px 0 20px;
+  display: none;
+  height: 75px;
+  line-height: 75px;
+  padding: 0 10px 0 30px;
   border: 0px solid cyan;
 }
 .radio .button-wrapper {
   float: left;
-  height: 150px;
-  line-height: 150px;
-  width: 150px;
+  height: 80px;
+  line-height: 80px;
+  width: 80px;
   text-align: center;
   box-sizing: border-box;
   padding: 0;
@@ -822,6 +824,23 @@ table.form tr td.button-row {
     flex-basis: 25%;
     max-width: 25%;
     width: 25%;
+  }
+
+  /* --  7. Radios -- */
+  .radio {
+    height: auto;
+  }
+  .radio .radio-name {
+    height: 75px;
+    line-height: 75px;
+  }
+  .radio .radio-url {
+    display: block;
+  }
+  .radio .button-wrapper {
+    height: 150px;
+    line-height: 150px;
+    width: 150px;
   }
 }
 /*
