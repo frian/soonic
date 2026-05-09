@@ -80,6 +80,14 @@ if [[ "$RUN_TESTSUITES" -eq 1 ]]; then
   php bin/phpunit --testsuite no-music
   php bin/phpunit --testsuite with-music
   php bin/phpunit --testsuite scan
+
+  if command -v npm >/dev/null 2>&1; then
+    print_step "Playwright e2e"
+    npm run test:e2e
+  else
+    print_step "Playwright e2e skipped"
+    echo "npm not found: Playwright e2e skipped"
+  fi
 fi
 
 print_step "All checks passed"

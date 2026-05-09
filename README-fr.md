@@ -121,13 +121,15 @@ Lancer toutes les vérifications projet:
 bin/check
 ```
 
+Inclut les checks PHP, le lint SCSS, les suites PHPUnit et les tests e2e Playwright.
+
 Mode rapide (sans tests PHPUnit):
 
 ```bash
 bin/check --fast
 ```
 
-Mode CI (sans checks DB, sans suites PHPUnit):
+Mode CI (sans checks DB, sans suites PHPUnit, sans e2e Playwright):
 
 ```bash
 bin/check --ci

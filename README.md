@@ -121,13 +121,15 @@ Run all project checks:
 bin/check
 ```
 
+This includes PHP checks, SCSS lint, PHPUnit suites, and Playwright e2e tests.
+
 Fast mode (without PHPUnit suites):
 
 ```bash
 bin/check --fast
 ```
 
-CI mode (no DB checks, no PHPUnit suites):
+CI mode (no DB checks, no PHPUnit suites, no Playwright e2e):
 
 ```bash
 bin/check --ci
