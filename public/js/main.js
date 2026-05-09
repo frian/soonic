@@ -340,7 +340,7 @@ $(function() {
                 }
             });
         }
-        $(".active").removeClass("active");
+        $(".artists-navigation a.active").removeClass("active");
         $(this).addClass('active');
 
         logDebug('clicked on an artist in artist nav');
@@ -421,7 +421,7 @@ $(function() {
                 $("#songs").append(data);
             }
         });
-        $(".active").removeClass("active");
+        $(".artists-navigation a.active").removeClass("active");
         $(this).addClass('active');
 
         if (screenWidth < 1024) {

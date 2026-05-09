@@ -60,15 +60,6 @@ $(function() {
     });
 
     /**
-     * close album on escape
-     */
-    $(document).on("keydown", function(e) {
-        if (e.key === "Escape") {
-            closeSingleAlbumView();
-        }
-    });
-
-    /**
      * close album from external events
      */
     $(document).on("soonic:closeAlbumOverlay", function() {
