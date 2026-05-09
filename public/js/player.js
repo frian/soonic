@@ -225,9 +225,7 @@ $(function() {
 
 
     function logDebug(message) {
-        if (debug) {
-            console.log(message);
-        }
+        window.logSoonicDebug(debug, message);
     }
 
     function getPlaybackScopeSelector() {

@@ -26,3 +26,11 @@ window.showSoonicFlash = (function() {
         }, duration || 1800);
     };
 }());
+
+window.logSoonicDebug = function(enabled, message) {
+    'use strict';
+
+    if (enabled) {
+        console.log(message);
+    }
+};
