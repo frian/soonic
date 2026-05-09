@@ -16,6 +16,22 @@
                 <td>{{ form_widget(edit_form.streamUrl) }}</td>
             </tr>
             <tr>
+                <td></td>
+                <td>
+                    <div class="radio-stream-check-actions">
+                        <button
+                            type="button"
+                            class="button radio-stream-check-button"
+                            data-checking-label="{{ 'radio.stream.checking'|trans }}"
+                            data-ok-label="{{ 'radio.stream.ok'|trans }}"
+                            data-error-label="{{ 'radio.stream.error'|trans }}"
+                            data-empty-label="{{ 'radio.stream.empty'|trans }}"
+                        >{{ 'radio.stream.check'|trans }}</button>
+                        <span class="radio-stream-check-result" aria-live="polite"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
                 <td>{{ form_label(edit_form.homepageUrl) }}</td>
                 <td>{{ form_widget(edit_form.homepageUrl) }}</td>
             </tr>

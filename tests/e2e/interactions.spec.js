@@ -102,6 +102,39 @@ test('radio pauses active topbar player', async ({ page }) => {
     await expect(page.locator('#play-pause-button')).toHaveClass(/icon-play/);
 });
 
+test('radio new checks stream playback in browser', async ({ page }) => {
+    await mockAudioPlayback(page);
+
+    await page.locator('#radio-button').click();
+    await expect(page.locator('.radios-view')).toBeVisible();
+
+    await page.locator('#radio-new-button').click();
+    await expect(page.locator('.radio-new-view')).toBeVisible();
+
+    await page.locator('.radio-new-view [id$="_streamUrl"]').fill('https://example.invalid/stream.mp3');
+    await page.locator('.radio-stream-check-button').click();
+
+    await expect(page.locator('.radio-stream-check-result')).toHaveText(/stream OK/i);
+});
+
+test('radio edit checks stream playback in browser', async ({ page }) => {
+    await mockAudioPlayback(page);
+
+    await page.locator('#radio-button').click();
+    await expect(page.locator('.radios-view')).toBeVisible();
+
+    const editLink = page.locator('.radios-view .radio-edit-link').first();
+    test.skip(await editLink.count() === 0, 'No radio edit link in the current fixture.');
+
+    await editLink.click();
+    await expect(page.locator('.radio-edit-view')).toBeVisible();
+
+    await page.locator('.radio-edit-view [id$="_streamUrl"]').fill('https://example.invalid/stream.mp3');
+    await page.locator('.radio-edit-view .radio-stream-check-button').click();
+
+    await expect(page.locator('.radio-edit-view .radio-stream-check-result')).toHaveText(/stream OK/i);
+});
+
 test('topbar player play pause and play failure update the button', async ({ page }) => {
     await mockAudioPlayback(page);
     await page.evaluate(function() {
@@ -463,6 +496,7 @@ async function mockAudioPlayback(page) {
             }
 
             this.__soonicPaused = false;
+            this.dispatchEvent(new Event('playing'));
 
             if (this.closest('.radios-view') && this.__soonicRejectRadioPlay) {
                 ['error', 'stalled', 'abort'].forEach(function(eventName) {

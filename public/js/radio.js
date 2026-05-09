@@ -82,6 +82,14 @@ $(function() {
         }, true);
     });
 
+    /**
+     * Check stream playback in browser
+     */
+    $(document).on("click", ".radio-stream-check-button", function(e) {
+        e.preventDefault();
+        checkRadioStream($(this));
+    });
+
 
     function logDebug(message) {
         window.logSoonicDebug(debug, message);
@@ -135,5 +143,81 @@ $(function() {
         }
 
         logDebug("radio stream error/stalled");
+    }
+
+    function checkRadioStream($button) {
+        const $form = $button.closest("form");
+        const $input = $form.find("[id$='_streamUrl']").first();
+        const url = String($input.val() || "").trim();
+        const $result = $button.closest("td").find(".radio-stream-check-result").first();
+
+        if (!url) {
+            setStreamCheckResult($button, $result, "empty");
+            return;
+        }
+
+        $button.prop("disabled", true);
+        setStreamCheckResult($button, $result, "checking");
+
+        const audio = new Audio();
+        const timeout = window.setTimeout(function() {
+            fail();
+        }, 8000);
+        let isDone = false;
+
+        audio.preload = "none";
+        audio.muted = true;
+        audio.volume = 0;
+
+        $(audio).one("canplay playing loadedmetadata", function() {
+            done("ok");
+        });
+        $(audio).one("error stalled abort", function() {
+            fail();
+        });
+
+        audio.src = url;
+        audio.load();
+
+        const playPromise = audio.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(function() {
+                fail();
+            });
+        }
+
+        function fail() {
+            done("error");
+        }
+
+        function done(state) {
+            if (isDone) {
+                return;
+            }
+
+            isDone = true;
+            window.clearTimeout(timeout);
+            $(audio).off();
+            audio.pause();
+            audio.removeAttribute("src");
+            audio.load();
+            $button.prop("disabled", false);
+            setStreamCheckResult($button, $result, state);
+            logDebug("radio stream check: " + state);
+        }
+    }
+
+    function setStreamCheckResult($button, $result, state) {
+        const labels = {
+            checking: $button.data("checking-label") || "checking...",
+            ok: $button.data("ok-label") || "stream OK",
+            error: $button.data("error-label") || "stream unavailable",
+            empty: $button.data("empty-label") || "enter a stream URL"
+        };
+
+        $result
+            .removeClass("is-ok is-error is-checking")
+            .addClass("is-" + state)
+            .text(labels[state] || "");
     }
 });

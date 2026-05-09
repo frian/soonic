@@ -750,8 +750,24 @@ table.form {
 table.form tr td {
   padding: 5px;
 }
-table.form tr td input[type=text] {
+table.form tr td input[type=text],
+table.form tr td input[type=url] {
+  box-sizing: border-box;
   width: 80%;
+}
+table.form tr td .radio-stream-check-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 80%;
+}
+table.form tr td .radio-stream-check-button {
+  white-space: nowrap;
+}
+table.form tr td .radio-stream-check-result {
+  min-height: 1.4em;
+  text-align: left;
 }
 table.form tr td:nth-child(1) {
   text-align: right;
@@ -1059,7 +1075,8 @@ table.form tr td.button-row {
   table.form tr td {
     padding: 10px;
   }
-  table.form tr td input[type=text] {
+  table.form tr td input[type=text],
+table.form tr td input[type=url] {
     width: 80%;
   }
   table.form tr td:nth-child(1) {
@@ -1115,7 +1132,11 @@ table.form tr td.button-row {
   }
 
   /* -- 11. Forms -- */
-  table.form tr td input[type=text] {
+  table.form tr td input[type=text],
+table.form tr td input[type=url] {
+    width: 60%;
+  }
+  table.form tr td .radio-stream-check-actions {
     width: 60%;
   }
 }

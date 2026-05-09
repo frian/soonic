@@ -30,6 +30,11 @@ radios: radios
 radio.new: 'nouvelle radio'
 radio.edit: 'modifier la radio'
 radio.flash.error: 'Flux radio indisponible'
+radio.stream.check: 'vérifier le stream'
+radio.stream.checking: 'vérification...'
+radio.stream.ok: 'stream OK'
+radio.stream.error: 'stream indisponible'
+radio.stream.empty: 'renseigne une URL de stream'
 random: aléatoire
 scan: scanner la bibliothèque
 save: enregistrer

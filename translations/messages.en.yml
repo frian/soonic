@@ -30,6 +30,11 @@ radios: radios
 radio.new: 'new radio'
 radio.edit: 'edit radio'
 radio.flash.error: 'Radio stream unavailable'
+radio.stream.check: 'check stream'
+radio.stream.checking: 'checking...'
+radio.stream.ok: 'stream OK'
+radio.stream.error: 'stream unavailable'
+radio.stream.empty: 'enter a stream URL'
 random: random
 save: save
 scan: 'scan library'
