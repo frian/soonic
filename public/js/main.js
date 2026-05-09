@@ -391,7 +391,7 @@ $(function() {
         timeout = setTimeout(function() {
 
             $.get({
-                url: url + filter,
+                url: url + encodeURIComponent(filter),
                 cache: true,
                 success: function(data) {
                     $("#artists-nav").remove();
@@ -593,6 +593,7 @@ $(function() {
 
                         if ($newTopbar.length) {
                             $('.topbar').replaceWith($newTopbar);
+                            $(document).trigger("soonic:topbarReplaced");
                         }
 
                         if ($newSettings.length) {
