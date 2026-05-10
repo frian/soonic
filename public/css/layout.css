@@ -365,7 +365,7 @@ table {
 .songs-header {
   display: none;
   position: relative;
-  width: calc(100% - 10px);
+  width: 100%;
   height: 22px;
   z-index: 40;
   box-sizing: border-box;
@@ -935,6 +935,11 @@ table.form tr td.button-row {
   }
 
   /* --  5. Songs and playlist panels -- */
+  .songs-header {
+    display: table;
+    width: 100%;
+  }
+
   .songs, .playlist {
     display: block;
     height: 50%;

@@ -102,7 +102,7 @@ $panel-header-height: 22px;
 .songs-header {
     display: none;
     position: relative;
-    width: calc(100% - 10px);
+    width: 100%;
     height: $panel-header-height;
     z-index: 40;
     box-sizing: border-box;
@@ -782,6 +782,12 @@ table.form {
 
 
     /* --  5. Songs and playlist panels -- */
+
+    .songs-header {
+        display: table;
+        width: 100%;
+    }
+
     .songs, .playlist {
         display: block;
         height: 50%;
