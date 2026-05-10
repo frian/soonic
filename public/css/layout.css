@@ -1010,11 +1010,8 @@ table.form tr td.button-row {
     display: table-cell;
     text-align: center;
   }
-  .songs tbody tr td:nth-child(7), .playlist tbody tr td:nth-child(7) {
+  .songs tbody tr td:nth-child(7), .songs tbody tr td:nth-child(8), .playlist tbody tr td:nth-child(7), .playlist tbody tr td:nth-child(8) {
     text-align: center;
-    display: none;
-  }
-  .songs tbody tr td:nth-child(8), .playlist tbody tr td:nth-child(8) {
     display: none;
   }
 
