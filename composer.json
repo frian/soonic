@@ -10,7 +10,7 @@
         "doctrine/dbal": "^4.4.3",
         "doctrine/doctrine-bundle": "^3.2.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
-        "doctrine/orm": "^3.6.3",
+        "doctrine/orm": "^3.6.4",
         "james-heinrich/getid3": "^1.9.25",
         "symfony/asset": "8.0.*",
         "symfony/asset-mapper": "8.0.*",
