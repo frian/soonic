@@ -4,6 +4,6 @@
             <a class="artist" href="{{ path('artist_albums', { artistSlug: artist.artistSlug }) }}">{{ artist.name }}</a>
         </li>
     {% else %}
-        <li>no artists found</li>
+        <li class="empty-list">no artists found</li>
     {% endfor %}
 </ul>
