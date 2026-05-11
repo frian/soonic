@@ -31,6 +31,13 @@ DEFAULT_URI="http://127.0.0.1:8000"
 
 ## Database
 
+Create database:
+
+```bash
+php bin/console d:d:c #doctrine:database:create
+php bin/console d:s:c #doctrine:schema:create
+```
+
 Initialize with migrations:
 
 ```bash

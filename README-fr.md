@@ -31,10 +31,11 @@ DEFAULT_URI="http://127.0.0.1:8000"
 
 ## Base de données
 
-Initialiser via migrations:
+Initialiser la base et le schéma:
 
 ```bash
-php bin/console doctrine:migrations:migrate
+php bin/console doctrine:database:create --if-not-exists
+php bin/console doctrine:migrations:migrate --no-interaction
 php bin/console doctrine:fixtures:load --no-interaction
 ```
 

@@ -87,7 +87,7 @@ class ResetCommand extends Command
         $steps = [
             ['doctrine:database:drop', ['--if-exists' => true, '--force' => true]],
             ['doctrine:database:create', ['--if-not-exists' => true]],
-            ['doctrine:schema:create', []],
+            ['doctrine:migrations:migrate', ['--no-interaction' => true]],
             ['doctrine:fixtures:load', ['--no-interaction' => true]],
         ];
 
