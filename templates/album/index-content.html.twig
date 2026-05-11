@@ -3,7 +3,7 @@
         <div class="album-container" data-album-id="{{ album.id }}" data-artist="" data-album="{{ album.albumSlug }}">
             <div class="img-wrapper">
                 {% set coverSrc = album.coverArtPath ?: '/img/cover.jpg' %}
-                <img src="{{ coverSrc }}" loading="lazy" decoding="async" alt="{{ album.name }}">
+                <img src="{{ coverSrc }}" class="cover" loading="lazy" decoding="async" alt="{{ album.name }}">
             </div>
 
             <div class="album-infos">
