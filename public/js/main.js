@@ -91,9 +91,6 @@ $(function() {
     /**
      * Load albums page
      */
-    const observer = lozad();
-    observer.observe();
-
     $(document).on("click", "#albums-button", function(e) {
 
         e.preventDefault();
@@ -112,7 +109,6 @@ $(function() {
                 success: function(data) {
                     $('.library-view').css('display', 'none');
                     $(document.body).append(data);
-                    observer.observe();
                 },
                 error: function() {
                     logDebug("albums load error");
