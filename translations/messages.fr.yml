@@ -38,6 +38,8 @@ radio.stream.empty: 'renseigne une URL de stream'
 random: aléatoire
 scan: scanner la bibliothèque
 save: enregistrer
+select language: sélectionner une langue
+select theme: sélectionner un thème
 search: chercher
 search.placeholder: 'min 3 caractères'
 settings: réglages
@@ -46,4 +48,5 @@ songs: chansons
 streamUrl: 'url du flux'
 theme: thème
 title: titre
+radio.delete.confirm: Supprimer cette radio ?
 year: année

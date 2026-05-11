@@ -37,6 +37,8 @@ radio.stream.error: 'stream unavailable'
 radio.stream.empty: 'enter a stream URL'
 random: random
 save: save
+select language: select a language
+select theme: select a theme
 scan: 'scan library'
 search: search
 search.placeholder: 'min 3 chars'
@@ -46,4 +48,5 @@ songs: songs
 streamUrl: 'stream url'
 theme: theme
 title: title
+radio.delete.confirm: Delete this radio?
 year: year
