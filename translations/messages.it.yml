@@ -1,52 +1,55 @@
-album: album
 album.play: 'riproduci album'
+album: album
 albums: album
 artist: artist
 artists: artisti
-back: indietro
 back.tolist: 'torna alla lista'
+back: indietro
 create: creare
 delete: elimina
 duration: durata
 edit: modificare
+empty.albums: 'nessun album trovato'
+empty.artists: 'nessun artista trovato'
+empty.radios: 'nessuna radio trovata'
 files: file
-filter: filtro
 filter.placeholder: 'minimo 3 caratteri'
+filter: filtro
 found: trovato
-homePage: homepage
 genre: genere
+homePage: homepage
 language: linguaggio
 library: biblioteca
 music: musica
 name: nome
-playlist: 'playlist'
 playlist.add: 'Aggiungi alla playlist'
-playlist.remove: 'rimuovi dalla playlist'
 playlist.flash.add: 'Brano aggiunto alla playlist'
-playlist.flash.remove: 'Brano rimosso dalla playlist'
 playlist.flash.album_add: 'Album aggiunto alla playlist'
-radio: radio
-radios: radio
-radio.new: 'nuova radio'
+playlist.flash.remove: 'Brano rimosso dalla playlist'
+playlist.remove: 'rimuovi dalla playlist'
+playlist: 'playlist'
+radio.delete.confirm: Eliminare questa radio?
 radio.edit: 'modifica la radio'
 radio.flash.error: 'Flusso radio non disponibile'
+radio.new: 'nuova radio'
 radio.stream.check: 'verifica stream'
 radio.stream.checking: 'verifica...'
-radio.stream.ok: 'stream OK'
-radio.stream.error: 'stream non disponibile'
 radio.stream.empty: 'inserisci un URL stream'
+radio.stream.error: 'stream non disponibile'
+radio.stream.ok: 'stream OK'
+radio: radio
+radios: radio
 random: aleatorio
 save: salvare
+scan: 'scansione della libreria'
+search.placeholder: 'minimo 3 caratteri'
+search: ricerca
 select language: seleziona una lingua
 select theme: seleziona un tema
-scan: 'scansione della libreria'
-search: ricerca
-search.placeholder: 'minimo 3 caratteri'
 settings: impostazioni
 songs.loadrandom: caricare 20 canzoni casuali
 songs: canzoni
 streamUrl: 'url del flusso'
 theme: tema
 title: titolo
-radio.delete.confirm: Eliminare questa radio?
 year: anno

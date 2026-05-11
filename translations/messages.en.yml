@@ -1,52 +1,55 @@
-album: album
 album.play: 'play album'
+album: album
 albums: albums
 artist: artist
 artists: artists
-back: back
 back.tolist: 'back to the list'
+back: back
 create: create
 delete: delete
 duration: duration
 edit: edit
+empty.albums: 'no albums found'
+empty.artists: 'no artists found'
+empty.radios: 'no radios found'
 files: files
-filter: filter
 filter.placeholder: 'min 3 chars'
+filter: filter
 found: found
-homePage: homepage
 genre: genre
+homePage: homepage
 language: language
 library: library
 music: music
 name: name
-playlist: playlist
 playlist.add: 'add to playlist'
-playlist.remove: 'remove from playlist'
 playlist.flash.add: 'Song added to playlist'
-playlist.flash.remove: 'Song removed from playlist'
 playlist.flash.album_add: 'Album added to playlist'
-radio: radio
-radios: radios
-radio.new: 'new radio'
+playlist.flash.remove: 'Song removed from playlist'
+playlist.remove: 'remove from playlist'
+playlist: playlist
+radio.delete.confirm: Delete this radio?
 radio.edit: 'edit radio'
 radio.flash.error: 'Radio stream unavailable'
+radio.new: 'new radio'
 radio.stream.check: 'check stream'
 radio.stream.checking: 'checking...'
-radio.stream.ok: 'stream OK'
-radio.stream.error: 'stream unavailable'
 radio.stream.empty: 'enter a stream URL'
+radio.stream.error: 'stream unavailable'
+radio.stream.ok: 'stream OK'
+radio: radio
+radios: radios
 random: random
 save: save
+scan: 'scan library'
+search.placeholder: 'min 3 chars'
+search: search
 select language: select a language
 select theme: select a theme
-scan: 'scan library'
-search: search
-search.placeholder: 'min 3 chars'
 settings: settings
 songs.loadrandom: load 20 random songs
 songs: songs
 streamUrl: 'stream url'
 theme: theme
 title: title
-radio.delete.confirm: Delete this radio?
 year: year

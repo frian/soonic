@@ -1,52 +1,55 @@
-album: album
 album.play: 'lire l''album'
+album: album
 albums: albums
 artist: artiste
 artists: artistes
-back: retour
 back.tolist: 'retour à la liste'
+back: retour
 create: créer
 delete: effacer
 duration: durée
 edit: modifier
+empty.albums: 'aucun album trouvé'
+empty.artists: 'aucun artiste trouvé'
+empty.radios: 'aucune radio trouvée'
 files: fichiers
-filter: filtre
 filter.placeholder: 'min 3 caractères'
+filter: filtre
 found: trouvé
-homePage: 'page d''accueil'
 genre: genre
+homePage: 'page d''accueil'
 language: langue
 library: bibliothèque
 music: musique
 name: nom
-playlist: playlist
 playlist.add: 'ajouter à la playlist'
-playlist.remove: 'retirer de la playlist'
 playlist.flash.add: 'Morceau ajouté à la playlist'
-playlist.flash.remove: 'Morceau retiré de la playlist'
 playlist.flash.album_add: 'Album ajouté à la playlist'
-radio: radio
-radios: radios
-radio.new: 'nouvelle radio'
+playlist.flash.remove: 'Morceau retiré de la playlist'
+playlist.remove: 'retirer de la playlist'
+playlist: playlist
+radio.delete.confirm: Supprimer cette radio ?
 radio.edit: 'modifier la radio'
 radio.flash.error: 'Flux radio indisponible'
+radio.new: 'nouvelle radio'
 radio.stream.check: 'vérifier le stream'
 radio.stream.checking: 'vérification...'
-radio.stream.ok: 'stream OK'
-radio.stream.error: 'stream indisponible'
 radio.stream.empty: 'renseigne une URL de stream'
+radio.stream.error: 'stream indisponible'
+radio.stream.ok: 'stream OK'
+radio: radio
+radios: radios
 random: aléatoire
-scan: scanner la bibliothèque
 save: enregistrer
+scan: scanner la bibliothèque
+search.placeholder: 'min 3 caractères'
+search: chercher
 select language: sélectionner une langue
 select theme: sélectionner un thème
-search: chercher
-search.placeholder: 'min 3 caractères'
 settings: réglages
 songs.loadrandom: charger 20 chansons aléatoires
 songs: chansons
 streamUrl: 'url du flux'
 theme: thème
 title: titre
-radio.delete.confirm: Supprimer cette radio ?
 year: année

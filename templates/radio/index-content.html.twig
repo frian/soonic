@@ -25,7 +25,7 @@
             </div>
         </section>
     {% else %}
-        <div class="empty-list">no radios found</div>
+        <div class="empty-list">{{ 'empty.radios'|trans }}</div>
     {% endfor %}
 
     {% if totalPages > 1 %}
