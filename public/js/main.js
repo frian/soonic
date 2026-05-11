@@ -337,6 +337,7 @@ $(function() {
             });
         }
         $(".artists-navigation a.active").removeClass("active");
+        $(".artists-navigation a.keyboard-selected").removeClass("keyboard-selected");
         $(this).addClass('active');
 
         logDebug('clicked on an artist in artist nav');
@@ -418,6 +419,7 @@ $(function() {
             }
         });
         $(".artists-navigation a.active").removeClass("active");
+        $(".artists-navigation a.keyboard-selected").removeClass("keyboard-selected");
         $(this).addClass('active');
 
         if (screenWidth < 1024) {
