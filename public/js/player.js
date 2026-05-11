@@ -24,6 +24,7 @@ $(function() {
         logDebug('clicked on a song');
 
         $("tbody .playing").removeClass('playing');
+        $("#songs tbody tr.keyboard-selected, #playlist tbody tr.keyboard-selected").removeClass("keyboard-selected");
         activePlaybackScope = "#" + $(this).closest("table").attr("id") + " tbody";
         loadSong($(this));
         playerStatus = "playing";

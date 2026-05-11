@@ -173,6 +173,11 @@ $(function() {
     }
 
     function getCurrentKeyboardSelector() {
+        const $playingRow = $("#playlist:visible tbody tr.playing, #songs:visible tbody tr.playing, .album-songs:visible tbody tr.playing").first();
+        if ($playingRow.length) {
+            return getKeyboardItemSelector($playingRow);
+        }
+
         const $selected = $("." + keyboardSelectedClass).filter(':visible').first();
         if ($selected.length) {
             return getKeyboardItemSelector($selected);
@@ -223,20 +228,63 @@ $(function() {
             nextIndex = 0;
         }
 
+        const $next = $items.eq(nextIndex);
+
         $("." + keyboardSelectedClass).removeClass(keyboardSelectedClass);
         $items.filter('.active').removeClass('active');
-        const $next = $items.eq(nextIndex).addClass(keyboardSelectedClass);
+
+        if (isSongsOrPlaylistSelection($items)) {
+            const hasPlayingRow = $items.filter('.playing').length > 0;
+
+            if (hasPlayingRow) {
+                if (isPlayerPlaying()) {
+                    $next.trigger('click');
+                } else {
+                    $items.filter('.playing').removeClass('playing');
+                    $next.addClass('playing');
+                }
+                scrollIntoView($next);
+                return;
+            }
+        }
+
+        $next.addClass(keyboardSelectedClass);
         scrollIntoView($next);
     }
 
     function getCurrentKeyboardIndex($items) {
+        if (isSongsOrPlaylistSelection($items) && isPlayerPlaying()) {
+            const playingIndex = $items.index($items.filter('.playing').first());
+            if (playingIndex >= 0) {
+                return playingIndex;
+            }
+        }
+
         let currentIndex = $items.index($items.filter('.' + keyboardSelectedClass).first());
 
         if (currentIndex < 0) {
             currentIndex = $items.index($items.filter('.active').first());
         }
 
+        if (currentIndex < 0) {
+            currentIndex = $items.index($items.filter('.playing').first());
+        }
+
         return currentIndex;
+    }
+
+    function isSongsOrPlaylistSelection($items) {
+        if (!$items.length) {
+            return false;
+        }
+
+        const item = $items.first();
+        return item.closest('#songs').length || item.closest('#playlist').length;
+    }
+
+    function isPlayerPlaying() {
+        const player = document.getElementById('player');
+        return !!player && !player.paused;
     }
 
     function activateKeyboardSelection($items) {
