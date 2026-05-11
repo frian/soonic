@@ -351,6 +351,27 @@ h2 {
   cursor: pointer;
   font-size: 3em;
 }
+.radio .radio-play.is-loading {
+  position: relative;
+  pointer-events: none;
+}
+.radio .radio-play.is-loading::before {
+  visibility: hidden;
+}
+.radio .radio-play.is-loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.72em;
+  height: 0.72em;
+  margin-top: -0.36em;
+  margin-left: -0.36em;
+  border: 0.09em solid currentcolor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: radio-spin 0.8s linear infinite;
+}
 .radio .radio-edit-link {
   display: inline-flex;
   align-items: center;
@@ -364,6 +385,14 @@ h2 {
   background-color: #ddd;
 }
 
+@keyframes radio-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .radio:nth-child(4n+2), .radio:nth-child(4n+3) {
   background-color: #ddd;
 }

@@ -48,6 +48,7 @@ $(function() {
 
         $(radioPlayer).removeData("stream-error-handled");
         $(document).trigger("soonic:pausePlayer");
+        setRadioLoading($button);
 
         const playPromise = radioPlayer.play();
         if (playPromise && typeof playPromise.catch === "function") {
@@ -105,7 +106,7 @@ $(function() {
 
     function setRadioPlaying($button) {
         $button
-            .removeClass("icon-play")
+            .removeClass("icon-play is-loading")
             .addClass("icon-pause activePlayer")
             .closest("tr, li, .radio-item")
             .addClass("active-radio");
@@ -113,8 +114,16 @@ $(function() {
 
     function setRadioPaused($button) {
         $button
-            .removeClass("icon-pause activePlayer")
+            .removeClass("icon-pause activePlayer is-loading")
             .addClass("icon-play")
+            .closest("tr, li, .radio-item")
+            .removeClass("active-radio");
+    }
+
+    function setRadioLoading($button) {
+        $button
+            .removeClass("icon-pause activePlayer")
+            .addClass("icon-play is-loading")
             .closest("tr, li, .radio-item")
             .removeClass("active-radio");
     }
