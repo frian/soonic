@@ -9,6 +9,11 @@ Application Symfony 8 de lecture musicale locale (bibliothèque, playlists, radi
 - Node.js + npm
 - MariaDB/MySQL (recommandé)
 
+### Pour lancer le scan depuis le navigateur :
+
+- Shell Unix/Linux/macOS avec `nohup`
+- PowerShell Windows avec `Start-Process`
+
 ## Installation
 
 ```bash

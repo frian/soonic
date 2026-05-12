@@ -9,6 +9,11 @@ Symfony 8 application for local music playback (library, playlists, radios, audi
 - Node.js + npm
 - MariaDB/MySQL (recommended)
 
+### For scan from browser:
+
+- Unix/Linux/macOS shell support (`nohup`)
+- Windows PowerShell support (`Start-Process`)
+
 ## Installation
 
 ```bash
