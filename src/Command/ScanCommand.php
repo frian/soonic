@@ -19,7 +19,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 )]
 class ScanCommand extends Command
 {
-    private const PROGRESS_UPDATE_EVERY_FILES = 100;
+    private const PROGRESS_UPDATE_EVERY_SECONDS = 1.0;
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
@@ -67,7 +67,6 @@ class ScanCommand extends Command
 
         $logFile = null;
         $sqlFile = [];
-
         try {
             // -- open log file
             $logFilePath = $this->artifactsManager->getLogFilePath();
@@ -149,7 +148,7 @@ class ScanCommand extends Command
 
         $hasError = false;
         $hasWarning = false;
-        $lastProgressFileCount = 0;
+        $lastProgressAt = microtime(true);
 
         /*
          * -- Prepare needed files ------------------------------------------------------------------------------------
@@ -341,7 +340,8 @@ class ScanCommand extends Command
 
                 ++$loadCount;
 
-                if (($fileCount - $lastProgressFileCount) >= self::PROGRESS_UPDATE_EVERY_FILES) {
+                $now = microtime(true);
+                if (($now - $lastProgressAt) >= self::PROGRESS_UPDATE_EVERY_SECONDS) {
                     $this->artifactsManager->writeProgress([
                         'status' => 'running',
                         'data' => [
@@ -350,7 +350,7 @@ class ScanCommand extends Command
                             'album' => $albumId,
                         ],
                     ]);
-                    $lastProgressFileCount = $fileCount;
+                    $lastProgressAt = $now;
                 }
             }
         }
@@ -509,7 +509,6 @@ class ScanCommand extends Command
                 'album' => $albumId,
             ],
         ]);
-
         return Command::SUCCESS;
         } catch (\Throwable $e) {
             $this->artifactsManager->writeProgress([

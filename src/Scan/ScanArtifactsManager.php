@@ -89,7 +89,7 @@ final class ScanArtifactsManager
             return;
         }
 
-        if (@file_put_contents($tmpPath, $payload, LOCK_EX) === false) {
+        if (@file_put_contents($tmpPath, $payload) === false) {
             return;
         }
 
