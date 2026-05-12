@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Process\Process;
+use Symfony\Component\Process\PhpExecutableFinder;
 
 /**
  * Library scan orchestration controller.
@@ -18,6 +19,7 @@ class ScanController extends AbstractController
     private const LEGACY_LOCK_FILE = '/public/soonic.lock';
     private const SCAN_DIR = '/var/scan';
     private const LEGACY_SCAN_DIR = '/public';
+    private const PROGRESS_FILE = '/var/scan/soonic-progress.json';
 
     private string $projectDir;
 
@@ -53,18 +55,23 @@ class ScanController extends AbstractController
             return new JsonResponse(['status' => 'error', 'message' => 'console_not_found'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
+        $phpBinary = (new PhpExecutableFinder())->find(false);
+        if ($phpBinary === false || $phpBinary === '') {
+            $phpBinary = 'php';
+        }
+
         $environment = (string) $this->getParameter('kernel.environment');
-        $process = new Process([
-            PHP_BINARY,
-            $consolePath,
-            'soonic:scan',
-            '--no-interaction',
-            '--env='.$environment,
-        ], $this->projectDir);
-        $process->disableOutput();
+        $command = sprintf(
+            'nohup %s %s soonic:scan --no-interaction --env=%s > /dev/null 2>&1 &',
+            escapeshellarg($phpBinary),
+            escapeshellarg($consolePath),
+            escapeshellarg($environment)
+        );
+        $process = Process::fromShellCommandline($command, $this->projectDir);
+        $process->setTimeout(10);
 
         try {
-            $process->start();
+            $process->run();
         } catch (\Throwable) {
             return new JsonResponse(['status' => 'error', 'message' => 'scan_start_failed'], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -79,6 +86,23 @@ class ScanController extends AbstractController
     public function scanProgress(): JsonResponse
     {
         $status = $this->isScanRunning() ? 'running' : 'stopped';
+        $progressSnapshot = $this->readProgressSnapshot();
+        if ($progressSnapshot !== null) {
+            if (isset($progressSnapshot['status']) && \is_string($progressSnapshot['status'])) {
+                $status = $progressSnapshot['status'];
+            }
+
+            if (isset($progressSnapshot['data']) && \is_array($progressSnapshot['data'])) {
+                return new JsonResponse([
+                    'status' => $status,
+                    'data' => [
+                        'song' => (int) ($progressSnapshot['data']['song'] ?? 0),
+                        'artist' => (int) ($progressSnapshot['data']['artist'] ?? 0),
+                        'album' => (int) ($progressSnapshot['data']['album'] ?? 0),
+                    ],
+                ]);
+            }
+        }
 
         $files = ['song', 'artist', 'album'];
         $data = [];
@@ -90,6 +114,15 @@ class ScanController extends AbstractController
                 $data[$file] = $file_handle->key() - 1;
             } else {
                 $data[$file] = 0;
+            }
+        }
+
+        // During scan, artist rows are written only near the end of the command.
+        // To keep progress useful, derive a live artist count from song rows.
+        if ($status === 'running' && ($data['artist'] ?? 0) === 0 && ($data['song'] ?? 0) > 0) {
+            $songFilePath = $this->resolveScanFilePath('song');
+            if ($songFilePath !== null) {
+                $data['artist'] = $this->countDistinctArtistsFromSongFile($songFilePath);
             }
         }
 
@@ -121,5 +154,50 @@ class ScanController extends AbstractController
         }
 
         return null;
+    }
+
+    private function countDistinctArtistsFromSongFile(string $songFilePath): int
+    {
+        $artists = [];
+        $file = new \SplFileObject($songFilePath, 'r');
+        $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
+        $file->setCsvControl(';');
+
+        foreach ($file as $row) {
+            if (!\is_array($row) || !isset($row[2])) {
+                continue;
+            }
+
+            $artistId = trim((string) $row[2]);
+
+            // Skip header line and empty values.
+            if ($artistId === '' || $artistId === 'artist_id') {
+                continue;
+            }
+
+            $artists[$artistId] = true;
+        }
+
+        return \count($artists);
+    }
+
+    private function readProgressSnapshot(): ?array
+    {
+        $progressPath = $this->projectDir.self::PROGRESS_FILE;
+        if (!is_file($progressPath)) {
+            return null;
+        }
+
+        $raw = @file_get_contents($progressPath);
+        if ($raw === false || $raw === '') {
+            return null;
+        }
+
+        $decoded = json_decode($raw, true);
+        if (!\is_array($decoded)) {
+            return null;
+        }
+
+        return $decoded;
     }
 }

@@ -512,7 +512,7 @@ $(function() {
                     $button.addClass('running');
                 }
 
-                if (data && (data.status === 'running' || data.status === 'already_running')) {
+                if (data && (data.status === 'started' || data.status === 'running' || data.status === 'already_running')) {
                     if (!scanLoop) {
                         scanLoop = setInterval(scanTimer, 1000);
                     }
