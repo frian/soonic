@@ -126,6 +126,7 @@ class ScanCommand extends Command
 
         // -- file types
         $types = ['mp3', 'mp4', 'oga', 'ogg', 'opus', 'wav', 'aac', 'm4a', 'webm', 'flac'];
+        $allowedExtensions = array_fill_keys($types, true);
         // -- counters
         $fileCount = 0;
         $skipCount = 0;
@@ -175,6 +176,12 @@ class ScanCommand extends Command
 
         $it = new \RecursiveIteratorIterator($di);
         $getID3 = new \getID3();
+        // Keep analysis minimal: we only need metadata tags and playtime.
+        $getID3->option_extra_info = false;
+        $getID3->option_md5_data = false;
+        $getID3->option_md5_data_source = false;
+        $getID3->option_save_attachments = false;
+        $getID3->option_tags_html = false;
 
         /*
          * -- SCAN ----------------------------------------------------------------------------------------------------
@@ -189,7 +196,8 @@ class ScanCommand extends Command
         }
 
         foreach ($iterator as $file) {
-            if (in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), $types)) {
+            $extension = strtolower(pathinfo((string) $file, PATHINFO_EXTENSION));
+            if (isset($allowedExtensions[$extension])) {
   
                 ++$fileCount;
                 $file = str_replace('\\', '/', $file);
