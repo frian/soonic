@@ -9,6 +9,14 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Table(
+    name: 'album',
+    indexes: [
+        new ORM\Index(name: 'IDX_ALBUM_NAME', columns: ['name']),
+        new ORM\Index(name: 'IDX_ALBUM_SLUG', columns: ['album_slug']),
+        new ORM\Index(name: 'FT_ALBUM_NAME', columns: ['name'], flags: ['fulltext']),
+    ]
+)]
 #[ORM\Entity(repositoryClass: AlbumRepository::class)]
 class Album
 {

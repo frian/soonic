@@ -11,6 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(
     name: 'artist',
+    indexes: [
+        new ORM\Index(name: 'IDX_ARTIST_NAME', columns: ['name']),
+        new ORM\Index(name: 'FT_ARTIST_NAME', columns: ['name'], flags: ['fulltext']),
+    ],
     uniqueConstraints: [
         new ORM\UniqueConstraint(name: 'UNIQ_ARTIST_SLUG', columns: ['artist_slug']),
     ]

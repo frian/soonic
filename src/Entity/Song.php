@@ -9,6 +9,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(
     name: 'song',
+    indexes: [
+        new ORM\Index(name: 'IDX_SONG_TITLE', columns: ['title']),
+        new ORM\Index(name: 'FT_SONG_TITLE', columns: ['title'], flags: ['fulltext']),
+    ],
     uniqueConstraints: [
         new ORM\UniqueConstraint(name: 'UNIQ_SONG_WEB_PATH', columns: ['web_path']),
     ]
