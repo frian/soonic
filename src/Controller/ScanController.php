@@ -82,48 +82,25 @@ class ScanController extends AbstractController
     {
         $status = $this->isScanRunning() ? 'running' : 'stopped';
         $progressSnapshot = $this->readProgressSnapshot();
-        if ($progressSnapshot !== null) {
-            if (isset($progressSnapshot['status']) && \is_string($progressSnapshot['status'])) {
-                $status = $progressSnapshot['status'];
-            }
-
-            if (isset($progressSnapshot['data']) && \is_array($progressSnapshot['data'])) {
-                return new JsonResponse([
-                    'status' => $status,
-                    'data' => [
-                        'song' => (int) ($progressSnapshot['data']['song'] ?? 0),
-                        'artist' => (int) ($progressSnapshot['data']['artist'] ?? 0),
-                        'album' => (int) ($progressSnapshot['data']['album'] ?? 0),
-                    ],
-                ]);
-            }
+        if ($progressSnapshot !== null && isset($progressSnapshot['status'], $progressSnapshot['data']) && \is_string($progressSnapshot['status']) && \is_array($progressSnapshot['data'])) {
+            return new JsonResponse([
+                'status' => $progressSnapshot['status'],
+                'data' => [
+                    'song' => (int) ($progressSnapshot['data']['song'] ?? 0),
+                    'artist' => (int) ($progressSnapshot['data']['artist'] ?? 0),
+                    'album' => (int) ($progressSnapshot['data']['album'] ?? 0),
+                ],
+            ]);
         }
 
-        $files = ['song', 'artist', 'album'];
-        $data = [];
-        foreach ($files as $file) {
-            $filePath = $this->resolveScanFilePath($file);
-            if ($filePath !== null) {
-                $file_handle = new \SplFileObject($filePath, 'r');
-                $file_handle->seek(PHP_INT_MAX);
-                $data[$file] = $file_handle->key() - 1;
-            } else {
-                $data[$file] = 0;
-            }
-        }
-
-        // During scan, artist rows are written only near the end of the command.
-        // To keep progress useful, derive a live artist count from song rows.
-        if ($status === 'running' && $data['artist'] === 0 && $data['song'] > 0) {
-            $songFilePath = $this->resolveScanFilePath('song');
-            if ($songFilePath !== null) {
-                $data['artist'] = $this->countDistinctArtistsFromSongFile($songFilePath);
-            }
-        }
-
-        $response = ['status' => $status, 'data' => $data];
-
-        return new JsonResponse($response);
+        return new JsonResponse([
+            'status' => $status,
+            'data' => [
+                'song' => 0,
+                'artist' => 0,
+                'album' => 0,
+            ],
+        ]);
     }
 
     /**
@@ -133,47 +110,6 @@ class ScanController extends AbstractController
     {
         return file_exists($this->projectDir.self::LOCK_FILE)
             || file_exists($this->projectDir.self::LEGACY_LOCK_FILE);
-    }
-
-    private function resolveScanFilePath(string $file): ?string
-    {
-        $paths = [
-            $this->projectDir.self::SCAN_DIR.'/soonic-'.$file.'.sql',
-            $this->projectDir.self::LEGACY_SCAN_DIR.'/soonic-'.$file.'.sql',
-        ];
-
-        foreach ($paths as $path) {
-            if (is_file($path)) {
-                return $path;
-            }
-        }
-
-        return null;
-    }
-
-    private function countDistinctArtistsFromSongFile(string $songFilePath): int
-    {
-        $artists = [];
-        $file = new \SplFileObject($songFilePath, 'r');
-        $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
-        $file->setCsvControl(';');
-
-        foreach ($file as $row) {
-            if (!\is_array($row) || !isset($row[2])) {
-                continue;
-            }
-
-            $artistId = trim((string) $row[2]);
-
-            // Skip header line and empty values.
-            if ($artistId === '' || $artistId === 'artist_id') {
-                continue;
-            }
-
-            $artists[$artistId] = true;
-        }
-
-        return \count($artists);
     }
 
     private function readProgressSnapshot(): ?array

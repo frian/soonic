@@ -82,7 +82,18 @@ final class ScanArtifactsManager
 
     public function writeProgress(array $progress): void
     {
-        @file_put_contents($this->getProgressFilePath(), json_encode($progress, JSON_UNESCAPED_SLASHES));
+        $path = $this->getProgressFilePath();
+        $tmpPath = $path.'.tmp';
+        $payload = json_encode($progress, JSON_UNESCAPED_SLASHES);
+        if ($payload === false) {
+            return;
+        }
+
+        if (@file_put_contents($tmpPath, $payload, LOCK_EX) === false) {
+            return;
+        }
+
+        @rename($tmpPath, $path);
     }
 
     public function clearProgress(): void
