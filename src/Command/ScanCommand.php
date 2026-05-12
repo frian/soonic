@@ -19,6 +19,8 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 )]
 class ScanCommand extends Command
 {
+    private const PROGRESS_UPDATE_EVERY_FILES = 100;
+
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly ScanArtifactsManager $artifactsManager,
@@ -70,6 +72,11 @@ class ScanCommand extends Command
             // -- open log file
             $logFilePath = $this->artifactsManager->getLogFilePath();
             $logFile = $this->artifactsManager->openLogFile();
+            $this->artifactsManager->clearProgress();
+            $this->artifactsManager->writeProgress([
+                'status' => 'running',
+                'data' => ['song' => 0, 'artist' => 0, 'album' => 0],
+            ]);
 
         // -- get entity manager
         $em = $this->entityManager;
@@ -142,6 +149,7 @@ class ScanCommand extends Command
 
         $hasError = false;
         $hasWarning = false;
+        $lastProgressFileCount = 0;
 
         /*
          * -- Prepare needed files ------------------------------------------------------------------------------------
@@ -332,6 +340,18 @@ class ScanCommand extends Command
                 array_push($songs, $tags);
 
                 ++$loadCount;
+
+                if (($fileCount - $lastProgressFileCount) >= self::PROGRESS_UPDATE_EVERY_FILES) {
+                    $this->artifactsManager->writeProgress([
+                        'status' => 'running',
+                        'data' => [
+                            'song' => $loadCount,
+                            'artist' => count($artistIds),
+                            'album' => $albumId,
+                        ],
+                    ]);
+                    $lastProgressFileCount = $fileCount;
+                }
             }
         }
 
@@ -357,6 +377,15 @@ class ScanCommand extends Command
         if ($fileCount === 0) {
             $io->warning('no audio file found');
         }
+
+        $this->artifactsManager->writeProgress([
+            'status' => 'running',
+            'data' => [
+                'song' => $loadCount,
+                'artist' => count($artistIds),
+                'album' => $albumId,
+            ],
+        ]);
 
         // -- write artist tags to sql file
         // -- name,artist_slug,album_count,cover_art_path
@@ -467,8 +496,21 @@ class ScanCommand extends Command
             $io->writeln(' [INFO]   done. \o/');
         }
 
+        $this->artifactsManager->writeProgress([
+            'status' => 'stopped',
+            'data' => [
+                'song' => $loadCount,
+                'artist' => count($artists),
+                'album' => $albumId,
+            ],
+        ]);
+
         return Command::SUCCESS;
         } catch (\Throwable $e) {
+            $this->artifactsManager->writeProgress([
+                'status' => 'error',
+                'data' => ['song' => 0, 'artist' => 0, 'album' => 0],
+            ]);
             $io->error($e->getMessage());
             return Command::FAILURE;
         } finally {

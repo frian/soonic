@@ -42,6 +42,11 @@ final class ScanArtifactsManager
         return $this->getScanDir().'/'.self::APPNAME.'.log';
     }
 
+    public function getProgressFilePath(): string
+    {
+        return $this->getScanDir().'/'.self::APPNAME.'-progress.json';
+    }
+
     public function ensureRuntimeDirectories(): void
     {
         $scanDir = $this->getScanDir();
@@ -72,6 +77,19 @@ final class ScanArtifactsManager
         $lockFile = $this->getLockFilePath();
         if (file_exists($lockFile)) {
             @unlink($lockFile);
+        }
+    }
+
+    public function writeProgress(array $progress): void
+    {
+        @file_put_contents($this->getProgressFilePath(), json_encode($progress, JSON_UNESCAPED_SLASHES));
+    }
+
+    public function clearProgress(): void
+    {
+        $path = $this->getProgressFilePath();
+        if (file_exists($path)) {
+            @unlink($path);
         }
     }
 
