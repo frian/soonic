@@ -114,7 +114,7 @@ class ScanController extends AbstractController
 
         // During scan, artist rows are written only near the end of the command.
         // To keep progress useful, derive a live artist count from song rows.
-        if ($status === 'running' && ($data['artist'] ?? 0) === 0 && ($data['song'] ?? 0) > 0) {
+        if ($status === 'running' && $data['artist'] === 0 && $data['song'] > 0) {
             $songFilePath = $this->resolveScanFilePath('song');
             if ($songFilePath !== null) {
                 $data['artist'] = $this->countDistinctArtistsFromSongFile($songFilePath);
