@@ -470,8 +470,13 @@ class ScanCommand extends Command
         if ($verbosity >= OutputInterface::VERBOSITY_VERBOSE) {
             $io->title('Summary');
             $io->writeln("<soonic_info> [INFO]   analysed $fileCount files");
-            $io->writeln(" [INFO]   loaded $loadCount files");
-            $io->writeln(" [INFO]   skipped $skipCount files");
+            if ($skipCount > 0) {
+                $io->writeln(" [INFO]   skipped $skipCount files");
+            }
+            $io->writeln(" [INFO]   loaded $loadCount songs");
+            $io->writeln(" [INFO]   loaded ". $albumId ." albums");
+            $io->writeln(" [INFO]   loaded ". count($artistIds) ." artists");
+            
 
             $end_time = microtime(true);
             $rawDuration = $end_time - $start_time;
