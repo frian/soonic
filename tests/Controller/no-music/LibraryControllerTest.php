@@ -14,7 +14,7 @@ class LibraryControllerTest extends NoMusicWebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.topbar');
         $this->assertSelectorExists('#songs-section');
-        $this->assertSame(1, $crawler->filter('#artists-nav:contains("no artists found")')->count());
+        $this->assertSame(1, $crawler->filter('#artists-nav .empty-list')->count());
     }
 
     public function testShowArtistAlbumsReturnsNotFoundWhenArtistMissing(): void
@@ -40,7 +40,7 @@ class LibraryControllerTest extends NoMusicWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('#artists-nav');
-        $this->assertSame(1, $crawler->filter('#artists-nav:contains("no artists found")')->count());
+        $this->assertSame(1, $crawler->filter('#artists-nav .empty-list')->count());
     }
 
     public function testFilterArtistWithParamShowsEmptyState(): void
@@ -50,7 +50,7 @@ class LibraryControllerTest extends NoMusicWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('#artists-nav');
-        $this->assertSame(1, $crawler->filter('#artists-nav:contains("no artists found")')->count());
+        $this->assertSame(1, $crawler->filter('#artists-nav .empty-list')->count());
     }
 
     public function testRandomSongsShowsEmptyState(): void

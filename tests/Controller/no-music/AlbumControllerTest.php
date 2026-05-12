@@ -13,7 +13,7 @@ class AlbumControllerTest extends NoMusicWebTestCase
 
         $this->assertResponseIsSuccessful();
         $this->assertSelectorExists('.albums-view');
-        $this->assertSame(1, $crawler->filter('.albums-view:contains("no album found")')->count());
+        $this->assertSame(1, $crawler->filter('.albums-view .empty-list')->count());
     }
 
     public function testAlbumViewReturnsNotFoundWhenAlbumDoesNotExist(): void

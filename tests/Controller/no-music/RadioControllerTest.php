@@ -22,7 +22,7 @@ class RadioControllerTest extends NoMusicWebTestCase
         $crawler = $client->request('GET', '/radio/');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSame(1, $crawler->filter('.radio-name:contains("no radios found")')->count());
+        $this->assertSame(1, $crawler->filter('.radios-view .empty-list')->count());
     }
 
     public function testNewFormIsReachable(): void
