@@ -61,12 +61,7 @@ class ScanController extends AbstractController
         }
 
         $environment = (string) $this->getParameter('kernel.environment');
-        $command = sprintf(
-            'nohup %s %s soonic:scan --no-interaction --env=%s > /dev/null 2>&1 &',
-            escapeshellarg($phpBinary),
-            escapeshellarg($consolePath),
-            escapeshellarg($environment)
-        );
+        $command = $this->buildDetachedScanCommand($phpBinary, $consolePath, $environment);
         $process = Process::fromShellCommandline($command, $this->projectDir);
         $process->setTimeout(10);
 
@@ -199,5 +194,28 @@ class ScanController extends AbstractController
         }
 
         return $decoded;
+    }
+
+    private function buildDetachedScanCommand(string $phpBinary, string $consolePath, string $environment): string
+    {
+        if (\PHP_OS_FAMILY === 'Windows') {
+            $psPhpBinary = str_replace("'", "''", $phpBinary);
+            $psConsolePath = str_replace("'", "''", $consolePath);
+            $psEnvironment = str_replace("'", "''", $environment);
+
+            return sprintf(
+                "powershell -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command \"Start-Process -FilePath '%s' -ArgumentList @('%s','soonic:scan','--no-interaction','--env=%s') -WindowStyle Hidden\"",
+                $psPhpBinary,
+                $psConsolePath,
+                $psEnvironment
+            );
+        }
+
+        return sprintf(
+            'nohup %s %s soonic:scan --no-interaction --env=%s > /dev/null 2>&1 &',
+            escapeshellarg($phpBinary),
+            escapeshellarg($consolePath),
+            escapeshellarg($environment)
+        );
     }
 }
