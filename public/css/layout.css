@@ -222,6 +222,10 @@ nav.topbar-nav a {
   line-height: 49px;
   border: 0px solid lime;
 }
+nav.topbar-nav .topbar-nav-label {
+  margin-left: 8px;
+  padding-left: 10px;
+}
 
 #navigation-library,
 #navigation-radio-new,
@@ -233,6 +237,10 @@ nav.topbar-nav a {
   -- Media query 1024px -------------------------------------------------------
 */
 @media all and (min-width: 1024px) {
+  nav.topbar-nav .topbar-nav-label {
+    display: none;
+  }
+
   #search-form input[type=text] {
     height: 39px;
   }
@@ -641,8 +649,11 @@ ul.top-nav.is-active li {
   float: none;
 }
 ul.top-nav.is-active li a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
-  text-align: center;
+  text-align: left;
 }
 ul.top-nav.is-active form {
   width: 100%;
