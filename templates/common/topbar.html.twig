@@ -26,30 +26,31 @@
         <span id="song-artist" class="song-artist"></span>
     </div>
 
-    <nav class="topbar-nav" id="top-bar-nav">
+    <nav class="topbar-nav" id="top-bar-nav"> 
         <ul class="top-nav">
             <li id="navigation-search-form">
                 {{ include('common/search.html.twig') }}
             </li>
             <li id="navigation-library">
-                <a id="library-button" href="{{ path('library') }}" title="{{ 'artists'|trans }}" aria-label="{{ 'artists'|trans }}"><span class="material-icons" aria-hidden="true">people</span></a>
+                <a id="library-button" href="{{ path('library') }}" title="{{ 'artists'|trans }}" aria-label="{{ 'artists'|trans }}"><span class="material-icons" aria-hidden="true">people</span><span class="topbar-nav-label">{{ 'artists'|trans }}</span></a>
             </li>
             <li id="navigation-random">
-                <a id="random-button" href="{{ path('random_songs') }}" title="{{ 'songs.loadrandom'|trans }}" aria-label="{{ 'songs.loadrandom'|trans }}"><span class="material-icons" aria-hidden="true">shuffle</span></a>
+                <a id="random-button" href="{{ path('random_songs') }}" title="{{ 'songs.loadrandom'|trans }}" aria-label="{{ 'songs.loadrandom'|trans }}"><span class="material-icons" aria-hidden="true">shuffle</span><span class="topbar-nav-label">{{ 'songs.loadrandom'|trans }}</span></a>
             </li>
             <li id="navigation-albums">
-                <a id="albums-button" href="{{ path('album_index') }}" title="{{ 'albums'|trans }}" aria-label="{{ 'albums'|trans }}"><span class="material-icons" aria-hidden="true">album</span></a>
+                <a id="albums-button" href="{{ path('album_index') }}" title="{{ 'albums'|trans }}" aria-label="{{ 'albums'|trans }}"><span class="material-icons" aria-hidden="true">album</span><span class="topbar-nav-label">{{ 'albums'|trans }}</span></a>
             </li>
             <li id="navigation-radios">
-                <a id="radio-button" href="{{ path('radio_index') }}" title="{{ 'radios'|trans }}" aria-label="{{ 'radios'|trans }}"><span class="material-icons" aria-hidden="true">radio</span></a>
+                <a id="radio-button" href="{{ path('radio_index') }}" title="{{ 'radios'|trans }}" aria-label="{{ 'radios'|trans }}"><span class="material-icons" aria-hidden="true">radio</span><span class="topbar-nav-label">{{ 'radios'|trans }}</span></a>
             </li>
             <li id="navigation-radio-new">
-                <a id="radio-new-button" href="{{ path('radio_new') }}" title="{{ 'radio.new'|trans }}" aria-label="{{ 'radio.new'|trans }}"><span class="material-icons" aria-hidden="true">radio</span><span class="material-icons radio-add" aria-hidden="true">add</span></a>
+                <a id="radio-new-button" href="{{ path('radio_new') }}" title="{{ 'radio.new'|trans }}" aria-label="{{ 'radio.new'|trans }}"><span class="material-icons" aria-hidden="true">radio</span><span class="material-icons radio-add" aria-hidden="true">add</span><span class="topbar-nav-label">{{ 'radio.new'|trans }}</span></a>
             </li>
             <li id="navigation-settings">
                 {% if show_settings_button|default(true) %}
                     <a id="settings-button" title="{{ 'settings'|trans }}" aria-label="{{ 'settings'|trans }}" href="{{ path('settings_index') }}">
                         <span class="material-icons" aria-hidden="true">settings</span>
+                        <span class="topbar-nav-label">{{ 'settings'|trans }}</span>
                     </a>
                 {% endif %}
             </li>

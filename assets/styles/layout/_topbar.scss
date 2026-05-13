@@ -152,6 +152,11 @@ nav.topbar-nav {
         line-height: $topbar-size;
         border: #{$debug}px solid lime;
     }
+
+    .topbar-nav-label {
+        margin-left: 8px;
+        padding-left: 10px;
+    }
 }
 
 // -- set menu items visibility
@@ -166,6 +171,12 @@ nav.topbar-nav {
   -- Media query 1024px -------------------------------------------------------
 */
 @media all and (min-width: 1024px) {
+    nav.topbar-nav {
+        .topbar-nav-label {
+            display: none;
+        }
+    }
+
     #search-form {
         input[type="text"] {
             height: 39px;
