@@ -17,8 +17,6 @@ class ScanController extends AbstractController
 {
     private const LOCK_FILE = '/var/lock/soonic.lock';
     private const LEGACY_LOCK_FILE = '/public/soonic.lock';
-    private const SCAN_DIR = '/var/scan';
-    private const LEGACY_SCAN_DIR = '/public';
     private const PROGRESS_FILE = '/var/scan/soonic-progress.json';
 
     private string $projectDir;
