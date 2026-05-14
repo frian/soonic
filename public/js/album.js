@@ -147,6 +147,7 @@ $(function() {
 
     function closeSingleAlbumView(options) {
         const opts = options || {};
+        const hadAlbumOverlay = $(".single-album-view").length > 0;
 
         if (!opts.force && !opts.fromHistory && isAlbumShowPath() && $(".albums-view").length && window.history && window.history.back) {
             window.history.back();
@@ -160,7 +161,7 @@ $(function() {
 
         $(".single-album-view").remove();
         unlockPageScroll();
-        if ($(".albums-view").length) {
+        if (hadAlbumOverlay && $(".albums-view").length) {
             setDocumentTitle("Soonic - albums");
         }
     }
