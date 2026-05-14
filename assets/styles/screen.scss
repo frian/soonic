@@ -40,12 +40,6 @@ html, body {
     font-family: Lato, sans-serif;
 }
 
-body {
-    color: $fg-color;
-    background-color: $bg-color;
-    background-attachment: fixed;
-}
-
 a {
     color: $fg-color;
     text-decoration: none;
@@ -105,24 +99,8 @@ h2 {
 /*
   --  6. Albums view ----------------------------------------------------------
 */
-.albums-view .album-container:nth-child(even) .album-infos {
-    background-color: $bg-alternate;
-}
-
-
-/*
-  --  6.1 Single album view ---------------------------------------------------
-*/
 .single-album-container {
     color: $fg-color;
-
-    .album-songs {
-        tbody {
-            tr:nth-child(even) {
-                background-color: $bg-alternate;
-            }
-        }
-    }
 }
 
 
@@ -182,9 +160,6 @@ h2 {
         }
     }
 
-    &.active-radio {
-        background-color: $hover-active;
-    }
 }
 
 @keyframes radio-spin {
@@ -283,8 +258,7 @@ input[type="text"] {
     border: 1px solid #555;
 }
 
-#search-form input[type="text"]:focus-visible,
-#filter:focus-visible {
+#search-form input[type="text"]:focus-visible {
     outline: 2px solid $border-color;
 }
 
@@ -327,34 +301,19 @@ form div div input {
     transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
 }
 
-.button.danger {
-    background: $red-gradient-dark;
-}
-
 .button:focus-visible,
-[role="button"]:focus-visible,
-.radio-edit-link:focus-visible {
+[role="button"]:focus-visible {
     outline: 2px solid $border-color;
     outline-offset: 2px;
 }
 
 .button:active,
-[role="button"]:active,
-.radio-edit-link:active {
+[role="button"]:active {
     transform: translateY(1px);
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .button:hover {
-        background: $hover-gradient;
-    }
-
-    .button.danger:hover {
-        background: $red-gradient;
-    }
-
-    [role="button"]:hover,
-    .radio-edit-link:hover {
+    [role="button"]:hover {
         opacity: 0.85;
     }
 }
