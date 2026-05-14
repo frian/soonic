@@ -47,6 +47,10 @@ class SettingsController extends AbstractController
             'edit_form' => $editForm->createView(),
         ];
 
+        if ($request->query->get('action') === 'update') {
+            return $this->render('settings/index-content-updated.html.twig', $parameters);
+        }
+
         if ($request->isXmlHttpRequest()) {
             return $this->render('settings/index-content.html.twig', $parameters);
         }

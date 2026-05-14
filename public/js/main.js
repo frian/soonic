@@ -581,16 +581,10 @@ $(function() {
                 }
 
                 // Refresh translated server-rendered fragments without full-page navigation.
-                window.fetch('/settings/', {
-                    credentials: 'same-origin'
-                })
-                    .then(function(response) {
-                        if (!response.ok) {
-                            throw new Error('settings refresh failed');
-                        }
-                        return response.text();
-                    })
-                    .then(function(html) {
+                $.get({
+                    url: '/settings/?action=update',
+                    cache: false,
+                    success: function(html) {
                         const $html = $('<div>').html(html);
                         const $newTopbar = $html.find('.topbar').first();
                         const $newSettings = $html.find('.settings-view').first();
@@ -607,10 +601,11 @@ $(function() {
                         }
 
                         setSongInfoSize();
-                    })
-                    .catch(function() {
+                    },
+                    error: function() {
                         logDebug('settings refresh error');
-                    });
+                    }
+                });
             },
             error:function() {
                 logDebug("settings submit error");
