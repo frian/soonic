@@ -591,6 +591,7 @@ $(function() {
 
                         if ($newTopbar.length) {
                             $('.topbar').replaceWith($newTopbar);
+                            $('#navigation-settings').css('display', 'none');
                             $(document).trigger("soonic:topbarReplaced");
                         }
 
