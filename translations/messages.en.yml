@@ -23,6 +23,8 @@ library: library
 music: music
 name: name
 playlist.add: 'add to playlist'
+player.next_song: next song
+player.previous_song: previous song
 playlist.flash.add: 'Song added to playlist'
 playlist.flash.album_add: 'Album added to playlist'
 playlist.flash.remove: 'Song removed from playlist'
