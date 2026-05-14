@@ -19,6 +19,7 @@ $(function() {
     if ($(".single-album-view").length) {
         adjustAlbumContainer();
         lockPageScroll();
+        updateDocumentTitleFromSelector(".single-album-view");
         if (window.history && window.history.replaceState) {
             window.history.replaceState({ url: window.location.pathname + window.location.search }, "", window.location.pathname + window.location.search);
         }
@@ -104,6 +105,29 @@ $(function() {
         window.history.pushState({ url: url }, "", url);
     }
 
+    function setDocumentTitle(title) {
+        if (typeof title !== "string") {
+            return;
+        }
+
+        const cleanTitle = title.trim();
+        if (!cleanTitle) {
+            return;
+        }
+
+        document.title = cleanTitle;
+    }
+
+    function updateDocumentTitleFromSelector(selector) {
+        setDocumentTitle($(selector).first().attr("data-page-title"));
+    }
+
+    function updateDocumentTitleFromHtml(data) {
+        const $payload = $("<div>").html(data);
+        const title = $payload.find("[data-page-title]").first().attr("data-page-title");
+        setDocumentTitle(title);
+    }
+
     function adjustAlbumContainer() {
         const $albumView = $(".single-album-view");
         const $albumContainer = $(".single-album-container");
@@ -136,6 +160,9 @@ $(function() {
 
         $(".single-album-view").remove();
         unlockPageScroll();
+        if ($(".albums-view").length) {
+            setDocumentTitle("Soonic - albums");
+        }
     }
 
     function lockPageScroll() {
@@ -198,6 +225,7 @@ $(function() {
             url: url,
             cache: true,
             success: function(data) {
+                updateDocumentTitleFromHtml(data);
                 $(".single-album-view").remove();
                 $(document.body).append(data);
 

@@ -1,7 +1,7 @@
 {% if album is null %}
     <h1>album not found</h1>
 {% else %}
-    <div class="single-album-view view">
+    <div class="single-album-view view" data-page-title="Soonic - {{ 'albums'|trans }}">
         <div class="single-album-container">
             <div class="img-wrapper">
                 {% set coverSrc = album.coverArtPath ?: '/img/cover.jpg' %}

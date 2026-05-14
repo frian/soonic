@@ -63,11 +63,13 @@ $(function() {
 
         if ($('.library-view').length) {
             $('.library-view').css('display', 'block');
+            updateDocumentTitleFromSelector('.library-view [data-page-title]');
         } else {
             $.ajax({
                 url: '/',
                 cache: true,
                 success: function(data) {
+                    updateDocumentTitleFromHtml(data);
                     upsertLibraryView(data);
                     $('.albums-view').css('display', 'none');
                     $('.library-view').css('display', 'block');
@@ -101,12 +103,14 @@ $(function() {
 
         if ($('.albums-view').length) {
             $('.albums-view').css('display', '');
+            updateDocumentTitleFromSelector('.albums-view');
         } else {
             const url = "/album/";
             $.ajax({
                 url: url,
                 cache: true,
                 success: function(data) {
+                    updateDocumentTitleFromHtml(data);
                     $('.library-view').css('display', 'none');
                     $(document.body).append(data);
                 },
@@ -137,6 +141,7 @@ $(function() {
 
         if ($('.radios-view').length) {
             activateRadioSubview('.radios-view');
+            updateDocumentTitleFromSelector('.radios-view');
         } else {
             const url = "/radio/";
 
@@ -144,6 +149,7 @@ $(function() {
                 url: url,
                 cache: true,
                 success: function(data) {
+                    updateDocumentTitleFromHtml(data);
                     upsertRadiosView(data);
                     activateRadioSubview('.radios-view');
                 },
@@ -232,6 +238,7 @@ $(function() {
 
         if ($('.radio-new-view').length) {
             activateRadioSubview('.radio-new-view');
+            updateDocumentTitleFromSelector('.radio-new-view');
         } else {
             const url = "/radio/new";
 
@@ -239,6 +246,7 @@ $(function() {
                 url: url,
                 cache: true,
                 success: function(data) {
+                    updateDocumentTitleFromHtml(data);
                     upsertSingleView(data, '.radio-new-view');
                     activateRadioSubview('.radio-new-view');
                 },
@@ -267,6 +275,7 @@ $(function() {
 
         if ($('.settings-view').length) {
             $('.settings-view').css('display', 'block');
+            updateDocumentTitleFromSelector('.settings-view');
         } else {
             const url = "/settings/";
 
@@ -274,6 +283,7 @@ $(function() {
                 url: url,
                 cache: true,
                 success: function(data) {
+                    updateDocumentTitleFromHtml(data);
                     $(document.body).append(data);
                 },
                 error: function() {
@@ -810,6 +820,29 @@ $(function() {
         window.history.pushState({ url: url }, "", url);
     }
 
+    function setDocumentTitle(title) {
+        if (typeof title !== 'string') {
+            return;
+        }
+
+        const cleanTitle = title.trim();
+        if (!cleanTitle) {
+            return;
+        }
+
+        document.title = cleanTitle;
+    }
+
+    function updateDocumentTitleFromSelector(selector) {
+        setDocumentTitle($(selector).first().attr('data-page-title'));
+    }
+
+    function updateDocumentTitleFromHtml(data) {
+        const $payload = $('<div>').html(data);
+        const title = $payload.find('[data-page-title]').first().attr('data-page-title');
+        setDocumentTitle(title);
+    }
+
     function upsertLibraryView(data) {
         let $incoming = $('<div>').html(data).find('.library-view').first();
         if (!$incoming.length) {
@@ -873,6 +906,7 @@ $(function() {
             url: url,
             cache: false,
             success: function(data) {
+                updateDocumentTitleFromHtml(data);
                 upsertRadiosView(data);
                 activateRadioSubview('.radios-view');
             },
@@ -887,6 +921,7 @@ $(function() {
             url: url,
             cache: false,
             success: function(data) {
+                updateDocumentTitleFromHtml(data);
                 if (!upsertSingleView(data, selector)) {
                     return;
                 }

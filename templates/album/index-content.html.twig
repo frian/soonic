@@ -1,4 +1,4 @@
-<div class="albums-view view">
+<div class="albums-view view" data-page-title="Soonic - {{ 'albums'|trans }}">
     {% for album in albums %}
         <div class="album-container" data-album-id="{{ album.id }}" data-artist="" data-album="{{ album.albumSlug }}">
             <div class="img-wrapper">
