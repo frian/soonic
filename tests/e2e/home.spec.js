@@ -80,6 +80,39 @@ test('ajax history back and forward keep URL and document title in sync', async 
     await assertTitleMatchesView(page, '.radios-view');
 });
 
+test('saving settings refreshes topbar through update fragment endpoint', async ({ page }) => {
+    const seenUpdateRequests = [];
+
+    page.on('request', function(request) {
+        if (request.url().includes('/settings/?action=update')) {
+            seenUpdateRequests.push(request.url());
+        }
+    });
+
+    await page.goto('/');
+    await page.locator('#settings-button').click();
+    await expect(page.locator('.settings-view')).toBeVisible();
+
+    await page.evaluate(function() {
+        const topbar = document.querySelector('.topbar');
+        if (topbar) {
+            topbar.setAttribute('data-test-refresh-marker', 'before');
+        }
+    });
+
+    await page.locator('#settings-form-button').click();
+
+    await expect.poll(function() {
+        return seenUpdateRequests.length;
+    }).toBeGreaterThan(0);
+
+    await expect(page.locator('.topbar[data-test-refresh-marker=\"before\"]')).toHaveCount(0);
+    await expect(page.locator('.settings-view')).toBeVisible();
+
+    await expect(page.locator('.icon-to-start')).toHaveAttribute('aria-label', /.+/);
+    await expect(page.locator('.icon-to-end')).toHaveAttribute('aria-label', /.+/);
+});
+
 async function assertTitleMatchesView(page, selector) {
     const expectedTitle = await page.locator(selector).first().getAttribute('data-page-title');
     expect(expectedTitle).toBeTruthy();

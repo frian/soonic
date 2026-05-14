@@ -16,6 +16,16 @@ class ConfigControllerTest extends NoMusicWebTestCase
         $this->assertSelectorExists('#settings-form');
     }
 
+    public function testSettingsUpdateActionReturnsTopbarAndSettingsFragments(): void
+    {
+        $client = static::createClient();
+        $client->xmlHttpRequest('GET', '/settings/?action=update');
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorExists('.topbar');
+        $this->assertSelectorExists('.settings-view');
+    }
+
     public function testConfigEditPersistsCurrentSelectionAndReturnsJson(): void
     {
         $client = static::createClient();
