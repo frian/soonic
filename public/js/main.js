@@ -581,10 +581,16 @@ $(function() {
                 }
 
                 // Refresh translated server-rendered fragments without full-page navigation.
-                $.get({
-                    url: '/settings/',
-                    cache: false,
-                    success: function(html) {
+                window.fetch('/settings/', {
+                    credentials: 'same-origin'
+                })
+                    .then(function(response) {
+                        if (!response.ok) {
+                            throw new Error('settings refresh failed');
+                        }
+                        return response.text();
+                    })
+                    .then(function(html) {
                         const $html = $('<div>').html(html);
                         const $newTopbar = $html.find('.topbar').first();
                         const $newSettings = $html.find('.settings-view').first();
@@ -597,11 +603,14 @@ $(function() {
                         if ($newSettings.length) {
                             $('.settings-view').replaceWith($newSettings);
                             openView = '.settings-view';
+                            updateDocumentTitleFromSelector('.settings-view');
                         }
 
                         setSongInfoSize();
-                    }
-                });
+                    })
+                    .catch(function() {
+                        logDebug('settings refresh error');
+                    });
             },
             error:function() {
                 logDebug("settings submit error");
