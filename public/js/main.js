@@ -318,7 +318,7 @@ $(function() {
 
         e.preventDefault();
 
-        const url = "/songs/random-broken";
+        const url = "/songs/random";
 
         $.ajax({
             url: url,
