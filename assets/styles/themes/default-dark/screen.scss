@@ -71,7 +71,6 @@ img.cover {
   -- Media query 500px --------------------------------------------------------
 */
 @media all and (min-width: 500px) {
-
     .albums-view .album-container:nth-child(4n + 2), .albums-view .album-container:nth-child(4n + 3){
         background: $theme-dark-gradient
     }
@@ -86,7 +85,6 @@ img.cover {
   -- Media query 700px --------------------------------------------------------
 */
 @media all and (min-width: 700px) {
-
     .albums-view .album-container:nth-child(even) {
         background: $theme-dark-gradient
     }
@@ -105,7 +103,6 @@ img.cover {
   -- Media query 1024px -------------------------------------------------------
 */
 @media all and (min-width: 1024px) {
-
     .albums-view .album-container:nth-child(8n + 2),
     .albums-view .album-container:nth-child(8n + 4),
     .albums-view .album-container:nth-child(8n + 5),
@@ -127,7 +124,6 @@ img.cover {
   -- Media query 1200px -------------------------------------------------------
 */
 @media all and (min-width: 1200px) {
-
     .albums-view .album-container:nth-child(10n + 2),
     .albums-view .album-container:nth-child(10n + 4),
     .albums-view .album-container:nth-child(10n + 6),
@@ -151,7 +147,6 @@ img.cover {
   -- Media query 1600px -------------------------------------------------------
 */
 @media all and (min-width: 1600px) {
-
     .albums-view .album-container:nth-child(12n + 2),
     .albums-view .album-container:nth-child(12n + 4),
     .albums-view .album-container:nth-child(12n + 6),
