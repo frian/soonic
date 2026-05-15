@@ -39,7 +39,7 @@
         {% block stylesheets %}{% endblock %}
     </head>
     {% set current_route = app.current_route|default('') %}
-    <body{% if current_route %} class="route-{{ current_route }}"{% endif %}>
+    <body{% if current_route %} class="route-{{ current_route|replace({'_': '-'}) }}"{% endif %}>
         {{ include('common/topbar.html.twig', {
             is_library_route: current_route == 'library'
         }) }}

@@ -83,7 +83,7 @@ $(function() {
 
         $('#navigation-random, #navigation-albums, #navigation-radios, #navigation-settings, #navigation-search-form' ).css('display', 'list-item');
         $('#navigation-library, #navigation-radio-new').css('display', 'none');
-        $(document.body).removeClass('route-settings_index');
+        $(document.body).removeClass('route-settings-index');
         setSongInfoSize();
         pushHistoryIfNeeded($(this).attr('href') || '/');
 
@@ -122,7 +122,7 @@ $(function() {
         }
         $('#navigation-library, #navigation-radios, #navigation-settings').css('display', 'list-item');
         $('#navigation-albums, #navigation-radio-new, #navigation-search-form, #navigation-random').css('display', 'none');
-        $(document.body).removeClass('route-settings_index');
+        $(document.body).removeClass('route-settings-index');
         openView = '.albums-view';
         pushHistoryIfNeeded($(this).attr('href') || '/album/');
 
@@ -161,7 +161,7 @@ $(function() {
             });
         }
         setRadioListNavState();
-        $(document.body).removeClass('route-settings_index');
+        $(document.body).removeClass('route-settings-index');
         pushHistoryIfNeeded($(this).attr('href') || '/radio/');
 
         logDebug('clicked on radio');
@@ -195,7 +195,7 @@ $(function() {
         e.preventDefault();
         loadRadioSubview(url, '.radio-edit-view');
         setRadioFormNavState();
-        $(document.body).removeClass('route-settings_index');
+        $(document.body).removeClass('route-settings-index');
         pushHistoryIfNeeded(url);
     });
 
@@ -296,7 +296,7 @@ $(function() {
             });
         }
         setSettingsNavState();
-        $(document.body).addClass('route-settings_index');
+        $(document.body).addClass('route-settings-index');
         setSongInfoSize();
         openView = '.settings-view';
         pushHistoryIfNeeded($(this).attr('href') || '/settings/');
