@@ -12,15 +12,15 @@ $theme-bg-color: #111;
     $bg-alternate: #222,
     $header-color: #333,
     $border-color: #666,
-    $default-gradient: linear-gradient(to top, rgba(34,34,34, 1), rgba(51,51,51, 0.9)),
-    $hover-gradient: linear-gradient(to top, rgba(0,102,0, 1), rgba(0,102,0, 0.5)),
+    $default-gradient: linear-gradient(to top, rgb(34 34 34 / 100%), rgb(51 51 51 / 90%)),
+    $hover-gradient: linear-gradient(to top, rgb(0 102 0 / 100%), rgb(0 102 0 / 50%)),
     $song-artist-color: #ddd,
     $progressbar-color: #555,
     $filter-input-bg: black,
     $scrollbar-track-bg: #111,
     $scrollbar-thumb-border-bg: #111,
     $context-menu-bg: black,
-    $context-menu-hover-bg: rgba(0, 102, 0, 0.8),
+    $context-menu-hover-bg: rgb(0 102 0 / 80%),
     $hamburger-color: #eee,
     $mobile-button-bg: #111
 );
