@@ -75,8 +75,9 @@ $(function() {
                     $('.library-view').css('display', 'block');
                     setSongInfoSize();
                 },
-                error: function() {
-                    logDebug("library load error");
+                error: function(jqXHR, textStatus, errorThrown) {
+                    logDebug(jqXHR.status + " " + textStatus + " " + errorThrown);
+                    redirectToErrorPage(jqXHR);
                 }
             });
         }
@@ -115,8 +116,9 @@ $(function() {
                     $('.library-view').css('display', 'none');
                     $(document.body).append(data);
                 },
-                error: function() {
+                error: function(jqXHR) {
                     logDebug("albums load error");
+                    redirectToErrorPage(jqXHR);
                 }
             });
         }
@@ -155,8 +157,9 @@ $(function() {
                     upsertRadiosView(data);
                     activateRadioSubview('.radios-view');
                 },
-                error: function() {
+                error: function(jqXHR) {
                     logDebug("radios load error");
+                    redirectToErrorPage(jqXHR);
                 }
             });
         }
@@ -254,8 +257,9 @@ $(function() {
                     upsertSingleView(data, '.radio-new-view');
                     activateRadioSubview('.radio-new-view');
                 },
-                error: function() {
+                error: function(jqXHR) {
                     logDebug("radio new load error");
+                    redirectToErrorPage(jqXHR);
                 }
             });
         }
@@ -290,8 +294,9 @@ $(function() {
                     updateDocumentTitleFromHtml(data);
                     $(document.body).append(data);
                 },
-                error: function() {
+                error: function(jqXHR) {
                     logDebug("settings load error");
+                    redirectToErrorPage(jqXHR);
                 }
             });
         }
@@ -313,7 +318,7 @@ $(function() {
 
         e.preventDefault();
 
-        const url = "/songs/random";
+        const url = "/songs/random-broken";
 
         $.ajax({
             url: url,
@@ -321,6 +326,7 @@ $(function() {
             success: loadSongPanel,
             error: function() {
                 logDebug("random songs load error");
+                showAjaxFlash("Unable to load random songs.");
             }
         });
 
@@ -465,6 +471,7 @@ $(function() {
             success: loadSongPanel,
             error: function() {
                 logDebug("search error");
+                showAjaxFlash("Unable to load search results.");
             }
         });
 
@@ -538,6 +545,7 @@ $(function() {
             error: function() {
                 $button.removeClass('running');
                 $button.text($button.data('initial-label') || initialLabel);
+                showAjaxFlash("Unable to start scan.");
             }
         });
 
@@ -609,11 +617,13 @@ $(function() {
                     },
                     error: function() {
                         logDebug('settings refresh error');
+                        showAjaxFlash("Unable to refresh settings view.");
                     }
                 });
             },
             error:function() {
                 logDebug("settings submit error");
+                showAjaxFlash("Unable to save settings.");
             }
         });
 
@@ -775,6 +785,10 @@ $(function() {
         window.logSoonicDebug(debug, message);
     }
 
+    function showAjaxFlash(message) {
+        window.showSoonicFlash("ajax-flash-message", message, 2000);
+    }
+
     function closeMobileMenu() {
         $(".topbar-nav, .top-nav, .hamburger").removeClass("is-active");
         mobileMenuState = 'closed';
@@ -905,6 +919,11 @@ $(function() {
         $('.radios-view, .radio-new-view, .radio-show-view, .radio-edit-view').css('display', 'none');
     }
 
+    function redirectToErrorPage(jqXHR) {
+        const statusCode = jqXHR && jqXHR.status >= 400 ? jqXHR.status : 500;
+        window.location.assign('/error/' + statusCode);
+    }
+
     function activateRadioSubview(selector) {
         $(document).trigger("soonic:closeAlbumOverlay");
         $(openView).css('display', 'none');
@@ -924,8 +943,9 @@ $(function() {
                 upsertRadiosView(data);
                 activateRadioSubview('.radios-view');
             },
-            error: function() {
+            error: function(jqXHR) {
                 logDebug("radios pagination error");
+                redirectToErrorPage(jqXHR);
             }
         });
     }
@@ -941,8 +961,9 @@ $(function() {
                 }
                 activateRadioSubview(selector);
             },
-            error: function() {
+            error: function(jqXHR) {
                 logDebug("radio subview load error");
+                redirectToErrorPage(jqXHR);
             }
         });
     }

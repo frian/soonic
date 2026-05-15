@@ -304,11 +304,12 @@ h2 {
 }
 
 #playlist-flash-message,
-#radio-flash-message {
+#radio-flash-message,
+#ajax-flash-message {
   border-radius: 6px;
   background: #ddd;
   color: #fff;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 /*

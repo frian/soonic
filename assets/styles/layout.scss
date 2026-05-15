@@ -630,16 +630,17 @@ table.form {
 }
 
 #playlist-flash-message,
-#radio-flash-message {
+#radio-flash-message,
+#ajax-flash-message {
     position: fixed;
-    top: 12px;
+    top: 25px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
     display: none;
-    height: 50px;
-    padding: 0 16px;
-    line-height: 50px;
+    height: 80px;
+    padding: 0 32px;
+    line-height: 80px;
     text-align: center;
     pointer-events: none;
     white-space: nowrap;

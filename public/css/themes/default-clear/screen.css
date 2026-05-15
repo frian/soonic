@@ -62,7 +62,8 @@ nav.topbar-nav a:hover {
 }
 
 #playlist-flash-message,
-#radio-flash-message {
+#radio-flash-message,
+#ajax-flash-message {
   background: #90ee90;
 }
 
