@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="{{ app is defined and app.request is defined ? app.request.locale|default('fr') : 'fr' }}">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Erreur {{ status_code }} - Soonic</title>
+        <style>
+            :root {
+                color-scheme: light;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                min-height: 100vh;
+                display: grid;
+                place-items: center;
+                padding: 24px;
+                font-family: "Lato", "Mulish", Arial, sans-serif;
+                background: #003ecc;
+                color: #1c1f23;
+            }
+
+            main {
+                text-align: center;
+                width: 100%;
+                max-width: 620px;
+                border: 1px solid #d7dee5;
+                border-radius: 12px;
+                background: #ffffff;
+                padding: 28px;
+                box-shadow: 0 8px 26px rgba(20, 26, 33, 0.08);
+            }
+
+            h1 {
+                margin: 0 0 12px;
+                font-size: 30px;
+                line-height: 1.2;
+            }
+
+            p {
+                margin: 0;
+                font-size: 24px;
+                line-height: 1.5;
+            }
+
+            .code {
+                display: inline-block;
+                margin-bottom: 16px;
+                border-radius: 999px;
+                padding: 24px 48px;
+                background: #eef3f7;
+                border: 1px solid #d7dee5;
+                font-size: 32px;
+                font-weight: 700;
+                background: linear-gradient(to top, rgba(204, 204, 204, 100%), rgba(204, 204, 204, 40%));
+            }
+            .code-500 {
+                background: #c00
+            }
+        </style>
+    </head>
+    <body class="code-{{ status_code }}">
+        <main>
+            <span class="code">HTTP {{ status_code }}</span>
+            <h1>{{ status_text|default('Internal Server Error.') }}</h1>
+            <p><a href="/">back to index</a></p>
+        </main>
+    </body>
+</html>
