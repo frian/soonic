@@ -112,15 +112,14 @@ nav.topbar-nav a:hover {
   background-color: #060;
 }
 
+/*
+  --  6. Albums view ----------------------------------------------------------
+*/
 .single-album-container .album-songs tbody tr:nth-child(even) {
   background-color: #222;
 }
 .single-album-container .album-songs tbody tr.playing {
   background-color: #060;
-}
-
-.albums-view .album-container:nth-child(even) .album-infos {
-  background-color: #222;
 }
 
 /*
@@ -253,6 +252,112 @@ body {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+/*
+  --  6. Albums view ----------------------------------------------------------
+*/
+img.cover {
+  box-shadow: rgba(255, 255, 255, 0.4) 6px 6px 6px;
+}
+
+.albums-view .album-container {
+  background: linear-gradient(to top, #111, #333);
+}
+
+.albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
+  background: linear-gradient(to top, #222, #444);
+}
+
+/*
+  -- Media query 500px --------------------------------------------------------
+*/
+@media all and (min-width: 500px) {
+  .albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
+    background: linear-gradient(to top, #111, #333);
+  }
+
+  .albums-view .album-container:nth-child(even) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
+/*
+  -- Media query 700px --------------------------------------------------------
+*/
+@media all and (min-width: 700px) {
+  .albums-view .album-container:nth-child(even) {
+    background: linear-gradient(to top, #111, #333);
+  }
+
+  .albums-view .album-container:nth-child(8n+2),
+.albums-view .album-container:nth-child(8n+4),
+.albums-view .album-container:nth-child(8n+5),
+.albums-view .album-container:nth-child(8n+7) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
+/*
+  -- Media query 1024px -------------------------------------------------------
+*/
+@media all and (min-width: 1024px) {
+  .albums-view .album-container:nth-child(8n+2),
+.albums-view .album-container:nth-child(8n+4),
+.albums-view .album-container:nth-child(8n+5),
+.albums-view .album-container:nth-child(8n+7) {
+    background: linear-gradient(to top, #111, #333);
+  }
+
+  .albums-view .album-container:nth-child(10n+2),
+.albums-view .album-container:nth-child(10n+4),
+.albums-view .album-container:nth-child(10n+6),
+.albums-view .album-container:nth-child(10n+8),
+.albums-view .album-container:nth-child(10n+10) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
+/*
+  -- Media query 1200px -------------------------------------------------------
+*/
+@media all and (min-width: 1200px) {
+  .albums-view .album-container:nth-child(10n+2),
+.albums-view .album-container:nth-child(10n+4),
+.albums-view .album-container:nth-child(10n+6),
+.albums-view .album-container:nth-child(10n+8),
+.albums-view .album-container:nth-child(10n+10) {
+    background: linear-gradient(to top, #111, #333);
+  }
+
+  .albums-view .album-container:nth-child(12n+2),
+.albums-view .album-container:nth-child(12n+4),
+.albums-view .album-container:nth-child(12n+6),
+.albums-view .album-container:nth-child(12n+7),
+.albums-view .album-container:nth-child(12n+9),
+.albums-view .album-container:nth-child(12n+11) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
+/*
+  -- Media query 1600px -------------------------------------------------------
+*/
+@media all and (min-width: 1600px) {
+  .albums-view .album-container:nth-child(12n+2),
+.albums-view .album-container:nth-child(12n+4),
+.albums-view .album-container:nth-child(12n+6),
+.albums-view .album-container:nth-child(12n+7),
+.albums-view .album-container:nth-child(12n+9),
+.albums-view .album-container:nth-child(12n+11) {
+    background: linear-gradient(to top, #111, #333);
+  }
+
+  .albums-view .album-container:nth-child(16n+2),
+.albums-view .album-container:nth-child(16n+4),
+.albums-view .album-container:nth-child(16n+6),
+.albums-view .album-container:nth-child(16n+8),
+.albums-view .album-container:nth-child(16n+9),
+.albums-view .album-container:nth-child(16n+11),
+.albums-view .album-container:nth-child(16n+13),
+.albums-view .album-container:nth-child(16n+15) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
 /*
   --  6.1 Single album view ---------------------------------------------------
 */

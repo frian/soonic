@@ -6,7 +6,7 @@
 */
 body {
   color: #111;
-  background-color: #eee;
+  background-color: #FAFAFA;
   background-attachment: fixed;
 }
 
@@ -112,15 +112,14 @@ nav.topbar-nav a:hover {
   background-color: #90ee90;
 }
 
+/*
+  --  6. Albums view ----------------------------------------------------------
+*/
 .single-album-container .album-songs tbody tr:nth-child(even) {
   background-color: #c8c8c8;
 }
 .single-album-container .album-songs tbody tr.playing {
   background-color: #90ee90;
-}
-
-.albums-view .album-container:nth-child(even) .album-infos {
-  background-color: #c8c8c8;
 }
 
 /*
@@ -146,7 +145,7 @@ nav.topbar-nav a:hover {
 */
 input[type=text] {
   color: #111;
-  background-color: #eee;
+  background-color: #FAFAFA;
   border: 1px solid #555;
 }
 
@@ -156,12 +155,12 @@ input[type=text] {
 }
 
 .input-reset {
-  background-color: #eee;
+  background-color: #FAFAFA;
 }
 
 .input-reset::after {
   color: #111;
-  background-color: #eee;
+  background-color: #FAFAFA;
 }
 
 /*
@@ -232,12 +231,119 @@ form div div input {
   --  1. Global ---------------------------------------------------------------
 */
 body {
-  background: linear-gradient(to bottom right, #dddddd, rgba(221, 221, 221, 0.8));
+  background: linear-gradient(to bottom right, #F9FAFB, #F5F5F5);
   background-attachment: fixed;
 }
 
 .topbar .logo {
   background-image: url("/img/default-clear-logo.png");
+}
+
+/*
+  --  6. Albums view ----------------------------------------------------------
+*/
+img.cover {
+  box-shadow: rgba(0, 0, 0, 0.4) 6px 6px 6px;
+}
+
+.albums-view .album-container {
+  background: linear-gradient(to top, #ccc, #eee);
+}
+
+.albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
+  background: linear-gradient(to top, #ddd, #fff);
+}
+
+/*
+  -- Media query 500px --------------------------------------------------------
+*/
+@media all and (min-width: 500px) {
+  .albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
+    background: linear-gradient(to top, #ccc, #eee);
+  }
+
+  .albums-view .album-container:nth-child(even) {
+    background: linear-gradient(to top, #ddd, #fff);
+  }
+}
+/*
+  -- Media query 700px --------------------------------------------------------
+*/
+@media all and (min-width: 700px) {
+  .albums-view .album-container:nth-child(even) {
+    background: linear-gradient(to top, #ccc, #eee);
+  }
+
+  .albums-view .album-container:nth-child(8n+2),
+.albums-view .album-container:nth-child(8n+4),
+.albums-view .album-container:nth-child(8n+5),
+.albums-view .album-container:nth-child(8n+7) {
+    background: linear-gradient(to top, #ddd, #fff);
+  }
+}
+/*
+  -- Media query 1024px -------------------------------------------------------
+*/
+@media all and (min-width: 1024px) {
+  .albums-view .album-container:nth-child(8n+2),
+.albums-view .album-container:nth-child(8n+4),
+.albums-view .album-container:nth-child(8n+5),
+.albums-view .album-container:nth-child(8n+7) {
+    background: linear-gradient(to top, #ccc, #eee);
+  }
+
+  .albums-view .album-container:nth-child(10n+2),
+.albums-view .album-container:nth-child(10n+4),
+.albums-view .album-container:nth-child(10n+6),
+.albums-view .album-container:nth-child(10n+8),
+.albums-view .album-container:nth-child(10n+10) {
+    background: linear-gradient(to top, #ddd, #fff);
+  }
+}
+/*
+  -- Media query 1200px -------------------------------------------------------
+*/
+@media all and (min-width: 1200px) {
+  .albums-view .album-container:nth-child(10n+2),
+.albums-view .album-container:nth-child(10n+4),
+.albums-view .album-container:nth-child(10n+6),
+.albums-view .album-container:nth-child(10n+8),
+.albums-view .album-container:nth-child(10n+10) {
+    background: linear-gradient(to top, #ccc, #eee);
+  }
+
+  .albums-view .album-container:nth-child(12n+2),
+.albums-view .album-container:nth-child(12n+4),
+.albums-view .album-container:nth-child(12n+6),
+.albums-view .album-container:nth-child(12n+7),
+.albums-view .album-container:nth-child(12n+9),
+.albums-view .album-container:nth-child(12n+11) {
+    background: linear-gradient(to top, #ddd, #fff);
+  }
+}
+/*
+  -- Media query 1600px -------------------------------------------------------
+*/
+@media all and (min-width: 1600px) {
+  .albums-view .album-container:nth-child(12n+2),
+.albums-view .album-container:nth-child(12n+4),
+.albums-view .album-container:nth-child(12n+6),
+.albums-view .album-container:nth-child(12n+7),
+.albums-view .album-container:nth-child(12n+9),
+.albums-view .album-container:nth-child(12n+11) {
+    background: linear-gradient(to top, #ccc, #eee);
+  }
+
+  .albums-view .album-container:nth-child(16n+2),
+.albums-view .album-container:nth-child(16n+4),
+.albums-view .album-container:nth-child(16n+6),
+.albums-view .album-container:nth-child(16n+8),
+.albums-view .album-container:nth-child(16n+9),
+.albums-view .album-container:nth-child(16n+11),
+.albums-view .album-container:nth-child(16n+13),
+.albums-view .album-container:nth-child(16n+15) {
+    background: linear-gradient(to top, #ddd, #fff);
+  }
 }
 
 /*# sourceMappingURL=screen.css.map */

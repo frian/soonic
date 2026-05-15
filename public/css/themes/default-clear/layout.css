@@ -1,0 +1,16 @@
+/*
+  --  6. Albums view ----------------------------------------------------------
+*/
+img.cover {
+  top: 3%;
+  left: 4%;
+  width: 90%;
+  height: 90%;
+}
+
+.album-infos {
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
+/*# sourceMappingURL=layout.css.map */

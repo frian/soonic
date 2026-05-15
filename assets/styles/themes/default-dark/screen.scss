@@ -4,6 +4,8 @@
 
 $theme-fg-color: #eee;
 $theme-bg-color: #111;
+$theme-clear-gradient: linear-gradient(to top, #222, #444);
+$theme-dark-gradient: linear-gradient(to top, #111, #333);
 
 @use "../base" with (
     $fg-color: $theme-fg-color,
@@ -44,6 +46,131 @@ body {
 */
 .single-album-view {
     background-color: rgb(0 0 0 / 80%);
+}
+
+
+/*
+  --  6. Albums view ----------------------------------------------------------
+*/
+
+img.cover {
+    box-shadow: rgb(255 255 255 / 40%) 6px 6px 6px;
+}
+
+
+.albums-view .album-container {
+    background: $theme-dark-gradient
+}
+
+.albums-view .album-container:nth-child(4n + 2), .albums-view .album-container:nth-child(4n + 3) {
+    background: $theme-clear-gradient
+}
+
+
+/*
+  -- Media query 500px --------------------------------------------------------
+*/
+@media all and (min-width: 500px) {
+
+    .albums-view .album-container:nth-child(4n + 2), .albums-view .album-container:nth-child(4n + 3){
+        background: $theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(even) {
+        background: $theme-clear-gradient
+    }
+}
+
+
+/*
+  -- Media query 700px --------------------------------------------------------
+*/
+@media all and (min-width: 700px) {
+
+    .albums-view .album-container:nth-child(even) {
+        background: $theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(8n + 2),
+    .albums-view .album-container:nth-child(8n + 4),
+    .albums-view .album-container:nth-child(8n + 5),
+    .albums-view .album-container:nth-child(8n + 7) {
+        background: $theme-clear-gradient
+    }
+
+}
+
+
+/*
+  -- Media query 1024px -------------------------------------------------------
+*/
+@media all and (min-width: 1024px) {
+
+    .albums-view .album-container:nth-child(8n + 2),
+    .albums-view .album-container:nth-child(8n + 4),
+    .albums-view .album-container:nth-child(8n + 5),
+    .albums-view .album-container:nth-child(8n + 7) {
+        background: $theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(10n + 2),
+    .albums-view .album-container:nth-child(10n + 4),
+    .albums-view .album-container:nth-child(10n + 6),
+    .albums-view .album-container:nth-child(10n + 8),
+    .albums-view .album-container:nth-child(10n + 10) {
+        background: $theme-clear-gradient
+    }
+}
+
+
+/*
+  -- Media query 1200px -------------------------------------------------------
+*/
+@media all and (min-width: 1200px) {
+
+    .albums-view .album-container:nth-child(10n + 2),
+    .albums-view .album-container:nth-child(10n + 4),
+    .albums-view .album-container:nth-child(10n + 6),
+    .albums-view .album-container:nth-child(10n + 8),
+    .albums-view .album-container:nth-child(10n + 10) {
+        background: $theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(12n + 2),
+    .albums-view .album-container:nth-child(12n + 4),
+    .albums-view .album-container:nth-child(12n + 6),
+    .albums-view .album-container:nth-child(12n + 7),
+    .albums-view .album-container:nth-child(12n + 9),
+    .albums-view .album-container:nth-child(12n + 11) {
+        background: $theme-clear-gradient
+    }
+}
+
+
+/*
+  -- Media query 1600px -------------------------------------------------------
+*/
+@media all and (min-width: 1600px) {
+
+    .albums-view .album-container:nth-child(12n + 2),
+    .albums-view .album-container:nth-child(12n + 4),
+    .albums-view .album-container:nth-child(12n + 6),
+    .albums-view .album-container:nth-child(12n + 7),
+    .albums-view .album-container:nth-child(12n + 9),
+    .albums-view .album-container:nth-child(12n + 11) {
+        background: $theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(16n + 2),
+        .albums-view .album-container:nth-child(16n + 4),
+        .albums-view .album-container:nth-child(16n + 6),
+        .albums-view .album-container:nth-child(16n + 8),
+        .albums-view .album-container:nth-child(16n + 9),
+        .albums-view .album-container:nth-child(16n + 11),
+        .albums-view .album-container:nth-child(16n + 13),
+        .albums-view .album-container:nth-child(16n + 15) {
+            background: $theme-clear-gradient    
+    }
 }
 
 

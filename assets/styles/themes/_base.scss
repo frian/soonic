@@ -151,6 +151,10 @@ nav.topbar-nav {
     background-color: $hover-active;
 }
 
+
+/*
+  --  6. Albums view ----------------------------------------------------------
+*/
 .single-album-container {
     .album-songs {
         tbody {
@@ -165,9 +169,9 @@ nav.topbar-nav {
     }
 }
 
-.albums-view .album-container:nth-child(even) .album-infos {
-    background-color: $bg-alternate;
-}
+// .albums-view .album-container:nth-child(even) .album-infos {
+//     background-color: $bg-alternate;
+// }
 
 /*
   --  7. Radios ---------------------------------------------------------------
