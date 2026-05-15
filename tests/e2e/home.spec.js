@@ -109,12 +109,53 @@ test('saving settings refreshes topbar through update fragment endpoint', async 
     await expect(page.locator('.topbar[data-test-refresh-marker=\"before\"]')).toHaveCount(0);
     await expect(page.locator('.settings-view')).toBeVisible();
 
+    // On settings view, only library/albums/radios should stay visible in topbar.
+    await assertTopbarNavState(page, {
+        visible: ['#navigation-library', '#navigation-albums', '#navigation-radios'],
+        hidden: ['#navigation-settings', '#navigation-random', '#navigation-search-form', '#navigation-radio-new']
+    });
+
     await expect(page.locator('.icon-to-start')).toHaveAttribute('aria-label', /.+/);
     await expect(page.locator('.icon-to-end')).toHaveAttribute('aria-label', /.+/);
+});
+
+test('topbar nav state stays coherent across settings save and next navigations', async ({ page }) => {
+    await page.goto('/');
+
+    await page.locator('#settings-button').click();
+    await expect(page.locator('.settings-view')).toBeVisible();
+    await assertTopbarNavState(page, {
+        visible: ['#navigation-library', '#navigation-albums', '#navigation-radios'],
+        hidden: ['#navigation-settings', '#navigation-random', '#navigation-search-form', '#navigation-radio-new']
+    });
+
+    await page.locator('#settings-form-button').click();
+    await expect(page.locator('.settings-view')).toBeVisible();
+    await assertTopbarNavState(page, {
+        visible: ['#navigation-library', '#navigation-albums', '#navigation-radios'],
+        hidden: ['#navigation-settings', '#navigation-random', '#navigation-search-form', '#navigation-radio-new']
+    });
+
+    await page.locator('#library-button').click();
+    await expect(page.locator('.library-view')).toBeVisible();
+    await assertTopbarNavState(page, {
+        visible: ['#navigation-random', '#navigation-albums', '#navigation-radios', '#navigation-settings', '#navigation-search-form'],
+        hidden: ['#navigation-library', '#navigation-radio-new']
+    });
 });
 
 async function assertTitleMatchesView(page, selector) {
     const expectedTitle = await page.locator(selector).first().getAttribute('data-page-title');
     expect(expectedTitle).toBeTruthy();
     await expect(page).toHaveTitle(expectedTitle);
+}
+
+async function assertTopbarNavState(page, state) {
+    for (const selector of state.visible) {
+        await expect(page.locator(selector)).toBeVisible();
+    }
+
+    for (const selector of state.hidden) {
+        await expect(page.locator(selector)).toBeHidden();
+    }
 }
