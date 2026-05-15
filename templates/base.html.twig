@@ -38,11 +38,10 @@
 
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
-        {% set current_route = app.current_route|default('') %}
+    {% set current_route = app.current_route|default('') %}
+    <body{% if current_route %} class="route-{{ current_route }}"{% endif %}>
         {{ include('common/topbar.html.twig', {
-            is_library_route: current_route == 'library',
-            show_settings_button: current_route != 'settings_index'
+            is_library_route: current_route == 'library'
         }) }}
 
         {% block body %}{% endblock %}

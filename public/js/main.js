@@ -83,6 +83,7 @@ $(function() {
 
         $('#navigation-random, #navigation-albums, #navigation-radios, #navigation-settings, #navigation-search-form' ).css('display', 'list-item');
         $('#navigation-library, #navigation-radio-new').css('display', 'none');
+        $(document.body).removeClass('route-settings_index');
         setSongInfoSize();
         pushHistoryIfNeeded($(this).attr('href') || '/');
 
@@ -121,6 +122,7 @@ $(function() {
         }
         $('#navigation-library, #navigation-radios, #navigation-settings').css('display', 'list-item');
         $('#navigation-albums, #navigation-radio-new, #navigation-search-form, #navigation-random').css('display', 'none');
+        $(document.body).removeClass('route-settings_index');
         openView = '.albums-view';
         pushHistoryIfNeeded($(this).attr('href') || '/album/');
 
@@ -159,6 +161,7 @@ $(function() {
             });
         }
         setRadioListNavState();
+        $(document.body).removeClass('route-settings_index');
         pushHistoryIfNeeded($(this).attr('href') || '/radio/');
 
         logDebug('clicked on radio');
@@ -192,6 +195,7 @@ $(function() {
         e.preventDefault();
         loadRadioSubview(url, '.radio-edit-view');
         setRadioFormNavState();
+        $(document.body).removeClass('route-settings_index');
         pushHistoryIfNeeded(url);
     });
 
@@ -291,8 +295,8 @@ $(function() {
                 }
             });
         }
-        $('#navigation-settings, #navigation-random, #navigation-search-form, #navigation-radio-new').css('display', 'none');
-        $('#navigation-library, #navigation-albums, #navigation-radios').css('display', 'list-item');
+        setSettingsNavState();
+        $(document.body).addClass('route-settings_index');
         setSongInfoSize();
         openView = '.settings-view';
         pushHistoryIfNeeded($(this).attr('href') || '/settings/');
@@ -591,7 +595,7 @@ $(function() {
 
                         if ($newTopbar.length) {
                             $('.topbar').replaceWith($newTopbar);
-                            $('#navigation-settings').css('display', 'none');
+                            setSettingsNavState();
                             $(document).trigger("soonic:topbarReplaced");
                         }
 
@@ -890,6 +894,11 @@ $(function() {
     function setRadioFormNavState() {
         $('#navigation-library, #navigation-albums, #navigation-radios, #navigation-settings').css('display', 'list-item');
         $('#navigation-random, #navigation-radio-new, #navigation-search-form').css('display', 'none');
+    }
+
+    function setSettingsNavState() {
+        $('#navigation-library, #navigation-albums, #navigation-radios').css('display', 'list-item');
+        $('#navigation-settings, #navigation-random, #navigation-search-form, #navigation-radio-new').css('display', 'none');
     }
 
     function hideRadioViews() {

@@ -159,6 +159,12 @@ nav.topbar-nav {
     }
 }
 
+body.route-settings_index {
+    #navigation-settings {
+        display: none !important;
+    }
+}
+
 // -- set menu items visibility
 #navigation-library,
 #navigation-radio-new,

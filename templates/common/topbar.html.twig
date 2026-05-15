@@ -47,12 +47,10 @@
                 <a id="radio-new-button" href="{{ path('radio_new') }}" title="{{ 'radio.new'|trans }}" aria-label="{{ 'radio.new'|trans }}"><span class="material-icons" aria-hidden="true">radio</span><span class="material-icons radio-add" aria-hidden="true">add</span><span class="topbar-nav-label">{{ 'radio.new'|trans }}</span></a>
             </li>
             <li id="navigation-settings">
-                {% if show_settings_button is not defined or show_settings_button %}
-                    <a id="settings-button" title="{{ 'settings'|trans }}" aria-label="{{ 'settings'|trans }}" href="{{ path('settings_index') }}">
-                        <span class="material-icons" aria-hidden="true">settings</span>
-                        <span class="topbar-nav-label">{{ 'settings'|trans }}</span>
-                    </a>
-                {% endif %}
+                <a id="settings-button" title="{{ 'settings'|trans }}" aria-label="{{ 'settings'|trans }}" href="{{ path('settings_index') }}">
+                    <span class="material-icons" aria-hidden="true">settings</span>
+                    <span class="topbar-nav-label">{{ 'settings'|trans }}</span>
+                </a>
             </li>
         </ul>
     </nav>
