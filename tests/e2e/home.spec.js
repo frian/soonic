@@ -120,6 +120,13 @@ test('saving settings refreshes topbar through update fragment endpoint', async 
 });
 
 test('topbar nav state stays coherent across settings save and next navigations', async ({ page }) => {
+    const seenUpdateRequests = [];
+    page.on('request', function(request) {
+        if (request.url().includes('/settings/?action=update')) {
+            seenUpdateRequests.push(request.url());
+        }
+    });
+
     await page.goto('/');
 
     await page.locator('#settings-button').click();
@@ -130,6 +137,9 @@ test('topbar nav state stays coherent across settings save and next navigations'
     });
 
     await page.locator('#settings-form-button').click();
+    await expect.poll(function() {
+        return seenUpdateRequests.length;
+    }).toBeGreaterThan(0);
     await expect(page.locator('.settings-view')).toBeVisible();
     await assertTopbarNavState(page, {
         visible: ['#navigation-library', '#navigation-albums', '#navigation-radios'],
@@ -142,6 +152,55 @@ test('topbar nav state stays coherent across settings save and next navigations'
         visible: ['#navigation-random', '#navigation-albums', '#navigation-radios', '#navigation-settings', '#navigation-search-form'],
         hidden: ['#navigation-library', '#navigation-radio-new']
     });
+});
+
+test('ajax navigation redirects to error page on fatal load error', async ({ page }) => {
+    await page.route('**/album/', async function(route) {
+        await route.fulfill({
+            status: 503,
+            contentType: 'text/html',
+            body: 'Service Unavailable'
+        });
+    });
+
+    await page.goto('/');
+    await page.locator('#albums-button').click();
+
+    await expect(page).toHaveURL(/\/error\/503$/);
+});
+
+test('ajax random load error shows flash message without redirect', async ({ page }) => {
+    await page.route('**/songs/random', async function(route) {
+        await route.fulfill({
+            status: 500,
+            contentType: 'application/json',
+            body: '{}'
+        });
+    });
+
+    await page.goto('/');
+    await page.locator('#random-button').click();
+
+    await expect(page.locator('#ajax-flash-message')).toBeVisible();
+    await expect(page.locator('#ajax-flash-message')).toHaveText('Unable to load random songs.');
+    await expect(page).toHaveURL(/\/$/);
+});
+
+test('search ajax error shows flash message without redirect', async ({ page }) => {
+    await page.route('**/search', async function(route) {
+        await route.fulfill({
+            status: 500,
+            contentType: 'application/json',
+            body: '{}'
+        });
+    });
+
+    await page.goto('/');
+    await page.locator('#form-keyword').fill('radio');
+    await page.locator('#search-form').dispatchEvent('submit');
+
+    await expect(page.locator('#ajax-flash-message')).toHaveText('Unable to load search results.');
+    await expect(page).toHaveURL(/\/$/);
 });
 
 async function assertTitleMatchesView(page, selector) {
