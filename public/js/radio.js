@@ -108,7 +108,7 @@ $(function() {
         $button
             .removeClass("icon-play is-loading")
             .addClass("icon-pause activePlayer")
-            .closest("tr, li, .radio-item")
+            .closest("tr, li, .radio-item, .radio")
             .addClass("active-radio");
     }
 
@@ -116,7 +116,7 @@ $(function() {
         $button
             .removeClass("icon-pause activePlayer is-loading")
             .addClass("icon-play")
-            .closest("tr, li, .radio-item")
+            .closest("tr, li, .radio-item, .radio")
             .removeClass("active-radio");
     }
 
@@ -124,7 +124,7 @@ $(function() {
         $button
             .removeClass("icon-pause activePlayer")
             .addClass("icon-play is-loading")
-            .closest("tr, li, .radio-item")
+            .closest("tr, li, .radio-item, .radio")
             .removeClass("active-radio");
     }
 

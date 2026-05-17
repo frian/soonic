@@ -188,6 +188,11 @@ nav.topbar-nav {
     background-color: $bg-alternate;
 }
 
+.radio:nth-child(4n+2).active-radio,
+.radio:nth-child(4n+3).active-radio {
+    background-color: $hover-active;
+}
+
 /*
   --  9. Mobile menu ----------------------------------------------------------
 */

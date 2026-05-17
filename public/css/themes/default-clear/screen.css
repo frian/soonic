@@ -138,6 +138,11 @@ nav.topbar-nav a:hover {
   background-color: #c8c8c8;
 }
 
+.radio:nth-child(4n+2).active-radio,
+.radio:nth-child(4n+3).active-radio {
+  background-color: #90ee90;
+}
+
 /*
   --  9. Mobile menu ----------------------------------------------------------
 */
