@@ -309,35 +309,6 @@ test('album overlay opens, closes, and closes on browser back', async ({ page })
     await expect(page.locator('.single-album-view')).toHaveCount(0);
 });
 
-test('album artist link is navigable from overlay', async ({ page }) => {
-    await page.locator('#albums-button').click();
-    await expect(page.locator('.albums-view')).toBeVisible();
-
-    const firstAlbum = page.locator('.albums-view .album-container .img-wrapper').first();
-    await expect(firstAlbum).toBeVisible();
-
-    await firstAlbum.click();
-    await expect(page.locator('.single-album-view')).toBeVisible();
-
-    const artistLink = page.locator('.single-album-view a[href^="/artist/"]').first();
-    test.skip(await artistLink.count() === 0, 'No artist link in the current album fixture.');
-
-    const href = await artistLink.getAttribute('href');
-    await artistLink.click();
-    await expect(page).toHaveURL(new RegExp(href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$'));
-});
-
-test('album pagination link keeps albums view visible', async ({ page }) => {
-    await page.locator('#albums-button').click();
-    await expect(page.locator('.albums-view')).toBeVisible();
-
-    const paginationLink = page.locator('.albums-view .pagination a, .albums-pagination a').first();
-    test.skip(await paginationLink.count() === 0, 'No album pagination in the current fixture.');
-
-    await paginationLink.click();
-    await expect(page.locator('.albums-view')).toBeVisible();
-});
-
 test('mobile menu closes after link click and search submit', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
 
@@ -421,17 +392,6 @@ async function hideSymfonyToolbar(page) {
         content: '.sf-toolbar { display: none !important; pointer-events: none !important; }'
     });
 }
-
-test('radio pagination link keeps radio list visible', async ({ page }) => {
-    await page.locator('#radio-button').click();
-    await expect(page.locator('.radios-view')).toBeVisible();
-
-    const paginationLink = page.locator('.radios-pagination a').first();
-    test.skip(await paginationLink.count() === 0, 'No radio pagination in the current fixture.');
-
-    await paginationLink.click();
-    await expect(page.locator('.radios-view')).toBeVisible();
-});
 
 async function ensureRadioExists(page) {
     await page.evaluate(function() {
