@@ -1,3 +1,6 @@
+/*
+-- Default layout -----------------------------------------------------------
+*/
 /*!
  * Hamburgers
  * @description Tasty CSS-animated hamburgers
@@ -244,7 +247,6 @@ body.route-settings-index #navigation-settings {
   nav.topbar-nav .topbar-nav-label {
     display: none;
   }
-
   #search-form input[type=text] {
     height: 39px;
   }
@@ -298,9 +300,6 @@ body.route-settings-index #navigation-settings {
   border: 0px solid lime;
 }
 
-/*
--- Default layout -----------------------------------------------------------
-*/
 /*
   --  1. Global ---------------------------------------------------------------
 */
@@ -856,7 +855,6 @@ table.form tr td.button-row {
     max-width: 25%;
     width: 25%;
   }
-
   /* --  7. Radios -- */
   .radio {
     height: auto;
@@ -882,15 +880,12 @@ table.form tr td.button-row {
   .topbar .logo > span {
     display: inline-block;
   }
-
   .song-info {
     display: block;
   }
-
   nav.topbar-nav {
     display: initial;
   }
-
   ul.top-nav.is-active {
     position: relative;
     top: auto;
@@ -906,15 +901,12 @@ table.form tr td.button-row {
     width: auto;
     text-align: left;
   }
-
   #form-keyword {
     width: 100px;
   }
-
   .hamburger {
     display: none;
   }
-
   /* --  3. Artists navigation -- */
   .artists-navigation {
     width: 240px;
@@ -930,14 +922,12 @@ table.form tr td.button-row {
   .artists-navigation > ul {
     margin-top: 5px;
   }
-
   /* --  4. Views -- */
   .album-container {
     flex-basis: 20%;
     max-width: 20%;
     width: 20%;
   }
-
   .album-infos {
     font-size: 1em;
   }
@@ -948,23 +938,19 @@ table.form tr td.button-row {
   .album-infos .album-info-artist {
     line-height: 1.3em;
   }
-
   /* --  5. Songs and playlist panels -- */
   .songs-header {
     display: table;
     width: 100%;
   }
-
   .songs, .playlist {
     display: block;
     height: 50%;
   }
-
   .songs-container, .playlist-container {
     height: calc(100% - 22px);
     overflow-y: scroll;
   }
-
   thead {
     width: 100%;
     display: table-header-group;
@@ -1000,7 +986,6 @@ table.form tr td.button-row {
     width: 80px;
     display: none;
   }
-
   .songs tbody tr td, .playlist tbody tr td {
     height: 22px;
     overflow: hidden;
@@ -1029,7 +1014,6 @@ table.form tr td.button-row {
     text-align: center;
     display: none;
   }
-
   /* --  6.1 Single album view -- */
   .single-album-container {
     display: grid;
@@ -1049,8 +1033,8 @@ table.form tr td.button-row {
     align-self: start;
   }
   .single-album-container > .album-title,
-.single-album-container > .album-artist,
-.single-album-container > .album-songs-section {
+  .single-album-container > .album-artist,
+  .single-album-container > .album-songs-section {
     grid-column: 2;
   }
   .single-album-container > .album-title {
@@ -1063,14 +1047,19 @@ table.form tr td.button-row {
   .single-album-container > .album-songs-section {
     min-height: 0;
   }
-
   /* --  7. Radios -- */
+  .radios-view {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
   .radio {
     font-size: 16px;
-    display: inline-block;
+    display: block;
+    flex: 0 0 50%;
+    max-width: 50%;
     width: 50%;
   }
-
   /* --  8. Settings-view -- */
   .settings-view .library-info {
     margin-top: 20px;
@@ -1078,12 +1067,10 @@ table.form tr td.button-row {
     margin-right: auto;
     width: 40%;
   }
-
   /* -- 10. Small screen buttons -- */
   .mobile-button {
     display: none;
   }
-
   /* -- 11. Forms -- */
   table.form {
     margin: auto;
@@ -1093,7 +1080,7 @@ table.form tr td.button-row {
     padding: 10px;
   }
   table.form tr td input[type=text],
-table.form tr td input[type=url] {
+  table.form tr td input[type=url] {
     width: 80%;
   }
   table.form tr td:nth-child(1) {
@@ -1113,7 +1100,6 @@ table.form tr td input[type=url] {
   .artists-navigation {
     width: 360px;
   }
-
   /* --  5. Songs and playlist panels -- */
   thead tr th:nth-child(7) {
     display: table-cell;
@@ -1121,21 +1107,18 @@ table.form tr td input[type=url] {
   thead tr th:nth-child(8) {
     display: table-cell;
   }
-
   .songs tbody tr td:nth-child(7), .playlist tbody tr td:nth-child(7) {
     display: table-cell;
   }
   .songs tbody tr td:nth-child(8), .playlist tbody tr td:nth-child(8) {
     display: table-cell;
   }
-
   /* --  4. Views -- */
   .album-container {
     flex-basis: 16.66%;
     max-width: 16.66%;
     width: 16.66%;
   }
-
   /* --  6. Album voew -- */
   .album-infos {
     font-size: 1.1em;
@@ -1147,10 +1130,9 @@ table.form tr td input[type=url] {
   .album-infos .album-info-artist {
     line-height: 1.5em;
   }
-
   /* -- 11. Forms -- */
   table.form tr td input[type=text],
-table.form tr td input[type=url] {
+  table.form tr td input[type=url] {
     width: 60%;
   }
   table.form tr td .radio-stream-check-actions {
@@ -1164,7 +1146,6 @@ table.form tr td input[type=url] {
   #search-form input[type=text] {
     width: 200px;
   }
-
   /* --  4. Views -- */
   .album-container {
     flex-basis: 12.5%;

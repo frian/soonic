@@ -1,4 +1,7 @@
 /*
+  -- Default clear theme -------------------------------------------------------
+*/
+/*
   -- Shared theme rules ------------------------------------------------------
 */
 /*
@@ -44,7 +47,7 @@ h2 {
   --  2. Topbar ---------------------------------------------------------------
 */
 .topbar {
-  background: linear-gradient(to top, #dddddd, rgba(204, 204, 204, 0.9));
+  background: linear-gradient(to top, rgb(221, 221, 221), rgba(204, 204, 204, 0.9));
   border-bottom-color: #666;
 }
 .topbar .song-artist {
@@ -55,10 +58,10 @@ h2 {
 }
 
 nav.topbar-nav a {
-  background: linear-gradient(to top, #dddddd, rgba(204, 204, 204, 0.9));
+  background: linear-gradient(to top, rgb(221, 221, 221), rgba(204, 204, 204, 0.9));
 }
 nav.topbar-nav a:hover {
-  background: linear-gradient(to top, lightgreen, rgba(144, 238, 144, 0.5));
+  background: linear-gradient(to top, rgb(144, 238, 144), rgba(144, 238, 144, 0.5));
 }
 
 #playlist-flash-message,
@@ -174,12 +177,12 @@ form div div input {
 .button {
   color: #111;
   cursor: pointer;
-  background: linear-gradient(to top, #dddddd, rgba(204, 204, 204, 0.9));
+  background: linear-gradient(to top, rgb(221, 221, 221), rgba(204, 204, 204, 0.9));
   transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
 }
 
 .button.danger {
-  background: linear-gradient(to top, #8c0000, rgba(140, 0, 0, 0.6));
+  background: linear-gradient(to top, rgb(140, 0, 0), rgba(140, 0, 0, 0.6));
 }
 
 .button:focus-visible,
@@ -197,15 +200,13 @@ form div div input {
 
 @media (hover: hover) and (pointer: fine) {
   .button:hover {
-    background: linear-gradient(to top, lightgreen, rgba(144, 238, 144, 0.5));
+    background: linear-gradient(to top, rgb(144, 238, 144), rgba(144, 238, 144, 0.5));
   }
-
   .button.danger:hover {
-    background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
+    background: linear-gradient(to top, rgb(204, 0, 0), rgba(204, 0, 0, 0.5));
   }
-
   [role=button]:hover,
-.radio-edit-link:hover {
+  .radio-edit-link:hover {
     opacity: 0.85;
   }
 }
@@ -225,9 +226,6 @@ form div div input {
   background: rgba(191, 255, 0, 0.8);
 }
 
-/*
-  -- Default clear theme -------------------------------------------------------
-*/
 /*
   --  1. Global ---------------------------------------------------------------
 */
@@ -262,7 +260,6 @@ img.cover {
   .albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
     background: linear-gradient(to top, #ccc, #eee);
   }
-
   .albums-view .album-container:nth-child(even) {
     background: linear-gradient(to top, #ddd, #fff);
   }
@@ -274,11 +271,10 @@ img.cover {
   .albums-view .album-container:nth-child(even) {
     background: linear-gradient(to top, #ccc, #eee);
   }
-
   .albums-view .album-container:nth-child(8n+2),
-.albums-view .album-container:nth-child(8n+4),
-.albums-view .album-container:nth-child(8n+5),
-.albums-view .album-container:nth-child(8n+7) {
+  .albums-view .album-container:nth-child(8n+4),
+  .albums-view .album-container:nth-child(8n+5),
+  .albums-view .album-container:nth-child(8n+7) {
     background: linear-gradient(to top, #ddd, #fff);
   }
 }
@@ -287,17 +283,16 @@ img.cover {
 */
 @media all and (min-width: 1024px) {
   .albums-view .album-container:nth-child(8n+2),
-.albums-view .album-container:nth-child(8n+4),
-.albums-view .album-container:nth-child(8n+5),
-.albums-view .album-container:nth-child(8n+7) {
+  .albums-view .album-container:nth-child(8n+4),
+  .albums-view .album-container:nth-child(8n+5),
+  .albums-view .album-container:nth-child(8n+7) {
     background: linear-gradient(to top, #ccc, #eee);
   }
-
   .albums-view .album-container:nth-child(10n+2),
-.albums-view .album-container:nth-child(10n+4),
-.albums-view .album-container:nth-child(10n+6),
-.albums-view .album-container:nth-child(10n+8),
-.albums-view .album-container:nth-child(10n+10) {
+  .albums-view .album-container:nth-child(10n+4),
+  .albums-view .album-container:nth-child(10n+6),
+  .albums-view .album-container:nth-child(10n+8),
+  .albums-view .album-container:nth-child(10n+10) {
     background: linear-gradient(to top, #ddd, #fff);
   }
 }
@@ -306,19 +301,18 @@ img.cover {
 */
 @media all and (min-width: 1200px) {
   .albums-view .album-container:nth-child(10n+2),
-.albums-view .album-container:nth-child(10n+4),
-.albums-view .album-container:nth-child(10n+6),
-.albums-view .album-container:nth-child(10n+8),
-.albums-view .album-container:nth-child(10n+10) {
+  .albums-view .album-container:nth-child(10n+4),
+  .albums-view .album-container:nth-child(10n+6),
+  .albums-view .album-container:nth-child(10n+8),
+  .albums-view .album-container:nth-child(10n+10) {
     background: linear-gradient(to top, #ccc, #eee);
   }
-
   .albums-view .album-container:nth-child(12n+2),
-.albums-view .album-container:nth-child(12n+4),
-.albums-view .album-container:nth-child(12n+6),
-.albums-view .album-container:nth-child(12n+7),
-.albums-view .album-container:nth-child(12n+9),
-.albums-view .album-container:nth-child(12n+11) {
+  .albums-view .album-container:nth-child(12n+4),
+  .albums-view .album-container:nth-child(12n+6),
+  .albums-view .album-container:nth-child(12n+7),
+  .albums-view .album-container:nth-child(12n+9),
+  .albums-view .album-container:nth-child(12n+11) {
     background: linear-gradient(to top, #ddd, #fff);
   }
 }
@@ -327,22 +321,21 @@ img.cover {
 */
 @media all and (min-width: 1600px) {
   .albums-view .album-container:nth-child(12n+2),
-.albums-view .album-container:nth-child(12n+4),
-.albums-view .album-container:nth-child(12n+6),
-.albums-view .album-container:nth-child(12n+7),
-.albums-view .album-container:nth-child(12n+9),
-.albums-view .album-container:nth-child(12n+11) {
+  .albums-view .album-container:nth-child(12n+4),
+  .albums-view .album-container:nth-child(12n+6),
+  .albums-view .album-container:nth-child(12n+7),
+  .albums-view .album-container:nth-child(12n+9),
+  .albums-view .album-container:nth-child(12n+11) {
     background: linear-gradient(to top, #ccc, #eee);
   }
-
   .albums-view .album-container:nth-child(16n+2),
-.albums-view .album-container:nth-child(16n+4),
-.albums-view .album-container:nth-child(16n+6),
-.albums-view .album-container:nth-child(16n+8),
-.albums-view .album-container:nth-child(16n+9),
-.albums-view .album-container:nth-child(16n+11),
-.albums-view .album-container:nth-child(16n+13),
-.albums-view .album-container:nth-child(16n+15) {
+  .albums-view .album-container:nth-child(16n+4),
+  .albums-view .album-container:nth-child(16n+6),
+  .albums-view .album-container:nth-child(16n+8),
+  .albums-view .album-container:nth-child(16n+9),
+  .albums-view .album-container:nth-child(16n+11),
+  .albums-view .album-container:nth-child(16n+13),
+  .albums-view .album-container:nth-child(16n+15) {
     background: linear-gradient(to top, #ddd, #fff);
   }
 }

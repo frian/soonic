@@ -929,7 +929,8 @@ $(function() {
         $(openView).css('display', 'none');
         $('.library-view').css('display', 'none');
         hideRadioViews();
-        $(selector).css('display', 'block');
+        const displayMode = selector === '.radios-view' && screenWidth >= 1024 ? 'flex' : 'block';
+        $(selector).css('display', displayMode);
         openView = selector;
         setSongInfoSize();
     }
@@ -1047,6 +1048,7 @@ $(function() {
 
     function _init() {
         syncLibraryPanelsWithViewport();
+        syncRadiosViewDisplayMode();
         setSongInfoSize();
         setFilterInputSize();
     }
@@ -1057,6 +1059,15 @@ $(function() {
             $(".songs").css('width', '');
             $(".mobile-artists-to-songs-button, .mobile-songs-to-artists-button, .mobile-songs-to-playlist-button, .mobile-playlist-to-songs-button").css('display', '');
         }
+    }
+
+    function syncRadiosViewDisplayMode() {
+        const $radiosView = $('.radios-view');
+        if (!$radiosView.length || $radiosView.css('display') === 'none') {
+            return;
+        }
+
+        $radiosView.css('display', screenWidth >= 1024 ? 'flex' : 'block');
     }
 
     function setSongInfoSize() {

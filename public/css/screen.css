@@ -1,3 +1,6 @@
+/*
+  -- Default styling ----------------------------------------------------------
+*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -255,9 +258,6 @@ nav.topbar-nav a:hover {
   background-color: #ddd;
 }
 
-/*
-  -- Default styling ----------------------------------------------------------
-*/
 /*
   --  1. Global ---------------------------------------------------------------
 */
@@ -518,10 +518,10 @@ form div div input {
   }
 }
 .running {
-  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
+  background: linear-gradient(to top, rgb(204, 0, 0), rgba(204, 0, 0, 0.5));
 }
 .running:hover {
-  background: linear-gradient(to top, #cc0000, rgba(204, 0, 0, 0.5));
+  background: linear-gradient(to top, rgb(204, 0, 0), rgba(204, 0, 0, 0.5));
 }
 
 /*
@@ -564,7 +564,6 @@ form div div input {
   .radio .radio-url {
     font-size: 1.2em;
   }
-
   /* -- Crud forms -- */
   form div div label {
     text-align: right;

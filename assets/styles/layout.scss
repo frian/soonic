@@ -903,9 +903,17 @@ table.form {
 
 
     /* --  7. Radios -- */
+    .radios-view {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+    }
+
     .radio {
         font-size: 16px;
-        display: inline-block;
+        display: block;
+        flex: 0 0 50%;
+        max-width: 50%;
         width: 50%;
 
     }
