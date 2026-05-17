@@ -15,7 +15,7 @@ test('home page loads without JavaScript errors', async ({ page }) => {
 
 test('main pages load without JavaScript errors', async ({ page }) => {
     const errors = [];
-    const pages = ['/', '/album/', '/radio/'];
+    const pages = ['/settings', '/album/', '/radio/'];
 
     page.on('pageerror', function(error) {
         errors.push(error.message);
