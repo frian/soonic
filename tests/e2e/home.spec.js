@@ -203,6 +203,33 @@ test('search ajax error shows flash message without redirect', async ({ page }) 
     await expect(page).toHaveURL(/\/$/);
 });
 
+test('album actions work when landing directly on album page', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', function(error) {
+        errors.push(error.message);
+    });
+
+    await page.goto('/album/');
+
+    const firstAlbumId = await page.locator('.album-container').first().getAttribute('data-album-id');
+    test.skip(!firstAlbumId, 'No album available in the current fixture.');
+
+    await page.goto('/album/' + firstAlbumId);
+    await mockAudioPlayback(page);
+
+    const albumSongsCount = await page.locator('.album-songs tbody tr').count();
+    test.skip(albumSongsCount === 0, 'Selected album has no songs in the current fixture.');
+
+    await page.locator('.play-album').click();
+    await expect(page.locator('#songs tbody tr')).toHaveCount(albumSongsCount);
+    await expect(page.locator('#songs tbody tr.playing')).toHaveCount(1);
+
+    await page.locator('.add-album-to-playlist').click();
+    await expect(page.locator('#playlist tbody tr')).toHaveCount(albumSongsCount);
+
+    expect(errors).toEqual([]);
+});
+
 async function assertTitleMatchesView(page, selector) {
     const expectedTitle = await page.locator(selector).first().getAttribute('data-page-title');
     expect(expectedTitle).toBeTruthy();
@@ -217,4 +244,29 @@ async function assertTopbarNavState(page, state) {
     for (const selector of state.hidden) {
         await expect(page.locator(selector)).toBeHidden();
     }
+}
+
+async function mockAudioPlayback(page) {
+    await page.evaluate(function() {
+        if (window.__soonicAudioMocked) {
+            return;
+        }
+
+        window.__soonicAudioMocked = true;
+        Object.defineProperty(HTMLMediaElement.prototype, 'paused', {
+            configurable: true,
+            get: function() {
+                return this.__soonicPaused !== false;
+            }
+        });
+        HTMLMediaElement.prototype.play = function() {
+            this.__soonicPaused = false;
+            this.dispatchEvent(new Event('playing'));
+            return Promise.resolve();
+        };
+        HTMLMediaElement.prototype.pause = function() {
+            this.__soonicPaused = true;
+        };
+        HTMLMediaElement.prototype.load = function() {};
+    });
 }
