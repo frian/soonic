@@ -6,6 +6,8 @@ $(function() {
     let playerStatus = "paused";
     let contextMenuClickTimer = null;
     let activePlaybackScope = "#songs tbody";
+    let isLoadingLibraryPanels = false;
+    const pendingLibraryCallbacks = [];
 
     /**
      * Play / Pause currently loaded song
@@ -314,8 +316,73 @@ $(function() {
         return $copy;
     }
 
+    function areLibraryPanelsReady() {
+        return $("#songs").length
+            && $("#playlist").length
+            && document.getElementById("playlist-num-files")
+            && document.getElementById("playlist-file")
+            && document.getElementById("playlist-duration")
+            && document.getElementById("playlist-infos");
+    }
+
+    function ensureLibraryPanelsReady(callback) {
+        if (areLibraryPanelsReady()) {
+            callback(true);
+            return;
+        }
+
+        pendingLibraryCallbacks.push(callback);
+
+        if (isLoadingLibraryPanels) {
+            return;
+        }
+        isLoadingLibraryPanels = true;
+
+        $.ajax({
+            url: "/",
+            cache: true,
+            success: function(data) {
+                const $payload = $("<div>").html(data);
+                let $libraryView = $payload.find(".library-view").first();
+
+                if (!$libraryView.length) {
+                    $libraryView = $("<div>", {
+                        "class": "library-view view"
+                    }).html(data);
+                }
+
+                if ($libraryView.length && !$(".library-view").length) {
+                    $libraryView.css("display", "none");
+                    $(document.body).append($libraryView);
+                }
+            },
+            complete: function() {
+                isLoadingLibraryPanels = false;
+                const ready = areLibraryPanelsReady();
+
+                while (pendingLibraryCallbacks.length) {
+                    const nextCallback = pendingLibraryCallbacks.shift();
+                    if (typeof nextCallback === "function") {
+                        nextCallback(ready);
+                    }
+                }
+            }
+        });
+    }
+
     function addSongToPlaylist($sourceRow, options) {
         options = options || {};
+
+        if (options._libraryReady !== true && !areLibraryPanelsReady()) {
+            const nextOptions = Object.assign({}, options, { _libraryReady: true });
+            ensureLibraryPanelsReady(function(ready) {
+                if (ready) {
+                    addSongToPlaylist($sourceRow, nextOptions);
+                }
+            });
+            return false;
+        }
+
         const path = $sourceRow.data("path");
 
         if (!path || playlistContainsPath(path)) {
@@ -365,6 +432,15 @@ $(function() {
     }
 
     function playAlbumFromOverlay($albumView) {
+        if (!areLibraryPanelsReady()) {
+            ensureLibraryPanelsReady(function(ready) {
+                if (ready) {
+                    playAlbumFromOverlay($albumView);
+                }
+            });
+            return;
+        }
+
         const $tbody = $("<tbody>");
 
         $albumView.find(".album-songs tbody tr").each(function() {
@@ -594,9 +670,17 @@ $(function() {
 
         action = action || 'add';
 
-        let numFiles = document.getElementById("playlist-num-files").textContent;
+        const $numFiles = document.getElementById("playlist-num-files");
+        const $playlistDuration = document.getElementById("playlist-duration");
+        const $playlistFile = document.getElementById("playlist-file");
+        const $playlistInfos = document.getElementById("playlist-infos");
+        if (!$numFiles || !$playlistDuration || !$playlistFile || !$playlistInfos) {
+            return;
+        }
+
+        let numFiles = $numFiles.textContent;
         let songDuration = $(item).data("duration");
-        let playlistDuration = document.getElementById("playlist-duration").textContent;
+        let playlistDuration = $playlistDuration.textContent;
 
         playlistDuration = toSeconds(playlistDuration);
         songDuration = toSeconds(songDuration);
@@ -615,15 +699,15 @@ $(function() {
             fileInfoText = 'files';
         }
 
-        document.getElementById("playlist-file").textContent = fileInfoText;
-        document.getElementById("playlist-num-files").textContent = numFiles;
-        document.getElementById("playlist-duration").textContent = playlistDuration;
+        $playlistFile.textContent = fileInfoText;
+        $numFiles.textContent = numFiles;
+        $playlistDuration.textContent = playlistDuration;
 
         let display = 'none';
         if (numFiles > 0) {
             display = 'initial';
         }
-        document.getElementById("playlist-infos").style.display = display;
+        $playlistInfos.style.display = display;
 
         logDebug('in updatePlaylistInfo');
     }
