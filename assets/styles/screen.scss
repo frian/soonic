@@ -11,21 +11,14 @@ $hover-active: #ddd;
 $bg-alternate: #ddd;
 $border-color: #666;
 $default-gradient: linear-gradient(to top, rgb(34 34 34 / 20%), rgb(51 51 51 / 10%) );
-$hover-gradient: linear-gradient(to top, rgb(34 34 34 / 10%), rgb(51 51 51 / 0%) );
-$red-gradient: linear-gradient(to top, rgb(204 0 0 / 100%), rgb(204 0 0 / 50%) );
-$red-gradient-dark: linear-gradient(to top, rgb(140 0 0 / 100%), rgb(140 0 0 / 60%) );
 $debug: 0;
 
 @use "screen/topbar" with (
     $border-color: $border-color,
-    $default-gradient: $default-gradient,
-    $hover-gradient: $hover-gradient
 );
 @use "screen/artists-navigation" with (
+    $bg-color: $bg-color,
     $hover-active: $hover-active,
-    $artists-song-bg: #fff,
-    $filter-bg: #ddd,
-    $filter-input-bg: black
 );
 @use "screen/songs-playlist" with (
     $bg-alternate: $bg-alternate,
@@ -84,7 +77,7 @@ h2 {
 #ajax-flash-message {
     border-radius: 6px;
     background: $hover-active;
-    color: #fff;
+    color: $fg-color;
     font-size: 20px;
 }
 
@@ -200,12 +193,11 @@ h2 {
     width: 100%;
     max-width: 320px;
     padding: 10px 36px 10px 12px;
-    border: 1px solid #666;
+    border: 1px solid $border-color;
     border-radius: 6px;
-    background-color: #fff;
-    color: #111;
+    color: $fg-color;
     font-family: Muli, sans-serif;
-    font-size: 1rem;
+    font-size: 1rem;    
     line-height: 1.2;
     cursor: pointer;
     background-image:
@@ -247,7 +239,7 @@ h2 {
 */
 input[type="text"] {
     color: $fg-color;
-    background-color: $bg-color;
+    background-color: #fff;
     font-family: Muli, sans-serif;
     font-size: 18px;
     border: 1px solid #555;
@@ -310,14 +302,6 @@ form div div input {
 @media (hover: hover) and (pointer: fine) {
     [role="button"]:hover {
         opacity: 0.85;
-    }
-}
-
-.running {
-    background: $red-gradient;
-
-    &:hover {
-        background: $red-gradient;
     }
 }
 
