@@ -356,19 +356,6 @@ table {
   overflow-y: scroll;
 }
 
-.radios-pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 16px 12px 24px;
-  font-size: 16px;
-}
-.radios-pagination .button {
-  min-width: 100px;
-  padding: 6px 12px;
-}
-
 /*
   --  5 .Songs and playlist panels --------------------------------------------
 */
@@ -406,22 +393,17 @@ thead {
   width: 48px;
   text-align: center;
 }
-.songs tbody tr td:nth-child(2), .playlist tbody tr td:nth-child(2) {
-  display: none;
-}
-.songs tbody tr td:nth-child(3), .playlist tbody tr td:nth-child(3) {
-  display: none;
-}
-.songs tbody tr td:nth-child(5), .playlist tbody tr td:nth-child(5) {
-  display: none;
-}
-.songs tbody tr td:nth-child(6), .playlist tbody tr td:nth-child(6) {
-  display: none;
-}
-.songs tbody tr td:nth-child(7), .playlist tbody tr td:nth-child(7) {
-  display: none;
-}
-.songs tbody tr td:nth-child(8), .playlist tbody tr td:nth-child(8) {
+.songs tbody tr td:nth-child(2),
+.songs tbody tr td:nth-child(3),
+.songs tbody tr td:nth-child(5),
+.songs tbody tr td:nth-child(6),
+.songs tbody tr td:nth-child(7),
+.songs tbody tr td:nth-child(8), .playlist tbody tr td:nth-child(2),
+.playlist tbody tr td:nth-child(3),
+.playlist tbody tr td:nth-child(5),
+.playlist tbody tr td:nth-child(6),
+.playlist tbody tr td:nth-child(7),
+.playlist tbody tr td:nth-child(8) {
   display: none;
 }
 
@@ -916,7 +898,7 @@ table.form tr td.button-row {
     line-height: 1.3em;
     border: 0px solid white;
   }
-  .artists-navigation a.song {
+  .artists-navigation a.albums-list {
     line-height: 1.4em;
   }
   .artists-navigation > ul {

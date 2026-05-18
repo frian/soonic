@@ -5,7 +5,7 @@
 $fg-color: #111 !default;
 $bg-color: #eee !default;
 $hover-active: #90ee90 !default;
-$bg-alternate: #c8c8c8 !default;
+$bg-alternate: #eee !default;
 $header-color: #ccc !default;
 $border-color: #666 !default;
 $default-gradient: linear-gradient(to top, rgb(221 221 221 / 100%), rgb(204 204 204 / 90%)) !default;
@@ -97,12 +97,6 @@ nav.topbar-nav {
 /*
   --  3. Artists navigation ---------------------------------------------------
 */
-.artists-navigation {
-    .song {
-        background-color: $header-color;
-    }
-}
-
 .filter {
     background-color: $header-color;
 

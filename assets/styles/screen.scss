@@ -93,7 +93,7 @@ h2 {
   --  4. Views ----------------------------------------------------------------
 */
 .single-album-view {
-    background-color: rgb(255 255 255 / 80%);
+    background-color: rgb(255 255 255 / 90%);
 }
 
 
@@ -175,12 +175,6 @@ h2 {
 
 .radio:nth-child(4n+2), .radio:nth-child(4n+3) {
     background-color: $bg-alternate;
-}
-
-.radios-pagination-current {
-    font-family: Muli, sans-serif;
-    font-size: 0.95rem;
-    letter-spacing: 0.6px;
 }
 
 

@@ -78,20 +78,6 @@ table {
     overflow-y: scroll;
 }
 
-.radios-pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 16px 12px 24px;
-    font-size: 16px;
-
-    .button {
-        min-width: 100px;
-        padding: 6px 12px;
-    }
-}
-
 
 /*
   --  5 .Songs and playlist panels --------------------------------------------
@@ -151,26 +137,11 @@ thead {
             text-align: center;
         }
 
-        td:nth-child(2) {
-            display: none;
-        }
-
-        td:nth-child(3) {
-            display: none;
-        }
-
-        td:nth-child(5) {
-            display: none;
-        }
-
-        td:nth-child(6) {
-            display: none;
-        }
-
-        td:nth-child(7) {
-            display: none;
-        }
-
+        td:nth-child(2),
+        td:nth-child(3),
+        td:nth-child(5),
+        td:nth-child(6),
+        td:nth-child(7),
         td:nth-child(8) {
             display: none;
         }
@@ -752,7 +723,7 @@ table.form {
             line-height: 1.3em;
             border: #{$debug}px solid white;
 
-            &.song {
+            &.albums-list {
                 line-height: 1.4em;
             }
         }

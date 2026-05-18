@@ -73,10 +73,6 @@ nav.topbar-nav a:hover {
 /*
   --  3. Artists navigation ---------------------------------------------------
 */
-.artists-navigation .song {
-  background-color: #ccc;
-}
-
 .filter {
   background-color: #ccc;
 }
@@ -100,7 +96,7 @@ nav.topbar-nav a:hover {
   background-color: #ccc;
 }
 .list tbody tr:nth-child(even) {
-  background-color: #c8c8c8;
+  background-color: #eee;
 }
 .list tbody tr.playing,
 .list tbody tr.selected,
@@ -120,7 +116,7 @@ nav.topbar-nav a:hover {
   --  6. Albums view ----------------------------------------------------------
 */
 .single-album-container .album-songs tbody tr:nth-child(even) {
-  background-color: #c8c8c8;
+  background-color: #eee;
 }
 .single-album-container .album-songs tbody tr.playing {
   background-color: #90ee90;
@@ -135,7 +131,7 @@ nav.topbar-nav a:hover {
 
 .radio:nth-child(4n+2),
 .radio:nth-child(4n+3) {
-  background-color: #c8c8c8;
+  background-color: #eee;
 }
 
 .radio:nth-child(4n+2).active-radio,
@@ -256,6 +252,11 @@ img.cover {
 
 .albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
   background: linear-gradient(to top, #ddd, #fff);
+}
+
+/* --  6.1 Single album view -- */
+.single-album-container {
+  background-color: #FAFAFA;
 }
 
 /*

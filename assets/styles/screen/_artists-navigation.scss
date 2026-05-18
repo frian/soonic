@@ -3,11 +3,6 @@ $artists-song-bg: #fff !default;
 $filter-bg: #ddd !default;
 $filter-input-bg: black !default;
 
-.artists-navigation {
-    .song {
-        background-color: $artists-song-bg;
-    }
-}
 
 .filter {
     background-color: $filter-bg;
@@ -25,6 +20,11 @@ $filter-input-bg: black !default;
         padding: 0 0 0 10px;
     }
 }
+
+ul.album-nav {
+    background-color: #eee;
+}
+
 
 .artists-navigation a.active,
 .artists-navigation a.keyboard-selected {

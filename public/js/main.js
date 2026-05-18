@@ -424,7 +424,7 @@ $(function() {
      * Returns the songs from an album
      * Updates the songs panel
      */
-    $(document).on("click", ".artists-navigation a.song", function(e) {
+    $(document).on("click", ".artists-navigation a.albums-list", function(e) {
 
         e.preventDefault();
 

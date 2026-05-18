@@ -3,14 +3,15 @@
 */
 
 $theme-fg-color: #111;
+$theme-bg-color: #FAFAFA;
 $theme-clear-gradient: linear-gradient(to top, #ddd, #fff);
 $theme-dark-gradient: linear-gradient(to top, #ccc, #eee);
 
 @use "../base" with (
     $fg-color: $theme-fg-color,
-    $bg-color: #FAFAFA,
+    $bg-color: $theme-bg-color,
     $hover-active: #90ee90,
-    $bg-alternate: #c8c8c8,
+    $bg-alternate: #eee,
     $header-color: #ccc,
     $border-color: #666,
     $default-gradient: linear-gradient(to top, rgb(221 221 221 / 100%), rgb(204 204 204 / 90%)),
@@ -59,6 +60,12 @@ img.cover {
 
 .albums-view .album-container:nth-child(4n + 2), .albums-view .album-container:nth-child(4n + 3) {
     background: $theme-clear-gradient
+}
+
+
+/* --  6.1 Single album view -- */
+.single-album-container {
+    background-color: $theme-bg-color;
 }
 
 
