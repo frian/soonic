@@ -9,7 +9,7 @@ module.exports = defineConfig({
         trace: 'on-first-retry'
     },
     webServer: {
-        command: 'symfony server:start --no-tls --allow-http --port=9810 2>&1 | grep --line-buffered -E "ERROR|CRITICAL|CRITICA|Fatal|Exception"',
+        command: 'symfony server:start --no-tls --allow-http --port=9810',
         url: 'http://127.0.0.1:9810',
         reuseExistingServer: true,
         timeout: 120 * 1000
