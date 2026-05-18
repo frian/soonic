@@ -89,9 +89,7 @@ class TagsCommand extends Command
                 ];
             }
 
-            if ($rows !== []) {
-                $io->table(['Tag', 'Value'], $rows);
-            }
+            $io->table(['Tag', 'Value'], $rows);
         }
 
         return Command::SUCCESS;
@@ -123,4 +121,3 @@ class TagsCommand extends Command
         return (string) $value;
     }
 }
-
