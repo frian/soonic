@@ -189,9 +189,6 @@ nav.topbar-nav a:hover {
   background: linear-gradient(to top, rgba(34, 34, 34, 0.1), rgba(51, 51, 51, 0));
 }
 
-.filter {
-  background-color: #ddd;
-}
 .filter label {
   padding: 0 0 0 10px;
   font-family: Muli, sans-serif;
@@ -200,7 +197,6 @@ nav.topbar-nav a:hover {
   font-weight: 600;
 }
 .filter input {
-  background-color: black;
   padding: 0 0 0 10px;
 }
 
@@ -243,7 +239,7 @@ ul.album-nav {
   padding: 5px;
 }
 .list tbody tr:nth-child(even) {
-  background-color: #ddd;
+  background-color: #eee;
 }
 .list tbody tr.playing,
 .list tbody tr.selected,
@@ -308,7 +304,7 @@ h2 {
 #ajax-flash-message {
   border-radius: 6px;
   background: #ddd;
-  color: #fff;
+  color: #111;
   font-size: 20px;
 }
 
@@ -409,7 +405,6 @@ h2 {
   padding: 10px 36px 10px 12px;
   border: 1px solid #666;
   border-radius: 6px;
-  background-color: #fff;
   color: #111;
   font-family: Muli, sans-serif;
   font-size: 1rem;
@@ -447,7 +442,7 @@ h2 {
 */
 input[type=text] {
   color: #111;
-  background-color: #eee;
+  background-color: #fff;
   font-family: Muli, sans-serif;
   font-size: 18px;
   border: 1px solid #555;
@@ -511,13 +506,6 @@ form div div input {
     opacity: 0.85;
   }
 }
-.running {
-  background: linear-gradient(to top, rgb(204, 0, 0), rgba(204, 0, 0, 0.5));
-}
-.running:hover {
-  background: linear-gradient(to top, rgb(204, 0, 0), rgba(204, 0, 0, 0.5));
-}
-
 /*
   -- 13. Context menus --------------------------------------------------------
 */

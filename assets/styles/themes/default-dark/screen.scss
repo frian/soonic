@@ -6,11 +6,12 @@ $theme-fg-color: #eee;
 $theme-bg-color: #111;
 $theme-clear-gradient: linear-gradient(to top, #222, #444);
 $theme-dark-gradient: linear-gradient(to top, #111, #333);
+$hover-active: #060;
 
 @use "../base" with (
     $fg-color: $theme-fg-color,
     $bg-color: $theme-bg-color,
-    $hover-active: #060,
+    $hover-active: $hover-active,
     $bg-alternate: #222,
     $header-color: #333,
     $border-color: #666,
@@ -27,7 +28,12 @@ $theme-dark-gradient: linear-gradient(to top, #111, #333);
     $mobile-button-bg: #111
 );
 
+// @use "../../screen/artists-navigation" with (
+//     $hover-active: $hover-active,
+//     $bg-color: #333
+// );
 
+ 
 /*
   --  1. Global ---------------------------------------------------------------
 */

@@ -1,11 +1,8 @@
+$bg-color: #fff!default;
 $hover-active: #ddd !default;
-$artists-song-bg: #fff !default;
-$filter-bg: #ddd !default;
-$filter-input-bg: black !default;
 
 
 .filter {
-    background-color: $filter-bg;
 
     label {
         padding: 0 0 0 10px;
@@ -16,13 +13,12 @@ $filter-input-bg: black !default;
     }
 
     input {
-        background-color: $filter-input-bg;
         padding: 0 0 0 10px;
     }
 }
 
 ul.album-nav {
-    background-color: #eee;
+    background-color: $bg-color;
 }
 
 
