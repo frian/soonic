@@ -1,0 +1,179 @@
+@use '../config' as config;
+
+.songs-header, .playlist-header {
+    height: config.$panel-header-height;
+    line-height: 20px;
+    padding-left: 10px;
+    top: 0;
+}
+
+.songs-container, .playlist-container {
+    height: calc(100% - #{config.$panel-header-height});
+    overflow-y: scroll;
+}
+
+.songs tbody, .playlist tbody {
+    tr {
+        td {
+            height: config.$mobileButtonSize;
+        }
+
+        td:nth-child(1) {
+            width: config.$mobileButtonSize;
+            text-align: center;
+        }
+
+        td:nth-child(2),
+        td:nth-child(3),
+        td:nth-child(5),
+        td:nth-child(6),
+        td:nth-child(7),
+        td:nth-child(8) {
+            display: none;
+        }
+    }
+}
+
+.list {
+    thead {
+        tr {
+            th {
+                padding: 0 10px;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                padding: 5px;
+            }
+        }
+    }
+}
+
+.icon-trash {
+    float: right;
+    cursor: pointer;
+}
+
+/*
+  -- 10. Small screen buttons -------------------------------------------------
+*/
+.mobile-button {
+    position: fixed;
+    top: calc(100% - #{config.$mobileButtonSize}); // calc(100% - 100px) for debug
+    width: config.$mobileButtonSize;
+    height: config.$mobileButtonSize;
+    line-height: config.$mobileButtonSize;
+    text-align: center;
+    cursor: pointer;
+}
+
+.mobile-forward-button {
+    right: 0;
+}
+
+.mobile-back-button {
+    left: 0;
+}
+
+.mobile-forward-button,
+.mobile-songs-to-artists-button,
+.mobile-songs-to-playlist-button,
+.mobile-playlist-to-songs-button {
+    display: none;
+}
+
+button:active, button:focus {
+    border: none;
+}
+
+
+@media all and (min-width: 1024px) {
+    thead {
+        width: 100%;
+        display: table-header-group;
+
+        tr {
+            th {
+                border: #{config.$debug}px solid red;
+                position: sticky;
+                top: 0;
+            }
+            th:nth-child(1) { width: 15px; }
+            th:nth-child(2) { width: 25px; }
+            th:nth-child(3) { width: 20%; }
+            th:nth-child(4) { width: 35%; }
+            th:nth-child(5) { width: 20%; }
+            th:nth-child(6) { width: 60px; }
+
+            th:nth-child(7) {
+                width: 60px;
+                display: none;
+            }
+
+            th:nth-child(8) {
+                width: 80px;
+                display: none;
+            }
+        }
+    }
+
+    .songs tbody, .playlist tbody {
+        tr {
+            td {
+                height: config.$panel-header-height;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                border: #{config.$debug}px solid red;
+            }
+
+            td:nth-child(1) {
+                text-align: center;
+                padding-left: 2px;
+                // border: 1px solid red;
+            }
+            td:nth-child(2) { display: table-cell}
+            td:nth-child(3) { display: table-cell}
+            td:nth-child(5) { display: table-cell}
+
+            td:nth-child(6) {
+                display: table-cell;
+                text-align: center;
+            }
+
+            td:nth-child(7), td:nth-child(8) {
+                text-align: center;
+                display: none;
+            }
+        }
+    }
+}
+
+@media all and (min-width: 1200px) {
+    thead {
+        tr {
+            th:nth-child(7) {
+                display: table-cell;
+            }
+
+            th:nth-child(8) {
+                display: table-cell;
+            }
+        }
+    }
+
+    .songs tbody, .playlist tbody {
+        tr {
+            td:nth-child(7) {
+                display: table-cell;
+            }
+
+            td:nth-child(8) {
+                display: table-cell;
+            }
+        }
+    }
+}

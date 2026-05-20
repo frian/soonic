@@ -1,0 +1,202 @@
+@use '../config' as config;
+
+.radio {
+    font-size: 16px;
+    box-sizing: border-box;
+    position: relative;
+    height: 80px;
+    border: #{config.$debug}px solid red;
+
+    .icon-play, .icon-pause {
+        cursor: pointer;
+        font-size: 50px;
+    }
+
+    .radio-name, .radio-url {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        float: left;
+        width: calc(100% - 150px);
+        box-sizing: border-box;
+    }
+
+    .radio-name {
+        height: 80px;
+        padding-left: 30px;
+        line-height: 80px;
+        border: #{config.$debug}px solid lime;
+    }
+
+    .radio-url {
+        display: none;
+        height: 75px;
+        line-height: 75px;
+        padding: 0 10px 0 30px;
+        border: #{config.$debug}px solid cyan;
+    }
+
+    .button-wrapper {
+        float: left;
+        height: 80px;
+        line-height: 80px;
+        width: 80px;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 0;
+        border: #{config.$debug}px solid yellow;
+    }
+
+    .radio-edit-link {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        line-height: 1;
+        z-index: 1;
+    }
+}
+
+.radio-edit-view {
+    .button-wrapper {
+        text-align: center;
+
+        &:nth-child(3) {
+            margin-top: 30px;
+        }
+    }
+}
+
+.radio-show-view {
+    dl.form {
+        width: 90%;
+        max-width: 600px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        column-gap: 16px;
+        row-gap: 20px;
+    }
+
+    dl.form dt,
+    dl.form dd {
+        height: 40px;
+        width: 300px;
+        margin: 0;
+    }
+}
+
+
+table.form {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+
+    tr {
+        td {
+            padding: 15px;
+
+            input[type='text'],
+            input[type='url'] {
+                box-sizing: border-box;
+                width: 80%;
+                height: 40px;
+                line-height: 40px;
+                font-size: 1.2em;
+            }
+
+            .radio-stream-check-actions {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                flex-wrap: wrap;
+                width: 80%;
+            }
+
+            .radio-stream-check-button {
+                white-space: nowrap;
+            }
+
+            .radio-stream-check-result {
+                min-height: 1.4em;
+                text-align: left;
+            }
+        }
+
+        td:nth-child(1) {
+            text-align: right;
+            width: 40%;
+        }
+
+        td.button-row {
+            text-align: center;
+            padding-top: 20px;
+        }
+    }
+}
+
+
+label[for="appbundle_radio_enabled"], [id="appbundle_radio_enabled"],
+label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
+    display: none;
+}
+
+
+@media all and (min-width: 700px) {
+
+    .radio {
+        height: auto;
+
+        .icon-play, .icon-pause {
+            cursor: pointer;
+            font-size: 5em;
+        }
+        .radio-name {
+            height: 75px;
+            line-height: 75px;
+        }
+
+        .radio-url {
+            display: block;
+        }
+
+        .button-wrapper {
+            height: 150px;
+            line-height: 150px;
+            width: 150px;
+        }
+    }
+}
+
+@media all and (max-width: 699px) {
+    .radio-show-view {
+        dl.form {
+            grid-template-columns: 1fr;
+            row-gap: 6px;
+        }
+
+        dl.form dt {
+            font-weight: 700;
+        }
+
+        dl.form dd {
+            margin-bottom: 12px;
+        }
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .radios-view {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+    }
+
+    .radio {
+        font-size: 16px;
+        display: block;
+        flex: 0 0 50%;
+        max-width: 50%;
+        width: 50%;
+    }
+}

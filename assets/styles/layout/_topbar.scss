@@ -1,127 +1,48 @@
-$debug: 0 !default;
-$topbar-size: 49px !default;
-$topbar-border-size: 1px !default;
+@use '../config' as config;
 
 .topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 300;
-    height: $topbar-size;
-    border-bottom-width: $topbar-border-size;
-    border-bottom-style: solid;
-
-    @if $debug != 0 {
-        background-color: #222;
-    }
 
     div {
         display: inline-block;
         box-sizing: border-box;
         vertical-align: top;
         height: 100%;
-        line-height: $topbar-size;
-        border: #{$debug}px solid red;
-    }
-
-    .logo {
-        padding: 0 5px;
-
-        // margin-top: -4px;
-        width: 51px;
-        background-repeat: no-repeat;
-        background-size: 40px 40px;
-        background-position: center;
-        border: #{$debug}px solid red;
-    }
-
-    [class^="icon-"] {
-        display: inline-block;
-        box-sizing: border-box;
-        vertical-align: top;
-        height: $topbar-size;
-        line-height: $topbar-size;
-        font-size: 120%;
-        cursor: pointer;
-        border: #{$debug}px solid red;
-    }
-
-    .icon-play,
-    .icon-pause {
-        font-size: 150%;
-    }
-
-    .icon-to-end {
-        margin-left: -2px;
-    }
-
-    .time-info {
-        display: block;
-        height: 30px;
-        line-height: 30px;
-    }
-
-    .progress-bar-container {
-        width: 100%;
-        height: 19px;
-        line-height: 19px;
-    }
-
-    .progressbar {
-        position: relative;
-        height: 10px;
-        width: calc(100% - 10px);
-        margin: 0 5px;
-        border-radius: 5px;
-        overflow: hidden;
-    }
-
-    .song-info {
-        display: inline-block;
-        margin-left: 10px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        line-height: config.$topbar-size;
+        border: #{config.$debug}px solid red;
     }
 
     .material-icons {
-        line-height: $topbar-size;
-    }
-
-    #radio-new-button {
-        padding-right: 10px;
-    }
-
-    .radio-add {
-        position: relative;
-        vertical-align: top;
-        line-height: 30px;
+        line-height: config.$topbar-size;
     }
 }
 
 #search-form {
     display: inline-block;
     vertical-align: top;
-    height: $topbar-size;
-    line-height: $topbar-size;
+    height: config.$topbar-size;
+    line-height: config.$topbar-size;
 
     input[type="text"] {
         display: inline-block;
         vertical-align: middle;
         position: relative;
         width: 130px;
-        height: $topbar-size;
+        height: config.$topbar-size;
         padding: 0 10px;
-        border: #{$debug}px solid lime;
+        border: #{config.$debug}px solid lime;
     }
 
     input[type="submit"] {
         display: inline-block;
-        height: $topbar-size;
-        line-height: $topbar-size;
+        height: config.$topbar-size;
+        line-height: config.$topbar-size;
         vertical-align: top;
-        border: #{$debug}px solid lime;
+        border: #{config.$debug}px solid lime;
+    }
+
+    .input-reset {
+        top: 10px;
+        right: 5px;
     }
 
     .form-element-container {
@@ -134,10 +55,10 @@ nav.topbar-nav {
     display: none;
     font-size: 0;
     float: right;
-    height: $topbar-size;
-    line-height: $topbar-size;
+    height: config.$topbar-size;
+    line-height: config.$topbar-size;
 
-    @if $debug != 0 {
+    @if config.$debug != 0 {
         background-color: #666;
     }
 
@@ -146,11 +67,16 @@ nav.topbar-nav {
     }
 
     a {
-        vertical-align: top;
+
+        font-size: 18px;
+        display: inline-block;
         box-sizing: border-box;
-        height: $topbar-size;
-        line-height: $topbar-size;
-        border: #{$debug}px solid lime;
+        vertical-align: top;
+
+        height: config.$topbar-size;
+        line-height: config.$topbar-size;
+        
+        padding: 0 20px;
     }
 
     .topbar-nav-label {
@@ -158,6 +84,51 @@ nav.topbar-nav {
         padding-left: 10px;
     }
 }
+
+ul.top-nav {
+    position: relative;
+    width: 100%;
+
+    &.is-active {
+        position: absolute;
+        top: 50px;  
+        left: 0;
+        width: 100%;
+        z-index: 20;
+
+        li {
+            text-align: center;
+            float: none;
+
+            a {
+                display: inline-flex;
+                align-items: center;
+                justify-content: flex-start;
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        form {
+            width: 100%;
+
+            &#search-form input[type='text'] {
+                box-sizing: border-box;
+                outline-offset: -5px;
+                width: 100%;
+            }
+
+            input[type='submit'] {
+                float: right;
+            }
+        }
+    }
+
+    li {
+        float: left;
+    }
+}
+
 
 body.route-settings-index {
     #navigation-settings {
@@ -173,19 +144,20 @@ body.route-settings-index {
 }
 
 
-/*
-  -- Media query 1024px -------------------------------------------------------
-*/
 @media all and (min-width: 1024px) {
-    nav.topbar-nav {
-        .topbar-nav-label {
-            display: none;
-        }
+    .hamburger {
+        display: none;
     }
 
-    #search-form {
-        input[type="text"] {
-            height: 39px;
+    #search-form input[type="text"] {
+        height: 39px;
+    }
+
+    nav.topbar-nav {
+        display: initial;
+
+        .topbar-nav-label {
+            display: none;
         }
     }
 }

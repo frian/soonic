@@ -1,60 +1,31 @@
-$bg-alternate: #ddd !default;
-$hover-active: #ddd !default;
+@use '../config/screen' as theme;
 
-.playlist-header {
-    font-family: Muli, sans-serif;
-    font-weight: 700;
-    font-size: 80%;
-    letter-spacing: 1px;
-    background-color: #ddd;
+.artists-navigation a.active {
+    background-color: theme.$hover-active;
+}
+
+.songs-header, .playlist-header {
+  background-color: theme.$header-color;
+}
+
+.mobile-button {
+    background-color: theme.$mobile-button-bg;
 }
 
 .list {
-    thead {
-        font-family: Muli, sans-serif;
-        font-weight: 700;
-        background-color: #ddd;
-
-        tr {
-            th {
-                padding: 0 10px;
-                font-family: Muli, sans-serif;
-                font-weight: 700;
-                font-size: 80%;
-                letter-spacing: 1px;
-            }
-        }
-    }
-
     tbody {
-        font-family: Lato, sans-serif;
-
         tr {
             cursor: pointer;
-
-            td {
-                padding: 5px;
-            }
         }
 
         tr:nth-child(even) {
-            background-color: #eee;
+            background-color: theme.$bg-alternate;
         }
     }
 
     tbody tr.playing,
     tbody tr.selected,
     tbody tr.keyboard-selected {
-        background-color: $hover-active;
-    }
-
-    .icon-plus, .icon-minus {
-        color: #aaa;
-    }
-}
-
-.album-songs {
-    tbody tr.playing {
-        background-color: $hover-active;
+        background-color: theme.$hover-active;
     }
 }

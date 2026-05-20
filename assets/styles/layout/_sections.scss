@@ -1,0 +1,82 @@
+@use '../config' as config;
+
+.topbar {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 300;
+    height: config.$topbar-size;
+    border-bottom-width: config.$topbar-border-size;
+    border-bottom-style: solid;
+}
+
+.library-view {
+    // overflow-x: hidden;
+}
+
+.albums-view {
+    display: flex;  
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow-y: scroll;
+}
+
+.single-album-view {
+    position: fixed;
+    left: 0;
+    z-index: 200;
+}
+
+.radios-view {
+    overflow-y: scroll;
+}
+
+.view {
+    position: absolute;
+    top: config.$topbar-size + config.$topbar-border-size;
+    left: 0;
+    height: calc(100% - (#{config.$topbar-size} + #{config.$topbar-border-size}));
+    width: 100%;
+    border: #{config.$debug}px solid red;
+}
+
+.artists-navigation {
+    float: left;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+
+    @if config.$debug != 0 {
+        background-color: #333;
+    }
+}
+
+.songs, .playlist {
+    display: none;
+    overflow: hidden;
+
+    table {
+        width: 100%;
+    }
+}
+
+
+@media all and (min-width: 1024px) {
+    .songs, .playlist {
+        display: block;
+        height: 50%;
+    }
+
+    .artists-navigation {
+        width: config.$artists-navigation-1024;
+    }
+}
+
+
+@media all and (min-width: 1200px) {
+    .artists-navigation {
+        width: config.$artists-navigation-1200;
+    }
+}

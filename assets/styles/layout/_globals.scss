@@ -1,0 +1,94 @@
+@use '../config/layout.scss' as config;
+@use '../config/screen.scss' as theme;
+
+html, body {
+    height: 100%;
+}
+
+h1 {
+    border-bottom: 1px solid theme.$border-color;
+    text-align: center;
+    padding: 30px 0;
+    margin-bottom: 30px;
+    font-family: Muli, sans-serif;
+    font-size: 1.6em;
+    letter-spacing: 1px;
+}
+
+h2 {
+    padding: 15px 20px;
+    font-family: Muli, sans-serif;
+    font-size: 1.4em;
+    letter-spacing: 1px;
+    border-bottom: 1px solid theme.$border-color;
+}
+
+.empty-list {
+    font-family: Lato, sans-serif;
+    font-weight: 300;
+    font-size: 2em;
+    padding: 20px;
+}
+
+table {
+    table-layout: fixed;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.button {
+  box-sizing: border-box;
+  height: config.$topbar-size;
+  line-height: config.$topbar-size;
+  display: inline-block;
+  padding: 0 20px;
+  border: 0;
+}
+
+.input-reset {
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    outline: 0;
+    width: 30px;
+    height: 30px;
+    z-index: 1;
+    border: 0;
+}
+
+.input-reset::after {
+    content: "\e805";
+	position: absolute;
+	display: block;
+	width: 20px;
+	height: 20px;
+
+    left: 2px;
+	top: 0;
+	bottom: 0;
+
+	margin: auto;
+	padding: 2px;
+
+	border-radius: 50%;
+    transform: rotate(45deg);
+	z-index:1;
+
+    font-family: fontello, sans-serif;
+	text-align: center;
+	font-weight: 900;
+	font-size: 20px;
+
+	cursor: pointer;
+}
+
+.filter-form {
+    .input-reset {
+        top: 5px;
+        right: 5px;
+    }
+}

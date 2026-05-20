@@ -1,0 +1,22 @@
+@use '../config/screen' as theme;
+
+.radio:nth-child(even) {
+    background-color: theme.$bg-alternate;
+}
+
+@media (min-width: 1024px) {
+
+    .radio:nth-child(even) {
+        background-color: transparent;
+    }
+
+    .radio:nth-child(4n+2),
+    .radio:nth-child(4n+3) {
+        background-color: theme.$bg-alternate;
+    }
+
+    .radio:nth-child(4n+2).active-radio,
+    .radio:nth-child(4n+3).active-radio {
+        background-color: theme.$hover-active;
+    }
+}

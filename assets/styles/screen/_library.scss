@@ -1,0 +1,23 @@
+@use '../config/screen' as theme;
+
+.filter {
+  background-color: theme.$header-color;
+}
+
+.songs-context-menu, .playlist-context-menu {
+    box-shadow: 0 0 5px 3px rgb(0 0 0 / 20%);
+
+    .menu-options {
+        background-color: theme.$bg-color;
+
+        .menu-option {
+            font-family: Muli, sans-serif;
+            letter-spacing: 1px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: theme.$hover-active;
+            }
+        }
+    }
+}

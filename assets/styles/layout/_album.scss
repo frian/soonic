@@ -1,0 +1,76 @@
+.album-container {
+    display: block;
+    flex: 0 0 50%;
+    max-width: 50%;
+    box-sizing: border-box;
+    width: 50%;
+
+    .img-wrapper {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-top: 100%;
+        cursor: pointer;
+    }
+
+    img.cover {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .album-infos {
+        font-size: 0.8em;
+
+        > div {
+            text-align: center;
+        }
+
+        .album-info-album {
+            padding: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .album-info-artist {
+            font-size: 0.9em;
+            padding: 5px 10px 20px 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+@media all and (min-width: 500px) {
+    .album-container {
+        flex-basis: 33.33%;
+        max-width: 33.33%;
+        width: 33.33%;
+    }
+}
+
+@media all and (min-width: 700px) {
+    .album-container {
+        flex-basis: 25%;
+        max-width: 25%;
+        width: 25%;
+    }
+}
+
+@media all and (min-width: 1020px) {
+    .album-container {
+        flex-basis: 20%;
+        max-width: 20%;
+        width: 20%;
+    }
+}
+
+@media (min-width: 1600px) {
+    .album-container {
+        flex-basis: 12.5%;
+        max-width: 12.5%;
+        width: 12.5%;
+    }
+}
