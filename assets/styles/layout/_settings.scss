@@ -5,6 +5,7 @@
         tr {
             td {
                 padding: 15px 0;
+
                 border: #{config.$debug}px solid lime;
                 
                 &:nth-child(even) {
@@ -19,9 +20,10 @@
     }
 
     .library-info{
-        margin: 20px auto 20px auto;
         width: 90%;
         max-width: 400px;
+
+        margin: 20px auto;
     }
 
     .button-wrapper {

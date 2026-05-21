@@ -1,18 +1,21 @@
 @use '../config/screen' as theme;
 
 a {
+    font-weight: 700;
+    line-height: 1.2em;
+
     color: theme.$fg-color;
     text-decoration: none;
-    line-height: 1.2em;
-    font-weight: 700;
 }
 
 .button {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
     font-weight: normal;
-    font-family: Arial, Helvetica, sans-serif;
+
     color: theme.$fg-color;
-    cursor: pointer;
     background: theme.$default-gradient;
+
+    cursor: pointer;
     transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
 }

@@ -158,7 +158,7 @@ $(function() {
         const $form = $button.closest("form");
         const $input = $form.find("[id$='_streamUrl']").first();
         const url = String($input.val() || "").trim();
-        const $result = $button.closest("td").find(".radio-stream-check-result").first();
+        const $result = $button.closest("dd").find(".radio-stream-check-result").first();
 
         if (!url) {
             setStreamCheckResult($button, $result, "empty");
