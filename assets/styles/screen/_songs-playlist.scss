@@ -1,3 +1,4 @@
+@use '../config/layout' as config;
 @use '../config/screen' as theme;
 
 .artists-navigation a.active {
@@ -5,10 +6,15 @@
 }
 
 .songs-header, .playlist-header {
+  line-height: 20px;
+
   background-color: theme.$header-color;
 }
 
 .mobile-button {
+    line-height: config.$mobileButtonSize;
+    text-align: center;
+
     background-color: theme.$mobile-button-bg;
 }
 
@@ -27,5 +33,26 @@
     tbody tr.selected,
     tbody tr.keyboard-selected {
         background-color: theme.$hover-active;
+    }
+}
+
+.songs tbody, .playlist tbody {
+    tr {
+        td:nth-child(1) {
+            text-align: center;
+        }
+    }
+}
+
+@include config.up(md) {
+    .songs tbody, .playlist tbody {
+        tr {
+            td:nth-child(1),
+            td:nth-child(6),
+            td:nth-child(7),
+            td:nth-child(8) {
+                text-align: center;
+            }
+        }
     }
 }

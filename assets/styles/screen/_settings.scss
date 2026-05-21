@@ -1,0 +1,13 @@
+.settings-view {
+    table {
+        tr {
+            td:nth-child(even) {
+                text-align: right;
+            }
+        }
+    }
+
+    .button-wrapper {
+        text-align: center;
+    }
+}

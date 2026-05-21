@@ -7,10 +7,6 @@
                 padding: 15px 0;
 
                 border: #{config.$debug}px solid lime;
-                
-                &:nth-child(even) {
-                    text-align: right;
-                }
             }
         }
     }
@@ -26,7 +22,4 @@
         margin: 20px auto;
     }
 
-    .button-wrapper {
-        text-align: center;
-    }
 }

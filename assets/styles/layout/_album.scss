@@ -1,3 +1,5 @@
+@use '../config/layout' as config;
+
 .album-container {
     display: block;
     flex: 0 0 50%;
@@ -26,33 +28,21 @@
     }
 
     .album-infos {
-        font-size: 0.8em;
-
-        > div {
-            text-align: center;
-        }
-
         .album-info-album {
             padding: 10px;
 
             overflow: hidden;
-
-            white-space: nowrap;
         }
 
         .album-info-artist {
             padding: 5px 10px 20px;
 
             overflow: hidden;
-
-            font-size: 0.9em;
-            white-space: nowrap;
-            text-overflow: ellipsis;
         }
     }
 }
 
-@media all and (min-width: 500px) {
+@include config.up(xs) {
     .album-container {
         flex-basis: 33.33%;
 
@@ -61,7 +51,7 @@
     }
 }
 
-@media all and (min-width: 700px) {
+@include config.up(sm) {
     .album-container {
         flex-basis: 25%;
 
@@ -70,7 +60,7 @@
     }
 }
 
-@media all and (min-width: 1020px) {
+@include config.up(md) {
     .album-container {
         flex-basis: 20%;
 
@@ -79,7 +69,7 @@
     }
 }
 
-@media (min-width: 1600px) {
+@include config.up(xl) {
     .album-container {
         flex-basis: 12.5%;
 

@@ -6,13 +6,9 @@
     box-sizing: border-box;
     height: 80px;
 
-    font-size: 16px;
-
     border: #{config.$debug}px solid red;
 
     .icon-play, .icon-pause {
-        font-size: 50px;
-
         cursor: pointer;
     }
 
@@ -109,9 +105,6 @@
     dl.form dt {
         display: flex;
 
-        font-weight: 700;
-        text-align: right;
-
         align-items: center;
         justify-content: flex-start;
     }
@@ -125,9 +118,6 @@
         box-sizing: border-box;
         width: 80%;
         height: 40px;
-
-        font-size: 1.2em;
-        line-height: 40px;
     }
 
     dl.form dd .radio-stream-check-actions {
@@ -176,9 +166,6 @@ table.form {
                 box-sizing: border-box;
                 width: 80%;
                 height: 40px;
-
-                font-size: 1.2em;
-                line-height: 40px;
             }
 
             .radio-stream-check-actions {
@@ -224,13 +211,11 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 }
 
 
-@media all and (min-width: 700px) {
+@include config.up(sm) {
     .radio {
         height: auto;
 
         .icon-play, .icon-pause {
-            font-size: 5em;
-
             cursor: pointer;
         }
 
@@ -271,7 +256,7 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 }
 
 
-@media (min-width: 1024px) {
+@include config.up(md) {
     .radios-view {
         display: flex;
         flex-wrap: wrap;
@@ -284,7 +269,5 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 
         width: 50%;
         max-width: 50%;
-
-        font-size: 16px;
     }
 }

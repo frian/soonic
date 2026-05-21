@@ -2,8 +2,14 @@
 @use '../config/screen' as theme;
 
 nav.topbar-nav a {
+    font-size: 18px;
+
     letter-spacing: 1px;
 
     background: theme.$default-gradient;
     border: #{config.$debug}px solid lime;
+}
+
+nav.topbar-nav {
+    font-size: 0;
 }

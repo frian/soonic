@@ -8,6 +8,38 @@ a {
     text-decoration: none;
 }
 
+h1 {
+    font-family: Muli, sans-serif;
+    font-size: 1.6em;
+    letter-spacing: 1px;
+    text-align: center;
+
+    border-bottom: 1px solid theme.$border-color;
+}
+
+h2 {
+    font-family: Muli, sans-serif;
+    font-size: 1.4em;
+    letter-spacing: 1px;
+
+    border-bottom: 1px solid theme.$border-color;
+}
+
+.empty-list {
+    font-family: Lato, sans-serif;
+    font-size: 2em;
+    font-weight: 300;
+}
+
+.input-reset::after {
+    font-family: fontello, sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    text-align: center;
+
+    border-radius: 50%;
+}
+
 .button {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;

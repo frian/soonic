@@ -6,8 +6,6 @@
     height: config.$panel-header-height;
 
     padding-left: 10px;
-
-    line-height: 20px;
 }
 
 .songs-container, .playlist-container {
@@ -24,8 +22,6 @@
 
         td:nth-child(1) {
             width: config.$mobileButtonSize;
-
-            text-align: center;
         }
 
         td:nth-child(2),
@@ -74,9 +70,6 @@
     width: config.$mobileButtonSize;
     height: config.$mobileButtonSize;
 
-    line-height: config.$mobileButtonSize;
-    text-align: center;
-
     cursor: pointer;
 }
 
@@ -100,7 +93,7 @@ button:active, button:focus {
 }
 
 
-@media all and (min-width: 1024px) {
+@include config.up(md) {
     thead {
         display: table-header-group;
 
@@ -150,8 +143,6 @@ button:active, button:focus {
             td:nth-child(1) {
                 padding-left: 2px;
 
-                text-align: center;
-
                 // border: 1px solid red;
             }
             td:nth-child(2) { display: table-cell}
@@ -160,20 +151,16 @@ button:active, button:focus {
 
             td:nth-child(6) {
                 display: table-cell;
-
-                text-align: center;
             }
 
             td:nth-child(7), td:nth-child(8) {
                 display: none;
-
-                text-align: center;
             }
         }
     }
 }
 
-@media all and (min-width: 1200px) {
+@include config.up(lg) {
     thead {
         tr {
             th:nth-child(7) {

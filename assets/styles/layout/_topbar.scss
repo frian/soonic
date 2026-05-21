@@ -73,7 +73,6 @@ nav.topbar-nav {
 
     height: config.$topbar-size;
 
-    font-size: 0;
     line-height: config.$topbar-size;
 
     @if config.$debug != 0 {
@@ -92,7 +91,6 @@ nav.topbar-nav {
 
         padding: 0 20px;
 
-        font-size: 18px;
         line-height: config.$topbar-size;
 
         vertical-align: top;
@@ -171,7 +169,7 @@ body.route-settings-index {
 }
 
 
-@media all and (min-width: 1024px) {
+@include config.up(md) {
     .hamburger {
         display: none;
     }

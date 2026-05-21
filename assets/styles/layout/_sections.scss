@@ -69,7 +69,7 @@
 }
 
 
-@media all and (min-width: 1024px) {
+@include config.up(md) {
     .songs, .playlist {
         display: block;
 
@@ -82,7 +82,7 @@
 }
 
 
-@media all and (min-width: 1200px) {
+@include config.up(lg) {
     .artists-navigation {
         width: config.$artists-navigation-1200;
     }

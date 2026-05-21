@@ -1,8 +1,23 @@
 .album-container {
     .album-infos {
+        font-size: 0.8em;
+
+        > div {
+            text-align: center;
+        }
+
         .album-info-album {
             font-size: 1.1em;
             letter-spacing: 0.4px;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .album-info-artist {
+            font-size: 0.9em;
+
+            white-space: nowrap;
             text-overflow: ellipsis;
         }
     }

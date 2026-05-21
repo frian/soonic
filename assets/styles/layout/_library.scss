@@ -12,10 +12,6 @@
 
         overflow: hidden;
 
-        line-height: config.$mobileButtonSize;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-
         @if config.$debug != 0 {
             background-color: #500;
         }
@@ -119,18 +115,12 @@
 }
 
 
-@media all and (min-width: 1024px) {
+@include config.up(md) {
     .artists-navigation {
         a {
             height: auto;
 
-            line-height: 1.3em;
-
             border: #{config.$debug}px solid white;
-
-            &.albums-list {
-                line-height: 1.4em;
-            }
         }
 
         > ul {

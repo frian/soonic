@@ -1,0 +1,11 @@
+@use '../config/screen' as theme;
+
+.hamburger {
+    color: theme.$fg-color;
+}
+
+.hamburger-inner,
+.hamburger-inner::after,
+.hamburger-inner::before {
+    background-color: theme.$fg-color;
+}

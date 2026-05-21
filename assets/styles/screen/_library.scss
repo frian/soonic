@@ -1,7 +1,25 @@
+@use '../config/layout' as config;
 @use '../config/screen' as theme;
 
 .filter {
   background-color: theme.$header-color;
+}
+
+.artists-navigation a {
+    line-height: config.$mobileButtonSize;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@include config.up(md) {
+    .artists-navigation a {
+        line-height: 1.3em;
+    }
+
+    .artists-navigation a.albums-list {
+        line-height: 1.4em;
+    }
 }
 
 .songs-context-menu, .playlist-context-menu {

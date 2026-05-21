@@ -1,10 +1,43 @@
+@use '../config/layout' as config;
 @use '../config/screen' as theme;
 
 .radio:nth-child(even) {
     background-color: theme.$bg-alternate;
 }
 
-@media (min-width: 1024px) {
+.radio {
+    font-size: 16px;
+}
+
+.radio .icon-play,
+.radio .icon-pause {
+    font-size: 50px;
+}
+
+.radio-edit-view dl.form dt,
+.radio-new-view dl.form dt {
+    font-weight: 700;
+    text-align: right;
+}
+
+.radio-edit-view dl.form dd input[type='text'],
+.radio-edit-view dl.form dd input[type='url'],
+.radio-new-view dl.form dd input[type='text'],
+.radio-new-view dl.form dd input[type='url'],
+table.form tr td input[type='text'],
+table.form tr td input[type='url'] {
+    font-size: 1.2em;
+    line-height: 40px;
+}
+
+@include config.up(sm) {
+    .radio .icon-play,
+    .radio .icon-pause {
+        font-size: 5em;
+    }
+}
+
+@include config.up(md) {
     .radio:nth-child(even) {
         background-color: transparent;
     }
@@ -18,4 +51,5 @@
     .radio:nth-child(4n+3).active-radio {
         background-color: theme.$hover-active;
     }
+
 }
