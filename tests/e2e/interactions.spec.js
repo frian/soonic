@@ -47,7 +47,7 @@ test('add and remove a song shows playlist flash messages', async ({ page }) => 
 });
 
 test('invalid radio shows one flash for repeated media errors', async ({ page }) => {
-    await page.locator('#radio-button').click();
+    await page.locator('.radio-button').click();
     await expect(page.locator('.radios-view')).toBeVisible();
 
     await ensureRadioExists(page);
@@ -65,7 +65,7 @@ test('invalid radio shows one flash for repeated media errors', async ({ page })
 });
 
 test('topbar player pauses active radio', async ({ page }) => {
-    await page.locator('#radio-button').click();
+    await page.locator('.radio-button').click();
     await expect(page.locator('.radios-view')).toBeVisible();
 
     await ensureRadioExists(page);
@@ -92,7 +92,7 @@ test('radio pauses active topbar player', async ({ page }) => {
     await page.locator('#play-pause-button').click();
     await expect(page.locator('#play-pause-button')).toHaveClass(/icon-pause/);
 
-    await page.locator('#radio-button').click();
+    await page.locator('.radio-button').click();
     await expect(page.locator('.radios-view')).toBeVisible();
 
     await ensureRadioExists(page);
@@ -105,10 +105,10 @@ test('radio pauses active topbar player', async ({ page }) => {
 test('radio new checks stream playback in browser', async ({ page }) => {
     await mockAudioPlayback(page);
 
-    await page.locator('#radio-button').click();
+    await page.locator('.radio-button').click();
     await expect(page.locator('.radios-view')).toBeVisible();
 
-    await page.locator('#radio-new-button').click();
+    await page.locator('.radio-new-button').click();
     await expect(page.locator('.radio-new-view')).toBeVisible();
 
     await page.locator('.radio-new-view [id$="_streamUrl"]').fill('https://example.invalid/stream.mp3');
@@ -120,7 +120,7 @@ test('radio new checks stream playback in browser', async ({ page }) => {
 test('radio edit checks stream playback in browser', async ({ page }) => {
     await mockAudioPlayback(page);
 
-    await page.locator('#radio-button').click();
+    await page.locator('.radio-button').click();
     await expect(page.locator('.radios-view')).toBeVisible();
 
     const editLink = page.locator('.radios-view .radio-edit-link').first();
@@ -273,7 +273,7 @@ test('empty playlist resets playlist info', async ({ page }) => {
 });
 
 test('switching radios pauses the previous radio', async ({ page }) => {
-    await page.locator('#radio-button').click();
+    await page.locator('.radio-button').click();
     await expect(page.locator('.radios-view')).toBeVisible();
 
     await ensureTwoRadiosExist(page);
@@ -290,7 +290,7 @@ test('switching radios pauses the previous radio', async ({ page }) => {
 });
 
 test('album overlay opens, closes, and closes on browser back', async ({ page }) => {
-    await page.locator('#albums-button').click();
+    await page.locator('.albums-button').click();
     await expect(page.locator('.albums-view')).toBeVisible();
 
     const firstAlbum = page.locator('.albums-view .album-container .img-wrapper').first();
@@ -324,7 +324,7 @@ test('mobile menu closes after link click and search submit', async ({ page }) =
     await page.locator('.hamburger').click();
     await expect(page.locator('.top-nav')).toHaveClass(/is-active/);
 
-    await page.locator('#albums-button').click();
+    await page.locator('.albums-button').click();
     await expect(page.locator('.top-nav')).not.toHaveClass(/is-active/);
 });
 
@@ -332,7 +332,7 @@ test('desktop search updates the songs panel and keeps menu state stable', async
     await mockSearchResults(page);
 
     await page.locator('#form-keyword').fill('test');
-    await page.locator('#search-form').evaluate(function(form) {
+    await page.locator('.search-form').evaluate(function(form) {
         form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     });
 
@@ -345,7 +345,7 @@ test('empty search clears keyword without updating songs panel', async ({ page }
     await seedSongRows(page);
     await page.locator('#form-keyword').fill('ab');
 
-    await page.locator('#search-form').evaluate(function(form) {
+    await page.locator('.search-form').evaluate(function(form) {
         form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     });
 

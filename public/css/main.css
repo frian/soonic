@@ -231,13 +231,13 @@ table {
   line-height: 49px;
 }
 
-#search-form {
+.search-form {
   display: inline-block;
   height: 49px;
   line-height: 49px;
   vertical-align: top;
 }
-#search-form input[type=text] {
+.search-form input[type=text] {
   position: relative;
   display: inline-block;
   width: 130px;
@@ -246,18 +246,18 @@ table {
   border: 0px solid lime;
   vertical-align: middle;
 }
-#search-form input[type=submit] {
+.search-form input[type=submit] {
   display: inline-block;
   height: 49px;
   line-height: 49px;
   border: 0px solid lime;
   vertical-align: top;
 }
-#search-form .input-reset {
+.search-form .input-reset {
   top: 10px;
   right: 5px;
 }
-#search-form .form-element-container {
+.search-form .form-element-container {
   position: relative;
   display: inline-block;
 }
@@ -295,38 +295,36 @@ ul.top-nav.is-active {
   z-index: 20;
   width: 100%;
 }
-ul.top-nav.is-active li {
+ul.top-nav.is-active .top-nav-item {
   float: none;
   text-align: center;
 }
-ul.top-nav.is-active li a {
+ul.top-nav.is-active .top-nav-link {
   display: inline-flex;
   width: 100%;
   text-align: left;
   align-items: center;
   justify-content: flex-start;
 }
-ul.top-nav.is-active form {
+ul.top-nav.is-active .search-form {
   width: 100%;
 }
-ul.top-nav.is-active form#search-form input[type=text] {
+ul.top-nav.is-active .search-form .filter-input {
   box-sizing: border-box;
   width: 100%;
 }
-ul.top-nav.is-active form input[type=submit] {
+ul.top-nav.is-active .search-form input[type=submit] {
   float: right;
 }
-ul.top-nav li {
+ul.top-nav .top-nav-item {
   float: left;
 }
 
-body.route-settings-index #navigation-settings {
-  display: none !important;
+body.route-settings-index .navigation-settings {
+  display: none;
 }
 
-#navigation-library,
-#navigation-radio-new,
-#navigation-back-to-radio-index {
+:is(.navigation-library, .navigation-radio-new) {
   display: none;
 }
 
@@ -334,7 +332,7 @@ body.route-settings-index #navigation-settings {
   .hamburger {
     display: none;
   }
-  #search-form input[type=text] {
+  .search-form input[type=text] {
     height: 39px;
   }
   nav.topbar-nav {
@@ -505,23 +503,20 @@ body.route-settings-index #navigation-settings {
   overflow-y: scroll;
 }
 
-.songs tbody tr td, .playlist tbody tr td {
+:is(.songs, .playlist) tbody td {
   height: 48px;
 }
-.songs tbody tr td:nth-child(1), .playlist tbody tr td:nth-child(1) {
+
+:is(.songs, .playlist) tbody td:nth-child(1) {
   width: 48px;
 }
-.songs tbody tr td:nth-child(2),
-.songs tbody tr td:nth-child(3),
-.songs tbody tr td:nth-child(5),
-.songs tbody tr td:nth-child(6),
-.songs tbody tr td:nth-child(7),
-.songs tbody tr td:nth-child(8), .playlist tbody tr td:nth-child(2),
-.playlist tbody tr td:nth-child(3),
-.playlist tbody tr td:nth-child(5),
-.playlist tbody tr td:nth-child(6),
-.playlist tbody tr td:nth-child(7),
-.playlist tbody tr td:nth-child(8) {
+
+:is(.songs, .playlist) tbody td:nth-child(2),
+:is(.songs, .playlist) tbody td:nth-child(3),
+:is(.songs, .playlist) tbody td:nth-child(5),
+:is(.songs, .playlist) tbody td:nth-child(6),
+:is(.songs, .playlist) tbody td:nth-child(7),
+:is(.songs, .playlist) tbody td:nth-child(8) {
   display: none;
 }
 
@@ -603,29 +598,24 @@ button:active, button:focus {
     display: none;
     width: 80px;
   }
-  .songs tbody tr td, .playlist tbody tr td {
+  :is(.songs, .playlist) tbody td {
     height: 22px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     border: 0px solid red;
   }
-  .songs tbody tr td:nth-child(1), .playlist tbody tr td:nth-child(1) {
+  :is(.songs, .playlist) tbody td:nth-child(1) {
     padding-left: 2px;
   }
-  .songs tbody tr td:nth-child(2), .playlist tbody tr td:nth-child(2) {
+  :is(.songs, .playlist) tbody td:nth-child(2),
+  :is(.songs, .playlist) tbody td:nth-child(3),
+  :is(.songs, .playlist) tbody td:nth-child(5),
+  :is(.songs, .playlist) tbody td:nth-child(6) {
     display: table-cell;
   }
-  .songs tbody tr td:nth-child(3), .playlist tbody tr td:nth-child(3) {
-    display: table-cell;
-  }
-  .songs tbody tr td:nth-child(5), .playlist tbody tr td:nth-child(5) {
-    display: table-cell;
-  }
-  .songs tbody tr td:nth-child(6), .playlist tbody tr td:nth-child(6) {
-    display: table-cell;
-  }
-  .songs tbody tr td:nth-child(7), .songs tbody tr td:nth-child(8), .playlist tbody tr td:nth-child(7), .playlist tbody tr td:nth-child(8) {
+  :is(.songs, .playlist) tbody td:nth-child(7),
+  :is(.songs, .playlist) tbody td:nth-child(8) {
     display: none;
   }
 }
@@ -636,10 +626,8 @@ button:active, button:focus {
   thead tr th:nth-child(8) {
     display: table-cell;
   }
-  .songs tbody tr td:nth-child(7), .playlist tbody tr td:nth-child(7) {
-    display: table-cell;
-  }
-  .songs tbody tr td:nth-child(8), .playlist tbody tr td:nth-child(8) {
+  :is(.songs, .playlist) tbody td:nth-child(7),
+  :is(.songs, .playlist) tbody td:nth-child(8) {
     display: table-cell;
   }
 }
@@ -755,8 +743,8 @@ button:active, button:focus {
   margin-top: 30px;
 }
 
-.radio-edit-view dl.form,
-.radio-new-view dl.form {
+.radio-edit-view .form,
+.radio-new-view .form {
   display: grid;
   grid-template-columns: 1fr;
   width: 90%;
@@ -764,50 +752,50 @@ button:active, button:focus {
   margin: auto;
   row-gap: 6px;
 }
-.radio-edit-view dl.form dt,
-.radio-edit-view dl.form dd,
-.radio-new-view dl.form dt,
-.radio-new-view dl.form dd {
+.radio-edit-view .form dt,
+.radio-edit-view .form dd,
+.radio-new-view .form dt,
+.radio-new-view .form dd {
   margin: 0;
   padding: 15px;
 }
-.radio-edit-view dl.form dt,
-.radio-new-view dl.form dt {
+.radio-edit-view .form dt,
+.radio-new-view .form dt {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-.radio-edit-view dl.form dd,
-.radio-new-view dl.form dd {
+.radio-edit-view .form dd,
+.radio-new-view .form dd {
   margin-bottom: 12px;
 }
-.radio-edit-view dl.form dd input[type=text],
-.radio-edit-view dl.form dd input[type=url],
-.radio-new-view dl.form dd input[type=text],
-.radio-new-view dl.form dd input[type=url] {
+.radio-edit-view .form input[type=text],
+.radio-edit-view .form input[type=url],
+.radio-new-view .form input[type=text],
+.radio-new-view .form input[type=url] {
   box-sizing: border-box;
   width: 80%;
   height: 40px;
 }
-.radio-edit-view dl.form dd .radio-stream-check-actions,
-.radio-new-view dl.form dd .radio-stream-check-actions {
+.radio-edit-view .radio-stream-check-actions,
+.radio-new-view .radio-stream-check-actions {
   display: flex;
   flex-wrap: wrap;
   width: 80%;
   gap: 8px;
   align-items: center;
 }
-.radio-edit-view dl.form dd .radio-stream-check-button,
-.radio-new-view dl.form dd .radio-stream-check-button {
+.radio-edit-view .radio-stream-check-button,
+.radio-new-view .radio-stream-check-button {
   white-space: nowrap;
 }
-.radio-edit-view dl.form dd .radio-stream-check-result,
-.radio-new-view dl.form dd .radio-stream-check-result {
+.radio-edit-view .radio-stream-check-result,
+.radio-new-view .radio-stream-check-result {
   min-height: 1.4em;
   text-align: left;
 }
-.radio-edit-view dl.form dd.button-row,
-.radio-new-view dl.form dd.button-row {
+.radio-edit-view .form .button-row,
+.radio-new-view .form .button-row {
   grid-column: 1/-1;
   padding-top: 20px;
   text-align: center;
@@ -874,17 +862,17 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
     height: 150px;
     line-height: 150px;
   }
-  .radio-edit-view dl.form,
-  .radio-new-view dl.form {
+  .radio-edit-view .form,
+  .radio-new-view .form {
     grid-template-columns: 40% 1fr;
     row-gap: 0;
   }
-  .radio-edit-view dl.form dt,
-  .radio-new-view dl.form dt {
+  .radio-edit-view .form dt,
+  .radio-new-view .form dt {
     justify-content: flex-end;
   }
-  .radio-edit-view dl.form dd,
-  .radio-new-view dl.form dd {
+  .radio-edit-view .form dd,
+  .radio-new-view .form dd {
     margin-bottom: 0;
   }
 }
@@ -901,7 +889,7 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
     max-width: 50%;
   }
 }
-.settings-view table tr td {
+.settings-view .library-info td {
   padding: 15px 0;
   border: 0px solid lime;
 }
@@ -993,14 +981,14 @@ h2 {
   background-color: #111;
 }
 
-nav.topbar-nav a {
+.top-nav-link {
   font-size: 18px;
   letter-spacing: 1px;
   background: linear-gradient(to top, rgba(34, 34, 34, 0.2), rgba(51, 51, 51, 0.1));
   border: 0px solid lime;
 }
 
-nav.topbar-nav {
+.topbar-nav {
   font-size: 0;
 }
 
@@ -1037,7 +1025,7 @@ nav.topbar-nav {
   background-color: #ddd;
 }
 
-.artists-navigation a.active {
+.artists-navigation a.is-active {
   background-color: #ddd;
 }
 
@@ -1058,24 +1046,21 @@ nav.topbar-nav {
 .list tbody tr:nth-child(even) {
   background-color: #f6f6f6;
 }
-.list tbody tr.playing,
-.list tbody tr.selected,
-.list tbody tr.keyboard-selected {
+.list tbody tr.is-playing,
+.list tbody tr.is-selected,
+.list tbody tr.is-keyboard-selected {
   background-color: #ddd;
 }
 
-.songs tbody tr td:nth-child(1), .playlist tbody tr td:nth-child(1) {
+:is(.songs, .playlist) tbody td:nth-child(1) {
   text-align: center;
 }
 
 @media all and (min-width: 1024px) {
-  .songs tbody tr td:nth-child(1),
-  .songs tbody tr td:nth-child(6),
-  .songs tbody tr td:nth-child(7),
-  .songs tbody tr td:nth-child(8), .playlist tbody tr td:nth-child(1),
-  .playlist tbody tr td:nth-child(6),
-  .playlist tbody tr td:nth-child(7),
-  .playlist tbody tr td:nth-child(8) {
+  :is(.songs, .playlist) tbody td:nth-child(1),
+  :is(.songs, .playlist) tbody td:nth-child(6),
+  :is(.songs, .playlist) tbody td:nth-child(7),
+  :is(.songs, .playlist) tbody td:nth-child(8) {
     text-align: center;
   }
 }
@@ -1110,18 +1095,18 @@ nav.topbar-nav {
   font-size: 50px;
 }
 
-.radio-edit-view dl.form dt,
-.radio-new-view dl.form dt {
+.radio-edit-view .form dt,
+.radio-new-view .form dt {
   font-weight: 700;
   text-align: right;
 }
 
-.radio-edit-view dl.form dd input[type=text],
-.radio-edit-view dl.form dd input[type=url],
-.radio-new-view dl.form dd input[type=text],
-.radio-new-view dl.form dd input[type=url],
-table.form tr td input[type=text],
-table.form tr td input[type=url] {
+.radio-edit-view .form input[type=text],
+.radio-edit-view .form input[type=url],
+.radio-new-view .form input[type=text],
+.radio-new-view .form input[type=url],
+table.form input[type=text],
+table.form input[type=url] {
   font-size: 1.2em;
   line-height: 40px;
 }
@@ -1140,12 +1125,12 @@ table.form tr td input[type=url] {
   .radio:nth-child(4n+3) {
     background-color: #f6f6f6;
   }
-  .radio:nth-child(4n+2).active-radio,
-  .radio:nth-child(4n+3).active-radio {
+  .radio:nth-child(4n+2).is-active-radio,
+  .radio:nth-child(4n+3).is-active-radio {
     background-color: #ddd;
   }
 }
-.settings-view table tr td:nth-child(even) {
+.settings-view .settings-value {
   text-align: right;
 }
 .settings-view .button-wrapper {

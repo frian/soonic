@@ -1,4 +1,4 @@
-@use '../config' as config;
+@use '../config/layout' as config;
 
 .radio {
     position: relative;
@@ -85,7 +85,7 @@
 
 .radio-edit-view,
 .radio-new-view {
-    dl.form {
+    .form {
         display: grid;
         grid-template-columns: 1fr;
 
@@ -96,31 +96,31 @@
         row-gap: 6px;
     }
 
-    dl.form dt,
-    dl.form dd {
+    .form dt,
+    .form dd {
         margin: 0;
         padding: 15px;
     }
 
-    dl.form dt {
+    .form dt {
         display: flex;
 
         align-items: center;
         justify-content: flex-start;
     }
 
-    dl.form dd {
+    .form dd {
         margin-bottom: 12px;
     }
 
-    dl.form dd input[type='text'],
-    dl.form dd input[type='url'] {
+    .form input[type='text'],
+    .form input[type='url'] {
         box-sizing: border-box;
         width: 80%;
         height: 40px;
     }
 
-    dl.form dd .radio-stream-check-actions {
+    .radio-stream-check-actions {
         display: flex;
         flex-wrap: wrap;
 
@@ -131,17 +131,17 @@
         align-items: center;
     }
 
-    dl.form dd .radio-stream-check-button {
+    .radio-stream-check-button {
         white-space: nowrap;
     }
 
-    dl.form dd .radio-stream-check-result {
+    .radio-stream-check-result {
         min-height: 1.4em;
 
         text-align: left;
     }
 
-    dl.form dd.button-row {
+    .form .button-row {
         grid-column: 1 / -1;
 
         padding-top: 20px;
@@ -239,17 +239,17 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 
     .radio-edit-view,
     .radio-new-view  {
-        dl.form {
+        .form {
             grid-template-columns: 40% 1fr;
 
             row-gap: 0;
         }
 
-        dl.form dt {
+        .form dt {
             justify-content: flex-end;
         }
 
-        dl.form dd {
+        .form dd {
             margin-bottom: 0;
         }
     }

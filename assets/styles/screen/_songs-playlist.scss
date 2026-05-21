@@ -1,7 +1,7 @@
 @use '../config/layout' as config;
 @use '../config/screen' as theme;
 
-.artists-navigation a.active {
+.artists-navigation a.is-active {
     background-color: theme.$hover-active;
 }
 
@@ -12,7 +12,7 @@
 }
 
 .mobile-button {
-    line-height: config.$mobileButtonSize;
+    line-height: config.$mobile-button-size;
     text-align: center;
 
     background-color: theme.$mobile-button-bg;
@@ -29,30 +29,22 @@
         }
     }
 
-    tbody tr.playing,
-    tbody tr.selected,
-    tbody tr.keyboard-selected {
+    tbody tr.is-playing,
+    tbody tr.is-selected,
+    tbody tr.is-keyboard-selected {
         background-color: theme.$hover-active;
     }
 }
 
-.songs tbody, .playlist tbody {
-    tr {
-        td:nth-child(1) {
-            text-align: center;
-        }
-    }
+:is(.songs, .playlist) tbody td:nth-child(1) {
+    text-align: center;
 }
 
 @include config.up(md) {
-    .songs tbody, .playlist tbody {
-        tr {
-            td:nth-child(1),
-            td:nth-child(6),
-            td:nth-child(7),
-            td:nth-child(8) {
-                text-align: center;
-            }
-        }
+    :is(.songs, .playlist) tbody td:nth-child(1),
+    :is(.songs, .playlist) tbody td:nth-child(6),
+    :is(.songs, .playlist) tbody td:nth-child(7),
+    :is(.songs, .playlist) tbody td:nth-child(8) {
+        text-align: center;
     }
 }

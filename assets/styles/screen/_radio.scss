@@ -14,18 +14,18 @@
     font-size: 50px;
 }
 
-.radio-edit-view dl.form dt,
-.radio-new-view dl.form dt {
+.radio-edit-view .form dt,
+.radio-new-view .form dt {
     font-weight: 700;
     text-align: right;
 }
 
-.radio-edit-view dl.form dd input[type='text'],
-.radio-edit-view dl.form dd input[type='url'],
-.radio-new-view dl.form dd input[type='text'],
-.radio-new-view dl.form dd input[type='url'],
-table.form tr td input[type='text'],
-table.form tr td input[type='url'] {
+.radio-edit-view .form input[type='text'],
+.radio-edit-view .form input[type='url'],
+.radio-new-view .form input[type='text'],
+.radio-new-view .form input[type='url'],
+table.form input[type='text'],
+table.form input[type='url'] {
     font-size: 1.2em;
     line-height: 40px;
 }
@@ -47,8 +47,8 @@ table.form tr td input[type='url'] {
         background-color: theme.$bg-alternate;
     }
 
-    .radio:nth-child(4n+2).active-radio,
-    .radio:nth-child(4n+3).active-radio {
+    .radio:nth-child(4n+2).is-active-radio,
+    .radio:nth-child(4n+3).is-active-radio {
         background-color: theme.$hover-active;
     }
 

@@ -2,6 +2,12 @@ $(function() {
     'use strict';
 
     const debug = false;
+    const uiStates = window.SoonicUiStates;
+    const uiSelectors = window.SoonicUiSelectors;
+    if (!uiStates || !uiSelectors) {
+        console.error('[Soonic] Missing UI globals in player.js (SoonicUiStates/SoonicUiSelectors).');
+        return;
+    }
 
     let playerStatus = "paused";
     let contextMenuClickTimer = null;
@@ -21,16 +27,16 @@ $(function() {
     /**
      * load and play a song from the songs list or the playlist
      */
-    $(document).on("click", "#songs tbody tr, #playlist tbody tr", function(e) {
+    $(document).on("click", uiSelectors.songRows, function(e) {
 
         logDebug('clicked on a song');
 
-        $("tbody .playing").removeClass('playing');
-        $("#songs tbody tr.keyboard-selected, #playlist tbody tr.keyboard-selected").removeClass("keyboard-selected");
+        $("tbody ." + uiStates.playing).removeClass(uiStates.playing);
+        $(uiSelectors.keyboardSelectedSongRows).removeClass(uiStates.keyboardSelected);
         activePlaybackScope = "#" + $(this).closest("table").attr("id") + " tbody";
         loadSong($(this));
         playerStatus = "playing";
-        $(this).addClass('playing');
+        $(this).addClass(uiStates.playing);
 
         $('#play-pause-button').removeClass('icon-play').addClass('icon-pause');
 
@@ -42,21 +48,21 @@ $(function() {
     /**
      * Context menu
      */
-    $(document).on("contextmenu", "#songs tbody tr, #playlist tbody tr", function(e) {
+    $(document).on("contextmenu", uiSelectors.songRows, function(e) {
 
         e.preventDefault();
 
         const $currentItem = $(this);
 
         // -- if we right-clic two times, remove class and listener
-        $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
+        $(uiSelectors.selectedSongRows).removeClass(uiStates.selected);
         $(document).off("click.playlistContext");
         if (contextMenuClickTimer) {
             clearTimeout(contextMenuClickTimer);
             contextMenuClickTimer = null;
         }
 
-        $currentItem.addClass("selected");
+        $currentItem.addClass(uiStates.selected);
 
         let contextMenu = '.songs-context-menu';
         const tableId = $currentItem.closest('table').attr('id');
@@ -72,13 +78,13 @@ $(function() {
         contextMenuClickTimer = setTimeout(function() {
             $(document).one("click.playlistContext", function(e) {
                 const $target = $(e.target).closest("#add-to-playlist, #remove-from-playlist");
-                const $selected = $("#songs tbody tr.selected, #playlist tbody tr.selected").first();
+                const $selected = $(uiSelectors.selectedSongRows).first();
 
                 if ($target.length && $selected.length) {
                     if ($target.is("#add-to-playlist")) {
                         if (!addSongToPlaylist($selected)) {
                             $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
-                            $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
+                            $(uiSelectors.selectedSongRows).removeClass(uiStates.selected);
                             return;
                         }
                     }
@@ -90,7 +96,7 @@ $(function() {
                 }
 
                 $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
-                $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
+                $(uiSelectors.selectedSongRows).removeClass(uiStates.selected);
             });
         }, 100);
     });
@@ -242,7 +248,7 @@ $(function() {
             return;
         }
 
-        $albumRows.removeClass("playing");
+        $albumRows.removeClass(uiStates.playing);
 
         if (!path) {
             return;
@@ -250,7 +256,7 @@ $(function() {
 
         $albumRows.filter(function() {
             return $(this).data("path") === path;
-        }).first().addClass("playing");
+        }).first().addClass(uiStates.playing);
     }
 
     function showPlaylistFlash(action, options) {
@@ -396,10 +402,10 @@ $(function() {
         } else {
             $copy = $sourceRow.clone();
             const $icon = $copy.find(".icon-plus");
-            if ($copy.hasClass('playing')) {
-                $copy.removeClass('playing');
+            if ($copy.hasClass(uiStates.playing)) {
+                $copy.removeClass(uiStates.playing);
             }
-            $copy.removeClass("selected");
+            $copy.removeClass(uiStates.selected);
             $icon.attr('class', 'icon-minus');
         }
 
@@ -506,7 +512,7 @@ $(function() {
         logDebug('- in playNext');
 
         const playbackScopeSelector = getPlaybackScopeSelector();
-        const $playingRows = $(playbackScopeSelector + " .playing");
+        const $playingRows = $(playbackScopeSelector + " ." + uiStates.playing);
 
         if ($playingRows.length) {
 
@@ -528,8 +534,8 @@ $(function() {
             }
 
             if (next.length) {
-                current.removeClass('playing');
-                next.addClass('playing');
+                current.removeClass(uiStates.playing);
+                next.addClass(uiStates.playing);
                 loadSong(next);
             }
             else {

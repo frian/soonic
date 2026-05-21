@@ -34,19 +34,19 @@ test('ajax navigation updates document title from visible view metadata', async 
 
     await assertTitleMatchesView(page, '.library-view [data-page-title]');
 
-    await page.locator('#albums-button').click();
+    await page.locator('.albums-button').click();
     await expect(page.locator('.albums-view')).toBeVisible();
     await assertTitleMatchesView(page, '.albums-view');
 
-    await page.locator('#library-button').click();
+    await page.locator('.library-button').click();
     await expect(page.locator('.library-view')).toBeVisible();
     await assertTitleMatchesView(page, '.library-view [data-page-title]');
 
-    await page.locator('#radio-button').click();
+    await page.locator('.radio-button').click();
     await expect(page.locator('.radios-view')).toBeVisible();
     await assertTitleMatchesView(page, '.radios-view');
 
-    await page.locator('#settings-button').click();
+    await page.locator('.settings-button').click();
     await expect(page.locator('.settings-view')).toBeVisible();
     await assertTitleMatchesView(page, '.settings-view');
 });
@@ -55,11 +55,11 @@ test('ajax history back and forward keep URL and document title in sync', async 
     await page.goto('/');
     await assertTitleMatchesView(page, '.library-view [data-page-title]');
 
-    await page.locator('#albums-button').click();
+    await page.locator('.albums-button').click();
     await expect(page).toHaveURL(/\/album\/$/);
     await assertTitleMatchesView(page, '.albums-view');
 
-    await page.locator('#radio-button').click();
+    await page.locator('.radio-button').click();
     await expect(page).toHaveURL(/\/radio\/$/);
     await assertTitleMatchesView(page, '.radios-view');
 
@@ -90,7 +90,7 @@ test('saving settings refreshes topbar through update fragment endpoint', async 
     });
 
     await page.goto('/');
-    await page.locator('#settings-button').click();
+    await page.locator('.settings-button').click();
     await expect(page.locator('.settings-view')).toBeVisible();
 
     await page.evaluate(function() {
@@ -111,8 +111,8 @@ test('saving settings refreshes topbar through update fragment endpoint', async 
 
     // On settings view, only library/albums/radios should stay visible in topbar.
     await assertTopbarNavState(page, {
-        visible: ['#navigation-library', '#navigation-albums', '#navigation-radios'],
-        hidden: ['#navigation-settings', '#navigation-random', '#navigation-search-form', '#navigation-radio-new']
+        visible: ['.navigation-library', '.navigation-albums', '.navigation-radios'],
+        hidden: ['.navigation-settings', '.navigation-random', '.navigation-search-form', '.navigation-radio-new']
     });
 
     await expect(page.locator('.icon-to-start')).toHaveAttribute('aria-label', /.+/);
@@ -129,11 +129,11 @@ test('topbar nav state stays coherent across settings save and next navigations'
 
     await page.goto('/');
 
-    await page.locator('#settings-button').click();
+    await page.locator('.settings-button').click();
     await expect(page.locator('.settings-view')).toBeVisible();
     await assertTopbarNavState(page, {
-        visible: ['#navigation-library', '#navigation-albums', '#navigation-radios'],
-        hidden: ['#navigation-settings', '#navigation-random', '#navigation-search-form', '#navigation-radio-new']
+        visible: ['.navigation-library', '.navigation-albums', '.navigation-radios'],
+        hidden: ['.navigation-settings', '.navigation-random', '.navigation-search-form', '.navigation-radio-new']
     });
 
     await page.locator('#settings-form-button').click();
@@ -142,15 +142,15 @@ test('topbar nav state stays coherent across settings save and next navigations'
     }).toBeGreaterThan(0);
     await expect(page.locator('.settings-view')).toBeVisible();
     await assertTopbarNavState(page, {
-        visible: ['#navigation-library', '#navigation-albums', '#navigation-radios'],
-        hidden: ['#navigation-settings', '#navigation-random', '#navigation-search-form', '#navigation-radio-new']
+        visible: ['.navigation-library', '.navigation-albums', '.navigation-radios'],
+        hidden: ['.navigation-settings', '.navigation-random', '.navigation-search-form', '.navigation-radio-new']
     });
 
-    await page.locator('#library-button').click();
+    await page.locator('.library-button').click();
     await expect(page.locator('.library-view')).toBeVisible();
     await assertTopbarNavState(page, {
-        visible: ['#navigation-random', '#navigation-albums', '#navigation-radios', '#navigation-settings', '#navigation-search-form'],
-        hidden: ['#navigation-library', '#navigation-radio-new']
+        visible: ['.navigation-random', '.navigation-albums', '.navigation-radios', '.navigation-settings', '.navigation-search-form'],
+        hidden: ['.navigation-library', '.navigation-radio-new']
     });
 });
 
@@ -164,7 +164,7 @@ test('ajax navigation redirects to error page on fatal load error', async ({ pag
     });
 
     await page.goto('/');
-    await page.locator('#albums-button').click();
+    await page.locator('.albums-button').click();
 
     await expect(page).toHaveURL(/\/error\/503$/);
 });
@@ -179,7 +179,7 @@ test('ajax random load error shows flash message without redirect', async ({ pag
     });
 
     await page.goto('/');
-    await page.locator('#random-button').click();
+    await page.locator('.random-button').click();
 
     await expect(page.locator('#ajax-flash-message')).toBeVisible();
     await expect(page.locator('#ajax-flash-message')).toHaveText('Unable to load random songs.');
@@ -197,7 +197,7 @@ test('search ajax error shows flash message without redirect', async ({ page }) 
 
     await page.goto('/');
     await page.locator('#form-keyword').fill('radio');
-    await page.locator('#search-form').dispatchEvent('submit');
+    await page.locator('.search-form').dispatchEvent('submit');
 
     await expect(page.locator('#ajax-flash-message')).toHaveText('Unable to load search results.');
     await expect(page).toHaveURL(/\/$/);
@@ -220,9 +220,12 @@ test('album actions work when landing directly on album page', async ({ page }) 
     const albumSongsCount = await page.locator('.album-songs tbody tr').count();
     test.skip(albumSongsCount === 0, 'Selected album has no songs in the current fixture.');
 
-    await page.locator('.play-album').click();
+    const playAlbumButton = page.locator('.play-album').first();
+    await playAlbumButton.evaluate(function(button) {
+        button.click();
+    });
     await expect(page.locator('#songs tbody tr')).toHaveCount(albumSongsCount);
-    await expect(page.locator('#songs tbody tr.playing')).toHaveCount(1);
+    await expect(page.locator('#songs tbody tr.is-playing')).toHaveCount(1);
 
     await page.locator('.add-album-to-playlist').click();
     await expect(page.locator('#playlist tbody tr')).toHaveCount(albumSongsCount);

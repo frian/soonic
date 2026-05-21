@@ -15,6 +15,19 @@
   ],
   "rules": {
     "no-descending-specificity": null,
+    "max-nesting-depth": 4,
+    "selector-max-specificity": "1,5,2",
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": [
+          "attribute",
+          "class"
+        ]
+      }
+    ],
+    "declaration-no-important": true,
+    "selector-max-id": 1,
     "declaration-empty-line-before": null,
     "media-feature-range-notation": "prefix",
     "selector-class-pattern": [

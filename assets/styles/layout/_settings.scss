@@ -1,14 +1,10 @@
 @use '../config/layout' as config;
 
 .settings-view {
-    table {
-        tr {
-            td {
-                padding: 15px 0;
+    .library-info td {
+        padding: 15px 0;
 
-                border: #{config.$debug}px solid lime;
-            }
-        }
+        border: #{config.$debug}px solid lime;
     }
 
     .settings {

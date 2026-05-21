@@ -6,10 +6,14 @@
 }
 
 .artists-navigation a {
-    line-height: config.$mobileButtonSize;
+    line-height: config.$mobile-button-size;
 
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    @if config.$debug != 0 {
+        background-color: #500;
+    }
 }
 
 @include config.up(md) {

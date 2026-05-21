@@ -1,4 +1,4 @@
-@use '../config' as config;
+@use '../config/layout' as config;
 
 .artists-navigation {
     a {
@@ -6,15 +6,12 @@
 
         box-sizing: border-box;
         width: 100%;
-        height: config.$mobileButtonSize;
+        height: config.$mobile-button-size;
 
         padding: 0 10px;
 
         overflow: hidden;
 
-        @if config.$debug != 0 {
-            background-color: #500;
-        }
     }
 }
 

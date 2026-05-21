@@ -1,7 +1,7 @@
 @use '../config/layout' as config;
 @use '../config/screen' as theme;
 
-nav.topbar-nav a {
+.top-nav-link {
     font-size: 18px;
 
     letter-spacing: 1px;
@@ -10,6 +10,10 @@ nav.topbar-nav a {
     border: #{config.$debug}px solid lime;
 }
 
-nav.topbar-nav {
+.topbar-nav {
     font-size: 0;
+
+    @if config.$debug != 0 {
+        background-color: #666;
+    }
 }

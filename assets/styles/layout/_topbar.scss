@@ -1,4 +1,4 @@
-@use '../config' as config;
+@use '../config/layout' as config;
 
 .topbar {
     div {
@@ -19,7 +19,7 @@
     }
 }
 
-#search-form {
+.search-form {
     display: inline-block;
 
     height: config.$topbar-size;
@@ -75,10 +75,6 @@ nav.topbar-nav {
 
     line-height: config.$topbar-size;
 
-    @if config.$debug != 0 {
-        background-color: #666;
-    }
-
     &.is-active {
         display: block;
     }
@@ -115,56 +111,53 @@ ul.top-nav {
 
         width: 100%;
 
-        li {
+        .top-nav-item {
             float: none;
 
             text-align: center;
-
-            a {
-                display: inline-flex;
-
-                width: 100%;
-
-                text-align: left;
-
-                align-items: center;
-                justify-content: flex-start;
-            }
         }
 
-        form {
+        .top-nav-link {
+            display: inline-flex;
+
             width: 100%;
 
-            &#search-form input[type='text'] {
-                box-sizing: border-box;
+            text-align: left;
 
-                // outline-offset: -5px;
-                width: 100%;
-            }
+            align-items: center;
+            justify-content: flex-start;
+        }
 
-            input[type='submit'] {
-                float: right;
-            }
+        .search-form {
+            width: 100%;
+        }
+
+        .search-form .filter-input {
+            box-sizing: border-box;
+
+            width: 100%;
+        }
+
+        .search-form input[type='submit'] {
+            float: right;
         }
     }
 
-    li {
+    .top-nav-item {
         float: left;
     }
 }
 
 
 body.route-settings-index {
-    #navigation-settings {
-        display: none !important;
+    .navigation-settings {
+        display: none;
     }
 }
 
 // -- set menu items visibility
 
-#navigation-library,
-#navigation-radio-new,
-#navigation-back-to-radio-index {
+:is(.navigation-library, .navigation-radio-new) {
     display: none;
 }
 
@@ -174,7 +167,7 @@ body.route-settings-index {
         display: none;
     }
 
-    #search-form input[type="text"] {
+    .search-form input[type="text"] {
         height: 39px;
     }
 

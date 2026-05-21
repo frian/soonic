@@ -2,9 +2,9 @@
 {% set searchLabel = 'search'|trans %}
 
 {% if search_form is defined %}
-{{ form_start(search_form, { attr: { id: 'search-form' }, action: path('search'), method: 'POST' }) }}
+{{ form_start(search_form, { attr: { id: 'search-form', class: 'search-form' }, action: path('search'), method: 'POST' }) }}
 {% else %}
-<form id="search-form" name="search" method="post" action="{{ path('search') }}">
+<form id="search-form" class="search-form" name="search" method="post" action="{{ path('search') }}">
 {% endif %}
 
     <div class="form-element-container">
