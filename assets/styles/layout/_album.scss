@@ -42,6 +42,87 @@
     }
 }
 
+.single-album-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 300px;
+    max-height: min(600px, calc(100vh - 40px));
+
+    overflow: hidden;
+    transform: translate(-50%, -50%);
+
+    .img-wrapper {
+        position: relative;
+
+        width: 100%;
+        height: 0;
+
+        padding-top: 100%;
+    }
+
+    .single-album {
+        position: absolute;
+        top: 0;
+
+        z-index: 100;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    .album-title {
+        padding: 10px 0;
+
+        text-align: center;
+    }
+
+    .album-artist {
+        padding-bottom: 10px;
+
+        text-align: center;
+    }
+
+    .album-songs-section {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .album-songs-wrapper {
+        flex: 1 1 auto;
+        min-height: 0;
+
+        overflow-y: auto;
+    }
+
+    .album-songs {
+        width: 100%;
+
+        table-layout: auto;
+
+        td {
+            padding: 5px;
+        }
+
+        td:nth-child(1),
+        td:nth-child(3) {
+            text-align: center;
+        }
+    }
+
+    .album-actions {
+        margin-bottom: 10px;
+
+        text-align: center;
+    }
+}
+
 @include config.up(xs) {
     .album-container {
         flex-basis: 33.33%;
@@ -66,6 +147,49 @@
 
         width: 20%;
         max-width: 20%;
+    }
+
+    .single-album-container {
+        display: grid;
+
+        grid-template-columns: 600px minmax(0, 1fr);
+        grid-template-rows: auto auto minmax(0, 1fr);
+        gap: 12px 24px;
+
+        width: min(1240px, calc(100% - 40px));
+        height: min(600px, calc(100vh - 40px));
+        max-height: min(600px, calc(100vh - 40px));
+
+        > .img-wrapper {
+            grid-column: 1;
+            grid-row: 1 / 4;
+
+            align-self: start;
+
+            width: 600px;
+            height: 600px;
+
+            padding-top: 0;
+        }
+
+        > .album-title,
+        > .album-artist,
+        > .album-songs-section {
+            grid-column: 2;
+        }
+
+        > .album-title {
+            align-self: end;
+            padding-bottom: 0;
+        }
+
+        > .album-artist {
+            padding-top: 0;
+        }
+
+        > .album-songs-section {
+            min-height: 0;
+        }
     }
 }
 

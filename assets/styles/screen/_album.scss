@@ -1,3 +1,5 @@
+@use '../config/screen' as theme;
+
 .album-container {
     .album-infos {
         font-size: 0.8em;
@@ -20,5 +22,31 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
+    }
+}
+
+.single-album-view {
+    background-color: theme.$album-overlay;
+}
+
+.single-album-container {
+    background: theme.$album-overlay ;
+
+    .album-songs {
+        tbody tr:nth-child(2n) {
+            background-color: theme.$bg-alternate;
+        }
+
+        tbody tr.is-playing {
+            background-color: theme.$active-playing;
+        }
+    }
+
+    .album-artist {
+        border-bottom: 1px solid theme.$border-color;
+    }
+
+    .icon-plus {
+        cursor: pointer;
     }
 }
