@@ -1,5 +1,11 @@
 @use '../config/layout' as config;
 
+%radio-form-input {
+    box-sizing: border-box;
+    width: 80%;
+    height: 40px;
+}
+
 .radio {
     position: relative;
 
@@ -115,9 +121,7 @@
 
     .form input[type='text'],
     .form input[type='url'] {
-        box-sizing: border-box;
-        width: 80%;
-        height: 40px;
+        @extend %radio-form-input;
     }
 
     .radio-stream-check-actions {
@@ -126,7 +130,7 @@
 
         width: 80%;
 
-        gap: 8px;
+        gap: 10px;
 
         align-items: center;
     }
@@ -163,9 +167,7 @@ table.form {
 
             input[type='text'],
             input[type='url'] {
-                box-sizing: border-box;
-                width: 80%;
-                height: 40px;
+                @extend %radio-form-input;
             }
 
             .radio-stream-check-actions {
@@ -174,7 +176,7 @@ table.form {
 
                 width: 80%;
 
-                gap: 8px;
+                gap: 10px;
 
                 align-items: center;
             }

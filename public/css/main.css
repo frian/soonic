@@ -118,7 +118,6 @@ table {
 }
 
 .filter-form .input-reset {
-  top: 5px;
   right: 5px;
 }
 
@@ -224,7 +223,6 @@ table {
   box-sizing: border-box;
   height: 100%;
   line-height: 49px;
-  border: 0px solid red;
   vertical-align: top;
 }
 .topbar .material-icons {
@@ -243,14 +241,12 @@ table {
   width: 130px;
   height: 49px;
   padding: 0 10px;
-  border: 0px solid lime;
   vertical-align: middle;
 }
 .search-form input[type=submit] {
   display: inline-block;
   height: 49px;
   line-height: 49px;
-  border: 0px solid lime;
   vertical-align: top;
 }
 .search-form .input-reset {
@@ -280,8 +276,7 @@ nav.topbar-nav a {
   vertical-align: top;
 }
 nav.topbar-nav .topbar-nav-label {
-  margin-left: 8px;
-  padding-left: 10px;
+  margin-left: 20px;
 }
 
 ul.top-nav {
@@ -507,16 +502,16 @@ body.route-settings-index .navigation-settings {
   height: 48px;
 }
 
-:is(.songs, .playlist) tbody td:nth-child(1) {
+:is(.songs, .playlist) tbody td.col-order {
   width: 48px;
 }
 
-:is(.songs, .playlist) tbody td:nth-child(2),
-:is(.songs, .playlist) tbody td:nth-child(3),
-:is(.songs, .playlist) tbody td:nth-child(5),
-:is(.songs, .playlist) tbody td:nth-child(6),
-:is(.songs, .playlist) tbody td:nth-child(7),
-:is(.songs, .playlist) tbody td:nth-child(8) {
+:is(.songs, .playlist) tbody td.col-state,
+:is(.songs, .playlist) tbody td.col-artist,
+:is(.songs, .playlist) tbody td.col-album,
+:is(.songs, .playlist) tbody td.col-duration,
+:is(.songs, .playlist) tbody td.col-add,
+:is(.songs, .playlist) tbody td.col-remove {
   display: none;
 }
 
@@ -572,29 +567,29 @@ button:active, button:focus {
     top: 0;
     border: 0px solid red;
   }
-  thead tr th:nth-child(1) {
+  thead tr th.col-order {
     width: 15px;
   }
-  thead tr th:nth-child(2) {
+  thead tr th.col-state {
     width: 25px;
   }
-  thead tr th:nth-child(3) {
+  thead tr th.col-artist {
     width: 20%;
   }
-  thead tr th:nth-child(4) {
+  thead tr th.col-title {
     width: 35%;
   }
-  thead tr th:nth-child(5) {
+  thead tr th.col-album {
     width: 20%;
   }
-  thead tr th:nth-child(6) {
+  thead tr th.col-duration {
     width: 60px;
   }
-  thead tr th:nth-child(7) {
+  thead tr th.col-add {
     display: none;
     width: 60px;
   }
-  thead tr th:nth-child(8) {
+  thead tr th.col-remove {
     display: none;
     width: 80px;
   }
@@ -605,29 +600,29 @@ button:active, button:focus {
     text-overflow: ellipsis;
     border: 0px solid red;
   }
-  :is(.songs, .playlist) tbody td:nth-child(1) {
+  :is(.songs, .playlist) tbody td.col-order {
     padding-left: 2px;
   }
-  :is(.songs, .playlist) tbody td:nth-child(2),
-  :is(.songs, .playlist) tbody td:nth-child(3),
-  :is(.songs, .playlist) tbody td:nth-child(5),
-  :is(.songs, .playlist) tbody td:nth-child(6) {
+  :is(.songs, .playlist) tbody td.col-state,
+  :is(.songs, .playlist) tbody td.col-artist,
+  :is(.songs, .playlist) tbody td.col-album,
+  :is(.songs, .playlist) tbody td.col-duration {
     display: table-cell;
   }
-  :is(.songs, .playlist) tbody td:nth-child(7),
-  :is(.songs, .playlist) tbody td:nth-child(8) {
+  :is(.songs, .playlist) tbody td.col-add,
+  :is(.songs, .playlist) tbody td.col-remove {
     display: none;
   }
 }
 @media all and (min-width: 1200px) {
-  thead tr th:nth-child(7) {
+  thead tr th.col-add {
     display: table-cell;
   }
-  thead tr th:nth-child(8) {
+  thead tr th.col-remove {
     display: table-cell;
   }
-  :is(.songs, .playlist) tbody td:nth-child(7),
-  :is(.songs, .playlist) tbody td:nth-child(8) {
+  :is(.songs, .playlist) tbody td.col-add,
+  :is(.songs, .playlist) tbody td.col-remove {
     display: table-cell;
   }
 }
@@ -779,6 +774,16 @@ button:active, button:focus {
     max-width: 12.5%;
   }
 }
+table.form tr td input[type=text],
+table.form tr td input[type=url], .radio-edit-view .form input[type=text],
+.radio-edit-view .form input[type=url],
+.radio-new-view .form input[type=text],
+.radio-new-view .form input[type=url] {
+  box-sizing: border-box;
+  width: 80%;
+  height: 40px;
+}
+
 .radio {
   position: relative;
   box-sizing: border-box;
@@ -860,20 +865,12 @@ button:active, button:focus {
 .radio-new-view .form dd {
   margin-bottom: 12px;
 }
-.radio-edit-view .form input[type=text],
-.radio-edit-view .form input[type=url],
-.radio-new-view .form input[type=text],
-.radio-new-view .form input[type=url] {
-  box-sizing: border-box;
-  width: 80%;
-  height: 40px;
-}
 .radio-edit-view .radio-stream-check-actions,
 .radio-new-view .radio-stream-check-actions {
   display: flex;
   flex-wrap: wrap;
   width: 80%;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
 }
 .radio-edit-view .radio-stream-check-button,
@@ -900,17 +897,11 @@ table.form {
 table.form tr td {
   padding: 15px;
 }
-table.form tr td input[type=text],
-table.form tr td input[type=url] {
-  box-sizing: border-box;
-  width: 80%;
-  height: 40px;
-}
 table.form tr td .radio-stream-check-actions {
   display: flex;
   flex-wrap: wrap;
   width: 80%;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
 }
 table.form tr td .radio-stream-check-button {
@@ -1053,13 +1044,25 @@ h2 {
 }
 
 .button {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Lato, sans-serif;
   font-size: 1em;
   font-weight: normal;
   color: #111;
   background: linear-gradient(to top, rgba(34, 34, 34, 0.2), rgba(51, 51, 51, 0.1));
   cursor: pointer;
   transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.button:focus-visible,
+.top-nav-link:focus-visible,
+.mobile-button:focus-visible {
+  outline: 2px solid #666;
+  outline-offset: 2px;
 }
 
 .hamburger {
@@ -1143,15 +1146,15 @@ h2 {
   background-color: #ddd;
 }
 
-:is(.songs, .playlist) tbody td:nth-child(1) {
+:is(.songs, .playlist) tbody td.col-order {
   text-align: center;
 }
 
 @media all and (min-width: 1024px) {
-  :is(.songs, .playlist) tbody td:nth-child(1),
-  :is(.songs, .playlist) tbody td:nth-child(6),
-  :is(.songs, .playlist) tbody td:nth-child(7),
-  :is(.songs, .playlist) tbody td:nth-child(8) {
+  :is(.songs, .playlist) tbody td.col-order,
+  :is(.songs, .playlist) tbody td.col-duration,
+  :is(.songs, .playlist) tbody td.col-add,
+  :is(.songs, .playlist) tbody td.col-remove {
     text-align: center;
   }
 }

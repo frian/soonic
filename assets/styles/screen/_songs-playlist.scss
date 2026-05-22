@@ -36,15 +36,15 @@
     }
 }
 
-:is(.songs, .playlist) tbody td:nth-child(1) {
+:is(.songs, .playlist) tbody td.col-order {
     text-align: center;
 }
 
 @include config.up(md) {
-    :is(.songs, .playlist) tbody td:nth-child(1),
-    :is(.songs, .playlist) tbody td:nth-child(6),
-    :is(.songs, .playlist) tbody td:nth-child(7),
-    :is(.songs, .playlist) tbody td:nth-child(8) {
+    :is(.songs, .playlist) tbody td.col-order,
+    :is(.songs, .playlist) tbody td.col-duration,
+    :is(.songs, .playlist) tbody td.col-add,
+    :is(.songs, .playlist) tbody td.col-remove {
         text-align: center;
     }
 }

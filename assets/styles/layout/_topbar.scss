@@ -7,24 +7,22 @@
         box-sizing: border-box;
         height: 100%;
 
-        line-height: config.$topbar-size;
-
-        border: #{config.$debug}px solid red;
+        line-height: config.$topbar-content-size;
 
         vertical-align: top;
     }
 
     .material-icons {
-        line-height: config.$topbar-size;
+        line-height: config.$topbar-content-size;
     }
 }
 
 .search-form {
     display: inline-block;
 
-    height: config.$topbar-size;
+    height: config.$topbar-content-size;
 
-    line-height: config.$topbar-size;
+    line-height: config.$topbar-content-size;
 
     vertical-align: top;
 
@@ -34,11 +32,9 @@
         display: inline-block;
 
         width: 130px;
-        height: config.$topbar-size;
+        height: config.$topbar-content-size;
 
         padding: 0 10px;
-
-        border: #{config.$debug}px solid lime;
 
         vertical-align: middle;
     }
@@ -46,11 +42,9 @@
     input[type="submit"] {
         display: inline-block;
 
-        height: config.$topbar-size;
+        height: config.$topbar-content-size;
 
-        line-height: config.$topbar-size;
-
-        border: #{config.$debug}px solid lime;
+        line-height: config.$topbar-content-size;
 
         vertical-align: top;
     }
@@ -71,9 +65,9 @@ nav.topbar-nav {
     display: none;
     float: right;
 
-    height: config.$topbar-size;
+    height: config.$topbar-content-size;
 
-    line-height: config.$topbar-size;
+    line-height: config.$topbar-content-size;
 
     &.is-active {
         display: block;
@@ -83,18 +77,17 @@ nav.topbar-nav {
         display: inline-block;
 
         box-sizing: border-box;
-        height: config.$topbar-size;
+        height: config.$topbar-content-size;
 
         padding: 0 20px;
 
-        line-height: config.$topbar-size;
+        line-height: config.$topbar-content-size;
 
         vertical-align: top;
     }
 
     .topbar-nav-label {
-        margin-left: 8px;
-        padding-left: 10px;
+        margin-left: 20px;
     }
 }
 
@@ -105,7 +98,7 @@ ul.top-nav {
 
     &.is-active {
         position: absolute;
-        top: 50px;  
+        top: config.$topbar-size;  
         left: 0;
         z-index: 20;
 
@@ -168,7 +161,7 @@ body.route-settings-index {
     }
 
     .search-form input[type="text"] {
-        height: 39px;
+        height: config.$topbar-content-size - 10px;
     }
 
     nav.topbar-nav {

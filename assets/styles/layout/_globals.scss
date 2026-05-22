@@ -31,11 +31,11 @@ table {
   display: inline-block;
 
   box-sizing: border-box;
-  height: config.$topbar-size;
+  height: config.$topbar-content-size;
 
   padding: 0 20px;
 
-  line-height: config.$topbar-size;
+  line-height: config.$topbar-content-size;
 
   border: 0;
 }
@@ -77,7 +77,7 @@ table {
 
 .filter-form {
     .input-reset {
-        top: 5px;
+        // top: 5px;
         right: 5px;
     }
 }

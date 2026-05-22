@@ -18,16 +18,16 @@
     height: config.$mobile-button-size;
 }
 
-:is(.songs, .playlist) tbody td:nth-child(1) {
+:is(.songs, .playlist) tbody td.col-order {
     width: config.$mobile-button-size;
 }
 
-:is(.songs, .playlist) tbody td:nth-child(2),
-:is(.songs, .playlist) tbody td:nth-child(3),
-:is(.songs, .playlist) tbody td:nth-child(5),
-:is(.songs, .playlist) tbody td:nth-child(6),
-:is(.songs, .playlist) tbody td:nth-child(7),
-:is(.songs, .playlist) tbody td:nth-child(8) {
+:is(.songs, .playlist) tbody td.col-state,
+:is(.songs, .playlist) tbody td.col-artist,
+:is(.songs, .playlist) tbody td.col-album,
+:is(.songs, .playlist) tbody td.col-duration,
+:is(.songs, .playlist) tbody td.col-add,
+:is(.songs, .playlist) tbody td.col-remove {
     display: none;
 }
 
@@ -102,20 +102,20 @@ button:active, button:focus {
 
                 border: #{config.$debug}px solid red;
             }
-            th:nth-child(1) { width: 15px; }
-            th:nth-child(2) { width: 25px; }
-            th:nth-child(3) { width: 20%; }
-            th:nth-child(4) { width: 35%; }
-            th:nth-child(5) { width: 20%; }
-            th:nth-child(6) { width: 60px; }
+            th.col-order { width: 15px; }
+            th.col-state { width: 25px; }
+            th.col-artist { width: 20%; }
+            th.col-title { width: 35%; }
+            th.col-album { width: 20%; }
+            th.col-duration { width: 60px; }
 
-            th:nth-child(7) {
+            th.col-add {
                 display: none;
 
                 width: 60px;
             }
 
-            th:nth-child(8) {
+            th.col-remove {
                 display: none;
 
                 width: 80px;
@@ -134,19 +134,19 @@ button:active, button:focus {
         border: #{config.$debug}px solid red;
     }
 
-    :is(.songs, .playlist) tbody td:nth-child(1) {
+    :is(.songs, .playlist) tbody td.col-order {
         padding-left: 2px;
     }
 
-    :is(.songs, .playlist) tbody td:nth-child(2),
-    :is(.songs, .playlist) tbody td:nth-child(3),
-    :is(.songs, .playlist) tbody td:nth-child(5),
-    :is(.songs, .playlist) tbody td:nth-child(6) {
+    :is(.songs, .playlist) tbody td.col-state,
+    :is(.songs, .playlist) tbody td.col-artist,
+    :is(.songs, .playlist) tbody td.col-album,
+    :is(.songs, .playlist) tbody td.col-duration {
         display: table-cell;
     }
 
-    :is(.songs, .playlist) tbody td:nth-child(7),
-    :is(.songs, .playlist) tbody td:nth-child(8) {
+    :is(.songs, .playlist) tbody td.col-add,
+    :is(.songs, .playlist) tbody td.col-remove {
         display: none;
     }
 }
@@ -154,18 +154,18 @@ button:active, button:focus {
 @include config.up(lg) {
     thead {
         tr {
-            th:nth-child(7) {
+            th.col-add {
                 display: table-cell;
             }
 
-            th:nth-child(8) {
+            th.col-remove {
                 display: table-cell;
             }
         }
     }
 
-    :is(.songs, .playlist) tbody td:nth-child(7),
-    :is(.songs, .playlist) tbody td:nth-child(8) {
+    :is(.songs, .playlist) tbody td.col-add,
+    :is(.songs, .playlist) tbody td.col-remove {
         display: table-cell;
     }
 }

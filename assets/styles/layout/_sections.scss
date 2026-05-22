@@ -7,7 +7,7 @@
     z-index: 300;
 
     width: 100%;
-    height: config.$topbar-size;
+    height: config.$topbar-content-size;
     border-bottom-width: config.$topbar-border-size;
     border-bottom-style: solid;
 }
@@ -36,11 +36,11 @@
 
 .view {
     position: absolute;
-    top: config.$topbar-size + config.$topbar-border-size;
+    top: config.$topbar-content-size + config.$topbar-border-size;
     left: 0;
 
     width: 100%;
-    height: calc(100% - (#{config.$topbar-size} + #{config.$topbar-border-size}));
+    height: calc(100% - (#{config.$topbar-content-size} + #{config.$topbar-border-size}));
 
     border: #{config.$debug}px solid red;
 }
