@@ -1,3 +1,5 @@
+@use '../config/layout' as config;
+
 /*!
  * Hamburgers
  * @description Tasty CSS-animated hamburgers
@@ -14,7 +16,7 @@
     display: inline-block;
 
     margin: 0;
-    padding: 10px;
+    padding: config.$space-2;
 
     overflow: visible;
 

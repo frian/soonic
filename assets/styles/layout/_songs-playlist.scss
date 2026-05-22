@@ -5,7 +5,7 @@
 
     height: config.$panel-header-height;
 
-    padding-left: 10px;
+    padding-left: config.$space-2;
 }
 
 .songs-container, .playlist-container {
@@ -35,7 +35,7 @@
     thead {
         tr {
             th {
-                padding: 0 10px;
+                padding: 0 config.$space-2;
             }
         }
     }
@@ -43,7 +43,7 @@
     tbody {
         tr {
             td {
-                padding: 5px;
+                padding: config.$space-1;
             }
         }
     }

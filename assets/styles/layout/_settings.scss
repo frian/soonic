@@ -2,7 +2,7 @@
 
 .settings-view {
     .library-info td {
-        padding: 15px 0;
+        padding: config.$space-3 0;
 
         border: #{config.$debug}px solid lime;
     }
@@ -15,7 +15,7 @@
         width: 90%;
         max-width: 400px;
 
-        margin: 20px auto;
+        margin: config.$space-4 auto;
     }
 
 }

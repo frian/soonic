@@ -349,9 +349,8 @@ body.route-settings-index .navigation-settings {
 }
 
 .albums-view {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   overflow-y: scroll;
 }
 
@@ -389,7 +388,20 @@ body.route-settings-index .navigation-settings {
   width: 100%;
 }
 
+@media all and (min-width: 500px) {
+  .albums-view {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media all and (min-width: 700px) {
+  .albums-view {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
 @media all and (min-width: 1024px) {
+  .albums-view {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
   .songs, .playlist {
     display: block;
     height: 50%;
@@ -399,8 +411,16 @@ body.route-settings-index .navigation-settings {
   }
 }
 @media all and (min-width: 1200px) {
+  .albums-view {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
   .artists-navigation {
     width: 360px;
+  }
+}
+@media all and (min-width: 1600px) {
+  .albums-view {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
   }
 }
 .artists-navigation a {
@@ -628,10 +648,7 @@ button:active, button:focus {
 }
 .album-container {
   display: block;
-  flex: 0 0 50%;
   box-sizing: border-box;
-  width: 50%;
-  max-width: 50%;
 }
 .album-container .img-wrapper {
   position: relative;
@@ -714,32 +731,12 @@ button:active, button:focus {
   text-align: center;
 }
 
-@media all and (min-width: 500px) {
-  .album-container {
-    flex-basis: 33.33%;
-    width: 33.33%;
-    max-width: 33.33%;
-  }
-}
-@media all and (min-width: 700px) {
-  .album-container {
-    flex-basis: 25%;
-    width: 25%;
-    max-width: 25%;
-  }
-}
 @media all and (min-width: 1024px) {
-  .album-container {
-    flex-basis: 20%;
-    width: 20%;
-    max-width: 20%;
-  }
   .single-album-container {
     display: grid;
     grid-template-columns: 600px minmax(0, 1fr);
     grid-template-rows: auto auto minmax(0, 1fr);
-    gap: 12px 24px;
-    width: min(1240px, 100% - 40px);
+    width: min(1200px, 100% - 40px);
     height: min(600px, 100vh - 40px);
     max-height: min(600px, 100vh - 40px);
   }
@@ -765,13 +762,6 @@ button:active, button:focus {
   }
   .single-album-container > .album-songs-section {
     min-height: 0;
-  }
-}
-@media all and (min-width: 1600px) {
-  .album-container {
-    flex-basis: 12.5%;
-    width: 12.5%;
-    max-width: 12.5%;
   }
 }
 table.form tr td input[type=text],

@@ -5,16 +5,16 @@ html, body {
 }
 
 h1 {
-    margin-bottom: 30px;
-    padding: 30px 0;
+    margin-bottom: config.$space-5;
+    padding: config.$space-5 0;
 }
 
 h2 {
-    padding: 15px 20px;
+    padding: config.$space-3 config.$space-4;
 }
 
 .empty-list {
-    padding: 20px;
+    padding: config.$space-4;
 }
 
 table {
@@ -33,7 +33,7 @@ table {
   box-sizing: border-box;
   height: config.$topbar-content-size;
 
-  padding: 0 20px;
+  padding: 0 config.$space-4;
 
   line-height: config.$topbar-content-size;
 
@@ -78,6 +78,6 @@ table {
 .filter-form {
     .input-reset {
         // top: 5px;
-        right: 5px;
+        right: config.$space-1;
     }
 }

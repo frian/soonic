@@ -34,7 +34,7 @@
     .radio-name {
         height: 80px;
 
-        padding-left: 30px;
+        padding-left: config.$space-5;
 
         line-height: 80px;
 
@@ -46,7 +46,7 @@
 
         height: 75px;
 
-        padding: 0 10px 0 30px;
+        padding: 0 config.$space-2 0 config.$space-5;
 
         line-height: 75px;
 
@@ -70,8 +70,8 @@
 
     .radio-edit-link {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: config.$space-2;
+        right: config.$space-2;
         z-index: 1;
 
         line-height: 1;
@@ -83,7 +83,7 @@
         text-align: center;
 
         &:nth-child(3) {
-            margin-top: 30px;
+            margin-top: config.$space-5;
         }
     }
 }
@@ -105,7 +105,7 @@
     .form dt,
     .form dd {
         margin: 0;
-        padding: 15px;
+        padding: config.$space-3;
     }
 
     .form dt {
@@ -148,7 +148,7 @@
     .form .button-row {
         grid-column: 1 / -1;
 
-        padding-top: 20px;
+        padding-top: config.$space-4;
 
         text-align: center;
     }
@@ -163,7 +163,7 @@ table.form {
 
     tr {
         td {
-            padding: 15px;
+            padding: config.$space-3;
 
             input[type='text'],
             input[type='url'] {
@@ -199,7 +199,7 @@ table.form {
         }
 
         td.button-row {
-            padding-top: 20px;
+            padding-top: config.$space-4;
 
             text-align: center;
         }

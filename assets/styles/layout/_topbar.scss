@@ -34,7 +34,7 @@
         width: 130px;
         height: config.$topbar-content-size;
 
-        padding: 0 10px;
+        padding: 0 config.$space-2;
 
         vertical-align: middle;
     }
@@ -50,8 +50,8 @@
     }
 
     .input-reset {
-        top: 10px;
-        right: 5px;
+        top: config.$space-2;
+        right: config.$space-1;
     }
 
     .form-element-container {
@@ -79,7 +79,7 @@ nav.topbar-nav {
         box-sizing: border-box;
         height: config.$topbar-content-size;
 
-        padding: 0 20px;
+        padding: 0 config.$space-4;
 
         line-height: config.$topbar-content-size;
 
@@ -87,7 +87,7 @@ nav.topbar-nav {
     }
 
     .topbar-nav-label {
-        margin-left: 20px;
+        margin-left: config.$space-4;
     }
 }
 

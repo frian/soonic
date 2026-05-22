@@ -17,9 +17,8 @@
 }
 
 .albums-view {
-    display: flex;  
-    flex-wrap: wrap;
-    align-content: flex-start;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
     overflow-y: scroll;
 }
@@ -66,7 +65,23 @@
 }
 
 
+@include config.up(xs) {
+    .albums-view {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@include config.up(sm) {
+    .albums-view {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
 @include config.up(md) {
+    .albums-view {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
     .songs, .playlist {
         display: block;
 
@@ -78,9 +93,17 @@
     }
 }
 
-
 @include config.up(lg) {
+    .albums-view {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
     .artists-navigation {
         width: config.$artists-navigation-1200;
+    }
+}
+
+@include config.up(xl) {
+    .albums-view {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
     }
 }

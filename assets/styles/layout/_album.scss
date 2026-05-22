@@ -2,11 +2,8 @@
 
 .album-container {
     display: block;
-    flex: 0 0 50%;
 
     box-sizing: border-box;
-    width: 50%;
-    max-width: 50%;
 
     .img-wrapper {
         position: relative;
@@ -29,13 +26,13 @@
 
     .album-infos {
         .album-info-album {
-            padding: 10px;
+            padding: config.$space-2;
 
             overflow: hidden;
         }
 
         .album-info-artist {
-            padding: 5px 10px 20px;
+            padding: config.$space-1 config.$space-2 config.$space-4;
 
             overflow: hidden;
         }
@@ -76,13 +73,13 @@
     }
 
     .album-title {
-        padding: 10px 0;
+        padding: config.$space-2 0;
 
         text-align: center;
     }
 
     .album-artist {
-        padding-bottom: 10px;
+        padding-bottom: config.$space-2;
 
         text-align: center;
     }
@@ -107,7 +104,7 @@
         table-layout: auto;
 
         td {
-            padding: 5px;
+            padding: config.$space-1;
         }
 
         td:nth-child(1),
@@ -117,46 +114,20 @@
     }
 
     .album-actions {
-        margin-bottom: 10px;
+        margin-bottom: config.$space-2;
 
         text-align: center;
     }
 }
 
-@include config.up(xs) {
-    .album-container {
-        flex-basis: 33.33%;
-
-        width: 33.33%;
-        max-width: 33.33%;
-    }
-}
-
-@include config.up(sm) {
-    .album-container {
-        flex-basis: 25%;
-
-        width: 25%;
-        max-width: 25%;
-    }
-}
-
 @include config.up(md) {
-    .album-container {
-        flex-basis: 20%;
-
-        width: 20%;
-        max-width: 20%;
-    }
-
     .single-album-container {
         display: grid;
 
         grid-template-columns: 600px minmax(0, 1fr);
         grid-template-rows: auto auto minmax(0, 1fr);
-        gap: 12px 24px;
 
-        width: min(1240px, calc(100% - 40px));
+        width: min(1200px, calc(100% - 40px));
         height: min(600px, calc(100vh - 40px));
         max-height: min(600px, calc(100vh - 40px));
 
@@ -190,14 +161,5 @@
         > .album-songs-section {
             min-height: 0;
         }
-    }
-}
-
-@include config.up(xl) {
-    .album-container {
-        flex-basis: 12.5%;
-
-        width: 12.5%;
-        max-width: 12.5%;
     }
 }

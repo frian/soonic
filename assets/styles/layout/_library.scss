@@ -8,7 +8,7 @@
         width: 100%;
         height: config.$mobile-button-size;
 
-        padding: 0 10px;
+        padding: 0 config.$space-2;
 
         overflow: hidden;
 
@@ -21,7 +21,7 @@
 
     height: 40px;
 
-    padding: 0 0 0 10px;
+    padding: 0 0 0 config.$space-2;
 
     line-height: normal;
 
@@ -103,10 +103,10 @@
     .menu-options {
         list-style: none;
 
-        padding: 10px 0;
+        padding: config.$space-2 0;
 
         .menu-option {
-            padding: 10px 40px 10px 20px;
+            padding: config.$space-2 40px config.$space-2 config.$space-4;
         }
     }
 }
@@ -121,7 +121,7 @@
         }
 
         > ul {
-            margin-top: 5px;
+            margin-top: config.$space-1;
         }
     }
 }

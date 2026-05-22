@@ -1,6 +1,13 @@
 @use 'sass:map';
 
 $debug: 0 !default;
+
+$space-1: 5px;
+$space-2: 10px;
+$space-3: 15px;
+$space-4: 20px;
+$space-5: 30px;
+
 $topbar-content-size: 49px !default;
 $topbar-border-size: 1px !default;
 $topbar-size: $topbar-content-size + $topbar-border-size !default;
