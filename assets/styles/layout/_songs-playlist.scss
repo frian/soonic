@@ -20,17 +20,25 @@
     overflow-y: scroll;
 }
 
+:is(#songs, #playlist) {
+    table-layout: auto;
+}
+
 :is(.songs, .playlist) tbody td {
     height: config.$mobile-button-size;
 }
 
 :is(.songs, .playlist) :is(thead th, tbody td).col-add {
     width: config.$mobile-button-size;
-
-
+    min-width: config.$mobile-button-size;
+    max-width: config.$mobile-button-size;
 }
 
-// :is(.songs, .playlist) :is(tbody, thead) th.col-add,
+:is(.songs, .playlist) tbody td.col-title {
+    width: calc(100% - #{config.$mobile-button-size});
+}
+
+:is(.songs, .playlist) :is(tbody, thead) th.col-add,
 :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-track-number,
 :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-artist,
 :is(.songs, .playlist) :is(tbody, thead) th.col-title,
@@ -45,15 +53,7 @@
     thead {
         tr {
             th {
-                // padding: 0 config.$space-2;
-            }
-        }
-    }
-
-    tbody {
-        tr {
-            td {
-                padding: config.$space-1;
+                padding: config.$space-1 0;
             }
         }
     }
@@ -100,6 +100,10 @@ button:active, button:focus {
 
 
 @include config.up(md) {
+    :is(#songs, #playlist) {
+        table-layout: fixed;
+    }
+
     :is(#songs, #playlist) thead {
         display: table-header-group;
 
@@ -149,8 +153,10 @@ button:active, button:focus {
         padding-left: 2px;
     }
 
+    :is(.songs, .playlist) :is(tbody, thead) th.col-add,
     :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-track-number,
     :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-artist,
+    :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-title,
     :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-album,
     :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-duration {
         display: table-cell;
@@ -179,4 +185,15 @@ button:active, button:focus {
     :is(.songs, .playlist) tbody td.col-genre {
         display: table-cell;
     }
+
+    .list {
+        tbody {
+            tr {
+                td {
+                    padding: config.$space-1;
+                }
+            }
+        }
+    }
+    
 }

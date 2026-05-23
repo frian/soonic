@@ -399,6 +399,7 @@ body.route-settings-index .navigation-settings {
 
 .songs, .playlist {
   display: none;
+  height: 100%;
   overflow: hidden;
 }
 .songs table, .playlist table {
@@ -540,14 +541,25 @@ body.route-settings-index .navigation-settings {
   overflow-y: scroll;
 }
 
+:is(#songs, #playlist) {
+  table-layout: auto;
+}
+
 :is(.songs, .playlist) tbody td {
   height: 48px;
 }
 
 :is(.songs, .playlist) :is(thead th, tbody td).col-add {
   width: 48px;
+  min-width: 48px;
+  max-width: 48px;
 }
 
+:is(.songs, .playlist) tbody td.col-title {
+  width: calc(100% - 48px);
+}
+
+:is(.songs, .playlist) :is(tbody, thead) th.col-add,
 :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-track-number,
 :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-artist,
 :is(.songs, .playlist) :is(tbody, thead) th.col-title,
@@ -558,8 +570,8 @@ body.route-settings-index .navigation-settings {
   display: none;
 }
 
-.list tbody tr td {
-  padding: 5px;
+.list thead tr th {
+  padding: 5px 0;
 }
 
 .icon-trash {
@@ -598,6 +610,9 @@ button:active, button:focus {
 }
 
 @media all and (min-width: 1024px) {
+  :is(#songs, #playlist) {
+    table-layout: fixed;
+  }
   :is(#songs, #playlist) thead {
     display: table-header-group;
     width: 100%;
@@ -644,8 +659,10 @@ button:active, button:focus {
   :is(.songs, .playlist) tbody td.col-add {
     padding-left: 2px;
   }
+  :is(.songs, .playlist) :is(tbody, thead) th.col-add,
   :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-track-number,
   :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-artist,
+  :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-title,
   :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-album,
   :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-duration {
     display: table-cell;
@@ -665,6 +682,9 @@ button:active, button:focus {
   :is(.songs, .playlist) tbody td.col-year,
   :is(.songs, .playlist) tbody td.col-genre {
     display: table-cell;
+  }
+  .list tbody tr td {
+    padding: 5px;
   }
 }
 .album-container {
@@ -1135,7 +1155,7 @@ select:focus-visible,
   box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
 }
 .songs-context-menu .menu-options, .playlist-context-menu .menu-options {
-  background-color: #eee;
+  background-color: #fff;
 }
 .songs-context-menu .menu-options .menu-option, .playlist-context-menu .menu-options .menu-option {
   font-family: Muli, sans-serif;
