@@ -37,6 +37,17 @@ $breakpoints: (
     xl: 1600px
 );
 
+$playlist-col-widths: (
+    col-add: 25px,
+    col-track-number: 25px,
+    col-artist: 20%,
+    col-title: 35%,
+    col-album: 20%,
+    col-duration: 60px,
+    col-year: 60px,
+    col-genre: 80px
+);
+
 @mixin up($breakpoint) {
     @if not map.has-key($breakpoints, $breakpoint) {
         @error "Unknown breakpoint `#{$breakpoint}`. Allowed: #{map.keys($breakpoints)}.";

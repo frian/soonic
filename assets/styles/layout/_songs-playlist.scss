@@ -60,33 +60,6 @@
     }
 }
 
-.playlist {
-    .list {
-        thead,
-        thead tr,
-        thead th {
-            visibility: hidden;
-            height: 0;
-            min-height: 0;
-            max-height: 0;
-            padding: 0;
-            border: 0;
-            line-height: 0;
-            font-size: 0;
-            overflow: hidden;
-        }
-    }
-}
-
-.playlist {
-    .list {
-        table {
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-    }
-}
-
 .icon-trash {
     float: right;
 
@@ -128,21 +101,17 @@ button:active, button:focus {
 
 
 @include config.up(md) {
-
-    #playlist col.col-add { width: 25px; }
-    #playlist col.col-track-number { width: 25px; }
-    #playlist col.col-artist { width: 20%; }
-    #playlist col.col-title { width: 35%; }
-    #playlist col.col-album { width: 20%; }
-    #playlist col.col-duration { width: 60px; }
-    #playlist col.col-year { width: 60px; }
-    #playlist col.col-genre { width: 80px; }
+    // --
+    @each $col, $width in config.$playlist-col-widths {
+        :is(#songs, #playlist) thead tr th.#{$col} { width: $width; }
+        #playlist col.#{$col} { width: $width; }
+    }
 
     :is(#songs, #playlist) {
         table-layout: fixed;
     }
 
-    :is(#songs, #playlist) thead {
+    #songs thead {
         display: table-header-group;
 
         width: 100%;
@@ -153,23 +122,12 @@ button:active, button:focus {
                 top: 0;
                 z-index: 1;
             }
-            th.col-add { width: 25px; }
-            th.col-track-number { width: 25px; }
-            th.col-artist { width: 20%; }
-            th.col-title { width: 35%; }
-            th.col-album { width: 20%; }
-            th.col-duration { width: 60px; }
-
             th.col-year {
                 display: none;
-
-                width: 60px;
             }
 
             th.col-genre {
                 display: none;
-
-                width: 80px;
             }
         }
     }

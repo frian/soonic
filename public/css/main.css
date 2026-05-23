@@ -641,25 +641,6 @@ body.route-settings-index .navigation-settings {
   padding: 5px 0;
 }
 
-.playlist .list thead,
-.playlist .list thead tr,
-.playlist .list thead th {
-  visibility: hidden;
-  height: 0;
-  min-height: 0;
-  max-height: 0;
-  padding: 0;
-  border: 0;
-  line-height: 0;
-  font-size: 0;
-  overflow: hidden;
-}
-
-.playlist .list table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
 .icon-trash {
   float: right;
 }
@@ -695,26 +676,50 @@ button:active, button:focus {
 }
 
 @media all and (min-width: 1024px) {
+  :is(#songs, #playlist) thead tr th.col-add {
+    width: 25px;
+  }
   #playlist col.col-add {
+    width: 25px;
+  }
+  :is(#songs, #playlist) thead tr th.col-track-number {
     width: 25px;
   }
   #playlist col.col-track-number {
     width: 25px;
   }
+  :is(#songs, #playlist) thead tr th.col-artist {
+    width: 20%;
+  }
   #playlist col.col-artist {
     width: 20%;
+  }
+  :is(#songs, #playlist) thead tr th.col-title {
+    width: 35%;
   }
   #playlist col.col-title {
     width: 35%;
   }
+  :is(#songs, #playlist) thead tr th.col-album {
+    width: 20%;
+  }
   #playlist col.col-album {
     width: 20%;
+  }
+  :is(#songs, #playlist) thead tr th.col-duration {
+    width: 60px;
   }
   #playlist col.col-duration {
     width: 60px;
   }
+  :is(#songs, #playlist) thead tr th.col-year {
+    width: 60px;
+  }
   #playlist col.col-year {
     width: 60px;
+  }
+  :is(#songs, #playlist) thead tr th.col-genre {
+    width: 80px;
   }
   #playlist col.col-genre {
     width: 80px;
@@ -722,40 +727,20 @@ button:active, button:focus {
   :is(#songs, #playlist) {
     table-layout: fixed;
   }
-  :is(#songs, #playlist) thead {
+  #songs thead {
     display: table-header-group;
     width: 100%;
   }
-  :is(#songs, #playlist) thead tr th {
+  #songs thead tr th {
     position: sticky;
     top: 0;
     z-index: 1;
   }
-  :is(#songs, #playlist) thead tr th.col-add {
-    width: 25px;
-  }
-  :is(#songs, #playlist) thead tr th.col-track-number {
-    width: 25px;
-  }
-  :is(#songs, #playlist) thead tr th.col-artist {
-    width: 20%;
-  }
-  :is(#songs, #playlist) thead tr th.col-title {
-    width: 35%;
-  }
-  :is(#songs, #playlist) thead tr th.col-album {
-    width: 20%;
-  }
-  :is(#songs, #playlist) thead tr th.col-duration {
-    width: 60px;
-  }
-  :is(#songs, #playlist) thead tr th.col-year {
+  #songs thead tr th.col-year {
     display: none;
-    width: 60px;
   }
-  :is(#songs, #playlist) thead tr th.col-genre {
+  #songs thead tr th.col-genre {
     display: none;
-    width: 80px;
   }
   :is(.songs, .playlist) tbody td {
     height: 22px;
