@@ -31,11 +31,11 @@ table {
   display: inline-block;
 
   box-sizing: border-box;
-  height: config.$topbar-content-size;
+  height: config.$topbar-content-size-touch;
 
   padding: 0 config.$space-4;
 
-  line-height: config.$topbar-content-size;
+  line-height: config.$topbar-content-size-touch;
 
   border: 0;
 }
@@ -101,4 +101,13 @@ table {
 
     pointer-events: none;
     transform: translateX(-50%);
+}
+
+
+@include config.up(md) {
+    .button {
+        height: config.$topbar-content-size;
+
+        line-height: config.$topbar-content-size;
+    }
 }

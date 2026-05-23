@@ -7,137 +7,138 @@
         box-sizing: border-box;
         height: 100%;
 
-        line-height: config.$topbar-content-size;
+        line-height: config.$topbar-content-size-touch;
 
         vertical-align: top;
     }
 
     .material-icons {
-        line-height: config.$topbar-content-size;
-    }
-}
-
-.search-form {
-    display: inline-block;
-
-    height: config.$topbar-content-size;
-
-    line-height: config.$topbar-content-size;
-
-    vertical-align: top;
-
-    input[type="text"] {
-        position: relative;
-
-        display: inline-block;
-
-        width: 130px;
-        height: config.$topbar-content-size;
-
-        padding: 0 config.$space-2;
-
-        vertical-align: middle;
+        line-height: config.$topbar-content-size-touch;
     }
 
-    input[type="submit"] {
+
+    .search-form {
         display: inline-block;
 
-        height: config.$topbar-content-size;
+        height: config.$topbar-content-size-touch;
 
-        line-height: config.$topbar-content-size;
+        line-height: config.$topbar-content-size-touch;
 
         vertical-align: top;
+
+        input[type="text"] {
+            position: relative;
+
+            display: inline-block;
+
+            width: 130px;
+            height: config.$topbar-content-size-touch;
+
+            padding: 0 config.$space-2;
+
+            vertical-align: middle;
+        }
+
+        input[type="submit"] {
+            display: inline-block;
+
+            height: config.$topbar-content-size-touch;
+
+            line-height: config.$topbar-content-size-touch;
+
+            vertical-align: top;
+        }
+
+        .input-reset {
+            top: config.$space-2;
+            right: config.$space-1;
+        }
+
+        .form-element-container {
+            position: relative;
+
+            display: inline-block;
+        }
     }
 
-    .input-reset {
-        top: config.$space-2;
-        right: config.$space-1;
+    nav.topbar-nav {
+        display: none;
+        float: right;
+
+        height: config.$topbar-content-size-touch;
+
+        line-height: config.$topbar-content-size-touch;
+
+        &.is-active {
+            display: block;
+        }
+
+        a {
+            display: inline-block;
+
+            box-sizing: border-box;
+            height: config.$topbar-content-size-touch;
+
+            padding: 0 config.$space-4;
+
+            line-height: config.$topbar-content-size-touch;
+
+            vertical-align: top;
+        }
+
+        .topbar-nav-label {
+            margin-left: config.$space-4;
+        }
     }
 
-    .form-element-container {
+    ul.top-nav {
         position: relative;
-
-        display: inline-block;
-    }
-}
-
-nav.topbar-nav {
-    display: none;
-    float: right;
-
-    height: config.$topbar-content-size;
-
-    line-height: config.$topbar-content-size;
-
-    &.is-active {
-        display: block;
-    }
-
-    a {
-        display: inline-block;
-
-        box-sizing: border-box;
-        height: config.$topbar-content-size;
-
-        padding: 0 config.$space-4;
-
-        line-height: config.$topbar-content-size;
-
-        vertical-align: top;
-    }
-
-    .topbar-nav-label {
-        margin-left: config.$space-4;
-    }
-}
-
-ul.top-nav {
-    position: relative;
-
-    width: 100%;
-
-    &.is-active {
-        position: absolute;
-        top: config.$topbar-size;  
-        left: 0;
-        z-index: 20;
 
         width: 100%;
 
+        &.is-active {
+            position: absolute;
+            top: config.$topbar-size-touch;  
+            left: 0;
+            z-index: 20;
+
+            width: 100%;
+
+            .top-nav-item {
+                float: none;
+
+                text-align: center;
+            }
+
+            .top-nav-link {
+                display: inline-flex;
+
+                width: 100%;
+
+                text-align: left;
+
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .search-form {
+                width: 100%;
+            }
+
+            .search-form .filter-input {
+                box-sizing: border-box;
+
+                width: 100%;
+            }
+
+            .search-form input[type='submit'] {
+                float: right;
+            }
+        }
+
         .top-nav-item {
-            float: none;
-
-            text-align: center;
+            float: left;
         }
-
-        .top-nav-link {
-            display: inline-flex;
-
-            width: 100%;
-
-            text-align: left;
-
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .search-form {
-            width: 100%;
-        }
-
-        .search-form .filter-input {
-            box-sizing: border-box;
-
-            width: 100%;
-        }
-
-        .search-form input[type='submit'] {
-            float: right;
-        }
-    }
-
-    .top-nav-item {
-        float: left;
     }
 }
 
@@ -156,6 +157,47 @@ body.route-settings-index {
 
 
 @include config.up(md) {
+
+    .topbar {
+        div {
+            line-height: config.$topbar-content-size;
+        }
+
+        .material-icons {
+            line-height: config.$topbar-content-size;
+        }
+
+        .search-form {
+            height: config.$topbar-content-size;
+            line-height: config.$topbar-content-size;
+
+            input[type="text"] {
+                height: config.$topbar-content-size;
+            }
+
+            input[type="submit"] {
+                height: config.$topbar-content-size;
+                line-height: config.$topbar-content-size;
+            }
+        }
+
+        nav.topbar-nav {
+            height: config.$topbar-content-size;
+            line-height: config.$topbar-content-size;
+
+            a {
+                height: config.$topbar-content-size;
+                line-height: config.$topbar-content-size;
+            }
+        }
+
+        ul.top-nav {
+            &.is-active {
+                top: config.$topbar-size-touch;  
+            }
+        }
+    }
+
     .hamburger {
         display: none;
     }

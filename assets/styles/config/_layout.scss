@@ -6,11 +6,15 @@ $space-1: 5px;
 $space-2: 10px;
 $space-3: 15px;
 $space-4: 20px;
-$space-5: 30px;
+$space-5: 30px; 
 
 $topbar-content-size: 49px !default;
 $topbar-border-size: 1px !default;
-$topbar-size: $topbar-content-size + $topbar-border-size !default;
+$topbar-size: $topbar-content-size + $topbar-border-size;
+
+$topbar-content-size-touch: 59px !default;
+$topbar-border-size-touch: 1px !default;
+$topbar-size-touch: $topbar-content-size-touch + $topbar-border-size-touch;
 
 $mobile-button-size: 48px !default;
 
