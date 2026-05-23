@@ -25,13 +25,14 @@
 }
 
 :is(.songs, .playlist) tbody td {
-    height: config.$mobile-button-size;
+    height: config.$mobile-line-height;
 }
 
 :is(.songs, .playlist) :is(thead th, tbody td).col-add {
     width: config.$mobile-button-size;
-    min-width: config.$mobile-button-size;
-    max-width: config.$mobile-button-size;
+    // cursor: pointer;
+    // min-width: config.$mobile-button-size;
+    // max-width: config.$mobile-button-size;
 }
 
 :is(.songs, .playlist) tbody td.col-title {
@@ -59,10 +60,37 @@
     }
 }
 
+.playlist {
+    .list {
+        thead,
+        thead tr,
+        thead th {
+            visibility: hidden;
+            height: 0;
+            min-height: 0;
+            max-height: 0;
+            padding: 0;
+            border: 0;
+            line-height: 0;
+            font-size: 0;
+            overflow: hidden;
+        }
+    }
+}
+
+.playlist {
+    .list {
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+    }
+}
+
 .icon-trash {
     float: right;
 
-    cursor: pointer;
+    // cursor: pointer;
 }
 
 /*
@@ -71,7 +99,7 @@
 
 .mobile-button {
     position: fixed;
-    top: calc(100% - #{config.$mobile-button-size}); // calc(100% - 100px) for debug
+    top: calc(100% - #{config.$mobile-button-size});
 
     width: config.$mobile-button-size;
     height: config.$mobile-button-size;
@@ -100,6 +128,16 @@ button:active, button:focus {
 
 
 @include config.up(md) {
+
+    #playlist col.col-add { width: 25px; }
+    #playlist col.col-track-number { width: 25px; }
+    #playlist col.col-artist { width: 20%; }
+    #playlist col.col-title { width: 35%; }
+    #playlist col.col-album { width: 20%; }
+    #playlist col.col-duration { width: 60px; }
+    #playlist col.col-year { width: 60px; }
+    #playlist col.col-genre { width: 80px; }
+
     :is(#songs, #playlist) {
         table-layout: fixed;
     }
@@ -114,8 +152,6 @@ button:active, button:focus {
                 position: sticky;
                 top: 0;
                 z-index: 1;
-
-                border: 1px solid red;
             }
             th.col-add { width: 25px; }
             th.col-track-number { width: 25px; }

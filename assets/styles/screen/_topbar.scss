@@ -1,19 +1,31 @@
 @use '../config/layout' as config;
 @use '../config/screen' as theme;
 
-.top-nav-link {
-    font-size: 18px;
+.topbar {
+    .top-nav-link {
+        font-size: 18px;
 
-    letter-spacing: 1px;
+        letter-spacing: 1px;
 
-    background: theme.$default-gradient;
-    border: #{config.$debug}px solid lime;
-}
+        background: theme.$default-gradient;
+        border: #{config.$debug}px solid lime;
+    }
 
-.topbar-nav {
-    font-size: 0;
+    nav.topbar-nav {
+        font-size: 0;
 
-    @if config.$debug != 0 {
-        background-color: #666;
+        @if config.$debug != 0 {
+            background-color: #666;
+        }
+
+        .topbar-nav-label {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    }
+
+    ul.top-nav {
+        background-color: theme.$bg-color;
     }
 }

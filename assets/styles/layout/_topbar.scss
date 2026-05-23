@@ -17,7 +17,7 @@
     }
 
 
-    .search-form {
+    .search-form {  
         display: inline-block;
 
         height: config.$topbar-content-size-touch;
@@ -79,7 +79,7 @@
             box-sizing: border-box;
             height: config.$topbar-content-size-touch;
 
-            padding: 0 config.$space-4;
+            // padding: 0 config.$space-4;
 
             line-height: config.$topbar-content-size-touch;
 
@@ -95,6 +95,15 @@
         position: relative;
 
         width: 100%;
+
+        .button {
+            padding: 0;
+        }
+
+        .material-icons {
+            text-align: center;
+            width: config.$mobile-button-size;
+        }
 
         &.is-active {
             position: absolute;
@@ -140,6 +149,31 @@
             float: left;
         }
     }
+
+    .hamburger {
+        width: config.$topbar-content-size-touch;
+        height: config.$topbar-content-size-touch;
+    }
+
+    #player-container {
+        font-size: 0;
+
+        .button-wrapper {
+
+            height: config.$topbar-content-size-touch;
+            width: config.$topbar-content-size-touch;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid red;
+        }
+
+        .time-info-container {
+            padding-left: config.$space-2;
+        } 
+    }
+    #player-container > * {
+        font-size: initial;
+    }
 }
 
 
@@ -172,7 +206,7 @@ body.route-settings-index {
             line-height: config.$topbar-content-size;
 
             input[type="text"] {
-                height: config.$topbar-content-size;
+                height: config.$topbar-content-size - 10px;
             }
 
             input[type="submit"] {
@@ -182,6 +216,7 @@ body.route-settings-index {
         }
 
         nav.topbar-nav {
+            display: initial;
             height: config.$topbar-content-size;
             line-height: config.$topbar-content-size;
 
@@ -193,24 +228,30 @@ body.route-settings-index {
 
         ul.top-nav {
             &.is-active {
-                top: config.$topbar-size-touch;  
+                top: config.$topbar-size;  
+            }
+        }
+    
+       .hamburger {
+            display: none;
+        }
+
+        nav.topbar-nav {
+            display: initial;
+
+            .topbar-nav-label {
+                display: none;
+            }
+        }
+
+        #player-container {
+            font-size: 0;
+
+            .button-wrapper {
+                height: config.$topbar-content-size;
+                width: config.$topbar-content-size;
             }
         }
     }
-
-    .hamburger {
-        display: none;
-    }
-
-    .search-form input[type="text"] {
-        height: config.$topbar-content-size - 10px;
-    }
-
-    nav.topbar-nav {
-        display: initial;
-
-        .topbar-nav-label {
-            display: none;
-        }
-    }
 }
+

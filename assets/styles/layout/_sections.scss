@@ -39,7 +39,7 @@
     left: 0;
 
     width: 100%;
-    height: calc(100% - (#{config.$topbar-content-size} + #{config.$topbar-border-size}));
+    height: calc(100% - config.$topbar-size-touch);
 
     border: #{config.$debug}px solid red;
 }

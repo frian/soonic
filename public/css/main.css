@@ -292,7 +292,6 @@ table {
   display: inline-block;
   box-sizing: border-box;
   height: 59px;
-  padding: 0 20px;
   line-height: 59px;
   vertical-align: top;
 }
@@ -302,6 +301,13 @@ table {
 .topbar ul.top-nav {
   position: relative;
   width: 100%;
+}
+.topbar ul.top-nav .button {
+  padding: 0;
+}
+.topbar ul.top-nav .material-icons {
+  text-align: center;
+  width: 60px;
 }
 .topbar ul.top-nav.is-active {
   position: absolute;
@@ -334,6 +340,26 @@ table {
 .topbar ul.top-nav .top-nav-item {
   float: left;
 }
+.topbar .hamburger {
+  width: 59px;
+  height: 59px;
+}
+.topbar #player-container {
+  font-size: 0;
+}
+.topbar #player-container .button-wrapper {
+  height: 59px;
+  width: 59px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid red;
+}
+.topbar #player-container .time-info-container {
+  padding-left: 10px;
+}
+.topbar #player-container > * {
+  font-size: initial;
+}
 
 body.route-settings-index .navigation-settings {
   display: none;
@@ -355,13 +381,14 @@ body.route-settings-index .navigation-settings {
     line-height: 49px;
   }
   .topbar .search-form input[type=text] {
-    height: 49px;
+    height: 39px;
   }
   .topbar .search-form input[type=submit] {
     height: 49px;
     line-height: 49px;
   }
   .topbar nav.topbar-nav {
+    display: initial;
     height: 49px;
     line-height: 49px;
   }
@@ -370,19 +397,23 @@ body.route-settings-index .navigation-settings {
     line-height: 49px;
   }
   .topbar ul.top-nav.is-active {
-    top: 60px;
+    top: 50px;
   }
-  .hamburger {
+  .topbar .hamburger {
     display: none;
   }
-  .search-form input[type=text] {
-    height: 39px;
-  }
-  nav.topbar-nav {
+  .topbar nav.topbar-nav {
     display: initial;
   }
-  nav.topbar-nav .topbar-nav-label {
+  .topbar nav.topbar-nav .topbar-nav-label {
     display: none;
+  }
+  .topbar #player-container {
+    font-size: 0;
+  }
+  .topbar #player-container .button-wrapper {
+    height: 49px;
+    width: 49px;
   }
 }
 .topbar {
@@ -417,7 +448,7 @@ body.route-settings-index .navigation-settings {
   top: 60px;
   left: 0;
   width: 100%;
-  height: calc(100% - (49px + 1px));
+  height: calc(100% - 60px);
   border: 0px solid red;
 }
 
@@ -483,7 +514,7 @@ body.route-settings-index .navigation-settings {
   display: block;
   box-sizing: border-box;
   width: 100%;
-  height: 48px;
+  height: 60px;
   padding: 0 10px;
   overflow: hidden;
 }
@@ -584,17 +615,15 @@ body.route-settings-index .navigation-settings {
 }
 
 :is(.songs, .playlist) tbody td {
-  height: 48px;
+  height: 60px;
 }
 
 :is(.songs, .playlist) :is(thead th, tbody td).col-add {
-  width: 48px;
-  min-width: 48px;
-  max-width: 48px;
+  width: 60px;
 }
 
 :is(.songs, .playlist) tbody td.col-title {
-  width: calc(100% - 48px);
+  width: calc(100% - 60px);
 }
 
 :is(.songs, .playlist) :is(tbody, thead) th.col-add,
@@ -612,9 +641,27 @@ body.route-settings-index .navigation-settings {
   padding: 5px 0;
 }
 
+.playlist .list thead,
+.playlist .list thead tr,
+.playlist .list thead th {
+  visibility: hidden;
+  height: 0;
+  min-height: 0;
+  max-height: 0;
+  padding: 0;
+  border: 0;
+  line-height: 0;
+  font-size: 0;
+  overflow: hidden;
+}
+
+.playlist .list table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
 .icon-trash {
   float: right;
-  cursor: pointer;
 }
 
 /*
@@ -622,9 +669,9 @@ body.route-settings-index .navigation-settings {
 */
 .mobile-button {
   position: fixed;
-  top: calc(100% - 48px);
-  width: 48px;
-  height: 48px;
+  top: calc(100% - 60px);
+  width: 60px;
+  height: 60px;
   cursor: pointer;
 }
 
@@ -648,6 +695,30 @@ button:active, button:focus {
 }
 
 @media all and (min-width: 1024px) {
+  #playlist col.col-add {
+    width: 25px;
+  }
+  #playlist col.col-track-number {
+    width: 25px;
+  }
+  #playlist col.col-artist {
+    width: 20%;
+  }
+  #playlist col.col-title {
+    width: 35%;
+  }
+  #playlist col.col-album {
+    width: 20%;
+  }
+  #playlist col.col-duration {
+    width: 60px;
+  }
+  #playlist col.col-year {
+    width: 60px;
+  }
+  #playlist col.col-genre {
+    width: 80px;
+  }
   :is(#songs, #playlist) {
     table-layout: fixed;
   }
@@ -659,7 +730,6 @@ button:active, button:focus {
     position: sticky;
     top: 0;
     z-index: 1;
-    border: 1px solid red;
   }
   :is(#songs, #playlist) thead tr th.col-add {
     width: 25px;
@@ -1160,15 +1230,22 @@ select:focus-visible,
   background-color: #111;
 }
 
-.top-nav-link {
+.topbar .top-nav-link {
   font-size: 18px;
   letter-spacing: 1px;
   background: linear-gradient(to top, rgba(34, 34, 34, 0.2), rgba(51, 51, 51, 0.1));
   border: 0px solid lime;
 }
-
-.topbar-nav {
+.topbar nav.topbar-nav {
   font-size: 0;
+}
+.topbar nav.topbar-nav .topbar-nav-label {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.topbar ul.top-nav {
+  background-color: #fff;
 }
 
 .filter {
@@ -1176,7 +1253,7 @@ select:focus-visible,
 }
 
 .artists-navigation a {
-  line-height: 48px;
+  line-height: 60px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -1218,7 +1295,7 @@ select:focus-visible,
 }
 
 .mobile-button {
-  line-height: 48px;
+  line-height: 60px;
   text-align: center;
   background-color: #ddd;
 }

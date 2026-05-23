@@ -16,7 +16,8 @@ $topbar-content-size-touch: 59px !default;
 $topbar-border-size-touch: 1px !default;
 $topbar-size-touch: $topbar-content-size-touch + $topbar-border-size-touch;
 
-$mobile-button-size: 48px !default;
+$mobile-button-size: $topbar-size-touch !default;
+$mobile-line-height: $mobile-button-size; 
 
 $artists-navigation-1024: 240px !default;
 $artists-navigation-1200: 360px !default;
