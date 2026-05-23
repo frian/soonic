@@ -82,7 +82,7 @@
     .button-wrapper {
         text-align: center;
 
-        &:nth-child(3) {
+        .radio-delete-form .button.danger {
             margin-top: config.$space-5;
         }
     }

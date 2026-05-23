@@ -1,26 +1,16 @@
 <section id="songs-section" class="songs">
-    <div class="songs-header-container">
-        <table class="list songs-header" aria-hidden="true">
-            <thead>
-                <tr>
-                    <th class="col-order"></th>
-                    <th class="col-state">#</th>
-                    <th class="col-artist">{{ 'artist'|trans }}</th>
-                    <th class="col-title">{{ 'title'|trans }}</th>
-                    <th class="col-album">{{ 'album'|trans }}</th>
-                    <th class="col-duration">{{ 'duration'|trans }}</th>
-                    <th class="col-add">{{ 'year'|trans }}</th>
-                    <th class="col-remove">{{ 'genre'|trans }}</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-
     <div class="songs-container">
         <table id="songs" class="list" aria-label="{{ 'songs'|trans }}">
             <thead>
                 <tr>
-                    <th class="col-order"></th><th class="col-state"></th><th class="col-artist"></th><th class="col-title"></th><th class="col-album"></th><th class="col-duration"></th><th class="col-add"></th><th class="col-remove"></th>
+                    <th class="col-add"></th>
+                    <th class="col-track-number">#</th>
+                    <th class="col-artist">{{ 'artist'|trans }}</th>
+                    <th class="col-title">{{ 'title'|trans }}</th>
+                    <th class="col-album">{{ 'album'|trans }}</th>
+                    <th class="col-duration">{{ 'duration'|trans }}</th>
+                    <th class="col-year">{{ 'year'|trans }}</th>
+                    <th class="col-genre">{{ 'genre'|trans }}</th>
                 </tr>
             </thead>
             <tbody></tbody>

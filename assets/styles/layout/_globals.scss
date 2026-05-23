@@ -77,7 +77,28 @@ table {
 
 .filter-form {
     .input-reset {
-        // top: 5px;
         right: config.$space-1;
     }
+}
+
+#playlist-flash-message,
+#radio-flash-message,
+#ajax-flash-message {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    z-index: 9999;
+
+    display: none;
+
+    height: 80px;
+
+    padding: 0 32px;
+
+    line-height: 80px;
+    text-align: center;
+    white-space: nowrap;
+
+    pointer-events: none;
+    transform: translateX(-50%);
 }

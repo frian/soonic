@@ -1,14 +1,14 @@
 <tbody>
 {% for song in songs %}
     <tr data-path="{{ song.webPath }}" data-duration="{{ song.duration }}">
-        <td class="add col-order"><i class="icon-plus" role="button" tabindex="0" aria-label="{{ 'playlist.add'|trans|default('Add song to playlist') }}" title="{{ 'playlist.add'|trans|default('Add song to playlist') }}"></i></td>
-        <td class="col-state">{{ song.trackNumber }}</td>
+        <td class="add col-add"><i class="icon-plus" role="button" tabindex="0" aria-label="{{ 'playlist.add'|trans|default('Add song to playlist') }}" title="{{ 'playlist.add'|trans|default('Add song to playlist') }}"></i></td>
+        <td class="col-track-number">{{ song.trackNumber }}</td>
         <td class="col-artist">{{ song.artist }}</td>
         <td class="col-title">{{ song.title }}</td>
         <td class="col-album">{{ song.album }}</td>
         <td class="col-duration">{{ song.duration }}</td>
-        <td class="col-add">{{ song.year }}</td>
-        <td class="col-remove">{{ song.genre }}</td>
+        <td class="col-year">{{ song.year }}</td>
+        <td class="col-genre">{{ song.genre }}</td>
     </tr>
 {% else %}
     <tr>

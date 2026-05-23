@@ -13,9 +13,16 @@ $topbar-border-size: 1px !default;
 $topbar-size: $topbar-content-size + $topbar-border-size !default;
 
 $mobile-button-size: 48px !default;
+
 $artists-navigation-1024: 240px !default;
 $artists-navigation-1200: 360px !default;
+
 $panel-header-height: 22px !default;
+
+$single-album-col: 300px !default;
+$single-album-col-md: 400px !default;
+$single-album-col-lg: 500px !default;
+$single-album-col-xl: 600px !default;
 
 $breakpoints: (
     xs: 500px,

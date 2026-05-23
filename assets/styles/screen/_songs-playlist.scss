@@ -5,10 +5,14 @@
     background-color: theme.$hover-active;
 }
 
-.songs-header, .playlist-header {
+.playlist-header {
   line-height: 20px;
 
   background-color: theme.$header-color;
+}
+
+:is(#songs, #playlist) thead th {
+    background-color: theme.$header-color;
 }
 
 .mobile-button {
@@ -36,15 +40,15 @@
     }
 }
 
-:is(.songs, .playlist) tbody td.col-order {
+:is(.songs, .playlist) tbody td.col-add {
     text-align: center;
 }
 
 @include config.up(md) {
-    :is(.songs, .playlist) tbody td.col-order,
-    :is(.songs, .playlist) tbody td.col-duration,
     :is(.songs, .playlist) tbody td.col-add,
-    :is(.songs, .playlist) tbody td.col-remove {
+    :is(.songs, .playlist) tbody td.col-duration,
+    :is(.songs, .playlist) tbody td.col-year,
+    :is(.songs, .playlist) tbody td.col-genre {
         text-align: center;
     }
 }

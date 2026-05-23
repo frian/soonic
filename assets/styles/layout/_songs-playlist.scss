@@ -1,6 +1,6 @@
 @use '../config/layout' as config;
 
-.songs-header, .playlist-header {
+.playlist-header {
     top: 0;
 
     height: config.$panel-header-height;
@@ -8,7 +8,13 @@
     padding-left: config.$space-2;
 }
 
-.songs-container, .playlist-container {
+.songs-container {
+    height: 100%;
+
+    overflow-y: scroll;
+}
+
+.playlist-container {
     height: calc(100% - #{config.$panel-header-height});
 
     overflow-y: scroll;
@@ -18,16 +24,20 @@
     height: config.$mobile-button-size;
 }
 
-:is(.songs, .playlist) tbody td.col-order {
+:is(.songs, .playlist) :is(thead th, tbody td).col-add {
     width: config.$mobile-button-size;
+
+
 }
 
-:is(.songs, .playlist) tbody td.col-state,
-:is(.songs, .playlist) tbody td.col-artist,
-:is(.songs, .playlist) tbody td.col-album,
-:is(.songs, .playlist) tbody td.col-duration,
-:is(.songs, .playlist) tbody td.col-add,
-:is(.songs, .playlist) tbody td.col-remove {
+// :is(.songs, .playlist) :is(tbody, thead) th.col-add,
+:is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-track-number,
+:is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-artist,
+:is(.songs, .playlist) :is(tbody, thead) th.col-title,
+:is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-album,
+:is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-duration,
+:is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-year,
+:is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-genre {
     display: none;
 }
 
@@ -35,7 +45,7 @@
     thead {
         tr {
             th {
-                padding: 0 config.$space-2;
+                // padding: 0 config.$space-2;
             }
         }
     }
@@ -90,7 +100,7 @@ button:active, button:focus {
 
 
 @include config.up(md) {
-    thead {
+    :is(#songs, #playlist) thead {
         display: table-header-group;
 
         width: 100%;
@@ -99,23 +109,24 @@ button:active, button:focus {
             th {
                 position: sticky;
                 top: 0;
+                z-index: 1;
 
-                border: #{config.$debug}px solid red;
+                border: 1px solid red;
             }
-            th.col-order { width: 15px; }
-            th.col-state { width: 25px; }
+            th.col-add { width: 25px; }
+            th.col-track-number { width: 25px; }
             th.col-artist { width: 20%; }
             th.col-title { width: 35%; }
             th.col-album { width: 20%; }
             th.col-duration { width: 60px; }
 
-            th.col-add {
+            th.col-year {
                 display: none;
 
                 width: 60px;
             }
 
-            th.col-remove {
+            th.col-genre {
                 display: none;
 
                 width: 80px;
@@ -134,38 +145,38 @@ button:active, button:focus {
         border: #{config.$debug}px solid red;
     }
 
-    :is(.songs, .playlist) tbody td.col-order {
+    :is(.songs, .playlist) tbody td.col-add {
         padding-left: 2px;
     }
 
-    :is(.songs, .playlist) tbody td.col-state,
-    :is(.songs, .playlist) tbody td.col-artist,
-    :is(.songs, .playlist) tbody td.col-album,
-    :is(.songs, .playlist) tbody td.col-duration {
+    :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-track-number,
+    :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-artist,
+    :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-album,
+    :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-duration {
         display: table-cell;
     }
 
-    :is(.songs, .playlist) tbody td.col-add,
-    :is(.songs, .playlist) tbody td.col-remove {
+    :is(.songs, .playlist) tbody td.col-year,
+    :is(.songs, .playlist) tbody td.col-genre {
         display: none;
     }
 }
 
 @include config.up(lg) {
-    thead {
+    :is(#songs, #playlist) thead {
         tr {
-            th.col-add {
+            th.col-year {
                 display: table-cell;
             }
 
-            th.col-remove {
+            th.col-genre {
                 display: table-cell;
             }
         }
     }
 
-    :is(.songs, .playlist) tbody td.col-add,
-    :is(.songs, .playlist) tbody td.col-remove {
+    :is(.songs, .playlist) tbody td.col-year,
+    :is(.songs, .playlist) tbody td.col-genre {
         display: table-cell;
     }
 }

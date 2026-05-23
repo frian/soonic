@@ -63,3 +63,12 @@ select:focus-visible,
     outline: 2px solid theme.$border-color;
     outline-offset: 2px;
 }
+
+#playlist-flash-message,
+#radio-flash-message,
+#ajax-flash-message {
+    border-radius: 6px;
+    background: theme.$hover-active;
+    color: theme.$fg-color;
+    font-size: 20px;
+}
