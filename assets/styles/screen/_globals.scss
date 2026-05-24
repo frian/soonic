@@ -14,7 +14,7 @@ h1 {
     letter-spacing: 1px;
     text-align: center;
 
-    border-bottom: 1px solid theme.$border-color;
+    border-bottom: theme.$border-size solid theme.$border-color;
 }
 
 h2 {
@@ -22,7 +22,7 @@ h2 {
     font-size: 1.4em;
     letter-spacing: 1px;
 
-    border-bottom: 1px solid theme.$border-color;
+    border-bottom: theme.$border-size solid theme.$border-color;
 }
 
 .empty-list {
@@ -67,8 +67,9 @@ select:focus-visible,
 #playlist-flash-message,
 #radio-flash-message,
 #ajax-flash-message {
-    border-radius: 6px;
-    background: theme.$hover-active;
-    color: theme.$fg-color;
     font-size: 20px;
+
+    color: theme.$fg-color;
+    background: theme.$hover-active;
+    border-radius: 6px;
 }

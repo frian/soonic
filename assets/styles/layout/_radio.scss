@@ -98,6 +98,7 @@
 
     .form dt {
         display: flex;
+
         padding: config.$space-1 config.$space-3;
 
         align-items: center;
@@ -216,6 +217,7 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 
         .radio-name, .radio-url {
             width: calc(100% - config.$radio-button-size-medium - config.$space-5);
+
             line-height: calc(config.$radio-button-size-medium / 2);
         }
 
@@ -256,18 +258,21 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 
 @include config.up(md) {
     .radio {
-        height: config.$radio-button-size;
         display: block;
         flex: 0 0 50%;
 
         width: 50%;
         max-width: 50%;
+        height: config.$radio-button-size;
         
         .radio-name, .radio-url {
-            padding-left: config.$space-5;
-            line-height: calc(config.$radio-button-size / 2);
             width: calc(100% - config.$radio-button-size - config.$space-5);
+
+            padding-left: config.$space-5;
+
+            line-height: calc(config.$radio-button-size / 2);
         }   
+
         .button-wrapper {
             width: config.$radio-button-size;
             height: config.$radio-button-size;

@@ -30,6 +30,7 @@
 
 :is(.songs, .playlist) :is(thead th, tbody td).col-add {
     width: config.$mobile-button-size;
+
     // cursor: pointer;
     // min-width: config.$mobile-button-size;
     // max-width: config.$mobile-button-size;
@@ -122,6 +123,7 @@ button:active, button:focus {
                 top: 0;
                 z-index: 1;
             }
+
             th.col-year {
                 display: none;
             }

@@ -105,7 +105,6 @@ table {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 2px;
   z-index: 1;
   display: block;
   width: 20px;
@@ -306,8 +305,8 @@ table {
   padding: 0;
 }
 .topbar ul.top-nav .material-icons {
-  text-align: center;
   width: 60px;
+  text-align: center;
 }
 .topbar ul.top-nav.is-active {
   position: absolute;
@@ -348,11 +347,10 @@ table {
   font-size: 0;
 }
 .topbar #player-container .button-wrapper {
-  height: 59px;
   width: 59px;
+  height: 59px;
   text-align: center;
   cursor: pointer;
-  border: 1px solid red;
 }
 .topbar #player-container .time-info-container {
   padding-left: 10px;
@@ -412,8 +410,8 @@ body.route-settings-index .navigation-settings {
     font-size: 0;
   }
   .topbar #player-container .button-wrapper {
-    height: 49px;
     width: 49px;
+    height: 49px;
   }
 }
 .topbar {
@@ -850,8 +848,8 @@ button:active, button:focus {
   overflow-y: auto;
 }
 .single-album-container .album-songs {
-  width: 100%;
   table-layout: auto;
+  width: 100%;
 }
 .single-album-container .album-songs td {
   padding: 5px;
@@ -1093,16 +1091,16 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
 }
 @media all and (min-width: 1024px) {
   .radio {
-    height: 150px;
     display: block;
     flex: 0 0 50%;
     width: 50%;
     max-width: 50%;
+    height: 150px;
   }
   .radio .radio-name, .radio .radio-url {
+    width: calc(100% - 150px - 30px);
     padding-left: 30px;
     line-height: 75px;
-    width: calc(100% - 150px - 30px);
   }
   .radio .button-wrapper {
     width: 150px;
@@ -1212,10 +1210,10 @@ select:focus-visible,
 #playlist-flash-message,
 #radio-flash-message,
 #ajax-flash-message {
-  border-radius: 6px;
-  background: #ddd;
-  color: #111;
   font-size: 20px;
+  color: #111;
+  background: #ddd;
+  border-radius: 6px;
 }
 
 .hamburger {
@@ -1238,9 +1236,9 @@ select:focus-visible,
   font-size: 0;
 }
 .topbar nav.topbar-nav .topbar-nav-label {
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
 }
 .topbar ul.top-nav {
   background-color: #fff;

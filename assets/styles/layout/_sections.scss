@@ -56,6 +56,7 @@
 
 .songs, .playlist {
     display: none;
+
     height: 100%;
 
     overflow: hidden;
@@ -83,6 +84,7 @@
         height: config.$topbar-content-size;
         border-bottom-width: config.$topbar-border-size;
     }
+
     .albums-view {
         grid-template-columns: repeat(5, minmax(0, 1fr));
     }
@@ -106,6 +108,7 @@
     .albums-view {
         grid-template-columns: repeat(6, minmax(0, 1fr));
     }
+
     .artists-navigation {
         width: config.$artists-navigation-1200;
     }

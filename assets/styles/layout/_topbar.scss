@@ -79,8 +79,6 @@
             box-sizing: border-box;
             height: config.$topbar-content-size-touch;
 
-            // padding: 0 config.$space-4;
-
             line-height: config.$topbar-content-size-touch;
 
             vertical-align: top;
@@ -101,8 +99,9 @@
         }
 
         .material-icons {
-            text-align: center;
             width: config.$mobile-button-size;
+
+            text-align: center;
         }
 
         &.is-active {
@@ -159,18 +158,20 @@
         font-size: 0;
 
         .button-wrapper {
+            width: config.$topbar-content-size-touch;
 
             height: config.$topbar-content-size-touch;
-            width: config.$topbar-content-size-touch;
+
             text-align: center;
+
             cursor: pointer;
-            border: 1px solid red;
         }
 
         .time-info-container {
             padding-left: config.$space-2;
         } 
     }
+
     #player-container > * {
         font-size: initial;
     }
@@ -191,7 +192,6 @@ body.route-settings-index {
 
 
 @include config.up(md) {
-
     .topbar {
         div {
             line-height: config.$topbar-content-size;
@@ -203,6 +203,7 @@ body.route-settings-index {
 
         .search-form {
             height: config.$topbar-content-size;
+
             line-height: config.$topbar-content-size;
 
             input[type="text"] {
@@ -211,17 +212,21 @@ body.route-settings-index {
 
             input[type="submit"] {
                 height: config.$topbar-content-size;
+
                 line-height: config.$topbar-content-size;
             }
         }
 
         nav.topbar-nav {
             display: initial;
+
             height: config.$topbar-content-size;
+
             line-height: config.$topbar-content-size;
 
             a {
                 height: config.$topbar-content-size;
+
                 line-height: config.$topbar-content-size;
             }
         }
@@ -248,8 +253,8 @@ body.route-settings-index {
             font-size: 0;
 
             .button-wrapper {
-                height: config.$topbar-content-size;
                 width: config.$topbar-content-size;
+                height: config.$topbar-content-size;
             }
         }
     }

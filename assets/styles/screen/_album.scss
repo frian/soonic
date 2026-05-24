@@ -43,7 +43,7 @@
     }
 
     .album-artist {
-        border-bottom: 1px solid theme.$border-color;
+        border-bottom: theme.$border-size solid theme.$border-color;
     }
 
     .icon-plus {

@@ -21,6 +21,8 @@ $mobile-button-size: $topbar-size-touch !default;
 $mobile-line-height: $mobile-button-size; 
 
 
+$input-reset-size: 30px;
+
 $artists-navigation-1024: 240px !default;
 $artists-navigation-1200: 360px !default;
 
@@ -30,18 +32,6 @@ $single-album-col: 300px !default;
 $single-album-col-md: 400px !default;
 $single-album-col-lg: 500px !default;
 $single-album-col-xl: 600px !default;
-
-$radio-button-size-medium: 80px;
-$radio-button-size: 150px;
-
-$breakpoints: (
-    xs: 500px,
-    sm: 700px,
-    md: 1024px,
-    lg: 1200px,
-    xl: 1600px
-);
-
 $playlist-col-widths: (
     col-add: 25px,
     col-track-number: 25px,
@@ -52,6 +42,21 @@ $playlist-col-widths: (
     col-year: 60px,
     col-genre: 80px
 );
+
+
+$radio-button-size-medium: 80px;
+$radio-button-size: 150px;
+
+
+$breakpoints: (
+    xs: 500px,
+    sm: 700px,
+    md: 1024px,
+    lg: 1200px,
+    xl: 1600px
+);
+
+
 
 @mixin up($breakpoint) {
     @if not map.has-key($breakpoints, $breakpoint) {

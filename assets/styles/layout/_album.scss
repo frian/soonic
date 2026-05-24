@@ -51,6 +51,7 @@
     height: calc(config.$single-album-col * 2);
 
     overflow: hidden;
+
     transform: translate(-50%, -50%);
 
     .img-wrapper {
@@ -88,20 +89,22 @@
         display: flex;
         flex: 1 1 auto;
         flex-direction: column;
+
         min-height: 0;
     }
 
     .album-songs-wrapper {
         flex: 1 1 auto;
+
         min-height: 0;
 
         overflow-y: auto;
     }
 
     .album-songs {
-        width: 100%;
-
         table-layout: auto;
+
+        width: 100%;
 
         td {
             padding: config.$space-1;
@@ -123,6 +126,7 @@
         display: flex;
         flex: 1 1 auto;
         flex-direction: column;
+
         min-height: 0;
     }
 }
@@ -146,7 +150,6 @@
         height: config.$single-album-col-md;
 
         > .img-wrapper {
-
             width: 100%;
             height: 100%;
 
