@@ -10,7 +10,7 @@
     position: relative;
 
     box-sizing: border-box;
-    height: 80px;
+    height: config.$mobile-line-height;
 
     border: #{config.$debug}px solid red;
 
@@ -21,8 +21,10 @@
     .radio-name, .radio-url {
         float: left;
 
-        box-sizing: border-box;
-        width: calc(100% - 150px);
+        box-sizing: content-box;
+        width: calc(100% - config.$mobile-button-size - config.$space-2);
+
+        padding-left: config.$space-2;
 
         overflow: hidden;
 
@@ -32,37 +34,23 @@
     }
 
     .radio-name {
-        height: 80px;
-
-        padding-left: config.$space-5;
-
-        line-height: 80px;
-
-        border: #{config.$debug}px solid lime;
+        line-height: config.$mobile-line-height;
     }
 
     .radio-url {
         display: none;
-
-        height: 75px;
-
-        padding: 0 config.$space-2 0 config.$space-5;
-
-        line-height: 75px;
-
-        border: #{config.$debug}px solid cyan;
     }
 
     .button-wrapper {
         float: left;
 
         box-sizing: border-box;
-        width: 80px;
-        height: 80px;
+        width: config.$mobile-button-size;
+        height: config.$mobile-button-size;
 
         padding: 0;
 
-        line-height: 80px;
+        line-height: config.$mobile-button-size;
         text-align: center;
 
         border: #{config.$debug}px solid yellow;
@@ -110,6 +98,7 @@
 
     .form dt {
         display: flex;
+        padding: config.$space-1 config.$space-3;
 
         align-items: center;
         justify-content: flex-start;
@@ -124,13 +113,17 @@
         @extend %radio-form-input;
     }
 
+    .form input[type='text'] {
+        width: 100%;
+    }
+
     .radio-stream-check-actions {
         display: flex;
         flex-wrap: wrap;
 
         width: 80%;
 
-        gap: 10px;
+        gap: config.$space-2;
 
         align-items: center;
     }
@@ -176,7 +169,7 @@ table.form {
 
                 width: 80%;
 
-                gap: 10px;
+                gap: config.$space-2;
 
                 align-items: center;
             }
@@ -215,16 +208,19 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 
 @include config.up(sm) {
     .radio {
-        height: auto;
+        height: config.$radio-button-size-medium;
 
         .icon-play, .icon-pause {
             cursor: pointer;
         }
 
-        .radio-name {
-            height: 75px;
+        .radio-name, .radio-url {
+            width: calc(100% - config.$radio-button-size-medium - config.$space-5);
+            line-height: calc(config.$radio-button-size-medium / 2);
+        }
 
-            line-height: 75px;
+        .radio-name {
+            line-height: calc(config.$radio-button-size-medium / 2);
         }
 
         .radio-url {
@@ -232,10 +228,10 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
         }
 
         .button-wrapper {
-            width: 150px;
-            height: 150px;
+            width: config.$radio-button-size-medium;
+            height: config.$radio-button-size-medium;
 
-            line-height: 150px;
+            line-height: config.$radio-button-size-medium;
         }
     }
 
@@ -259,17 +255,32 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 
 
 @include config.up(md) {
+    .radio {
+        height: config.$radio-button-size;
+        display: block;
+        flex: 0 0 50%;
+
+        width: 50%;
+        max-width: 50%;
+        
+        .radio-name, .radio-url {
+            padding-left: config.$space-5;
+            line-height: calc(config.$radio-button-size / 2);
+            width: calc(100% - config.$radio-button-size - config.$space-5);
+        }   
+        .button-wrapper {
+            width: config.$radio-button-size;
+            height: config.$radio-button-size;
+    
+            line-height: config.$radio-button-size;
+        }
+    }
+
+
     .radios-view {
         display: flex;
         flex-wrap: wrap;
         align-content: flex-start;
     }
 
-    .radio {
-        display: block;
-        flex: 0 0 50%;
-
-        width: 50%;
-        max-width: 50%;
-    }
 }

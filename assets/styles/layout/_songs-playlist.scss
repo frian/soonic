@@ -101,7 +101,7 @@ button:active, button:focus {
 
 
 @include config.up(md) {
-    // --
+    // -- assign table cols widths
     @each $col, $width in config.$playlist-col-widths {
         :is(#songs, #playlist) thead tr th.#{$col} { width: $width; }
         #playlist col.#{$col} { width: $width; }

@@ -11,7 +11,7 @@
 
 .radio .icon-play,
 .radio .icon-pause {
-    font-size: 50px;
+    font-size: 40px;
 }
 
 .radio-edit-view .form dt,
@@ -33,11 +33,16 @@ table.form input[type='url'] {
 @include config.up(sm) {
     .radio .icon-play,
     .radio .icon-pause {
-        font-size: 5em;
+        font-size: 3em;
     }
 }
 
 @include config.up(md) {
+    .radio .icon-play,
+    .radio .icon-pause {
+        font-size: 5em;
+    }
+
     .radio:nth-child(even) {
         background-color: transparent;
     }

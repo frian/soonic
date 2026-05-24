@@ -16,8 +16,10 @@ $topbar-content-size-touch: 59px !default;
 $topbar-border-size-touch: 1px !default;
 $topbar-size-touch: $topbar-content-size-touch + $topbar-border-size-touch;
 
+
 $mobile-button-size: $topbar-size-touch !default;
 $mobile-line-height: $mobile-button-size; 
+
 
 $artists-navigation-1024: 240px !default;
 $artists-navigation-1200: 360px !default;
@@ -28,6 +30,9 @@ $single-album-col: 300px !default;
 $single-album-col-md: 400px !default;
 $single-album-col-lg: 500px !default;
 $single-album-col-xl: 600px !default;
+
+$radio-button-size-medium: 80px;
+$radio-button-size: 150px;
 
 $breakpoints: (
     xs: 500px,

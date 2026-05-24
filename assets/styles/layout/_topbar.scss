@@ -206,7 +206,7 @@ body.route-settings-index {
             line-height: config.$topbar-content-size;
 
             input[type="text"] {
-                height: config.$topbar-content-size - 10px;
+                height: config.$topbar-content-size - config.$space-2;
             }
 
             input[type="submit"] {
