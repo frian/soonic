@@ -989,6 +989,11 @@ table.form tr td input[type=url], .radio-edit-view .form input[type=text],
 .radio-new-view .form dd {
   margin-bottom: 12px;
 }
+.radio-edit-view .form dd.stream-check-button,
+.radio-new-view .form dd.stream-check-button {
+  top: -20px;
+  padding: 0 15px 15px 15px;
+}
 .radio-edit-view .form input[type=text],
 .radio-new-view .form input[type=text] {
   width: 100%;

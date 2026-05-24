@@ -107,6 +107,11 @@
 
     .form dd {
         margin-bottom: 12px;
+
+        &.stream-check-button {
+            top: -20px;
+            padding: 0 15px 15px 15px;
+        }
     }
 
     .form input[type='text'],
