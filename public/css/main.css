@@ -254,10 +254,11 @@ table {
   line-height: 59px;
 }
 .topbar .search-form {
-  display: inline-block;
+  display: inline-flex;
   height: 59px;
   line-height: 59px;
   vertical-align: top;
+  align-items: stretch;
 }
 .topbar .search-form input[type=text] {
   position: relative;
@@ -280,6 +281,8 @@ table {
 .topbar .search-form .form-element-container {
   position: relative;
   display: inline-block;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 .topbar nav.topbar-nav {
   display: none;
@@ -308,7 +311,6 @@ table {
   padding: 0;
 }
 .topbar ul.top-nav .material-icons {
-  width: 60px;
   text-align: center;
 }
 .topbar ul.top-nav.is-active {
@@ -321,6 +323,9 @@ table {
 .topbar ul.top-nav.is-active .top-nav-item {
   float: none;
   text-align: center;
+}
+.topbar ul.top-nav.is-active .material-icons {
+  width: 60px;
 }
 .topbar ul.top-nav.is-active .top-nav-link {
   display: inline-flex;
@@ -395,6 +400,9 @@ body.route-settings-index .navigation-settings {
     height: 49px;
     line-height: 49px;
   }
+  .topbar .search-form .button {
+    width: 60px;
+  }
   .topbar .search-form input[type=text] {
     height: 39px;
   }
@@ -410,6 +418,9 @@ body.route-settings-index .navigation-settings {
   .topbar nav.topbar-nav a {
     height: 49px;
     line-height: 49px;
+  }
+  .topbar ul.top-nav .top-nav-item:not(.navigation-search-form) {
+    width: 60px;
   }
   .topbar ul.top-nav.is-active {
     top: 50px;
@@ -1271,6 +1282,20 @@ select:focus-visible,
   background-color: #111;
 }
 
+.topbar .navigation-search-form .search-form .button {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
 .topbar .top-nav-item {
   font-size: 18px;
   text-align: center;

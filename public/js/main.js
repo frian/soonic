@@ -1098,12 +1098,7 @@ $(function() {
     }
 
     function setFilterInputSize() {
-        let width = "";
-        if (screenWidth < 1024) {
-            const buttonWidth = getElementOuterWidth($('#search-button'));
-            width = (screenWidth - buttonWidth );
-        }
-        $('.form-element-container').width(width);
+        $('.form-element-container').css('width', '');
     }
 
     function getElementOuterWidth($element) {

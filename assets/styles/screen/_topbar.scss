@@ -2,6 +2,25 @@
 @use '../config/screen' as theme;
 
 .topbar {
+    .navigation-search-form .search-form .button {
+        appearance: none;
+        -webkit-appearance: none;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 60px;
+        height: 100%;
+        padding: 0;
+
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+
+        background: transparent;
+    }
+
     .top-nav-item {
         font-size: 18px;
 
@@ -25,6 +44,7 @@
             white-space: nowrap;
             text-overflow: ellipsis;
         }
+
     }
 
     ul.top-nav {
