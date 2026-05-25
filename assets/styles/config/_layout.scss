@@ -57,6 +57,10 @@ $breakpoints: (
 );
 
 
+@mixin scrollable-y {
+    overflow-y: auto;
+}
+
 
 @mixin up($breakpoint) {
     @if not map.has-key($breakpoints, $breakpoint) {

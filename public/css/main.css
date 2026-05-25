@@ -240,6 +240,10 @@ table {
   transition-delay: 0.075s;
 }
 
+.topbar {
+  display: flex;
+  align-items: stretch;
+}
 .topbar .logo {
   display: none;
 }
@@ -274,6 +278,15 @@ table {
   line-height: 59px;
   vertical-align: top;
 }
+.topbar .search-form .button {
+  display: inline-flex;
+  width: 60px;
+  height: 100%;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+}
 .topbar .search-form .input-reset {
   top: 10px;
   right: 5px;
@@ -286,12 +299,12 @@ table {
 }
 .topbar nav.topbar-nav {
   display: none;
-  float: right;
   height: 59px;
+  margin-left: auto;
   line-height: 59px;
 }
 .topbar nav.topbar-nav.is-active {
-  display: block;
+  display: flex;
 }
 .topbar nav.topbar-nav a {
   display: inline-block;
@@ -334,6 +347,9 @@ table {
   align-items: center;
   justify-content: flex-start;
 }
+.topbar ul.top-nav.is-active .top-nav-item {
+  width: 100%;
+}
 .topbar ul.top-nav.is-active .search-form {
   width: 100%;
 }
@@ -341,15 +357,14 @@ table {
   box-sizing: border-box;
   width: 100%;
 }
-.topbar ul.top-nav.is-active .search-form input[type=submit] {
-  float: right;
-}
 .topbar ul.top-nav .top-nav-item {
-  float: left;
+  flex: 0 0 auto;
 }
 .topbar .hamburger {
+  position: static;
   width: 59px;
   height: 59px;
+  margin-left: auto;
 }
 .topbar #player-container {
   font-size: 0;
@@ -371,6 +386,8 @@ table {
 }
 .topbar .song-info {
   display: none;
+  flex: 0 1 auto;
+  min-width: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -400,9 +417,6 @@ body.route-settings-index .navigation-settings {
     height: 49px;
     line-height: 49px;
   }
-  .topbar .search-form .button {
-    width: 60px;
-  }
   .topbar .search-form input[type=text] {
     height: 39px;
   }
@@ -411,13 +425,16 @@ body.route-settings-index .navigation-settings {
     line-height: 49px;
   }
   .topbar nav.topbar-nav {
-    display: initial;
+    display: flex;
     height: 49px;
     line-height: 49px;
   }
   .topbar nav.topbar-nav a {
     height: 49px;
     line-height: 49px;
+  }
+  .topbar ul.top-nav {
+    display: flex;
   }
   .topbar ul.top-nav .top-nav-item:not(.navigation-search-form) {
     width: 60px;
@@ -429,7 +446,7 @@ body.route-settings-index .navigation-settings {
     display: none;
   }
   .topbar nav.topbar-nav {
-    display: initial;
+    display: flex;
   }
   .topbar nav.topbar-nav .topbar-nav-label {
     display: none;
@@ -456,7 +473,6 @@ body.route-settings-index .navigation-settings {
 .albums-view {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  overflow-y: scroll;
 }
 
 .single-album-view {
@@ -465,12 +481,8 @@ body.route-settings-index .navigation-settings {
   z-index: 200;
 }
 
-.radios-view {
-  overflow-y: scroll;
-}
-
-.settings-view {
-  overflow-y: scroll;
+:is(.albums-view, .radios-view, .settings-view) {
+  overflow-y: auto;
 }
 
 .view {
@@ -479,7 +491,6 @@ body.route-settings-index .navigation-settings {
   left: 0;
   width: 100%;
   height: calc(100% - 60px);
-  border: 0px solid red;
 }
 
 .artists-navigation {
@@ -556,7 +567,6 @@ body.route-settings-index .navigation-settings {
   height: 40px;
   padding: 0 0 0 10px;
   line-height: normal;
-  border: 0px solid red;
 }
 .filter .filter-form {
   display: flex;
@@ -570,7 +580,6 @@ body.route-settings-index .navigation-settings {
   flex: 0 0 30%;
   box-sizing: border-box;
   max-width: 30%;
-  border: 0px solid cyan;
 }
 .filter input {
   position: relative;
@@ -579,7 +588,6 @@ body.route-settings-index .navigation-settings {
   box-sizing: border-box;
   height: 34px;
   line-height: 34px;
-  border: 0px solid lime;
   vertical-align: baseline;
 }
 .filter .form-element-container {
@@ -619,7 +627,6 @@ body.route-settings-index .navigation-settings {
 @media all and (min-width: 1024px) {
   .artists-navigation a {
     height: auto;
-    border: 0px solid white;
   }
   .artists-navigation > ul {
     margin-top: 5px;
@@ -633,12 +640,14 @@ body.route-settings-index .navigation-settings {
 
 .songs-container {
   height: 100%;
-  overflow-y: scroll;
 }
 
 .playlist-container {
   height: calc(100% - 22px);
-  overflow-y: scroll;
+}
+
+:is(.songs-container, .playlist-container) {
+  overflow-y: auto;
 }
 
 :is(#songs, #playlist) {
@@ -779,7 +788,6 @@ button:active, button:focus {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    border: 0px solid red;
   }
   :is(.songs, .playlist) tbody td.col-add {
     padding-left: 2px;
@@ -951,7 +959,6 @@ table.form tr td input[type=url], .radio-edit-view .form input[type=text],
   position: relative;
   box-sizing: border-box;
   height: 60px;
-  border: 0px solid red;
 }
 .radio .icon-play, .radio .icon-pause {
   cursor: pointer;
@@ -979,7 +986,6 @@ table.form tr td input[type=url], .radio-edit-view .form input[type=text],
   padding: 0;
   line-height: 60px;
   text-align: center;
-  border: 0px solid yellow;
 }
 .radio .radio-edit-link {
   position: absolute;
@@ -1171,7 +1177,6 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
 }
 .settings-view .library-info td {
   padding: 15px 0;
-  border: 0px solid lime;
 }
 .settings-view .settings {
   margin-bottom: 50px;
@@ -1283,24 +1288,16 @@ select:focus-visible,
 }
 
 .topbar .navigation-search-form .search-form .button {
-  display: inline-flex;
-  width: 60px;
-  height: 100%;
-  padding: 0;
   background: transparent;
   border: 0;
   border-radius: 0;
   box-shadow: none;
-  align-items: center;
-  justify-content: center;
-  appearance: none;
 }
 .topbar .top-nav-item {
   font-size: 18px;
   letter-spacing: 1px;
   text-align: center;
   background: linear-gradient(to top, rgba(34, 34, 34, 0.2), rgba(51, 51, 51, 0.1));
-  border: 0px solid lime;
 }
 .topbar nav.topbar-nav {
   font-size: 0;

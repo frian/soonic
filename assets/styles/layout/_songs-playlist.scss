@@ -10,14 +10,14 @@
 
 .songs-container {
     height: 100%;
-
-    overflow-y: scroll;
 }
 
 .playlist-container {
     height: calc(100% - #{config.$panel-header-height});
+}
 
-    overflow-y: scroll;
+:is(.songs-container, .playlist-container) {
+    @include config.scrollable-y;
 }
 
 :is(#songs, #playlist) {
@@ -142,7 +142,6 @@ button:active, button:focus {
         white-space: nowrap;
         text-overflow: ellipsis;
 
-        border: #{config.$debug}px solid red;
     }
 
     :is(.songs, .playlist) tbody td.col-add {

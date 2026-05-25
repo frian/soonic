@@ -12,8 +12,6 @@
     box-sizing: border-box;
     height: config.$mobile-line-height;
 
-    border: #{config.$debug}px solid red;
-
     .icon-play, .icon-pause {
         cursor: pointer;
     }
@@ -53,7 +51,6 @@
         line-height: config.$mobile-button-size;
         text-align: center;
 
-        border: #{config.$debug}px solid yellow;
     }
 
     .radio-edit-link {

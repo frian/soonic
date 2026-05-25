@@ -1,7 +1,0 @@
-@use '../config/layout' as config;
-
-.artists-navigation {
-    @if config.$debug != 0 {
-        background-color: #333;
-    }
-}

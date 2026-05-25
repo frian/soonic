@@ -19,8 +19,6 @@
 .albums-view {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    overflow-y: scroll;
 }
 
 .single-album-view {
@@ -29,12 +27,8 @@
     z-index: 200;
 }
 
-.radios-view {
-    overflow-y: scroll;
-}
-
-.settings-view {
-    overflow-y: scroll;
+:is(.albums-view, .radios-view, .settings-view) {
+    @include config.scrollable-y;
 }
 
 .view {
@@ -45,7 +39,6 @@
     width: 100%;
     height: calc(100% - config.$topbar-size-touch);
 
-    border: #{config.$debug}px solid red;
 }
 
 .artists-navigation {

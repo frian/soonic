@@ -3,22 +3,11 @@
 
 .topbar {
     .navigation-search-form .search-form .button {
-        display: inline-flex;
-
-        width: 60px;
-        height: 100%;
-
-        padding: 0;
-
         background: transparent;
 
         border: 0;
         border-radius: 0;
         box-shadow: none;
-
-        align-items: center;
-        justify-content: center;
-        appearance: none;
     }
 
     .top-nav-item {
@@ -28,15 +17,10 @@
         text-align: center;
 
         background: theme.$default-gradient;
-        border: #{config.$debug}px solid lime;
     }
 
     nav.topbar-nav {
         font-size: 0;
-
-        @if config.$debug != 0 {
-            background-color: #666;
-        }
 
         .topbar-nav-label {
             overflow: hidden;

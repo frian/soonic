@@ -10,10 +10,6 @@
 
     white-space: nowrap;
     text-overflow: ellipsis;
-
-    @if config.$debug != 0 {
-        background-color: #500;
-    }
 }
 
 @include config.up(md) {
