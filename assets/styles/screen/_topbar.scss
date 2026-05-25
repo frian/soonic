@@ -2,9 +2,10 @@
 @use '../config/screen' as theme;
 
 .topbar {
-    .top-nav-link {
+    .top-nav-item {
         font-size: 18px;
 
+        text-align: center;
         letter-spacing: 1px;
 
         background: theme.$default-gradient;

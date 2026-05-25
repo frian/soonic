@@ -458,6 +458,10 @@ body.route-settings-index .navigation-settings {
   overflow-y: scroll;
 }
 
+.settings-view {
+  overflow-y: scroll;
+}
+
 .view {
   position: absolute;
   top: 60px;
@@ -503,6 +507,7 @@ body.route-settings-index .navigation-settings {
   }
   .view {
     top: 50px;
+    height: calc(100% - 50px);
   }
   .songs, .playlist {
     display: block;
@@ -658,6 +663,7 @@ body.route-settings-index .navigation-settings {
 
 .icon-trash {
   float: right;
+  cursor: pointer;
 }
 
 /*
@@ -1265,8 +1271,9 @@ select:focus-visible,
   background-color: #111;
 }
 
-.topbar .top-nav-link {
+.topbar .top-nav-item {
   font-size: 18px;
+  text-align: center;
   letter-spacing: 1px;
   background: linear-gradient(to top, rgba(34, 34, 34, 0.2), rgba(51, 51, 51, 0.1));
   border: 0px solid lime;

@@ -33,6 +33,10 @@
     overflow-y: scroll;
 }
 
+.settings-view {
+    overflow-y: scroll;
+}
+
 .view {
     position: absolute;
     top: config.$topbar-size-touch;
@@ -91,6 +95,7 @@
 
     .view {
         top: config.$topbar-size;
+        height: calc(100% - config.$topbar-size);
     }
 
     .songs, .playlist {
