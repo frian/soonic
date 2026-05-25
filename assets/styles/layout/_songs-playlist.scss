@@ -30,10 +30,6 @@
 
 :is(.songs, .playlist) :is(thead th, tbody td).col-add {
     width: config.$mobile-button-size;
-
-    // cursor: pointer;
-    // min-width: config.$mobile-button-size;
-    // max-width: config.$mobile-button-size;
 }
 
 :is(.songs, .playlist) tbody td.col-title {

@@ -1,12 +1,10 @@
 @use 'sass:map';
 
-$debug: 0 !default;
-
 $space-1: 5px;
 $space-2: 10px;
 $space-3: 15px;
 $space-4: 20px;
-$space-5: 30px; 
+$space-5: 30px;
 
 $topbar-content-size: 49px !default;
 $topbar-border-size: 1px !default;
@@ -18,7 +16,7 @@ $topbar-size-touch: $topbar-content-size-touch + $topbar-border-size-touch;
 
 $player-button-width-touch: 50px;
 $mobile-button-size: $topbar-size-touch !default;
-$mobile-line-height: $mobile-button-size; 
+$mobile-line-height: $mobile-button-size;
 
 
 $input-reset-size: 30px;

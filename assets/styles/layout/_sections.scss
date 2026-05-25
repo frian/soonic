@@ -12,10 +12,6 @@
     border-bottom-style: solid;
 }
 
-.library-view {
-    // overflow-x: hidden;
-}
-
 .albums-view {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -38,7 +34,6 @@
 
     width: 100%;
     height: calc(100% - config.$topbar-size-touch);
-
 }
 
 .artists-navigation {
@@ -48,7 +43,6 @@
     height: 100%;
 
     overflow-y: auto;
-
 }
 
 .songs, .playlist {
