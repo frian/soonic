@@ -11,10 +11,10 @@
             <dd>{{ form_widget(form.name) }}</dd>
 
             <dt>{{ form_label(form.streamUrl) }}</dt>
-            <dd>{{ form_widget(form.streamUrl) }}</dd>
+            <dd>{{ form_widget(form.streamUrl, { translation_domain: false }) }}</dd>
 
             <dt></dt>
-            <dd>
+            <dd class="stream-check-button">
                 <div class="radio-stream-check-actions">
                     <button
                         type="button"
@@ -29,7 +29,7 @@
             </dd>
 
             <dt>{{ form_label(form.homepageUrl) }}</dt>
-            <dd>{{ form_widget(form.homepageUrl) }}</dd>
+            <dd>{{ form_widget(form.homepageUrl, { translation_domain: false }) }}</dd>
 
             <dd class="button-row">
                 {{ include('common/_form_actions.html.twig', {

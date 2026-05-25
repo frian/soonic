@@ -1,6 +1,10 @@
 @use '../config/layout' as config;
 
 .topbar {
+    .logo {
+        display: none;
+    }
+
     div {
         display: inline-block;
 
@@ -158,13 +162,17 @@
         font-size: 0;
 
         .button-wrapper {
-            width: config.$topbar-content-size-touch;
+            width: config.$player-button-width-touch;
 
             height: config.$topbar-content-size-touch;
 
             text-align: center;
 
             cursor: pointer;
+
+            i {
+                font-size: 30px;
+            }
         }
 
         .time-info-container {
@@ -174,6 +182,13 @@
 
     #player-container > * {
         font-size: initial;
+    }
+
+    .song-info {
+        display: none;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 }
 
@@ -190,6 +205,14 @@ body.route-settings-index {
     display: none;
 }
 
+
+@include config.up(xs) {
+    .topbar {
+        .song-info {
+            display: initial;
+        }
+    }
+}
 
 @include config.up(md) {
     .topbar {

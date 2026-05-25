@@ -109,8 +109,7 @@
         margin-bottom: 12px;
 
         &.stream-check-button {
-            top: -20px;
-            padding: 0 15px 15px 15px;
+            padding: 0 15px 15px;
         }
     }
 
@@ -121,6 +120,15 @@
 
     .form input[type='text'] {
         width: 100%;
+    }
+
+    .form dt:empty {
+        padding: 0;
+    }
+
+    .form dt:empty + dd {
+        margin-top: -25px;
+        padding-top: 0;
     }
 
     .radio-stream-check-actions {
@@ -152,7 +160,6 @@
         text-align: center;
     }
 }
-
 
 table.form {
     width: 90%;
@@ -256,6 +263,15 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 
         .form dd {
             margin-bottom: 0;
+        }
+
+        .form dt:empty {
+            padding: config.$space-1 config.$space-3;
+        }
+
+        .form dt:empty + dd {
+            margin-top: -15px;
+            padding-top: config.$space-3;
         }
     }
 }

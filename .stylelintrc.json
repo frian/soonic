@@ -26,8 +26,9 @@
         ]
       }
     ],
+    "scss/dollar-variable-empty-line-before": null,
     "declaration-no-important": true,
-    "selector-max-id": 1,
+    "selector-max-id": 2,
     "declaration-empty-line-before": null,
     "media-feature-range-notation": "prefix",
     "selector-class-pattern": [
