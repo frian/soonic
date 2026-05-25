@@ -1,10 +1,10 @@
 @use 'sass:map';
 
-$space-1: 5px;
-$space-2: 10px;
-$space-3: 15px;
-$space-4: 20px;
-$space-5: 30px;
+$space-1: 5px !default;
+$space-2: 10px !default;
+$space-3: 15px !default;
+$space-4: 20px !default;
+$space-5: 30px !default;
 
 $topbar-content-size: 49px !default;
 $topbar-border-size: 1px !default;
@@ -14,12 +14,12 @@ $topbar-content-size-touch: 59px !default;
 $topbar-border-size-touch: 1px !default;
 $topbar-size-touch: $topbar-content-size-touch + $topbar-border-size-touch;
 
-$player-button-width-touch: 50px;
+$player-button-width-touch: 50px !default;
 $mobile-button-size: $topbar-size-touch !default;
 $mobile-line-height: $mobile-button-size;
 
 
-$input-reset-size: 30px;
+$input-reset-size: 30px !default;
 
 $artists-navigation-1024: 240px !default;
 $artists-navigation-1200: 360px !default;
@@ -39,11 +39,11 @@ $playlist-col-widths: (
     col-duration: 60px,
     col-year: 60px,
     col-genre: 80px
-);
+) !default;
 
 
-$radio-button-size-medium: 80px;
-$radio-button-size: 150px;
+$radio-button-size-medium: 80px !default;
+$radio-button-size: 150px !default;
 
 
 $breakpoints: (
@@ -52,7 +52,7 @@ $breakpoints: (
     md: 1024px,
     lg: 1200px,
     xl: 1600px
-);
+) !default;
 
 
 @mixin scrollable-y {

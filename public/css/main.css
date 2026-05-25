@@ -337,6 +337,7 @@ table {
   width: 60px;
 }
 .topbar ul.top-nav.is-active .top-nav-link {
+  position: relative;
   display: inline-flex;
   width: 100%;
   text-align: left;
@@ -345,6 +346,13 @@ table {
 }
 .topbar ul.top-nav.is-active .top-nav-item {
   width: 100%;
+}
+.topbar ul.top-nav.is-active .radio-new-button .radio-add {
+  position: absolute;
+  top: 10px;
+  left: 40px;
+  width: auto;
+  line-height: 1;
 }
 .topbar ul.top-nav.is-active .search-form {
   width: 100%;
@@ -437,6 +445,15 @@ body.route-settings-index .navigation-settings {
   }
   .topbar ul.top-nav .top-nav-item:not(.navigation-search-form) {
     width: 60px;
+  }
+  .topbar ul.top-nav .radio-new-button {
+    position: relative;
+  }
+  .topbar ul.top-nav .radio-new-button .radio-add {
+    position: absolute;
+    top: 5px;
+    right: -15px;
+    line-height: 1;
   }
   .topbar ul.top-nav.is-active {
     top: 50px;
@@ -1368,6 +1385,9 @@ select:focus-visible,
 }
 .topbar ul.top-nav {
   background-color: #fff;
+}
+.topbar .radio-new-button .radio-add {
+  font-size: 18px;
 }
 
 .filter {

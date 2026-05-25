@@ -143,6 +143,8 @@
             }
 
             .top-nav-link {
+                position: relative;
+
                 display: inline-flex;
 
                 width: 100%;
@@ -155,6 +157,16 @@
 
             .top-nav-item {
                 width: 100%;
+            }
+
+            .radio-new-button .radio-add {
+                position: absolute;
+                top: config.$space-2;
+                left: calc(config.$mobile-button-size - config.$space-4);
+
+                width: auto;
+
+                line-height: 1;
             }
 
             .search-form {
@@ -292,6 +304,18 @@ body.route-settings-index {
 
             .top-nav-item:not(.navigation-search-form) {
                 width: 60px;
+            }
+
+            .radio-new-button {
+                position: relative;
+
+                .radio-add {
+                    position: absolute;
+                    top: 5px;
+                    right: -15px;
+
+                    line-height: 1;
+                }
             }
 
             &.is-active {

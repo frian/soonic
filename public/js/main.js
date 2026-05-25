@@ -1076,12 +1076,16 @@ $(function() {
     }
 
     function syncLibraryPanelsWithViewport() {
-        if (screenWidth >= 1024) {
+        if (screenWidth >= 1024 && isViewVisible($('.library-view'))) {
             showLibraryView();
             $(".artists-navigation, .songs, .playlist").css('display', '');
             $(".songs").css('width', '');
             $(".mobile-artists-to-songs-button, .mobile-songs-to-artists-button, .mobile-songs-to-playlist-button, .mobile-playlist-to-songs-button").css('display', '');
         }
+    }
+
+    function isViewVisible($view) {
+        return $view.length > 0 && $view.css('display') !== 'none';
     }
 
     function syncRadiosViewDisplayMode() {
