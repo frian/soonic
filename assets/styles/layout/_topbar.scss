@@ -28,8 +28,9 @@
 
         line-height: config.$topbar-content-size-touch;
 
-        vertical-align: top;
         align-items: stretch;
+
+        vertical-align: top;
 
         input[type="text"] {
             position: relative;
@@ -64,6 +65,7 @@
 
             display: inline-block;
             flex: 1 1 auto;
+
             min-width: 0;
         }
     }
@@ -193,7 +195,9 @@
 
     .song-info {
         display: none;
+
         overflow: hidden;
+
         white-space: nowrap;
         text-overflow: ellipsis;
     }

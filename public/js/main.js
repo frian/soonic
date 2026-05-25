@@ -9,6 +9,7 @@ $(function() {
         return;
     }
     let screenWidth = $(window).width();
+    let isMobileView = screenWidth < 1024;
     let mobileMenuState = 'closed';
     let openView = null;
     let scanLoop = null;
@@ -1053,10 +1054,21 @@ $(function() {
     }
 
     function _init() {
+        syncMobileMenuWithViewport();
         syncLibraryPanelsWithViewport();
         syncRadiosViewDisplayMode();
         setSongInfoSize();
         setFilterInputSize();
+    }
+
+    function syncMobileMenuWithViewport() {
+        const nextIsMobileView = screenWidth < 1024;
+
+        if (isMobileView && !nextIsMobileView) {
+            closeMobileMenu();
+        }
+
+        isMobileView = nextIsMobileView;
     }
 
     function syncLibraryPanelsWithViewport() {

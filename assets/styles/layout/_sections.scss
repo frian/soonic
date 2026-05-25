@@ -95,6 +95,7 @@
 
     .view {
         top: config.$topbar-size;
+
         height: calc(100% - config.$topbar-size);
     }
 
