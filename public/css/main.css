@@ -486,8 +486,11 @@ body.route-settings-index .navigation-settings {
   height: calc(100% - 60px);
 }
 
+.page-title-meta {
+  display: none;
+}
+
 .artists-navigation {
-  float: left;
   width: 100%;
   height: 100%;
   overflow-y: auto;
@@ -513,6 +516,15 @@ body.route-settings-index .navigation-settings {
   }
 }
 @media all and (min-width: 1024px) {
+  .library-view {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    grid-template-rows: 1fr 1fr;
+  }
+  .library-view > :not(.artists-navigation, .songs, .playlist) {
+    grid-column: 1/-1;
+    grid-row: 1/-1;
+  }
   .topbar {
     height: 49px;
     border-bottom-width: 1px;
@@ -526,13 +538,27 @@ body.route-settings-index .navigation-settings {
   }
   .songs, .playlist {
     display: block;
-    height: 50%;
+    min-width: 0;
+    height: auto;
   }
   .artists-navigation {
+    grid-column: 1;
+    grid-row: 1/-1;
     width: 240px;
+  }
+  .songs {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .playlist {
+    grid-column: 2;
+    grid-row: 2;
   }
 }
 @media all and (min-width: 1200px) {
+  .library-view {
+    grid-template-columns: 360px minmax(0, 1fr);
+  }
   .albums-view {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
@@ -627,8 +653,10 @@ body.route-settings-index .navigation-settings {
 }
 .playlist-header {
   top: 0;
+  display: flex;
   height: 22px;
   padding-left: 10px;
+  align-items: center;
 }
 
 .songs-container {
@@ -675,7 +703,7 @@ body.route-settings-index .navigation-settings {
 }
 
 .icon-trash {
-  float: right;
+  margin-left: auto;
   cursor: pointer;
 }
 
@@ -982,10 +1010,10 @@ button:active, button:focus {
   visibility: hidden;
 }
 .radio .radio-play.is-loading::after {
-  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
+  content: "";
   width: 0.72em;
   height: 0.72em;
   margin-top: -0.36em;

@@ -3,9 +3,13 @@
 .playlist-header {
     top: 0;
 
+    display: flex;
+
     height: config.$panel-header-height;
 
     padding-left: config.$space-2;
+
+    align-items: center;
 }
 
 .songs-container {
@@ -58,7 +62,7 @@
 }
 
 .icon-trash {
-    float: right;
+    margin-left: auto;
 
     cursor: pointer;
 }

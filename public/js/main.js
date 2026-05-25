@@ -69,7 +69,7 @@ $(function() {
         openView = null;
 
         if ($('.library-view').length) {
-            $('.library-view').css('display', 'block');
+            showLibraryView();
             updateDocumentTitleFromSelector('.library-view [data-page-title]');
         } else {
             $.ajax({
@@ -79,7 +79,7 @@ $(function() {
                     updateDocumentTitleFromHtml(data);
                     upsertLibraryView(data);
                     $('.albums-view').css('display', 'none');
-                    $('.library-view').css('display', 'block');
+                    showLibraryView();
                     setSongInfoSize();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -802,6 +802,10 @@ $(function() {
         $(document).off("click.mobileMenu");
     }
 
+    function showLibraryView() {
+        $('.library-view').css('display', screenWidth >= 1024 ? 'grid' : 'block');
+    }
+
     function showMobileSongsView(options) {
         const opts = options || {};
         const playlistButtonDisplay = opts.playlistButtonDisplay || 'initial';
@@ -1073,6 +1077,7 @@ $(function() {
 
     function syncLibraryPanelsWithViewport() {
         if (screenWidth >= 1024) {
+            showLibraryView();
             $(".artists-navigation, .songs, .playlist").css('display', '');
             $(".songs").css('width', '');
             $(".mobile-artists-to-songs-button, .mobile-songs-to-artists-button, .mobile-songs-to-playlist-button, .mobile-playlist-to-songs-button").css('display', '');
