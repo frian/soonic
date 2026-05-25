@@ -46,7 +46,7 @@ h2 {
     font-weight: normal;
 
     color: theme.$fg-color;
-    background: theme.$default-gradient;
+    background-image: theme.$default-gradient;
 
     cursor: pointer;
     transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
