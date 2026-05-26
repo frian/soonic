@@ -131,8 +131,18 @@ $(function() {
             return;
         }
         const offset = $(this).offset();
+        const width = $(this).width();
+        if (!Number.isFinite(width) || width <= 0) {
+            return;
+        }
+
         const xVal = e.pageX - offset.left;
-        const percent = (xVal / $(this).width()) * 100;
+        let percent = (xVal / width) * 100;
+        if (percent > 100) {
+            percent = 100;
+        } else if (percent < 0) {
+            percent = 0;
+        }
         const jumpTime = player.duration * percent / 100;
 
         player.currentTime = jumpTime;

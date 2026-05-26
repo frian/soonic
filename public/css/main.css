@@ -383,7 +383,35 @@ table {
   font-size: 30px;
 }
 .topbar #player-container .time-info-container {
-  padding-left: 10px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 0 10px;
+}
+.topbar #player-container .time-info {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+}
+.topbar #player-container .progress-bar-container {
+  height: 19px;
+  width: 100%;
+  line-height: 19px;
+}
+.topbar #player-container .progressbar {
+  position: relative;
+  width: calc(100% - 10px);
+  height: 10px;
+  margin: 0 5px;
+  overflow: hidden;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.topbar #player-container .progress-indicator {
+  display: block;
+  width: 0;
+  height: 100%;
 }
 .topbar #player-container > * {
   font-size: initial;
@@ -410,7 +438,31 @@ body.route-settings-index .navigation-settings {
     display: block;
   }
 }
+@media all and (min-width: 500px) {
+  .topbar .logo {
+    display: inline-flex;
+    width: 49px;
+    align-items: center;
+    justify-content: center;
+  }
+  .topbar .logo > img {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
+}
 @media all and (min-width: 1024px) {
+  .topbar .logo {
+    display: inline-flex;
+    width: 49px;
+    align-items: center;
+    justify-content: center;
+  }
+  .topbar .logo > img {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
   .topbar div {
     line-height: 49px;
   }
@@ -465,7 +517,7 @@ body.route-settings-index .navigation-settings {
     font-size: 0;
   }
   .topbar #player-container .button-wrapper {
-    width: 49px;
+    width: 34px;
     height: 49px;
   }
 }
@@ -1363,6 +1415,18 @@ select:focus-visible,
   background-color: #111;
 }
 
+.topbar .time-info {
+  padding: 0 10px;
+  letter-spacing: 1px;
+  font-size: 80%;
+  font-weight: 700;
+}
+.topbar .progressbar {
+  background-color: #ddd;
+}
+.topbar .progress-indicator {
+  background-color: #aaa;
+}
 .topbar .navigation-search-form .search-form .button {
   background: transparent;
   border: 0;
@@ -1561,6 +1625,28 @@ table.form input[type=url] {
 }
 .settings-view .button-wrapper {
   text-align: center;
+}
+.settings-view .library-info select {
+  appearance: none;
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 36px 10px 12px;
+  color: #111;
+  background-image: linear-gradient(45deg, transparent 50%, #555 50%), linear-gradient(135deg, #555 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 2px), calc(100% - 12px) calc(50% - 2px);
+  background-repeat: no-repeat;
+  background-size: 6px 6px, 6px 6px;
+  border: 1px solid #666;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.settings-view .library-info select:hover {
+  border-color: #111;
+}
+.settings-view .library-info select:focus {
+  border-color: #111;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
 }
 
 /*# sourceMappingURL=main.css.map */

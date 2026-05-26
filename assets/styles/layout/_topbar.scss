@@ -212,7 +212,47 @@
         }
 
         .time-info-container {
-            padding-left: config.$space-2;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: center;
+
+            height: 100%;
+            padding: 0 config.$space-2;
+        }
+
+        .time-info {
+            display: block;
+            height: 30px;
+
+            line-height: 30px;
+        }
+
+        .progress-bar-container {
+            height: 19px;
+            width: 100%;
+
+            line-height: 19px;
+        }
+
+        .progressbar {
+            position: relative;
+
+            width: calc(100% - 10px);
+            height: 10px;
+
+            margin: 0 5px;
+
+            overflow: hidden;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+        }
+
+        .progress-indicator {
+            display: block;
+            width: 0;
+            height: 100%;
         }
     }
 
@@ -255,8 +295,40 @@ body.route-settings-index {
     }
 }
 
+
+
+@include config.up(xs) {
+    .topbar {
+        .logo {
+            display: inline-flex;
+            width: 49px;
+            align-items: center;
+            justify-content: center;
+
+            > img {
+                display: block;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+}
+
 @include config.up(md) {
     .topbar {
+        .logo {
+            display: inline-flex;
+            width: 49px;
+            align-items: center;
+            justify-content: center;
+
+            > img {
+                display: block;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
         div {
             line-height: config.$topbar-content-size;
         }
@@ -331,7 +403,7 @@ body.route-settings-index {
             font-size: 0;
 
             .button-wrapper {
-                width: config.$topbar-content-size;
+                width: config.$topbar-content-size - 15px;
                 height: config.$topbar-content-size;
             }
         }
