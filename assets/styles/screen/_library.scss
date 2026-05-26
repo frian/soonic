@@ -12,6 +12,10 @@
     text-overflow: ellipsis;
 }
 
+.album-nav {
+    background-color: theme.$bg-alternate;
+}
+
 @include config.up(md) {
     .artists-navigation a {
         line-height: 1.3em;

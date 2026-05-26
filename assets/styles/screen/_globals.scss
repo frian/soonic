@@ -64,6 +64,12 @@ select:focus-visible,
     outline-offset: 2px;
 }
 
+.is-playing,
+.is-selected,
+.is-keyboard-selected {
+    background-color: theme.$hover-active;
+}
+
 #playlist-flash-message,
 #radio-flash-message,
 #ajax-flash-message {

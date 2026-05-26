@@ -214,22 +214,25 @@
         .time-info-container {
             display: inline-flex;
             flex-direction: column;
-            justify-content: center;
 
             height: 100%;
+
             padding: 0 config.$space-2;
+
+            justify-content: center;
         }
 
         .time-info {
             display: block;
+
             height: 30px;
 
             line-height: 30px;
         }
 
         .progress-bar-container {
-            height: 19px;
             width: 100%;
+            height: 19px;
 
             line-height: 19px;
         }
@@ -251,6 +254,7 @@
 
         .progress-indicator {
             display: block;
+
             width: 0;
             height: 100%;
         }
@@ -301,12 +305,15 @@ body.route-settings-index {
     .topbar {
         .logo {
             display: inline-flex;
+
             width: 49px;
+
             align-items: center;
             justify-content: center;
 
             > img {
                 display: block;
+
                 width: 40px;
                 height: 40px;
             }
@@ -318,12 +325,15 @@ body.route-settings-index {
     .topbar {
         .logo {
             display: inline-flex;
+
             width: 49px;
+
             align-items: center;
             justify-content: center;
 
             > img {
                 display: block;
+
                 width: 40px;
                 height: 40px;
             }

@@ -32,12 +32,6 @@
             background-color: theme.$bg-alternate;
         }
     }
-
-    tbody tr.is-playing,
-    tbody tr.is-selected,
-    tbody tr.is-keyboard-selected {
-        background-color: theme.$hover-active;
-    }
 }
 
 :is(.songs, .playlist) tbody td.col-add {

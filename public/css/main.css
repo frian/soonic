@@ -385,9 +385,9 @@ table {
 .topbar #player-container .time-info-container {
   display: inline-flex;
   flex-direction: column;
-  justify-content: center;
   height: 100%;
   padding: 0 10px;
+  justify-content: center;
 }
 .topbar #player-container .time-info {
   display: block;
@@ -395,8 +395,8 @@ table {
   line-height: 30px;
 }
 .topbar #player-container .progress-bar-container {
-  height: 19px;
   width: 100%;
+  height: 19px;
   line-height: 19px;
 }
 .topbar #player-container .progressbar {
@@ -1396,6 +1396,12 @@ select:focus-visible,
   outline-offset: 2px;
 }
 
+.is-playing,
+.is-selected,
+.is-keyboard-selected {
+  background-color: #ddd;
+}
+
 #playlist-flash-message,
 #radio-flash-message,
 #ajax-flash-message {
@@ -1417,9 +1423,9 @@ select:focus-visible,
 
 .topbar .time-info {
   padding: 0 10px;
-  letter-spacing: 1px;
   font-size: 80%;
   font-weight: 700;
+  letter-spacing: 1px;
 }
 .topbar .progressbar {
   background-color: #ddd;
@@ -1462,6 +1468,10 @@ select:focus-visible,
   line-height: 60px;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.album-nav {
+  background-color: #f6f6f6;
 }
 
 @media all and (min-width: 1024px) {
@@ -1511,11 +1521,6 @@ select:focus-visible,
 }
 .list tbody tr:nth-child(even) {
   background-color: #f6f6f6;
-}
-.list tbody tr.is-playing,
-.list tbody tr.is-selected,
-.list tbody tr.is-keyboard-selected {
-  background-color: #ddd;
 }
 
 :is(.songs, .playlist) tbody td.col-add {
