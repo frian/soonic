@@ -1519,7 +1519,7 @@ select:focus-visible,
 .list tbody tr {
   cursor: pointer;
 }
-.list tbody tr:nth-child(even) {
+.list tbody tr:nth-child(even):not(.is-playing, .is-keyboard-select) {
   background-color: #f6f6f6;
 }
 

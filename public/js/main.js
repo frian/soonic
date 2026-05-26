@@ -366,6 +366,10 @@ $(function() {
         $(uiSelectors.artistNavLinks + "." + uiStates.active).removeClass(uiStates.active);
         $(uiSelectors.artistNavLinks + "." + uiStates.keyboardSelected).removeClass(uiStates.keyboardSelected);
         $(this).addClass(uiStates.active);
+        $(document).trigger("soonic:setKeyboardScope", [{
+            selector: ".artists-navigation:visible a",
+            target: this
+        }]);
 
         logDebug('clicked on an artist in artist nav');
     });
@@ -448,6 +452,10 @@ $(function() {
         $(uiSelectors.artistNavLinks + "." + uiStates.active).removeClass(uiStates.active);
         $(uiSelectors.artistNavLinks + "." + uiStates.keyboardSelected).removeClass(uiStates.keyboardSelected);
         $(this).addClass(uiStates.active);
+        $(document).trigger("soonic:setKeyboardScope", [{
+            selector: ".artists-navigation:visible a",
+            target: this
+        }]);
 
         if (screenWidth < 1024) {
             showMobileSongsView({ playlistButtonDisplay: 'block' });

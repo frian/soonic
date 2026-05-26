@@ -13,6 +13,7 @@ $(function() {
     const legacyActiveClass = 'active';
     const legacyKeyboardSelectedClass = 'keyboard-selected';
     let keyboardScopeSelector = null;
+    let forcedKeyboardScopeSelector = null;
 
     /**
      * Activate custom role=button controls with keyboard
@@ -81,6 +82,26 @@ $(function() {
         logDebug('keyboard shortcut: ' + key);
     });
 
+    $(document).on("soonic:setKeyboardScope", function(_e, payload) {
+        const selector = payload && payload.selector;
+        if (!selector) {
+            return;
+        }
+
+        forcedKeyboardScopeSelector = selector;
+        keyboardScopeSelector = selector;
+
+        $("." + keyboardSelectedClass + ", ." + legacyKeyboardSelectedClass).removeClass(keyboardSelectedClass + " " + legacyKeyboardSelectedClass);
+
+        if (payload && payload.target) {
+            const $target = $(payload.target).first();
+            if ($target.length) {
+                $target.addClass(keyboardSelectedClass);
+                scrollIntoView($target);
+            }
+        }
+    });
+
 
     function logDebug(message) {
         window.logSoonicDebug(debug, message);
@@ -140,6 +161,7 @@ $(function() {
             e.preventDefault();
             moveKeyboardSelection($items, e.key === 'ArrowDown' ? 1 : -1);
             keyboardScopeSelector = itemSelector;
+            forcedKeyboardScopeSelector = null;
             return true;
         }
 
@@ -147,6 +169,7 @@ $(function() {
             e.preventDefault();
             activateKeyboardSelection($items);
             keyboardScopeSelector = itemSelector;
+            forcedKeyboardScopeSelector = null;
             return true;
         }
 
@@ -158,6 +181,13 @@ $(function() {
     }
 
     function getKeyboardItems() {
+        if (forcedKeyboardScopeSelector) {
+            const $forcedItems = $(forcedKeyboardScopeSelector).filter(':visible');
+            if ($forcedItems.length) {
+                return $forcedItems;
+            }
+        }
+
         const currentSelector = getCurrentKeyboardSelector();
         if (currentSelector) {
             const $currentItems = $(currentSelector).filter(':visible');

@@ -28,7 +28,7 @@
             cursor: pointer;
         }
 
-        tr:nth-child(even) {
+        tr:nth-child(even):not(.is-playing, .is-keyboard-select) {
             background-color: theme.$bg-alternate;
         }
     }
