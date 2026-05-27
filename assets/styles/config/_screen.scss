@@ -1,5 +1,6 @@
 $fg-color: #111 !default;
 $bg-color: #fff !default;
+$body-gradient: linear-gradient(to bottom right, rgb(238 238 238 / 100%), rgb(238 238 238 / 90%)) !default;
 $border-size: 1px !default;
 $bg-alternate: #f6f6f6 !default;
 $border-color: #666 !default;
@@ -14,3 +15,5 @@ $ui-font: "Inter", sans-serif !default;
 $ui-system-font: inherit !default;
 $title-font: inherit !default;
 $button-font: inherit !default;
+
+

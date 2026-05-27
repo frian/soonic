@@ -1,0 +1,345 @@
+@font-face {
+  font-family: "Material Icons";
+  src: url("/fonts/material-icons/material-icons-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+.material-icons {
+  display: inline-block;
+  font-family: "Material Icons", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  font-style: normal;
+  overflow-wrap: normal;
+  direction: ltr;
+  font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  color: #fafafa;
+  font-family: "Inter", sans-serif;
+  background-image: linear-gradient(to bottom right, rgb(17, 17, 17), rgba(17, 17, 17, 0.9));
+}
+
+a {
+  font-weight: 700;
+  line-height: 1.2em;
+  color: #fafafa;
+  text-decoration: none;
+}
+
+h1 {
+  font-family: inherit;
+  font-size: 1.6em;
+  letter-spacing: 1px;
+  text-align: center;
+  border-bottom: 1px solid #666;
+}
+
+h2 {
+  font-family: inherit;
+  font-size: 1.4em;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #666;
+}
+
+.empty-list {
+  font-family: inherit;
+  font-size: 2em;
+  font-weight: 300;
+}
+
+.input-reset::after {
+  border-radius: 50%;
+}
+
+.button {
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: normal;
+  color: #fafafa;
+  background-image: linear-gradient(to top, rgb(17, 17, 17), rgb(54, 54, 54));
+  cursor: pointer;
+  transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.button:focus-visible,
+.top-nav-link:focus-visible,
+.mobile-button:focus-visible {
+  outline: 2px solid #666;
+  outline-offset: 2px;
+}
+
+.is-playing,
+.is-selected,
+.is-keyboard-selected {
+  background-color: #ddd;
+}
+
+#playlist-flash-message,
+#radio-flash-message,
+#ajax-flash-message {
+  font-size: 20px;
+  color: #fafafa;
+  background-color: #ddd;
+  border-radius: 6px;
+}
+
+.hamburger {
+  color: #fafafa;
+}
+
+.hamburger-inner,
+.hamburger-inner::after,
+.hamburger-inner::before {
+  background-color: #fafafa;
+}
+
+.topbar {
+  background-color: #111;
+  background-image: linear-gradient(to top, rgb(17, 17, 17), rgb(54, 54, 54));
+}
+.topbar .time-info {
+  padding: 0 10px;
+  font-size: 80%;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.topbar .progressbar {
+  background-color: #ddd;
+}
+.topbar .progress-indicator {
+  background-color: #aaa;
+}
+.topbar .navigation-search-form .search-form .button {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.topbar .top-nav-item {
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-align: center;
+  background-image: linear-gradient(to top, rgb(17, 17, 17), rgb(54, 54, 54));
+}
+.topbar nav.topbar-nav {
+  font-size: 0;
+}
+.topbar nav.topbar-nav .topbar-nav-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.topbar ul.top-nav {
+  background-color: #111;
+}
+.topbar .radio-new-button .radio-add {
+  font-size: 18px;
+}
+
+.filter {
+  background-color: #333;
+}
+
+.artists-navigation a {
+  line-height: 60px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.album-nav {
+  background-color: #222;
+}
+
+@media all and (min-width: 1024px) {
+  .artists-navigation a {
+    line-height: 1.3em;
+  }
+  .artists-navigation a.albums-list {
+    line-height: 1.4em;
+  }
+}
+.songs-context-menu, .playlist-context-menu {
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.2);
+}
+.songs-context-menu .menu-options, .playlist-context-menu .menu-options {
+  background-color: #111;
+}
+.songs-context-menu .menu-options .menu-option, .playlist-context-menu .menu-options .menu-option {
+  font-family: "Inter", sans-serif;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.songs-context-menu .menu-options .menu-option:hover, .playlist-context-menu .menu-options .menu-option:hover {
+  background-color: #ddd;
+}
+
+.artists-navigation a.is-active {
+  background-color: #ddd;
+}
+
+.playlist-header {
+  line-height: 20px;
+  background-color: #333;
+}
+
+:is(#songs, #playlist) thead th {
+  background-color: #333;
+}
+
+.mobile-button {
+  line-height: 60px;
+  text-align: center;
+  background-color: #ddd;
+}
+
+.list tbody tr {
+  cursor: pointer;
+}
+.list tbody tr:nth-child(even):not(.is-playing, .is-keyboard-select) {
+  background-color: #222;
+}
+
+:is(.songs, .playlist) tbody td.col-add {
+  text-align: center;
+}
+
+@media all and (min-width: 1024px) {
+  :is(.songs, .playlist) tbody td.col-add,
+  :is(.songs, .playlist) tbody td.col-duration,
+  :is(.songs, .playlist) tbody td.col-year,
+  :is(.songs, .playlist) tbody td.col-genre {
+    text-align: center;
+  }
+}
+.album-container .album-infos {
+  font-size: 0.8em;
+}
+.album-container .album-infos > div {
+  text-align: center;
+}
+.album-container .album-infos .album-info-album {
+  font-size: 1.1em;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.album-container .album-infos .album-info-artist {
+  font-size: 0.9em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.single-album-view {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.single-album-container {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.single-album-container .album-songs tbody tr:nth-child(2n) {
+  background-color: #222;
+}
+.single-album-container .album-songs tbody tr.is-playing {
+  background-color: #ddd;
+}
+.single-album-container .album-artist {
+  border-bottom: 1px solid #666;
+}
+.single-album-container .icon-plus {
+  cursor: pointer;
+}
+
+.radio:nth-child(even) {
+  background-color: #222;
+}
+
+.radio {
+  font-size: 16px;
+}
+
+.radio .icon-play,
+.radio .icon-pause {
+  font-size: 40px;
+}
+
+.radio-edit-view .form dt,
+.radio-new-view .form dt {
+  font-weight: 700;
+  text-align: right;
+}
+
+.radio-edit-view .form input[type=text],
+.radio-edit-view .form input[type=url],
+.radio-new-view .form input[type=text],
+.radio-new-view .form input[type=url],
+table.form input[type=text],
+table.form input[type=url] {
+  font-size: 1.2em;
+  line-height: 40px;
+}
+
+@media all and (min-width: 700px) {
+  .radio .icon-play,
+  .radio .icon-pause {
+    font-size: 3em;
+  }
+}
+@media all and (min-width: 1024px) {
+  .radio .icon-play,
+  .radio .icon-pause {
+    font-size: 5em;
+  }
+  .radio:nth-child(even) {
+    background-color: transparent;
+  }
+  .radio:nth-child(4n+2),
+  .radio:nth-child(4n+3) {
+    background-color: #222;
+  }
+  .radio.is-active-radio {
+    background-color: #ddd;
+  }
+}
+.settings-view .settings-value {
+  text-align: right;
+}
+.settings-view .button-wrapper {
+  text-align: center;
+}
+.settings-view .library-info select {
+  appearance: none;
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 36px 10px 12px;
+  color: #fafafa;
+  background-image: linear-gradient(45deg, transparent 50%, #555 50%), linear-gradient(135deg, #555 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 2px), calc(100% - 12px) calc(50% - 2px);
+  background-repeat: no-repeat;
+  background-size: 6px 6px, 6px 6px;
+  border: 1px solid #666;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.settings-view .library-info select:hover {
+  border-color: #fafafa;
+}
+.settings-view .library-info select:focus {
+  border-color: #fafafa;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+
+/*# sourceMappingURL=main.css.map */

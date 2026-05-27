@@ -93,31 +93,36 @@ table {
 .input-reset {
   position: absolute;
   z-index: 1;
-  display: inline-block;
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
   width: 30px;
   height: 30px;
+  padding: 0;
   border: 0;
-  vertical-align: middle;
+  appearance: none;
   outline: 0;
 }
 
 .input-reset::after {
-  position: absolute;
-  top: 0;
-  bottom: 0;
+  position: static;
   z-index: 1;
   display: block;
-  width: 20px;
-  height: 20px;
-  margin: auto;
-  padding: 2px;
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  padding: 0;
   cursor: pointer;
-  transform: rotate(45deg);
-  content: "\e805";
+  background: linear-gradient(45deg, transparent 42%, currentColor 42%, currentColor 58%, transparent 58%), linear-gradient(-45deg, transparent 42%, currentColor 42%, currentColor 58%, transparent 58%);
+  content: "";
 }
 
 .filter-form .input-reset {
+  top: 1px;
   right: 5px;
+  width: 34px;
+  height: calc(100% - 2px);
 }
 
 #playlist-flash-message,
@@ -261,7 +266,7 @@ table {
   display: inline-flex;
   height: 59px;
   line-height: 59px;
-  align-items: stretch;
+  align-items: center;
   vertical-align: top;
 }
 .topbar .search-form input[type=text] {
@@ -286,10 +291,13 @@ table {
   align-items: center;
   justify-content: center;
   appearance: none;
+  line-height: 1;
 }
 .topbar .search-form .input-reset {
-  top: 10px;
+  top: 0;
+  bottom: 0;
   right: 5px;
+  margin: auto;
 }
 .topbar .search-form .form-element-container {
   position: relative;
@@ -1341,7 +1349,9 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
 }
 
 body {
+  color: #111;
   font-family: "Inter", sans-serif;
+  background-image: linear-gradient(to bottom right, rgb(238, 238, 238), rgba(238, 238, 238, 0.9));
 }
 
 a {
@@ -1373,10 +1383,6 @@ h2 {
 }
 
 .input-reset::after {
-  font-family: fontello, sans-serif;
-  font-size: 20px;
-  font-weight: 900;
-  text-align: center;
   border-radius: 50%;
 }
 
@@ -1427,6 +1433,10 @@ select:focus-visible,
   background-color: #111;
 }
 
+.topbar {
+  background-color: #fff;
+  background-image: linear-gradient(to top, rgba(34, 34, 34, 0.2), rgba(51, 51, 51, 0.1));
+}
 .topbar .time-info {
   padding: 0 10px;
   font-size: 80%;

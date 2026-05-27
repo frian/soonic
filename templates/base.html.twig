@@ -21,7 +21,7 @@
             'css/fontello-embedded.css'
         ] %}
         {% set theme_layout_css = 'css/themes/' ~ theme ~ '/layout.css' %}
-        {% set theme_screen_css = 'css/themes/' ~ theme ~ '/screen.css' %}
+        {% set theme_screen_css = 'css/themes/' ~ theme ~ '/main.css' %}
 
         {% for css_file in base_css_files %}
             <link href="/{{ css_file }}?v={{ file_mtime(css_file) }}" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -34,12 +34,6 @@
         {% if file_exists(theme_screen_css) %}
             <link id="screen-theme-css" href="/{{ theme_screen_css }}?v={{ file_mtime(theme_screen_css) }}" media="screen, projection" rel="stylesheet" type="text/css" />
         {% endif %}
-
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-
 
         {% block stylesheets %}{% endblock %}
     </head>

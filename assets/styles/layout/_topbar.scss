@@ -32,7 +32,7 @@
 
         line-height: config.$topbar-content-size-touch;
 
-        align-items: stretch;
+        align-items: center;
 
         vertical-align: top;
 
@@ -71,11 +71,15 @@
             justify-content: center;
 
             appearance: none;
+            line-height: 1;
         }
 
         .input-reset {
-            top: config.$space-2;
+            top: 0;
+            bottom: 0;
             right: config.$space-1;
+
+            margin: auto;
         }
 
         .form-element-container {

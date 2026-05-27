@@ -1,7 +1,9 @@
 @use '../config/screen' as theme;
 
 body {
-    font-family: theme.$ui-font;
+    color: theme.$fg-color;
+    font-family: theme.$ui-font;    
+    background-image: theme.$body-gradient;
 }
 
 a {
@@ -36,11 +38,6 @@ h2 {
 }
 
 .input-reset::after {
-    font-family: fontello, sans-serif;
-    font-size: 20px;
-    font-weight: 900;
-    text-align: center;
-
     border-radius: 50%;
 }
 

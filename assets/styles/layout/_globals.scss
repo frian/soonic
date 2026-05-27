@@ -44,39 +44,51 @@ table {
     position: absolute;
     z-index: 1;
 
-    display: inline-block;
+    display: inline-flex;
+
+    box-sizing: border-box;
+
+    align-items: center;
+    justify-content: center;
 
     width: config.$input-reset-size;
     height: config.$input-reset-size;
 
+    padding: 0;
+
     border: 0;
 
-    vertical-align: middle;
+    appearance: none;
     outline: 0;
 }
 
 .input-reset::after {
-	position: absolute;
-	top: 0;
-	bottom: 0;
+	position: static;
 	z-index:1;
 
 	display: block;
 
-	width: 20px;
-	height: 20px;
+	box-sizing: border-box;
 
-	margin: auto;
-	padding: 2px;
+	width: 14px;
+	height: 14px;
+
+	padding: 0;
 
 	cursor: pointer;
-    transform: rotate(45deg);
-    content: "\e805";
+    background:
+        linear-gradient(45deg, transparent 42%, currentColor 42%, currentColor 58%, transparent 58%),
+        linear-gradient(-45deg, transparent 42%, currentColor 42%, currentColor 58%, transparent 58%);
+    content: "";
 }
 
 .filter-form {
     .input-reset {
+        top: 1px;
         right: config.$space-1;
+
+        width: 34px;
+        height: calc(100% - 2px);
     }
 }
 
