@@ -30,7 +30,7 @@
 }
 
 .single-album-container {
-    background: theme.$album-overlay ;
+    background-color: theme.$album-overlay ;
 
     .album-songs {
         tbody tr:nth-child(2n) {

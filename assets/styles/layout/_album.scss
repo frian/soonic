@@ -110,9 +110,12 @@
             padding: config.$space-1;
         }
 
-        td:nth-child(1),
-        td:nth-child(3) {
+        td:nth-child(1)  {
             text-align: center;
+        }
+
+        td:nth-child(2)  {
+            text-align: right;
         }
     }
 

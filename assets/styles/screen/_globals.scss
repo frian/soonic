@@ -1,5 +1,9 @@
 @use '../config/screen' as theme;
 
+body {
+    font-family: theme.$ui-font;
+}
+
 a {
     font-weight: 700;
     line-height: 1.2em;
@@ -9,7 +13,7 @@ a {
 }
 
 h1 {
-    font-family: Muli, sans-serif;
+    font-family: theme.$title-font;
     font-size: 1.6em;
     letter-spacing: 1px;
     text-align: center;
@@ -18,7 +22,7 @@ h1 {
 }
 
 h2 {
-    font-family: Muli, sans-serif;
+    font-family: theme.$title-font;
     font-size: 1.4em;
     letter-spacing: 1px;
 
@@ -26,7 +30,7 @@ h2 {
 }
 
 .empty-list {
-    font-family: Lato, sans-serif;
+    font-family: theme.$ui-system-font;
     font-size: 2em;
     font-weight: 300;
 }
@@ -41,7 +45,7 @@ h2 {
 }
 
 .button {
-    font-family: Lato, sans-serif;
+    font-family: theme.$button-font;
     font-size: 1em;
     font-weight: normal;
 
@@ -76,6 +80,6 @@ select:focus-visible,
     font-size: 20px;
 
     color: theme.$fg-color;
-    background: theme.$hover-active;
+    background-color: theme.$hover-active;
     border-radius: 6px;
 }

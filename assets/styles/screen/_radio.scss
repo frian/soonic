@@ -52,9 +52,10 @@ table.form input[type='url'] {
         background-color: theme.$bg-alternate;
     }
 
-    .radio:nth-child(4n+2).is-active-radio,
-    .radio:nth-child(4n+3).is-active-radio {
-        background-color: theme.$hover-active;
+    .radio {
+        &.is-active-radio {
+            background-color: theme.$hover-active;
+        }
     }
 
 }

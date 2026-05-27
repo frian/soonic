@@ -986,9 +986,11 @@ button:active, button:focus {
 .single-album-container .album-songs td {
   padding: 5px;
 }
-.single-album-container .album-songs td:nth-child(1),
-.single-album-container .album-songs td:nth-child(3) {
+.single-album-container .album-songs td:nth-child(1) {
   text-align: center;
+}
+.single-album-container .album-songs td:nth-child(2) {
+  text-align: right;
 }
 .single-album-container .album-actions {
   margin-bottom: 10px;
@@ -1338,6 +1340,10 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
   -webkit-font-smoothing: antialiased;
 }
 
+body {
+  font-family: "Inter", sans-serif;
+}
+
 a {
   font-weight: 700;
   line-height: 1.2em;
@@ -1346,7 +1352,7 @@ a {
 }
 
 h1 {
-  font-family: Muli, sans-serif;
+  font-family: inherit;
   font-size: 1.6em;
   letter-spacing: 1px;
   text-align: center;
@@ -1354,14 +1360,14 @@ h1 {
 }
 
 h2 {
-  font-family: Muli, sans-serif;
+  font-family: inherit;
   font-size: 1.4em;
   letter-spacing: 1px;
   border-bottom: 1px solid #666;
 }
 
 .empty-list {
-  font-family: Lato, sans-serif;
+  font-family: inherit;
   font-size: 2em;
   font-weight: 300;
 }
@@ -1375,7 +1381,7 @@ h2 {
 }
 
 .button {
-  font-family: Lato, sans-serif;
+  font-family: inherit;
   font-size: 1em;
   font-weight: normal;
   color: #111;
@@ -1407,7 +1413,7 @@ select:focus-visible,
 #ajax-flash-message {
   font-size: 20px;
   color: #111;
-  background: #ddd;
+  background-color: #ddd;
   border-radius: 6px;
 }
 
@@ -1489,7 +1495,7 @@ select:focus-visible,
   background-color: #fff;
 }
 .songs-context-menu .menu-options .menu-option, .playlist-context-menu .menu-options .menu-option {
-  font-family: Muli, sans-serif;
+  font-family: "Inter", sans-serif;
   letter-spacing: 1px;
   cursor: pointer;
 }
@@ -1558,7 +1564,7 @@ select:focus-visible,
 }
 
 .single-album-container {
-  background: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.9);
 }
 .single-album-container .album-songs tbody tr:nth-child(2n) {
   background-color: #f6f6f6;
@@ -1620,8 +1626,7 @@ table.form input[type=url] {
   .radio:nth-child(4n+3) {
     background-color: #f6f6f6;
   }
-  .radio:nth-child(4n+2).is-active-radio,
-  .radio:nth-child(4n+3).is-active-radio {
+  .radio.is-active-radio {
     background-color: #ddd;
   }
 }

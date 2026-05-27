@@ -33,7 +33,7 @@
         background-color: theme.$bg-color;
 
         .menu-option {
-            font-family: Muli, sans-serif;
+            font-family: theme.$ui-font;
             letter-spacing: 1px;
 
             cursor: pointer;
