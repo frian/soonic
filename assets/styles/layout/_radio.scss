@@ -275,18 +275,15 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
             cursor: pointer;
         }
 
-        .radio-name, .radio-url {
-            line-height: calc(config.$radio-button-size-medium / 2);
-        }
-
         .radio-name {
-            line-height: calc(config.$radio-button-size-medium / 2);
+            height: calc(config.$radio-button-size-medium);
+
+            line-height: calc(config.$radio-button-size-medium);
         }
 
-        .radio-url {
-            display: block;
-            grid-row: 2;
-        }
+        // .radio-name {
+        //     line-height: calc(config.$radio-button-size-medium);
+        // }
 
         .button-wrapper {
             width: config.$radio-button-size-medium;
@@ -325,6 +322,12 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
 
 
 @include config.up(md) {
+    .radios-view {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+    }
+
     .radio {
         flex: 0 0 50%;
         grid-template-columns: config.$radio-button-size minmax(0, 1fr);
@@ -336,8 +339,13 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
         .radio-name, .radio-url {
             padding-left: config.$space-5;
 
-            line-height: calc(config.$radio-button-size / 2);
+            line-height: calc(config.$radio-button-size / 2);   
         }   
+
+        .radio-url {
+            display: block;
+            grid-row: 2;
+        }
 
         .button-wrapper {
             width: config.$radio-button-size;
@@ -347,11 +355,5 @@ label[for="appbundle_radio_changed"], [id="appbundle_radio_changed"] {
         }
     }
 
-
-    .radios-view {
-        display: flex;
-        flex-wrap: wrap;
-        align-content: flex-start;
-    }
 
 }

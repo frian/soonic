@@ -9,6 +9,12 @@
     font-size: 16px;
 }
 
+.radio-name {
+    font-family: theme.$text-font;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
 .radio .icon-play,
 .radio .icon-pause {
     font-size: 40px;
@@ -31,6 +37,10 @@ table.form input[type='url'] {
 }
 
 @include config.up(sm) {
+    .radio-name {
+        font-size: 1.4rem;
+    }
+
     .radio .icon-play,
     .radio .icon-pause {
         font-size: 3em;
@@ -38,6 +48,10 @@ table.form input[type='url'] {
 }
 
 @include config.up(md) {
+    .radio-name {
+        font-size: 2rem;
+    }
+
     .radio .icon-play,
     .radio .icon-pause {
         font-size: 5em;

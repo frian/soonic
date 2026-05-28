@@ -1,12 +1,26 @@
 @use '../config/screen' as theme;
 
 .settings-view {
+
+    font-family: theme.$text-font;
+
     .settings-value {
         text-align: right;
     }
 
     .button-wrapper {
         text-align: center;
+    }
+
+    .library-info {
+        td {
+            font-size: 1.6rem;
+            font-weight: 300;
+
+            &.settings-value {
+                font-weight: 400;
+            }
+        }
     }
 
     .library-info select {

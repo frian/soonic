@@ -731,9 +731,13 @@ body.route-settings-index .navigation-settings {
 .playlist-header {
   top: 0;
   display: flex;
-  height: 22px;
+  height: 24px;
   padding-left: 10px;
+  line-height: 24px;
   align-items: center;
+}
+.playlist-header .is-hidden {
+  display: none;
 }
 
 .songs-container {
@@ -741,7 +745,7 @@ body.route-settings-index .navigation-settings {
 }
 
 .playlist-container {
-  height: calc(100% - 22px);
+  height: calc(100% - 24px);
 }
 
 :is(.songs-container, .playlist-container) {
@@ -773,10 +777,6 @@ body.route-settings-index .navigation-settings {
 :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-year,
 :is(.songs, .playlist) :is(tbody, thead) :is(td, th).col-genre {
   display: none;
-}
-
-.list thead tr th {
-  padding: 5px 0;
 }
 
 .icon-trash {
@@ -882,7 +882,7 @@ button:active, button:focus {
     display: none;
   }
   :is(.songs, .playlist) tbody td {
-    height: 22px;
+    height: 24px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1252,15 +1252,9 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
   .radio .icon-play, .radio .icon-pause {
     cursor: pointer;
   }
-  .radio .radio-name, .radio .radio-url {
-    line-height: 40px;
-  }
   .radio .radio-name {
-    line-height: 40px;
-  }
-  .radio .radio-url {
-    display: block;
-    grid-row: 2;
+    height: 80px;
+    line-height: 80px;
   }
   .radio .button-wrapper {
     width: 80px;
@@ -1291,6 +1285,11 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
   }
 }
 @media all and (min-width: 1024px) {
+  .radios-view {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
   .radio {
     flex: 0 0 50%;
     grid-template-columns: 150px minmax(0, 1fr);
@@ -1302,15 +1301,14 @@ label[for=appbundle_radio_changed], [id=appbundle_radio_changed] {
     padding-left: 30px;
     line-height: 75px;
   }
+  .radio .radio-url {
+    display: block;
+    grid-row: 2;
+  }
   .radio .button-wrapper {
     width: 150px;
     height: 150px;
     line-height: 150px;
-  }
-  .radios-view {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
   }
 }
 .settings-view .library-info td {
@@ -1450,6 +1448,15 @@ select:focus-visible,
   font-weight: 700;
   letter-spacing: 1px;
 }
+.topbar .song-title {
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+.topbar .song-artist {
+  font-family: inherit;
+  font-weight: 700;
+}
 .topbar .progressbar {
   background-color: #ddd;
 }
@@ -1525,7 +1532,10 @@ select:focus-visible,
 }
 
 .playlist-header {
-  line-height: 20px;
+  font-family: inherit;
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 1px;
   background-color: #ddd;
 }
 
@@ -1539,6 +1549,14 @@ select:focus-visible,
   background-color: #ddd;
 }
 
+.list thead th {
+  height: 24px;
+  font-family: inherit;
+  font-size: 0.8em;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 1px;
+}
 .list tbody tr {
   cursor: pointer;
 }
@@ -1558,20 +1576,23 @@ select:focus-visible,
     text-align: center;
   }
 }
-.album-container .album-infos {
-  font-size: 0.8em;
+.albums-view {
+  font-family: inherit;
 }
+
 .album-container .album-infos > div {
   text-align: center;
 }
 .album-container .album-infos .album-info-album {
   font-size: 1.1em;
+  font-weight: 700;
   letter-spacing: 0.4px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 .album-container .album-infos .album-info-artist {
   font-size: 0.9em;
+  letter-spacing: 0.4px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -1596,82 +1617,116 @@ select:focus-visible,
   cursor: pointer;
 }
 
-.albums-view .album-container {
+.albums-view .album-container:nth-child(n) {
   background: linear-gradient(to top, #ddd, #eee);
 }
-
-.albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
+.albums-view .album-container:nth-child(4n+3) {
+  background: linear-gradient(to top, #eee, #fff);
+}
+.albums-view .album-container:nth-child(4n+2) {
   background: linear-gradient(to top, #eee, #fff);
 }
 
 @media all and (min-width: 500px) {
-  .albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
+  .albums-view .album-container:nth-child(n) {
     background: linear-gradient(to top, #ddd, #eee);
   }
-  .albums-view .album-container:nth-child(even) {
+  .albums-view .album-container:nth-child(6n+4) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(6n+2) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(6n+6) {
     background: linear-gradient(to top, #eee, #fff);
   }
 }
 @media all and (min-width: 700px) {
-  .albums-view .album-container:nth-child(even) {
+  .albums-view .album-container:nth-child(n) {
     background: linear-gradient(to top, #ddd, #eee);
   }
-  .albums-view .album-container:nth-child(8n+2),
-  .albums-view .album-container:nth-child(8n+4),
-  .albums-view .album-container:nth-child(8n+5),
+  .albums-view .album-container:nth-child(8n+5) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(8n+2) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
   .albums-view .album-container:nth-child(8n+7) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(8n+4) {
     background: linear-gradient(to top, #eee, #fff);
   }
 }
 @media all and (min-width: 1024px) {
-  .albums-view .album-container:nth-child(8n+2),
-  .albums-view .album-container:nth-child(8n+4),
-  .albums-view .album-container:nth-child(8n+5),
-  .albums-view .album-container:nth-child(8n+7) {
+  .albums-view .album-container:nth-child(n) {
     background: linear-gradient(to top, #ddd, #eee);
   }
-  .albums-view .album-container:nth-child(10n+2),
-  .albums-view .album-container:nth-child(10n+4),
-  .albums-view .album-container:nth-child(10n+6),
-  .albums-view .album-container:nth-child(10n+8),
+  .albums-view .album-container:nth-child(10n+6) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(10n+2) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(10n+8) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(10n+4) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
   .albums-view .album-container:nth-child(10n+10) {
     background: linear-gradient(to top, #eee, #fff);
   }
 }
 @media all and (min-width: 1200px) {
-  .albums-view .album-container:nth-child(10n+2),
-  .albums-view .album-container:nth-child(10n+4),
-  .albums-view .album-container:nth-child(10n+6),
-  .albums-view .album-container:nth-child(10n+8),
-  .albums-view .album-container:nth-child(10n+10) {
+  .albums-view .album-container:nth-child(n) {
     background: linear-gradient(to top, #ddd, #eee);
   }
-  .albums-view .album-container:nth-child(12n+2),
-  .albums-view .album-container:nth-child(12n+4),
-  .albums-view .album-container:nth-child(12n+6),
-  .albums-view .album-container:nth-child(12n+7),
-  .albums-view .album-container:nth-child(12n+9),
+  .albums-view .album-container:nth-child(12n+7) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(12n+2) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(12n+9) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(12n+4) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
   .albums-view .album-container:nth-child(12n+11) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(12n+6) {
     background: linear-gradient(to top, #eee, #fff);
   }
 }
 @media all and (min-width: 1600px) {
-  .albums-view .album-container:nth-child(12n+2),
-  .albums-view .album-container:nth-child(12n+4),
-  .albums-view .album-container:nth-child(12n+6),
-  .albums-view .album-container:nth-child(12n+7),
-  .albums-view .album-container:nth-child(12n+9),
-  .albums-view .album-container:nth-child(12n+11) {
+  .albums-view .album-container:nth-child(n) {
     background: linear-gradient(to top, #ddd, #eee);
   }
-  .albums-view .album-container:nth-child(16n+2),
-  .albums-view .album-container:nth-child(16n+4),
-  .albums-view .album-container:nth-child(16n+6),
-  .albums-view .album-container:nth-child(16n+8),
-  .albums-view .album-container:nth-child(16n+9),
-  .albums-view .album-container:nth-child(16n+11),
-  .albums-view .album-container:nth-child(16n+13),
+  .albums-view .album-container:nth-child(16n+9) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(16n+2) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(16n+11) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(16n+4) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(16n+13) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(16n+6) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
   .albums-view .album-container:nth-child(16n+15) {
+    background: linear-gradient(to top, #eee, #fff);
+  }
+  .albums-view .album-container:nth-child(16n+8) {
     background: linear-gradient(to top, #eee, #fff);
   }
 }
@@ -1681,6 +1736,12 @@ select:focus-visible,
 
 .radio {
   font-size: 16px;
+}
+
+.radio-name {
+  font-family: inherit;
+  font-size: 1.2rem;
+  font-weight: 300;
 }
 
 .radio .icon-play,
@@ -1705,12 +1766,18 @@ table.form input[type=url] {
 }
 
 @media all and (min-width: 700px) {
+  .radio-name {
+    font-size: 1.4rem;
+  }
   .radio .icon-play,
   .radio .icon-pause {
     font-size: 3em;
   }
 }
 @media all and (min-width: 1024px) {
+  .radio-name {
+    font-size: 2rem;
+  }
   .radio .icon-play,
   .radio .icon-pause {
     font-size: 5em;
@@ -1726,11 +1793,21 @@ table.form input[type=url] {
     background-color: #ddd;
   }
 }
+.settings-view {
+  font-family: inherit;
+}
 .settings-view .settings-value {
   text-align: right;
 }
 .settings-view .button-wrapper {
   text-align: center;
+}
+.settings-view .library-info td {
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+.settings-view .library-info td.settings-value {
+  font-weight: 400;
 }
 .settings-view .library-info select {
   appearance: none;

@@ -6,9 +6,13 @@
 }
 
 .playlist-header {
-  line-height: 20px;
+    font-family: theme.$title-font;
+    font-size: 0.8em;
+    font-weight: 700;
 
-  background-color: theme.$header-color;
+    letter-spacing: 1px;
+
+    background-color: theme.$header-color;
 }
 
 :is(#songs, #playlist) thead th {
@@ -23,6 +27,18 @@
 }
 
 .list {
+    thead {
+        th {
+            height: config.$panel-header-height;
+    
+            font-family: theme.$title-font;
+            font-size: 0.8em;
+            font-weight: 700;
+            line-height: config.$panel-header-height;
+            letter-spacing: 1px;
+        }
+    }
+
     tbody {
         tr {
             cursor: pointer;

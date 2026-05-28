@@ -5,6 +5,8 @@ body {
 
     color: theme.$fg-color;    
     background-image: theme.$body-gradient;
+
+    // font-optical-sizing: auto;
 }
 
 a {
@@ -16,7 +18,7 @@ a {
 }
 
 h1 {
-    font-family: theme.$title-font;
+    font-family: theme.$text-font;
     font-size: 1.6em;
     letter-spacing: 1px;
     text-align: center;
@@ -25,7 +27,7 @@ h1 {
 }
 
 h2 {
-    font-family: theme.$title-font;
+    font-family: theme.$text-font;
     font-size: 1.4em;
     letter-spacing: 1px;
 
