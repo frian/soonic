@@ -1,11 +1,18 @@
+@use 'index';
+
 @use '../../config/screen' as theme with (
 
     $fg-color: #fafafa,
     $bg-color: #111,
+    $bg-alternate: #222,
     $body-gradient: linear-gradient(to bottom right, rgb(17 17 17 / 100%), rgb(17 17 17 / 90%)),
     $default-gradient: linear-gradient(to top, rgb(17 17 17), rgb(54 54 54)),
     $header-color: #333,
-    $bg-alternate: #222
+    $border-color: #555,
+    $hover-active: #060,
+    $ui-font: ('Inter', sans-serif),
+    $theme-dark-gradient: linear-gradient(to top, #111, #333),
+    $theme-clear-gradient: linear-gradient(to top, #222, #444)
 );
 
 @use '../../screen';

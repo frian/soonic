@@ -50,3 +50,94 @@
         cursor: pointer;
     }
 }
+
+
+.albums-view .album-container {
+    background: theme.$theme-dark-gradient
+}
+
+.albums-view .album-container:nth-child(4n + 2), .albums-view .album-container:nth-child(4n + 3) {
+    background: theme.$theme-clear-gradient
+}
+
+@media all and (min-width: 500px) {
+    .albums-view .album-container:nth-child(4n + 2), .albums-view .album-container:nth-child(4n + 3){
+        background: theme.$theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(even) {
+        background: theme.$theme-clear-gradient
+    }
+}
+
+@media all and (min-width: 700px) {
+    .albums-view .album-container:nth-child(even) {
+        background: theme.$theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(8n + 2),
+    .albums-view .album-container:nth-child(8n + 4),
+    .albums-view .album-container:nth-child(8n + 5),
+    .albums-view .album-container:nth-child(8n + 7) {
+        background: theme.$theme-clear-gradient
+    }
+}
+
+@media all and (min-width: 1024px) {
+    .albums-view .album-container:nth-child(8n + 2),
+    .albums-view .album-container:nth-child(8n + 4),
+    .albums-view .album-container:nth-child(8n + 5),
+    .albums-view .album-container:nth-child(8n + 7) {
+        background: theme.$theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(10n + 2),
+    .albums-view .album-container:nth-child(10n + 4),
+    .albums-view .album-container:nth-child(10n + 6),
+    .albums-view .album-container:nth-child(10n + 8),
+    .albums-view .album-container:nth-child(10n + 10) {
+        background: theme.$theme-clear-gradient
+    }
+}
+
+@media all and (min-width: 1200px) {
+    .albums-view .album-container:nth-child(10n + 2),
+    .albums-view .album-container:nth-child(10n + 4),
+    .albums-view .album-container:nth-child(10n + 6),
+    .albums-view .album-container:nth-child(10n + 8),
+    .albums-view .album-container:nth-child(10n + 10) {
+        background: theme.$theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(12n + 2),
+    .albums-view .album-container:nth-child(12n + 4),
+    .albums-view .album-container:nth-child(12n + 6),
+    .albums-view .album-container:nth-child(12n + 7),
+    .albums-view .album-container:nth-child(12n + 9),
+    .albums-view .album-container:nth-child(12n + 11) {
+        background: theme.$theme-clear-gradient
+    }
+}
+
+@media all and (min-width: 1600px) {
+    .albums-view .album-container:nth-child(12n + 2),
+    .albums-view .album-container:nth-child(12n + 4),
+    .albums-view .album-container:nth-child(12n + 6),
+    .albums-view .album-container:nth-child(12n + 7),
+    .albums-view .album-container:nth-child(12n + 9),
+    .albums-view .album-container:nth-child(12n + 11) {
+        background: theme.$theme-dark-gradient
+    }
+
+    .albums-view .album-container:nth-child(16n + 2),
+        .albums-view .album-container:nth-child(16n + 4),
+        .albums-view .album-container:nth-child(16n + 6),
+        .albums-view .album-container:nth-child(16n + 8),
+        .albums-view .album-container:nth-child(16n + 9),
+        .albums-view .album-container:nth-child(16n + 11),
+        .albums-view .album-container:nth-child(16n + 13),
+        .albums-view .album-container:nth-child(16n + 15) {
+            background: theme.$theme-clear-gradient    
+    }
+}
+

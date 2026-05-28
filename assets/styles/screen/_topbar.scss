@@ -1,9 +1,9 @@
 @use '../config/screen' as theme;
 
 .topbar {
-
     background-color: theme.$bg-color;
     background-image: theme.$default-gradient;
+    border-bottom-color: theme.$border-color;
 
     .time-info {
         padding: 0 10px;

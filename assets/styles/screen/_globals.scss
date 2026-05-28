@@ -1,8 +1,9 @@
 @use '../config/screen' as theme;
 
 body {
-    color: theme.$fg-color;
-    font-family: theme.$ui-font;    
+    font-family: theme.$ui-font;
+
+    color: theme.$fg-color;    
     background-image: theme.$body-gradient;
 }
 
@@ -35,6 +36,12 @@ h2 {
     font-family: theme.$ui-system-font;
     font-size: 2em;
     font-weight: 300;
+}
+
+input[type="text"] {
+    color: theme.$fg-color;
+    background-color: theme.$bg-color;
+    border-color: theme.$border-color;
 }
 
 .input-reset::after {

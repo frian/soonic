@@ -48,15 +48,15 @@ table {
 
     box-sizing: border-box;
 
-    align-items: center;
-    justify-content: center;
-
     width: config.$input-reset-size;
     height: config.$input-reset-size;
 
     padding: 0;
 
     border: 0;
+
+    align-items: center;
+    justify-content: center;
 
     appearance: none;
     outline: 0;
@@ -75,10 +75,11 @@ table {
 
 	padding: 0;
 
-	cursor: pointer;
     background:
-        linear-gradient(45deg, transparent 42%, currentColor 42%, currentColor 58%, transparent 58%),
-        linear-gradient(-45deg, transparent 42%, currentColor 42%, currentColor 58%, transparent 58%);
+        linear-gradient(45deg, transparent 42%, currentcolor 42%, currentcolor 58%, transparent 58%),
+        linear-gradient(-45deg, transparent 42%, currentcolor 42%, currentcolor 58%, transparent 58%);
+
+	cursor: pointer;
     content: "";
 }
 

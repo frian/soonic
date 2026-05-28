@@ -67,17 +67,18 @@
 
             padding: 0;
 
+            line-height: 1;
+
             align-items: center;
             justify-content: center;
 
             appearance: none;
-            line-height: 1;
         }
 
         .input-reset {
             top: 0;
-            bottom: 0;
             right: config.$space-1;
+            bottom: 0;
 
             margin: auto;
         }

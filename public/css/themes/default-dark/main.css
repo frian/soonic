@@ -1,3 +1,19 @@
+/* inter-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  src: url("/fonts/Inter/inter-v20-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* inter-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  src: url("/fonts/Inter/inter-v20-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
 @font-face {
   font-family: "Material Icons";
   src: url("/fonts/material-icons/material-icons-latin-400-normal.woff2") format("woff2");
@@ -22,8 +38,8 @@
 }
 
 body {
-  color: #fafafa;
   font-family: "Inter", sans-serif;
+  color: #fafafa;
   background-image: linear-gradient(to bottom right, rgb(17, 17, 17), rgba(17, 17, 17, 0.9));
 }
 
@@ -39,20 +55,26 @@ h1 {
   font-size: 1.6em;
   letter-spacing: 1px;
   text-align: center;
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid #555;
 }
 
 h2 {
   font-family: inherit;
   font-size: 1.4em;
   letter-spacing: 1px;
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid #555;
 }
 
 .empty-list {
   font-family: inherit;
   font-size: 2em;
   font-weight: 300;
+}
+
+input[type=text] {
+  color: #fafafa;
+  background-color: #111;
+  border-color: #555;
 }
 
 .input-reset::after {
@@ -77,14 +99,14 @@ select:focus-visible,
 .button:focus-visible,
 .top-nav-link:focus-visible,
 .mobile-button:focus-visible {
-  outline: 2px solid #666;
+  outline: 2px solid #555;
   outline-offset: 2px;
 }
 
 .is-playing,
 .is-selected,
 .is-keyboard-selected {
-  background-color: #ddd;
+  background-color: #060;
 }
 
 #playlist-flash-message,
@@ -92,7 +114,7 @@ select:focus-visible,
 #ajax-flash-message {
   font-size: 20px;
   color: #fafafa;
-  background-color: #ddd;
+  background-color: #060;
   border-radius: 6px;
 }
 
@@ -109,6 +131,7 @@ select:focus-visible,
 .topbar {
   background-color: #111;
   background-image: linear-gradient(to top, rgb(17, 17, 17), rgb(54, 54, 54));
+  border-bottom-color: #555;
 }
 .topbar .time-info {
   padding: 0 10px;
@@ -183,11 +206,11 @@ select:focus-visible,
   cursor: pointer;
 }
 .songs-context-menu .menu-options .menu-option:hover, .playlist-context-menu .menu-options .menu-option:hover {
-  background-color: #ddd;
+  background-color: #060;
 }
 
 .artists-navigation a.is-active {
-  background-color: #ddd;
+  background-color: #060;
 }
 
 .playlist-header {
@@ -256,12 +279,91 @@ select:focus-visible,
   background-color: #ddd;
 }
 .single-album-container .album-artist {
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid #555;
 }
 .single-album-container .icon-plus {
   cursor: pointer;
 }
 
+.albums-view .album-container {
+  background: linear-gradient(to top, #111, #333);
+}
+
+.albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
+  background: linear-gradient(to top, #222, #444);
+}
+
+@media all and (min-width: 500px) {
+  .albums-view .album-container:nth-child(4n+2), .albums-view .album-container:nth-child(4n+3) {
+    background: linear-gradient(to top, #111, #333);
+  }
+  .albums-view .album-container:nth-child(even) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
+@media all and (min-width: 700px) {
+  .albums-view .album-container:nth-child(even) {
+    background: linear-gradient(to top, #111, #333);
+  }
+  .albums-view .album-container:nth-child(8n+2),
+  .albums-view .album-container:nth-child(8n+4),
+  .albums-view .album-container:nth-child(8n+5),
+  .albums-view .album-container:nth-child(8n+7) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
+@media all and (min-width: 1024px) {
+  .albums-view .album-container:nth-child(8n+2),
+  .albums-view .album-container:nth-child(8n+4),
+  .albums-view .album-container:nth-child(8n+5),
+  .albums-view .album-container:nth-child(8n+7) {
+    background: linear-gradient(to top, #111, #333);
+  }
+  .albums-view .album-container:nth-child(10n+2),
+  .albums-view .album-container:nth-child(10n+4),
+  .albums-view .album-container:nth-child(10n+6),
+  .albums-view .album-container:nth-child(10n+8),
+  .albums-view .album-container:nth-child(10n+10) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
+@media all and (min-width: 1200px) {
+  .albums-view .album-container:nth-child(10n+2),
+  .albums-view .album-container:nth-child(10n+4),
+  .albums-view .album-container:nth-child(10n+6),
+  .albums-view .album-container:nth-child(10n+8),
+  .albums-view .album-container:nth-child(10n+10) {
+    background: linear-gradient(to top, #111, #333);
+  }
+  .albums-view .album-container:nth-child(12n+2),
+  .albums-view .album-container:nth-child(12n+4),
+  .albums-view .album-container:nth-child(12n+6),
+  .albums-view .album-container:nth-child(12n+7),
+  .albums-view .album-container:nth-child(12n+9),
+  .albums-view .album-container:nth-child(12n+11) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
+@media all and (min-width: 1600px) {
+  .albums-view .album-container:nth-child(12n+2),
+  .albums-view .album-container:nth-child(12n+4),
+  .albums-view .album-container:nth-child(12n+6),
+  .albums-view .album-container:nth-child(12n+7),
+  .albums-view .album-container:nth-child(12n+9),
+  .albums-view .album-container:nth-child(12n+11) {
+    background: linear-gradient(to top, #111, #333);
+  }
+  .albums-view .album-container:nth-child(16n+2),
+  .albums-view .album-container:nth-child(16n+4),
+  .albums-view .album-container:nth-child(16n+6),
+  .albums-view .album-container:nth-child(16n+8),
+  .albums-view .album-container:nth-child(16n+9),
+  .albums-view .album-container:nth-child(16n+11),
+  .albums-view .album-container:nth-child(16n+13),
+  .albums-view .album-container:nth-child(16n+15) {
+    background: linear-gradient(to top, #222, #444);
+  }
+}
 .radio:nth-child(even) {
   background-color: #222;
 }
@@ -310,7 +412,7 @@ table.form input[type=url] {
     background-color: #222;
   }
   .radio.is-active-radio {
-    background-color: #ddd;
+    background-color: #060;
   }
 }
 .settings-view .settings-value {
@@ -329,7 +431,7 @@ table.form input[type=url] {
   background-position: calc(100% - 18px) calc(50% - 2px), calc(100% - 12px) calc(50% - 2px);
   background-repeat: no-repeat;
   background-size: 6px 6px, 6px 6px;
-  border: 1px solid #666;
+  border: 1px solid #555;
   border-radius: 6px;
   cursor: pointer;
 }
