@@ -89,3 +89,18 @@ select:focus-visible,
     background-color: theme.$hover-active;
     border-radius: 6px;
 }
+
+@media (hover: hover) and (pointer: fine) {
+    .button:hover {
+        background-image: theme.$hover-gradient;
+    }
+
+    .button.danger:hover {
+        // background: $red-gradient;
+    }
+
+    [role="button"]:hover,
+    .radio-edit-link:hover {
+        opacity: 0.85;
+    }
+}

@@ -5,18 +5,28 @@
     $bg-color: #111,
     $bg-alternate: #222,
     $body-gradient: linear-gradient(to bottom right, rgb(17 17 17 / 100%), rgb(17 17 17 / 90%)),
-    $default-gradient: linear-gradient(to top, rgb(17 17 17), rgb(54 54 54)),
-    $header-color: #333,
+
     $border-color: #555,
+
+    $default-gradient: linear-gradient(to top, rgb(17 17 17), rgb(54 54 54)),
+
+    $header-color: #333,
+
+    $hover-gradient: linear-gradient(to top, rgba(0, 102, 0, 0.5), #006600),
+
+    $album-overlay: rgb(0 0 0 / 90%),
+
     $hover-active: #060,
+    $active-playing: #060,
+
     $ui-font: ('Inter', sans-serif),
     $title-font: ('Muli', sans-serif),
     $text-font: ('Lato', sans-serif),
+
     $theme-dark-gradient: linear-gradient(to top, #111, #333),
     $theme-clear-gradient: linear-gradient(to top, #222, #444),
+
     $progressbar-color: #555,
     $progress-indicator-color: #aaa,
-    $album-overlay: rgb(0 0 0 / 90%),
-    $active-playing: #060
 );
 @use '../../screen';

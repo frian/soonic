@@ -575,7 +575,7 @@ $(function() {
     /**
      * Submit setting form
      */
-    $(document).on("click", "#settings-form-button", function(e) {
+    $(document).on("click", "#settings-form-button", function(e) {  
         e.preventDefault();
         $('#settings-form').trigger('submit');
     });
@@ -599,13 +599,13 @@ $(function() {
                 let href = "";
                 const cacheBuster = Date.now();
                 if ($('#screen-theme-css').length) {
-                    href = "/css/themes/" + data.config.theme + "/screen.css?v=" + cacheBuster;
+                    href = "/css/themes/" + data.config.theme + "/main.css?v=" + cacheBuster;
                     $('#screen-theme-css').attr('href', href );
                 }
-                if ($('#layout-theme-css').length) {
-                    href = "/css/themes/" + data.config.theme + "/layout.css?v=" + cacheBuster;
-                    $('#layout-theme-css').attr('href', href );
-                }
+                // if ($('#layout-theme-css').length) {
+                //     href = "/css/themes/" + data.config.theme + "/main.css?v=" + cacheBuster;
+                //     $('#layout-theme-css').attr('href', href );
+                // }
 
                 // Refresh translated server-rendered fragments without full-page navigation.
                 $.get({
