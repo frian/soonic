@@ -7,6 +7,18 @@ cd "$ROOT_DIR"
 RUN_TESTSUITES=1
 RUN_DOCTRINE=1
 
+usage() {
+  cat <<'EOF'
+Usage: bin/check [--fast] [--no-db] [--ci]
+
+Modes:
+  (no option)  Static/lint checks, Doctrine checks, PHPUnit, and Playwright.
+  --fast       Static/lint checks and Doctrine checks; skip PHPUnit and Playwright.
+  --no-db      Static/lint checks only; skip Doctrine, PHPUnit, and Playwright.
+  --ci         Same in-script scope as --no-db; CI runs PHPUnit and Playwright separately.
+EOF
+}
+
 for arg in "$@"; do
   case "$arg" in
     --fast)
@@ -21,8 +33,8 @@ for arg in "$@"; do
       RUN_TESTSUITES=0
       ;;
     *)
-      echo "Unknown option: $arg"
-      echo "Usage: bin/check [--fast] [--no-db] [--ci]"
+      echo "Unknown option: $arg" >&2
+      usage >&2
       exit 2
       ;;
   esac

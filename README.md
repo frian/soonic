@@ -127,27 +127,18 @@ php bin/console soonic:add:radios path/to/radios.csv --dry-run
 
 ## Tests
 
-Run all project checks:
+`bin/check` has four execution modes:
 
-```bash
-bin/check
-```
+| Command | Checks run inside `bin/check` |
+| --- | --- |
+| `bin/check` | Static/lint checks, Doctrine checks, PHPUnit, Playwright |
+| `bin/check --fast` | Static/lint checks and Doctrine checks; skips PHPUnit and Playwright |
+| `bin/check --no-db` | Static/lint checks only; skips Doctrine, PHPUnit and Playwright |
+| `bin/check --ci` | Same in-script scope as `--no-db`; GitHub Actions runs PHPUnit and Playwright separately |
 
-This includes PHP checks, SCSS lint, PHPUnit suites, and Playwright e2e tests.
+Static/lint checks include Composer validation, PHP syntax, PHPStan, JavaScript syntax, SCSS lint, and Symfony Twig/YAML/container linting.
 
-Fast mode (without PHPUnit suites):
-
-```bash
-bin/check --fast
-```
-
-CI mode (no DB checks, no PHPUnit suites, no Playwright e2e):
-
-```bash
-bin/check --ci
-```
-
-PHPUnit suites:
+PHPUnit suites can also be run directly:
 
 ```bash
 php bin/phpunit --testsuite no-music
@@ -175,8 +166,16 @@ php bin/console doctrine:migrations:status
 
 ## CI
 
-A GitHub Actions workflow is available in `.github/workflows/ci.yml`.
-It runs dependency installation and `bin/check --ci` on pushes and pull requests.
+The GitHub Actions workflow in `.github/workflows/ci.yml` runs on pushes and pull requests. It:
+
+1. installs PHP and JavaScript dependencies;
+2. runs `bin/check --ci` for the static/lint stage;
+3. runs all three PHPUnit suites against a MariaDB `soonic_test` service;
+4. installs the locked Playwright Chromium and Firefox browsers;
+5. rebuilds and seeds the E2E test database;
+6. runs the Playwright end-to-end suite.
+
+`--ci` therefore does not mean "all CI checks inside `bin/check`"; it is the non-database/static stage used by the wider CI workflow.
 
 ## License
 
