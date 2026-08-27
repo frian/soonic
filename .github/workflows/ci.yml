@@ -8,6 +8,22 @@ jobs:
   checks:
     runs-on: ubuntu-latest
 
+    services:
+      database:
+        image: mariadb:10.11
+        env:
+          MARIADB_DATABASE: soonic_test
+          MARIADB_USER: app
+          MARIADB_PASSWORD: "!ChangeMe!"
+          MARIADB_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="healthcheck.sh --connect --innodb_initialized"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -34,3 +50,11 @@ jobs:
 
       - name: Run checks (CI mode)
         run: bin/check --ci
+
+      - name: Run PHPUnit suites
+        env:
+          DATABASE_URL: "mysql://app:!ChangeMe!@127.0.0.1:3306/soonic_test?serverVersion=10.11.2-MariaDB&charset=utf8mb4"
+        run: |
+          php bin/phpunit --testsuite no-music
+          php bin/phpunit --testsuite with-music
+          php bin/phpunit --testsuite scan
