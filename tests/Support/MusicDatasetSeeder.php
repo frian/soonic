@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class MusicDatasetSeeder
 {
-    public static function seed(EntityManagerInterface $entityManager): void
+    public static function seed(EntityManagerInterface $entityManager, int $artistCount = 1): void
     {
         $artist = (new Artist())
             ->setName('DIRE STRAITS')
@@ -46,6 +46,16 @@ final class MusicDatasetSeeder
                 ->setAlbum($album);
 
             $entityManager->persist($song);
+        }
+
+        for ($i = 2; $i <= $artistCount; ++$i) {
+            $extraArtist = (new Artist())
+                ->setName(sprintf('TEST ARTIST %02d', $i))
+                ->setArtistSlug(sprintf('test-artist-%02d', $i))
+                ->setAlbumCount(0)
+                ->setCoverArtPath(null);
+
+            $entityManager->persist($extraArtist);
         }
 
         $entityManager->flush();
