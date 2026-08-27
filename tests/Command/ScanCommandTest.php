@@ -59,7 +59,7 @@ class ScanCommandTest extends KernelTestCase
             $this->filesystem->rename($this->renamedMusicPath, $this->musicPath);
         }
 
-        if ($this->filesystem->exists($this->musicBackupPath)) {
+        if ($this->pathExistsOrIsLink($this->musicBackupPath)) {
             if ($this->pathExistsOrIsLink($this->musicPath)) {
                 $this->filesystem->remove($this->musicPath);
             }
