@@ -106,7 +106,7 @@ test('saving settings refreshes topbar through update fragment endpoint', async 
         return seenUpdateRequests.length;
     }).toBeGreaterThan(0);
 
-    await expect(page.locator('.topbar[data-test-refresh-marker=\"before\"]')).toHaveCount(0);
+    await expect(page.locator('.topbar[data-test-refresh-marker="before"]')).toHaveCount(0);
     await expect(page.locator('.settings-view')).toBeVisible();
 
     // On settings view, only library/albums/radios should stay visible in topbar.
@@ -129,7 +129,15 @@ test('topbar nav state stays coherent across settings save and next navigations'
         hidden: ['#navigation-settings', '#navigation-random', '#navigation-search-form', '#navigation-radio-new']
     });
 
+    await page.evaluate(function() {
+        const topbar = document.querySelector('.topbar');
+        if (topbar) {
+            topbar.setAttribute('data-test-refresh-marker', 'before-navigation');
+        }
+    });
+
     await page.locator('#settings-form-button').click();
+    await expect(page.locator('.topbar[data-test-refresh-marker="before-navigation"]')).toHaveCount(0);
     await expect(page.locator('.settings-view')).toBeVisible();
     await assertTopbarNavState(page, {
         visible: ['#navigation-library', '#navigation-albums', '#navigation-radios'],
