@@ -8,4 +8,5 @@ if ($path !== '/' && is_file($file)) {
     return false;
 }
 
-require $publicDir.'/index.php';
+$_SERVER['SCRIPT_FILENAME'] = $publicDir.'/index.php';
+require $_SERVER['SCRIPT_FILENAME'];
