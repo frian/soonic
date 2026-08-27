@@ -4,7 +4,7 @@ set -euo pipefail
 server_log="$(mktemp)"
 response_body="$(mktemp)"
 
-php -S 127.0.0.1:9810 -t public tests/e2e/router.php >"$server_log" 2>&1 &
+php -d variables_order=EGPCS -S 127.0.0.1:9810 -t public tests/e2e/router.php >"$server_log" 2>&1 &
 server_pid=$!
 
 cleanup() {
