@@ -1,191 +1,426 @@
-$debug: 0 !default;
-$topbar-size: 49px !default;
-$topbar-border-size: 1px !default;
+@use '../config/layout' as config;
 
 .topbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 300;
-    height: $topbar-size;
-    border-bottom-width: $topbar-border-size;
-    border-bottom-style: solid;
+    display: flex;
 
-    @if $debug != 0 {
-        background-color: #222;
+    align-items: stretch;
+
+    .logo {
+        display: none;
     }
 
     div {
         display: inline-block;
+
         box-sizing: border-box;
-        vertical-align: top;
         height: 100%;
-        line-height: $topbar-size;
-        border: #{$debug}px solid red;
-    }
 
-    .logo {
-        padding: 0 5px;
+        line-height: config.$topbar-content-size-touch;
 
-        // margin-top: -4px;
-        width: 51px;
-        background-repeat: no-repeat;
-        background-size: 40px 40px;
-        background-position: center;
-        border: #{$debug}px solid red;
-    }
-
-    [class^="icon-"] {
-        display: inline-block;
-        box-sizing: border-box;
         vertical-align: top;
-        height: $topbar-size;
-        line-height: $topbar-size;
-        font-size: 120%;
-        cursor: pointer;
-        border: #{$debug}px solid red;
-    }
-
-    .icon-play,
-    .icon-pause {
-        font-size: 150%;
-    }
-
-    .icon-to-end {
-        margin-left: -2px;
-    }
-
-    .time-info {
-        display: block;
-        height: 30px;
-        line-height: 30px;
-    }
-
-    .progress-bar-container {
-        width: 100%;
-        height: 19px;
-        line-height: 19px;
-    }
-
-    .progressbar {
-        position: relative;
-        height: 10px;
-        width: calc(100% - 10px);
-        margin: 0 5px;
-        border-radius: 5px;
-        overflow: hidden;
-    }
-
-    .song-info {
-        display: inline-block;
-        margin-left: 10px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
     }
 
     .material-icons {
-        line-height: $topbar-size;
+        line-height: config.$topbar-content-size-touch;
     }
 
-    #radio-new-button {
-        padding-right: 10px;
-    }
 
-    .radio-add {
-        position: relative;
+    .search-form {
+        display: inline-flex;
+
+        height: config.$topbar-content-size-touch;
+
+        line-height: config.$topbar-content-size-touch;
+
+        align-items: center;
+
         vertical-align: top;
-        line-height: 30px;
+
+        input[type="text"] {
+            position: relative;
+
+            display: inline-block;
+
+            width: 130px;
+            height: config.$topbar-content-size-touch;
+
+            padding: 0 config.$space-2;
+
+            vertical-align: middle;
+        }
+
+        input[type="submit"] {
+            display: inline-block;
+
+            height: config.$topbar-content-size-touch;
+
+            line-height: config.$topbar-content-size-touch;
+
+            vertical-align: top;
+        }
+
+        .button {
+            display: inline-flex;
+
+            width: 60px;
+            height: 100%;
+
+            padding: 0;
+
+            line-height: 1;
+
+            align-items: center;
+            justify-content: center;
+
+            appearance: none;
+        }
+
+        .input-reset {
+            top: 0;
+            right: config.$space-1;
+            bottom: 0;
+
+            margin: auto;
+        }
+
+        .form-element-container {
+            position: relative;
+
+            display: inline-block;
+            flex: 1 1 auto;
+
+            min-width: 0;
+        }
+    }
+
+    nav.topbar-nav {
+        display: none;
+
+        height: config.$topbar-content-size-touch;
+
+        margin-left: auto;
+
+        line-height: config.$topbar-content-size-touch;
+
+        &.is-active {
+            display: flex;
+        }
+
+        a {
+            display: inline-block;
+
+            box-sizing: border-box;
+            height: config.$topbar-content-size-touch;
+
+            line-height: config.$topbar-content-size-touch;
+
+            vertical-align: top;
+        }
+
+        .topbar-nav-label {
+            margin-left: config.$space-4;
+        }
+    }
+
+    ul.top-nav {
+        position: relative;
+
+        width: 100%;
+
+        .button {
+            padding: 0;
+        }
+
+        .material-icons {
+            text-align: center;
+        }
+
+        &.is-active {
+            position: absolute;
+            top: config.$topbar-size-touch;
+            left: 0;
+            z-index: 20;
+
+            width: 100%;
+
+            .material-icons {
+                width: config.$mobile-button-size;
+            }
+
+            .top-nav-link {
+                position: relative;
+
+                display: inline-flex;
+
+                width: 100%;
+
+                text-align: left;
+
+                align-items: center;
+                justify-content: flex-start;
+            }
+
+            .top-nav-item {
+                width: 100%;
+            }
+
+            .radio-new-button .radio-add {
+                position: absolute;
+                top: config.$space-2;
+                left: calc(config.$mobile-button-size - config.$space-4);
+
+                width: auto;
+
+                line-height: 1;
+            }
+
+            .search-form {
+                width: 100%;
+            }
+
+            .search-form .filter-input {
+                box-sizing: border-box;
+
+                width: 100%;
+            }
+        }
+
+        .top-nav-item {
+            flex: 0 0 auto;
+        }
+    }
+
+    .hamburger {
+        position: static;
+
+        width: config.$topbar-content-size-touch;
+        height: config.$topbar-content-size-touch;
+
+        margin-left: auto;
+    }
+
+    #player-container {
+        font-size: 0;
+
+        .button-wrapper {
+            width: config.$player-button-width-touch;
+
+            height: config.$topbar-content-size-touch;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            i {
+                font-size: 30px;
+            }
+        }
+
+        .time-info-container {
+            display: inline-flex;
+            flex-direction: column;
+
+            height: 100%;
+
+            padding: 0 config.$space-2;
+
+            justify-content: center;
+        }
+
+        .time-info {
+            display: block;
+
+            height: 30px;
+
+            line-height: 30px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 19px;
+
+            line-height: 19px;
+        }
+
+        .progressbar {
+            position: relative;
+
+            width: calc(100% - 10px);
+            height: 10px;
+
+            margin: 0 5px;
+
+            overflow: hidden;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+        }
+
+        .progress-indicator {
+            display: block;
+
+            width: 0;
+            height: 100%;
+        }
+    }
+
+    #player-container > * {
+        font-size: initial;
+    }
+
+    .song-info {
+        display: none;
+        flex: 0 1 auto;
+
+        min-width: 0;
+
+        overflow: hidden;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 }
 
-#search-form {
-    display: inline-block;
-    vertical-align: top;
-    height: $topbar-size;
-    line-height: $topbar-size;
-
-    input[type="text"] {
-        display: inline-block;
-        vertical-align: middle;
-        position: relative;
-        width: 130px;
-        height: $topbar-size;
-        padding: 0 10px;
-        border: #{$debug}px solid lime;
-    }
-
-    input[type="submit"] {
-        display: inline-block;
-        height: $topbar-size;
-        line-height: $topbar-size;
-        vertical-align: top;
-        border: #{$debug}px solid lime;
-    }
-
-    .form-element-container {
-        display: inline-block;
-        position: relative;
-    }
-}
-
-nav.topbar-nav {
-    display: none;
-    font-size: 0;
-    float: right;
-    height: $topbar-size;
-    line-height: $topbar-size;
-
-    @if $debug != 0 {
-        background-color: #666;
-    }
-
-    &.is-active {
-        display: block;
-    }
-
-    a {
-        vertical-align: top;
-        box-sizing: border-box;
-        height: $topbar-size;
-        line-height: $topbar-size;
-        border: #{$debug}px solid lime;
-    }
-
-    .topbar-nav-label {
-        margin-left: 8px;
-        padding-left: 10px;
-    }
-}
 
 body.route-settings-index {
-    #navigation-settings {
-        display: none !important;
+    .navigation-settings {
+        display: none;
     }
 }
 
 // -- set menu items visibility
-#navigation-library,
-#navigation-radio-new,
-#navigation-back-to-radio-index {
+
+:is(.navigation-library, .navigation-radio-new) {
     display: none;
 }
 
 
-/*
-  -- Media query 1024px -------------------------------------------------------
-*/
-@media all and (min-width: 1024px) {
-    nav.topbar-nav {
-        .topbar-nav-label {
-            display: none;
+@include config.up(xs) {
+    .topbar {
+        .song-info {
+            display: block;
         }
     }
+}
 
-    #search-form {
-        input[type="text"] {
-            height: 39px;
+
+
+@include config.up(xs) {
+    .topbar {
+        .logo {
+            display: inline-flex;
+
+            width: 49px;
+
+            align-items: center;
+            justify-content: center;
+
+            > img {
+                display: block;
+
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+}
+
+@include config.up(md) {
+    .topbar {
+        .logo {
+            display: inline-flex;
+
+            width: 49px;
+
+            align-items: center;
+            justify-content: center;
+
+            > img {
+                display: block;
+
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        div {
+            line-height: config.$topbar-content-size;
+        }
+
+        .material-icons {
+            line-height: config.$topbar-content-size;
+        }
+
+        .search-form {
+            height: config.$topbar-content-size;
+
+            line-height: config.$topbar-content-size;
+
+            input[type="text"] {
+                height: config.$topbar-content-size - config.$space-2;
+            }
+
+            input[type="submit"] {
+                height: config.$topbar-content-size;
+
+                line-height: config.$topbar-content-size;
+            }
+        }
+
+        nav.topbar-nav {
+            display: flex;
+
+            height: config.$topbar-content-size;
+
+            line-height: config.$topbar-content-size;
+
+            a {
+                height: config.$topbar-content-size;
+
+                line-height: config.$topbar-content-size;
+            }
+
+            .topbar-nav-label {
+                display: none;
+            }
+        }
+
+        ul.top-nav {
+            display: flex;
+
+            .top-nav-item:not(.navigation-search-form) {
+                width: 60px;
+            }
+
+            .radio-new-button {
+                position: relative;
+
+                .radio-add {
+                    position: absolute;
+                    top: 5px;
+                    right: -15px;
+
+                    line-height: 1;
+                }
+            }
+
+            &.is-active {
+                top: config.$topbar-size;
+            }
+        }
+
+        .hamburger {
+            display: none;
+        }
+
+        #player-container {
+            font-size: 0;
+
+            .button-wrapper {
+                width: config.$topbar-content-size - 15px;
+                height: config.$topbar-content-size;
+            }
         }
     }
 }

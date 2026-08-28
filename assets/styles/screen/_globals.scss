@@ -1,0 +1,106 @@
+@use '../config/screen' as theme;
+
+body {
+    font-family: theme.$ui-font;
+
+    color: theme.$fg-color;
+    background-image: theme.$body-gradient;
+
+    // font-optical-sizing: auto;
+}
+
+a {
+    font-weight: 700;
+    line-height: 1.2em;
+
+    color: theme.$fg-color;
+    text-decoration: none;
+}
+
+h1 {
+    font-family: theme.$text-font;
+    font-size: 1.6em;
+    letter-spacing: 1px;
+    text-align: center;
+
+    border-bottom: theme.$border-size solid theme.$border-color;
+}
+
+h2 {
+    font-family: theme.$text-font;
+    font-size: 1.4em;
+    letter-spacing: 1px;
+
+    border-bottom: theme.$border-size solid theme.$border-color;
+}
+
+.empty-list {
+    font-family: theme.$ui-system-font;
+    font-size: 2em;
+    font-weight: 300;
+}
+
+input[type="text"] {
+    color: theme.$fg-color;
+    background-color: theme.$bg-color;
+    border-color: theme.$border-color;
+}
+
+.input-reset::after {
+    border-radius: 50%;
+}
+
+.button {
+    font-family: theme.$button-font;
+    font-size: 1em;
+    font-weight: normal;
+
+    color: theme.$fg-color;
+    background-image: theme.$default-gradient;
+
+    cursor: pointer;
+    transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.button:focus-visible,
+.top-nav-link:focus-visible,
+.mobile-button:focus-visible {
+    outline: 2px solid theme.$border-color;
+    outline-offset: 2px;
+}
+
+.is-playing,
+.is-selected,
+.is-keyboard-selected {
+    background-color: theme.$hover-active;
+}
+
+#playlist-flash-message,
+#radio-flash-message,
+#ajax-flash-message {
+    font-size: 20px;
+
+    color: theme.$fg-color;
+    background-color: theme.$hover-active;
+    border-radius: 6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .button:hover {
+        background-image: theme.$hover-gradient;
+    }
+
+    .button.danger:hover {
+        // background: $red-gradient;
+    }
+
+    [role="button"]:hover,
+    .radio-edit-link:hover {
+        opacity: 0.85;
+    }
+}

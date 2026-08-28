@@ -15,6 +15,7 @@ class RadioType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                'label' => 'name',
                 'trim' => true,
                 'empty_data' => '',
                 'attr' => [
@@ -22,6 +23,7 @@ class RadioType extends AbstractType
                 ],
             ])
             ->add('streamUrl', UrlType::class, [
+                'label' => 'streamUrl',
                 'trim' => true,
                 'empty_data' => '',
                 'default_protocol' => 'https',
@@ -31,6 +33,7 @@ class RadioType extends AbstractType
                 ],
             ])
             ->add('homepageUrl', UrlType::class, [
+                'label' => 'homePage',
                 'required' => false,
                 'trim' => true,
                 'empty_data' => '',

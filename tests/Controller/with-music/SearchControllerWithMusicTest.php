@@ -11,7 +11,7 @@ class SearchControllerWithMusicTest extends WithMusicWebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/search');
 
-        $form = $crawler->filter('#search-form')->form([
+        $form = $crawler->filter('.search-form')->form([
             'search[keyword]' => 'dire',
         ]);
 

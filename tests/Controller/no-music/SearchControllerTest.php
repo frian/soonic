@@ -12,7 +12,7 @@ class SearchControllerTest extends NoMusicWebTestCase
         $client->request('GET', '/search');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorExists('#search-form');
+        $this->assertSelectorExists('.search-form');
         $this->assertSelectorExists('input[name="search[keyword]"]');
     }
 
@@ -21,7 +21,7 @@ class SearchControllerTest extends NoMusicWebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/search');
 
-        $form = $crawler->filter('#search-form')->form([
+        $form = $crawler->filter('.search-form')->form([
             'search[keyword]' => 'dire',
         ]);
 
@@ -36,14 +36,14 @@ class SearchControllerTest extends NoMusicWebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/search');
 
-        $form = $crawler->filter('#search-form')->form([
+        $form = $crawler->filter('.search-form')->form([
             'search[keyword]' => 'ab',
         ]);
 
         $crawler = $client->submit($form);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorExists('#search-form');
+        $this->assertSelectorExists('.search-form');
         $this->assertSelectorNotExists('i.icon-plus');
     }
 
@@ -52,14 +52,14 @@ class SearchControllerTest extends NoMusicWebTestCase
         $client = static::createClient();
         $crawler = $client->request('GET', '/search');
 
-        $form = $crawler->filter('#search-form')->form([
+        $form = $crawler->filter('.search-form')->form([
             'search[keyword]' => '   ',
         ]);
 
         $crawler = $client->submit($form);
 
         $this->assertResponseStatusCodeSame(422);
-        $this->assertSelectorExists('#search-form');
+        $this->assertSelectorExists('.search-form');
         $this->assertSelectorNotExists('i.icon-plus');
     }
 }

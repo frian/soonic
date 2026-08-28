@@ -1,68 +1,72 @@
-$border-color: #666 !default;
-$default-gradient: linear-gradient(to top, rgb(34 34 34 / 20%), rgb(51 51 51 / 10%)) !default;
-$hover-gradient: linear-gradient(to top, rgb(34 34 34 / 10%), rgb(51 51 51 / 0%)) !default;
+@use '../config/screen' as theme;
 
 .topbar {
-    border-bottom-color: $border-color;
-
-    .logo {
-        font-family: Muli, sans-serif;
-        letter-spacing: 1px;
-        font-size: 1.6em;
-        font-weight: 700;
-    }
+    background-color: theme.$bg-color;
+    background-image: theme.$default-gradient;
+    border-bottom-color: theme.$border-color;
 
     .time-info {
-        font-family: Muli, sans-serif;
-        font-weight: 700;
-        font-size: 80%;
         padding: 0 10px;
-        letter-spacing: 1px;
-    }
 
-    .progressbar {
-        background-color: #ddd;
-    }
-
-    .progress-indicator {
-        background-color: #aaa;
-    }
-
-    .song-info {
-        font-family: Lato, sans-serif;
+        font-size: 80%;
         font-weight: 700;
-        letter-spacing: 0.5px;
+
+        letter-spacing: 1px;
     }
 
     .song-title {
+        font-family: theme.$text-font;
+        font-size: 1.2rem;
         font-weight: 900;
-        font-size: 120%;
     }
 
     .song-artist {
-        color: #333;
-    }
-}
-
-#search-form {
-    input[type="submit"] {
-        font-family: Lato, sans-serif;
+        font-family: theme.$text-font;
         font-weight: 700;
-        font-size: 18px;
-        letter-spacing: 1px;
-    }
-}
-
-nav.topbar-nav {
-    a {
-        font-size: 18px;
-        display: inline-block;
-        padding: 0 20px;
-        letter-spacing: 1px;
-        background: $default-gradient;
     }
 
-    a:hover {
-        background: $hover-gradient;
+    .progressbar {
+        background-color: theme.$progressbar-color;
+    }
+
+    .progress-indicator {
+        background-color: theme.$progress-indicator-color;
+    }
+
+    .navigation-search-form .search-form .button {
+        background: transparent;
+
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .top-nav-item {
+        font-size: 18px;
+        letter-spacing: 1px;
+
+        text-align: center;
+
+        background-image: theme.$default-gradient;
+    }
+
+    nav.topbar-nav {
+        font-size: 0;
+
+        .topbar-nav-label {
+            overflow: hidden;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    }
+
+    ul.top-nav {
+        background-color: theme.$bg-color;
+    }
+
+    .radio-new-button .radio-add {
+        font-size: 18px;
     }
 }

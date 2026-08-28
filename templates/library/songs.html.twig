@@ -1,26 +1,16 @@
 <section id="songs-section" class="songs">
-    <div class="songs-header-container">
-        <table class="list songs-header" aria-hidden="true">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>#</th>
-                    <th>{{ 'artist'|trans }}</th>
-                    <th>{{ 'title'|trans }}</th>
-                    <th>{{ 'album'|trans }}</th>
-                    <th>{{ 'duration'|trans }}</th>
-                    <th>{{ 'year'|trans }}</th>
-                    <th>{{ 'genre'|trans }}</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-
     <div class="songs-container">
         <table id="songs" class="list" aria-label="{{ 'songs'|trans }}">
             <thead>
                 <tr>
-                    <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                    <th class="col-add"></th>
+                    <th class="col-track-number">#</th>
+                    <th class="col-artist">{{ 'artist'|trans }}</th>
+                    <th class="col-title">{{ 'title'|trans }}</th>
+                    <th class="col-album">{{ 'album'|trans }}</th>
+                    <th class="col-duration">{{ 'duration'|trans }}</th>
+                    <th class="col-year">{{ 'year'|trans }}</th>
+                    <th class="col-genre">{{ 'genre'|trans }}</th>
                 </tr>
             </thead>
             <tbody></tbody>

@@ -1,0 +1,20 @@
+@use '../config/layout' as config;
+
+.settings-view {
+    .library-info td {
+        padding: config.$space-3 0;
+
+    }
+
+    .settings {
+        margin-bottom: 50px;
+    }
+
+    .library-info{
+        width: 90%;
+        max-width: 400px;
+
+        margin: config.$space-4 auto;
+    }
+
+}

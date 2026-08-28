@@ -2,21 +2,22 @@
   "name": "soonic-stylelint",
   "private": true,
   "scripts": {
-    "build:scss": "sass assets/styles/layout.scss public/css/layout.css && sass assets/styles/screen.scss public/css/screen.css && sass assets/styles/themes/default-clear/screen.scss public/css/themes/default-clear/screen.css && sass assets/styles/themes/default-dark/screen.scss public/css/themes/default-dark/screen.css && sass assets/styles/themes/guitar-dark/screen.scss public/css/themes/guitar-dark/screen.css",
-    "build:scss:watch": "sass --watch assets/styles:public/css",
+    "build:scss": "sass assets/styles/main.scss public/css/main.css",
+    "build:scss:watch": "sass --watch assets/styles/main.scss:public/css/main.css",
     "check:scss": "npm run lint:scss && npm run build:scss",
     "lint:scss": "stylelint \"assets/styles/**/*.scss\"",
     "lint:scss:fix": "stylelint \"assets/styles/**/*.scss\" --fix",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },
-  "devDependencies": {
+    "devDependencies": {
     "@fontsource/lato": "^5.3.0",
     "@fontsource/material-icons": "^5.3.0",
     "@fontsource/mulish": "^5.3.0",
     "@playwright/test": "^1.62.1",
     "postcss-scss": "^4.0.9",
     "stylelint": "^17.14.1",
-    "stylelint-config-standard-scss": "^17.0.0"
-  }
+    "stylelint-config-standard-scss": "^17.0.0",
+    "stylelint-order": "^8.1.1"
+    }
 }

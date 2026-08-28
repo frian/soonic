@@ -1,0 +1,71 @@
+@use 'sass:map';
+
+$space-1: 5px !default;
+$space-2: 10px !default;
+$space-3: 15px !default;
+$space-4: 20px !default;
+$space-5: 30px !default;
+
+$topbar-content-size: 49px !default;
+$topbar-border-size: 1px !default;
+$topbar-size: $topbar-content-size + $topbar-border-size;
+
+$topbar-content-size-touch: 59px !default;
+$topbar-border-size-touch: 1px !default;
+$topbar-size-touch: $topbar-content-size-touch + $topbar-border-size-touch;
+
+$player-button-width-touch: 50px !default;
+$mobile-button-size: $topbar-size-touch !default;
+$mobile-line-height: $mobile-button-size;
+
+
+$input-reset-size: 30px !default;
+
+$artists-navigation-1024: 240px !default;
+$artists-navigation-1200: 360px !default;
+
+$panel-header-height: 24px !default;
+
+$single-album-col: 300px !default;
+$single-album-col-md: 400px !default;
+$single-album-col-lg: 500px !default;
+$single-album-col-xl: 600px !default;
+$playlist-col-widths: (
+    col-add: 25px,
+    col-track-number: 25px,
+    col-artist: 20%,
+    col-title: 35%,
+    col-album: 20%,
+    col-duration: 60px,
+    col-year: 60px,
+    col-genre: 80px
+) !default;
+
+
+$radio-button-size-medium: 80px !default;
+$radio-button-size: 150px !default;
+
+
+$breakpoints: (
+    xs: 500px,
+    sm: 700px,
+    md: 1024px,
+    lg: 1200px,
+    xl: 1600px
+) !default;
+
+
+@mixin scrollable-y {
+    overflow-y: auto;
+}
+
+
+@mixin up($breakpoint) {
+    @if not map.has-key($breakpoints, $breakpoint) {
+        @error "Unknown breakpoint `#{$breakpoint}`. Allowed: #{map.keys($breakpoints)}.";
+    }
+
+    @media all and (min-width: map.get($breakpoints, $breakpoint)) {
+        @content;
+    }
+}

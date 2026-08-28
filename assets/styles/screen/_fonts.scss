@@ -1,0 +1,25 @@
+@font-face {
+    font-family: "Material Icons";
+    src: url("/fonts/material-icons/material-icons-latin-400-normal.woff2") format("woff2");
+
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+.material-icons {
+    display: inline-block;
+
+    font-family: "Material Icons", sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    font-style: normal;
+    overflow-wrap: normal;
+    direction: ltr;
+    font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+}

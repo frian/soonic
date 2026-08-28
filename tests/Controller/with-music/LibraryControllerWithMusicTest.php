@@ -23,7 +23,7 @@ class LibraryControllerWithMusicTest extends WithMusicWebTestCase
         $crawler = $client->request('GET', '/albums/dire-straits');
 
         $this->assertResponseIsSuccessful();
-        $this->assertSame(1, $crawler->filter('#album-nav .song:contains("Dire Straits")')->count());
+        $this->assertSame(1, $crawler->filter('.album-nav .albums-list:contains("Dire Straits")')->count());
     }
 
     public function testShowAlbumsSongs(): void

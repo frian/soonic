@@ -6,45 +6,39 @@
         method: 'POST',
         attr: { id: 'radio_save' }
     }) }}
-        <table class="form">
-            <tr>
-                <td>{{ form_label(edit_form.name) }}</td>
-                <td>{{ form_widget(edit_form.name) }}</td>
-            </tr>
-            <tr>
-                <td>{{ form_label(edit_form.streamUrl) }}</td>
-                <td>{{ form_widget(edit_form.streamUrl) }}</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    <div class="radio-stream-check-actions">
-                        <button
-                            type="button"
-                            class="button radio-stream-check-button"
-                            data-checking-label="{{ 'radio.stream.checking'|trans }}"
-                            data-ok-label="{{ 'radio.stream.ok'|trans }}"
-                            data-error-label="{{ 'radio.stream.error'|trans }}"
-                            data-empty-label="{{ 'radio.stream.empty'|trans }}"
-                        >{{ 'radio.stream.check'|trans }}</button>
-                        <span class="radio-stream-check-result" aria-live="polite"></span>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>{{ form_label(edit_form.homepageUrl) }}</td>
-                <td>{{ form_widget(edit_form.homepageUrl) }}</td>
-            </tr>
-            <tr>
-                <td colspan="2" class="button-row">
-                    {{ include('common/_form_actions.html.twig', {
-                        submit_label: 'edit'|trans,
-                        back_href: path('radio_index'),
-                        back_label: 'back.tolist'|trans
-                    }) }}
-                </td>
-            </tr>
-        </table>
+        <dl class="form">
+            <dt>{{ form_label(edit_form.name) }}</dt>
+            <dd>{{ form_widget(edit_form.name) }}</dd>
+
+            <dt>{{ form_label(edit_form.streamUrl) }}</dt>
+            <dd>{{ form_widget(edit_form.streamUrl, { translation_domain: false }) }}</dd>
+
+            <dt></dt>
+            <dd class="stream-check-button">
+                <div class="radio-stream-check-actions">
+                    <button
+                        type="button"
+                        class="button radio-stream-check-button"
+                        data-checking-label="{{ 'radio.stream.checking'|trans }}"
+                        data-ok-label="{{ 'radio.stream.ok'|trans }}"
+                        data-error-label="{{ 'radio.stream.error'|trans }}"
+                        data-empty-label="{{ 'radio.stream.empty'|trans }}"
+                    >{{ 'radio.stream.check'|trans }}</button>
+                    <span class="radio-stream-check-result" aria-live="polite"></span>
+                </div>
+            </dd>
+
+            <dt>{{ form_label(edit_form.homepageUrl) }}</dt>
+            <dd>{{ form_widget(edit_form.homepageUrl, { translation_domain: false }) }}</dd>
+
+            <dd class="button-row">
+                {{ include('common/_form_actions.html.twig', {
+                    submit_label: 'edit'|trans,
+                    back_href: path('radio_index'),
+                    back_label: 'back.tolist'|trans
+                }) }}
+            </dd>
+        </dl>
         {{ form_rest(edit_form) }}
     {{ form_end(edit_form, { render_rest: false }) }}
 

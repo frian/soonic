@@ -1,32 +1,25 @@
 <div class="radio-show-view view" data-page-title="Soonic - {{ radio.name }}">
     <h1>{{ radio.name }}</h1>
 
-    <table class="form">
-        <tbody>
-            <tr>
-                <th>{{ 'name'|trans|default('Name') }}</th>
-                <td>{{ radio.name }}</td>
-            </tr>
-            <tr>
-                <th>Stream URL</th>
-                <td><a href="{{ radio.streamUrl }}" target="_blank" rel="noopener noreferrer">{{ radio.streamUrl }}</a></td>
-            </tr>
-            <tr>
-                <th>Homepage URL</th>
-                <td>
-                    {% if radio.homepageUrl %}
-                        <a href="{{ radio.homepageUrl }}" target="_blank" rel="noopener noreferrer">{{ radio.homepageUrl }}</a>
-                    {% else %}
-                        -
-                    {% endif %}
-                </td>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <td>{{ radio.id }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <dl class="form">
+        <dt>{{ 'name'|trans|default('Name') }}</dt>
+        <dd>{{ radio.name }}</dd>
+
+        <dt>Stream URL</dt>
+        <dd><a href="{{ radio.streamUrl }}" target="_blank" rel="noopener noreferrer">{{ radio.streamUrl }}</a></dd>
+
+        <dt>Homepage URL</dt>
+        <dd>
+            {% if radio.homepageUrl %}
+                <a href="{{ radio.homepageUrl }}" target="_blank" rel="noopener noreferrer">{{ radio.homepageUrl }}</a>
+            {% else %}
+                -
+            {% endif %}
+        </dd>
+
+        <dt>Id</dt>
+        <dd>{{ radio.id }}</dd>
+    </dl>
 
     <div class="button-wrapper">
         <a class="button" href="{{ path('radio_index') }}">{{ 'back.tolist'|trans }}</a>

@@ -7,63 +7,65 @@
                 {% set coverSrc = album.coverArtPath ?: '/img/cover.jpg' %}
                 <img class="single-album" src="{{ coverSrc }}" alt="{{ album.name }}">
             </div>
-            <div class="album-title">
-                {{ album.name }}
-            </div>
-            <div class="album-artist">
-                {% for artist in album.artists %}
-                    {{ artist }}<br>
-                {% endfor %}
-            </div>
-            <div class="album-songs-section">
-                <div class="album-songs-wrapper">
-                    <table class="album-songs">
-                        <tbody>
-                            {% for song in album.songs %}
-                                <tr
-                                    data-path="{{ song.webPath }}"
-                                    data-duration="{{ song.duration }}"
-                                    data-track-number="{{ song.trackNumber }}"
-                                    data-artist="{{ song.artist }}"
-                                    data-title="{{ song.title }}"
-                                    data-album="{{ album.name }}"
-                                    data-year="{{ song.year }}"
-                                    data-genre="{{ song.genre }}"
-                                >
-                                    <td class="add">
-                                        <i 
-                                            class="icon-plus" 
-                                            role="button" 
-                                            tabindex="0" 
-                                            aria-label="{{ 'playlist.add'|trans|default('Add song to playlist') }}" 
-                                            title="{{ 'playlist.add'|trans|default('Add song to playlist') }}">
-                                        </i>
-                                    </td>
-                                    <td>{{ song.trackNumber }}</td>
-                                    <td>{{ song.title }}</td>
-                                    <td>{{ song.duration }}</td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            <div class="album-content">
+                <div class="album-title">
+                    {{ album.name }}
                 </div>
-                <div class="album-actions">
-                    <button
-                        type="button"
-                        class="button play-album"
-                        aria-label="{{ 'album.play'|trans|default('Play album') }}"
-                        title="{{ 'album.play'|trans|default('Play album') }}"
-                    >
-                        {{ 'album.play'|trans|default('Play album') }}
-                    </button>
-                    <button
-                        type="button"
-                        class="button add-album-to-playlist"
-                        aria-label="{{ 'playlist.add'|trans|default('Add to playlist') }}"
-                        title="{{ 'playlist.add'|trans|default('Add to playlist') }}"
-                    >
-                        {{ 'playlist.add'|trans|default('Add to playlist') }}
-                    </button>
+                <div class="album-artist">
+                    {% for artist in album.artists %}
+                        {{ artist }}<br>
+                    {% endfor %}
+                </div>
+                <div class="album-songs-section">
+                    <div class="album-songs-wrapper">
+                        <table class="album-songs">
+                            <tbody>
+                                {% for song in album.songs %}
+                                    <tr
+                                        data-path="{{ song.webPath }}"
+                                        data-duration="{{ song.duration }}"
+                                        data-track-number="{{ song.trackNumber }}"
+                                        data-artist="{{ song.artist }}"
+                                        data-title="{{ song.title }}"
+                                        data-album="{{ album.name }}"
+                                        data-year="{{ song.year }}"
+                                        data-genre="{{ song.genre }}"
+                                    >
+                                        <td class="add">
+                                            <i
+                                                class="icon-plus"
+                                                role="button"
+                                                tabindex="0"
+                                                aria-label="{{ 'playlist.add'|trans|default('Add song to playlist') }}"
+                                                title="{{ 'playlist.add'|trans|default('Add song to playlist') }}">
+                                            </i>
+                                        </td>
+                                        <td>{{ song.trackNumber }}</td>
+                                        <td>{{ song.title }}</td>
+                                        <td>{{ song.duration }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="album-actions">
+                        <button
+                            type="button"
+                            class="button play-album"
+                            aria-label="{{ 'album.play'|trans|default('Play album') }}"
+                            title="{{ 'album.play'|trans|default('Play album') }}"
+                        >
+                            {{ 'album.play'|trans|default('Play album') }}
+                        </button>
+                        <button
+                            type="button"
+                            class="button add-album-to-playlist"
+                            aria-label="{{ 'playlist.add'|trans|default('Add to playlist') }}"
+                            title="{{ 'playlist.add'|trans|default('Add to playlist') }}"
+                        >
+                            {{ 'playlist.add'|trans|default('Add to playlist') }}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

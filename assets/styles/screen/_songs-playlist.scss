@@ -1,60 +1,64 @@
-$bg-alternate: #ddd !default;
-$hover-active: #ddd !default;
+@use '../config/layout' as config;
+@use '../config/screen' as theme;
+
+.artists-navigation a.is-active {
+    background-color: theme.$hover-active;
+}
 
 .playlist-header {
-    font-family: Muli, sans-serif;
+    font-family: theme.$title-font;
+    font-size: 0.8em;
     font-weight: 700;
-    font-size: 80%;
+
     letter-spacing: 1px;
-    background-color: #ddd;
+
+    background-color: theme.$header-color;
+}
+
+:is(#songs, #playlist) thead th {
+    background-color: theme.$header-color;
+}
+
+.mobile-button {
+    line-height: config.$mobile-button-size;
+    text-align: center;
+
+    background-color: theme.$mobile-button-bg;
 }
 
 .list {
     thead {
-        font-family: Muli, sans-serif;
-        font-weight: 700;
-        background-color: #ddd;
+        th {
+            height: config.$panel-header-height;
 
-        tr {
-            th {
-                padding: 0 10px;
-                font-family: Muli, sans-serif;
-                font-weight: 700;
-                font-size: 80%;
-                letter-spacing: 1px;
-            }
+            font-family: theme.$title-font;
+            font-size: 0.8em;
+            font-weight: 700;
+            line-height: config.$panel-header-height;
+            letter-spacing: 1px;
         }
     }
 
     tbody {
-        font-family: Lato, sans-serif;
-
         tr {
             cursor: pointer;
-
-            td {
-                padding: 5px;
-            }
         }
 
-        tr:nth-child(even) {
-            background-color: $bg-alternate;
+        tr:nth-child(even):not(.is-playing, .is-keyboard-select) {
+            background-color: theme.$bg-alternate;
         }
-    }
-
-    tbody tr.playing,
-    tbody tr.selected,
-    tbody tr.keyboard-selected {
-        background-color: $hover-active;
-    }
-
-    .icon-plus, .icon-minus {
-        color: #aaa;
     }
 }
 
-.album-songs {
-    tbody tr.playing {
-        background-color: $hover-active;
+:is(.songs, .playlist) tbody td.col-add {
+    text-align: center;
+}
+
+@include config.up(md) {
+    :is(.songs, .playlist) tbody td.col-add,
+    :is(.songs, .playlist) tbody td.col-duration,
+    :is(.songs, .playlist) tbody td.col-year,
+    :is(.songs, .playlist) tbody td.col-genre {
+        text-align: center;
     }
 }
