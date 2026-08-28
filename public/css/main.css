@@ -81,6 +81,14 @@ table {
   content: "";
 }
 
+a.button,
+button.button {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  background-color: transparent;
+}
+
 .button {
   display: inline-block;
   box-sizing: border-box;
