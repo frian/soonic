@@ -11,9 +11,10 @@ module.exports = defineConfig({
     webServer: {
         command: process.env.CI
             ? 'bash tests/e2e/server.sh'
-            : 'symfony server:start --no-tls --allow-http --port=9810 2>&1 | grep --line-buffered -E "ERROR|CRITICAL|CRITICA|Fatal|Exception"',
+            : 'symfony server:start --no-tls --allow-http --port=9810',
         url: 'http://127.0.0.1:9810',
         reuseExistingServer: true,
+        stderr: 'ignore',
         timeout: 120 * 1000
     },
     projects: [

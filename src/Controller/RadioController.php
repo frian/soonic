@@ -23,16 +23,8 @@ class RadioController extends AbstractController
     #[Route(path: '/', name: 'radio_index', methods: ['GET'])]
     public function index(Request $request, RadioRepository $radioRepository): Response
     {
-        $limit = 24;
-        $page = max(1, $request->query->getInt('page', 1));
-        $total = $radioRepository->countAll();
-        $totalPages = max(1, (int) ceil($total / $limit));
-        $page = min($page, $totalPages);
-
         $parameters = [
-            'radios' => $radioRepository->findPaginated($page, $limit),
-            'currentPage' => $page,
-            'totalPages' => $totalPages,
+            'radios' => $radioRepository->findBy([], ['name' => 'ASC', 'id' => 'ASC']),
         ];
 
         if ($request->isXmlHttpRequest()) {

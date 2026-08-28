@@ -2,9 +2,18 @@ $(function() {
     'use strict';
 
     const debug = false;
+    const uiStates = window.SoonicUiStates;
+    const uiSelectors = window.SoonicUiSelectors;
+    if (!uiStates || !uiSelectors) {
+        console.error('[Soonic] Missing UI globals in keyboard.js (SoonicUiStates/SoonicUiSelectors).');
+        return;
+    }
     const editableSelector = 'input, textarea, select, [contenteditable="true"]';
-    const keyboardSelectedClass = 'keyboard-selected';
+    const keyboardSelectedClass = uiStates.keyboardSelected;
+    const legacyActiveClass = 'active';
+    const legacyKeyboardSelectedClass = 'keyboard-selected';
     let keyboardScopeSelector = null;
+    let forcedKeyboardScopeSelector = null;
 
     /**
      * Activate custom role=button controls with keyboard
@@ -51,9 +60,9 @@ $(function() {
             p: '#play-pause-button',
             n: '.icon-to-end',
             b: '.icon-to-start',
-            r: '#radio-button',
-            a: '#albums-button',
-            l: '#library-button',
+            r: '.radio-button',
+            a: '.albums-button',
+            l: '.library-button',
             f: 'input[name=filter]'
         };
         const selector = shortcuts[key.toLowerCase()];
@@ -73,6 +82,26 @@ $(function() {
         logDebug('keyboard shortcut: ' + key);
     });
 
+    $(document).on("soonic:setKeyboardScope", function(_e, payload) {
+        const selector = payload && payload.selector;
+        if (!selector) {
+            return;
+        }
+
+        forcedKeyboardScopeSelector = selector;
+        keyboardScopeSelector = selector;
+
+        $("." + keyboardSelectedClass + ", ." + legacyKeyboardSelectedClass).removeClass(keyboardSelectedClass + " " + legacyKeyboardSelectedClass);
+
+        if (payload && payload.target) {
+            const $target = $(payload.target).first();
+            if ($target.length) {
+                $target.addClass(keyboardSelectedClass);
+                scrollIntoView($target);
+            }
+        }
+    });
+
 
     function logDebug(message) {
         window.logSoonicDebug(debug, message);
@@ -85,19 +114,29 @@ $(function() {
     function closeTransientUi() {
         $(document).trigger("soonic:closeAlbumOverlay");
         $(".songs-context-menu, .playlist-context-menu").css('display', 'none');
-        $("#songs tbody tr.selected, #playlist tbody tr.selected").removeClass("selected");
+        $(uiSelectors.selectedSongRows).removeClass(uiStates.selected);
 
-        if ($(".hamburger").hasClass("is-active")) {
+        if ($(".hamburger").hasClass(uiStates.active)) {
             $(".hamburger").trigger('click');
         }
     }
 
     function focusSearch() {
-        if ($(window).width() < 1024 && !$(".top-nav").hasClass("is-active")) {
+        const focusKeywordInput = function() {
+            const input = document.querySelector('#form-keyword') || document.querySelector('.search-form .filter-input');
+            if (input && typeof input.focus === 'function') {
+                input.focus();
+            }
+        };
+
+        if ($(window).width() < 1024 && !$(".top-nav").hasClass(uiStates.active)) {
             $(".hamburger").trigger('click');
+            // Let the mobile menu open before trying to focus the input.
+            window.setTimeout(focusKeywordInput, 0);
+            return;
         }
 
-        $("#form-keyword").trigger('focus');
+        focusKeywordInput();
     }
 
     function handleListNavigation(e) {
@@ -122,6 +161,7 @@ $(function() {
             e.preventDefault();
             moveKeyboardSelection($items, e.key === 'ArrowDown' ? 1 : -1);
             keyboardScopeSelector = itemSelector;
+            forcedKeyboardScopeSelector = null;
             return true;
         }
 
@@ -129,6 +169,7 @@ $(function() {
             e.preventDefault();
             activateKeyboardSelection($items);
             keyboardScopeSelector = itemSelector;
+            forcedKeyboardScopeSelector = null;
             return true;
         }
 
@@ -140,6 +181,13 @@ $(function() {
     }
 
     function getKeyboardItems() {
+        if (forcedKeyboardScopeSelector) {
+            const $forcedItems = $(forcedKeyboardScopeSelector).filter(':visible');
+            if ($forcedItems.length) {
+                return $forcedItems;
+            }
+        }
+
         const currentSelector = getCurrentKeyboardSelector();
         if (currentSelector) {
             const $currentItems = $(currentSelector).filter(':visible');
@@ -173,17 +221,17 @@ $(function() {
     }
 
     function getCurrentKeyboardSelector() {
-        const $playingRow = $("#playlist:visible tbody tr.playing, #songs:visible tbody tr.playing, .album-songs:visible tbody tr.playing").first();
+        const $playingRow = $(uiSelectors.playingVisibleRows).first();
         if ($playingRow.length) {
             return getKeyboardItemSelector($playingRow);
         }
 
-        const $selected = $("." + keyboardSelectedClass).filter(':visible').first();
+        const $selected = $("." + keyboardSelectedClass + ", ." + legacyKeyboardSelectedClass).filter(':visible').first();
         if ($selected.length) {
             return getKeyboardItemSelector($selected);
         }
 
-        const $activeArtist = $(".artists-navigation a.active:visible").first();
+        const $activeArtist = $(uiSelectors.visibleActiveArtistLinks).first();
         if ($activeArtist.length) {
             return getKeyboardItemSelector($activeArtist);
         }
@@ -230,18 +278,18 @@ $(function() {
 
         const $next = $items.eq(nextIndex);
 
-        $("." + keyboardSelectedClass).removeClass(keyboardSelectedClass);
-        $items.filter('.active').removeClass('active');
+        $("." + keyboardSelectedClass + ", ." + legacyKeyboardSelectedClass).removeClass(keyboardSelectedClass + " " + legacyKeyboardSelectedClass);
+        $items.filter('.' + uiStates.active + ', .' + legacyActiveClass).removeClass(uiStates.active + " " + legacyActiveClass);
 
         if (isSongsOrPlaylistSelection($items)) {
-            const hasPlayingRow = $items.filter('.playing').length > 0;
+            const hasPlayingRow = $items.filter('.' + uiStates.playing).length > 0;
 
             if (hasPlayingRow) {
                 if (isPlayerPlaying()) {
                     $next.trigger('click');
                 } else {
-                    $items.filter('.playing').removeClass('playing');
-                    $next.addClass('playing');
+                    $items.filter('.' + uiStates.playing).removeClass(uiStates.playing);
+                    $next.addClass(uiStates.playing);
                 }
                 scrollIntoView($next);
                 return;
@@ -254,20 +302,20 @@ $(function() {
 
     function getCurrentKeyboardIndex($items) {
         if (isSongsOrPlaylistSelection($items) && isPlayerPlaying()) {
-            const playingIndex = $items.index($items.filter('.playing').first());
+            const playingIndex = $items.index($items.filter('.' + uiStates.playing).first());
             if (playingIndex >= 0) {
                 return playingIndex;
             }
         }
 
-        let currentIndex = $items.index($items.filter('.' + keyboardSelectedClass).first());
+        let currentIndex = $items.index($items.filter('.' + keyboardSelectedClass + ', .' + legacyKeyboardSelectedClass).first());
 
         if (currentIndex < 0) {
-            currentIndex = $items.index($items.filter('.active').first());
+            currentIndex = $items.index($items.filter('.' + uiStates.active + ', .' + legacyActiveClass).first());
         }
 
         if (currentIndex < 0) {
-            currentIndex = $items.index($items.filter('.playing').first());
+            currentIndex = $items.index($items.filter('.' + uiStates.playing).first());
         }
 
         return currentIndex;
@@ -288,10 +336,10 @@ $(function() {
     }
 
     function activateKeyboardSelection($items) {
-        let $selected = $items.filter('.' + keyboardSelectedClass).first();
+        let $selected = $items.filter('.' + keyboardSelectedClass + ', .' + legacyKeyboardSelectedClass).first();
 
         if (!$selected.length) {
-            $selected = $items.filter('.active').first();
+            $selected = $items.filter('.' + uiStates.active + ', .' + legacyActiveClass).first();
         }
 
         if ($selected.length) {
@@ -325,7 +373,7 @@ $(function() {
     }
 
     function removeSelectedPlaylistSong(e, $items) {
-        const $selected = $items.filter('.' + keyboardSelectedClass).first();
+        const $selected = $items.filter('.' + keyboardSelectedClass + ', .' + legacyKeyboardSelectedClass).first();
 
         if (!$selected.length || !$selected.closest('#playlist').length) {
             return false;

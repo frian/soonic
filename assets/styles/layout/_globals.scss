@@ -1,0 +1,133 @@
+@use '../config/layout' as config;
+
+html, body {
+    height: 100%;
+}
+
+h1 {
+    margin-bottom: config.$space-5;
+    padding: config.$space-5 0;
+}
+
+h2 {
+    padding: config.$space-3 config.$space-4;
+}
+
+.empty-list {
+    padding: config.$space-4;
+}
+
+table {
+    table-layout: fixed;
+}
+
+.clearfix::after {
+    display: table;
+    clear: both;
+    content: "";
+}
+
+a.button,
+button.button {
+  margin: 0;
+
+  background-color: transparent;
+  appearance: none;
+}
+
+.button {
+  display: inline-block;
+
+  box-sizing: border-box;
+  height: config.$topbar-content-size-touch;
+
+  padding: 0 config.$space-4;
+
+  line-height: config.$topbar-content-size-touch;
+
+  border: 0;
+}
+
+.input-reset {
+    position: absolute;
+    z-index: 1;
+
+    display: inline-flex;
+
+    box-sizing: border-box;
+
+    width: config.$input-reset-size;
+    height: config.$input-reset-size;
+
+    padding: 0;
+
+    border: 0;
+
+    align-items: center;
+    justify-content: center;
+
+    appearance: none;
+    outline: 0;
+}
+
+.input-reset::after {
+	position: static;
+	z-index:1;
+
+	display: block;
+
+	box-sizing: border-box;
+
+	width: 14px;
+	height: 14px;
+
+	padding: 0;
+
+    background:
+        linear-gradient(45deg, transparent 42%, currentcolor 42%, currentcolor 58%, transparent 58%),
+        linear-gradient(-45deg, transparent 42%, currentcolor 42%, currentcolor 58%, transparent 58%);
+
+	cursor: pointer;
+    content: "";
+}
+
+.filter-form {
+    .input-reset {
+        top: 1px;
+        right: config.$space-1;
+
+        width: 34px;
+        height: calc(100% - 2px);
+    }
+}
+
+#playlist-flash-message,
+#radio-flash-message,
+#ajax-flash-message {
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    z-index: 9999;
+
+    display: none;
+
+    height: 80px;
+
+    padding: 0 32px;
+
+    line-height: 80px;
+    text-align: center;
+    white-space: nowrap;
+
+    pointer-events: none;
+    transform: translateX(-50%);
+}
+
+
+@include config.up(md) {
+    .button {
+        height: config.$topbar-content-size;
+
+        line-height: config.$topbar-content-size;
+    }
+}

@@ -2,6 +2,9 @@
   "extends": [
     "stylelint-config-standard-scss"
   ],
+  "plugins": [
+    "stylelint-order"
+  ],
   "overrides": [
     {
       "files": [
@@ -12,6 +15,22 @@
   ],
   "rules": {
     "no-descending-specificity": null,
+    "max-nesting-depth": 4,
+    "selector-max-specificity": "1,5,2",
+    "selector-no-qualifying-type": [
+      true,
+      {
+        "ignore": [
+          "attribute",
+          "class"
+        ]
+      }
+    ],
+    "scss/dollar-variable-empty-line-before": null,
+    "scss/at-rule-conditional-no-parentheses": null,
+    "declaration-no-important": true,
+    "selector-max-id": 2,
+    "declaration-empty-line-before": null,
     "media-feature-range-notation": "prefix",
     "selector-class-pattern": [
       "^[a-z][a-z0-9-]*$",
@@ -21,6 +40,156 @@
     ],
     "selector-id-pattern": "^[a-z][a-z0-9-]*$",
     "scss/dollar-variable-pattern": null,
-    "font-family-no-missing-generic-family-keyword": true
+    "font-family-no-missing-generic-family-keyword": true,
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        "except": [
+          "first-nested"
+        ]
+      }
+    ],
+    "order/properties-order": [
+      {
+        "groupName": "positioning",
+        "emptyLineBefore": "never",
+        "properties": [
+          "position",
+          "top",
+          "right",
+          "bottom",
+          "left",
+          "z-index"
+        ]
+      },
+      {
+        "groupName": "layout-model",
+        "emptyLineBefore": "always",
+        "properties": [
+          "display",
+          "flex",
+          "flex-grow",
+          "flex-shrink",
+          "flex-basis",
+          "flex-direction",
+          "flex-wrap",
+          "flex-flow",
+          "flex-order",
+          "grid",
+          "grid-template",
+          "grid-template-areas",
+          "grid-template-columns",
+          "grid-template-rows",
+          "grid-column",
+          "grid-row",
+          "grid-area",
+          "grid-auto-columns",
+          "grid-auto-rows",
+          "grid-auto-flow",
+          "grid-column-gap",
+          "grid-row-gap",
+          "grid-gap",
+          "table-layout",
+          "float",
+          "clear"
+        ]
+      },
+      {
+        "groupName": "dimensions",
+        "emptyLineBefore": "always",
+        "properties": [
+          "box-sizing",
+          "width",
+          "min-width",
+          "max-width",
+          "height",
+          "min-height",
+          "max-height",
+          "aspect-ratio"
+        ]
+      },
+      {
+        "groupName": "spacing",
+        "emptyLineBefore": "always",
+        "properties": [
+          "margin",
+          "margin-top",
+          "margin-right",
+          "margin-bottom",
+          "margin-left",
+          "padding",
+          "padding-top",
+          "padding-right",
+          "padding-bottom",
+          "padding-left",
+          "gap",
+          "row-gap",
+          "column-gap"
+        ]
+      },
+      {
+        "groupName": "overflow-clipping",
+        "emptyLineBefore": "always",
+        "properties": [
+          "overflow",
+          "overflow-x",
+          "overflow-y",
+          "clip-path"
+        ]
+      },
+      {
+        "groupName": "typography-content",
+        "emptyLineBefore": "always",
+        "properties": [
+          "font-family",
+          "font-size",
+          "font-weight",
+          "line-height",
+          "letter-spacing",
+          "text-align",
+          "text-transform",
+          "white-space",
+          "text-overflow"
+        ]
+      },
+      {
+        "groupName": "colors-appearance",
+        "emptyLineBefore": "always",
+        "properties": [
+          "color",
+          "background",
+          "background-color",
+          "border",
+          "border-top",
+          "border-right",
+          "border-bottom",
+          "border-left",
+          "border-radius",
+          "box-shadow",
+          "opacity"
+        ]
+      },
+      {
+        "groupName": "interaction-animation",
+        "emptyLineBefore": "always",
+        "properties": [
+          "cursor",
+          "pointer-events",
+          "transition",
+          "transform",
+          "animation"
+        ]
+      },
+      {
+        "properties": [
+          "align-items",
+          "justify-content",
+          "vertical-align",
+          "justify-self",
+          "align-self"
+        ]
+      }
+    ],
+    "order/properties-alphabetical-order": null
   }
 }

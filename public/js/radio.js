@@ -2,12 +2,18 @@ $(function() {
     'use strict';
 
     const debug = false;
+    const uiStates = window.SoonicUiStates;
+    const uiSelectors = window.SoonicUiSelectors;
+    if (!uiStates || !uiSelectors) {
+        console.error('[Soonic] Missing UI globals in radio.js (SoonicUiStates/SoonicUiSelectors).');
+        return;
+    }
 
     /**
      * Pause radio from external controls
      */
     $(document).on("soonic:pauseRadio", function() {
-        const $activePlayerButton = $(".radios-view i.activePlayer").first();
+        const $activePlayerButton = $(uiSelectors.activeRadioPlayerButton).first();
         const activePlayer = $activePlayerButton.length ? $activePlayerButton.next()[0] : null;
 
         if (!activePlayer || activePlayer.paused) {
@@ -32,7 +38,7 @@ $(function() {
         }
 
         // -- find currently active player and pause it
-        const $activePlayerButton = $(".radios-view i.activePlayer").first();
+        const $activePlayerButton = $(uiSelectors.activeRadioPlayerButton).first();
         const activePlayer = $activePlayerButton.length ? $activePlayerButton.next()[0] : null;
 
         if (activePlayer) {
@@ -107,25 +113,25 @@ $(function() {
     function setRadioPlaying($button) {
         $button
             .removeClass("icon-play is-loading")
-            .addClass("icon-pause activePlayer")
-            .closest("tr, li, .radio-item")
-            .addClass("active-radio");
+            .addClass("icon-pause " + uiStates.activePlayer)
+            .closest("tr, li, .radio-item, .radio")
+            .addClass(uiStates.activeRadio);
     }
 
     function setRadioPaused($button) {
         $button
-            .removeClass("icon-pause activePlayer is-loading")
+            .removeClass("icon-pause " + uiStates.activePlayer + " is-loading")
             .addClass("icon-play")
-            .closest("tr, li, .radio-item")
-            .removeClass("active-radio");
+            .closest("tr, li, .radio-item, .radio")
+            .removeClass(uiStates.activeRadio);
     }
 
     function setRadioLoading($button) {
         $button
-            .removeClass("icon-pause activePlayer")
+            .removeClass("icon-pause " + uiStates.activePlayer)
             .addClass("icon-play is-loading")
-            .closest("tr, li, .radio-item")
-            .removeClass("active-radio");
+            .closest("tr, li, .radio-item, .radio")
+            .removeClass(uiStates.activeRadio);
     }
 
     function showRadioStreamError(audio) {
@@ -158,7 +164,7 @@ $(function() {
         const $form = $button.closest("form");
         const $input = $form.find("[id$='_streamUrl']").first();
         const url = String($input.val() || "").trim();
-        const $result = $button.closest("td").find(".radio-stream-check-result").first();
+        const $result = $button.closest("dd").find(".radio-stream-check-result").first();
 
         if (!url) {
             setStreamCheckResult($button, $result, "empty");

@@ -1,90 +1,63 @@
-# Sass Organization
+# SCSS Conventions
 
-This folder contains the Sass sources used to generate the CSS files in `public/css`.
+Ce dossier suit une separation stricte:
 
-## Structure
+- `layout/`: structure uniquement (position, display, dimensions, spacing, overflow).
+- `screen/`: apparence uniquement (typo, couleurs, bordures, ombres, interactions visuelles).
+- `config/`: variables, tokens, breakpoints, mixins.
 
-- `layout.scss`: structural/layout rules
-- `screen.scss`: default visual theme
-- `_reset.scss`, `_hamburger.scss`: shared partials
-- `layout/*.scss`: extracted layout sections (e.g. topbar, artists navigation)
-- `screen/*.scss`: extracted visual sections (e.g. topbar, artists navigation, songs/playlist)
-- `themes/_base.scss`: shared theme rules
-- `themes/<theme>/screen.scss`: theme-specific variables and overrides
+## Breakpoints
 
-## Conventions
+Toujours passer par le mixin `config.up(...)` (pas de `@media` en dur):
 
-- Prefer `@use` over legacy `@import`.
-- Keep shared theme rules in `themes/_base.scss`.
-- In each `themes/<theme>/screen.scss`, configure variables via:
-  `@use "../base" with (...)`
-- Keep visual overrides (e.g. background image/gradient) after `@use`.
+- `xs`: `500px`
+- `sm`: `700px`
+- `md`: `1024px`
+- `lg`: `1200px`
+- `xl`: `1600px`
 
-Current theme sources:
+Exemple:
 
-- `themes/default-clear/screen.scss`
-- `themes/default-dark/screen.scss`
-- `themes/guitar-dark/screen.scss`
+```scss
+@use '../config/layout' as config;
 
-## Build commands (Dart Sass)
-
-From the project root:
-
-```bash
-sass assets/styles/layout.scss public/css/layout.css
-sass assets/styles/screen.scss public/css/screen.css
-sass assets/styles/themes/default-clear/screen.scss public/css/themes/default-clear/screen.css
-sass assets/styles/themes/default-dark/screen.scss public/css/themes/default-dark/screen.css
-sass assets/styles/themes/guitar-dark/screen.scss public/css/themes/guitar-dark/screen.css
+@include config.up(md) {
+    .my-block {
+        display: flex;
+    }
+}
 ```
 
-Equivalent npm script:
+## Ordre des proprietes
 
-```bash
-npm run build:scss
-```
+Appliquer cet ordre dans chaque bloc:
 
-Optional watch mode:
+1. Positionnement
+2. Display / modele de layout
+3. Dimensions
+4. Espacement
+5. Overflow / clipping
+6. Typo / contenu
+7. Couleurs / apparence
+8. Interaction / animation
 
-```bash
-sass --watch assets/styles:public/css
-```
+Laisser une ligne vide entre groupes.
 
-Equivalent npm script:
+## Specificite
 
-```bash
-npm run build:scss:watch
-```
+- Eviter les selecteurs trop profonds.
+- Preferer des classes explicites (`.top-nav-link`, `.settings-value`) plutot que `table tr td ...`.
+- Limiter les `id` aux points necessaires pour le JS.
 
-## Add a new theme
+## Workflow
 
-1. Create `assets/styles/themes/<name>/screen.scss`.
-2. Start from an existing theme file and adjust the `@use "../base" with (...)` values.
-3. Add theme-specific overrides (background image, etc.) below the `@use`.
-4. Compile to `public/css/themes/<name>/screen.css`.
+- Lint: `npm run lint:scss`
+- Auto-fix: `npm run lint:scss:fix`
+- Build: `npm run build:scss`
 
-## Lint SCSS
+Refactor conseiller:
 
-Install lint dependencies from project root:
-
-```bash
-npm install
-```
-
-Run lint:
-
-```bash
-npm run lint:scss
-```
-
-Lint + build check:
-
-```bash
-npm run check:scss
-```
-
-Auto-fix where possible:
-
-```bash
-npm run lint:scss:fix
-```
+1. Modifier d'abord `layout/` (structure).
+2. Ajuster ensuite `screen/` (skin).
+3. Lancer `lint:scss:fix`.
+4. Verifier visuellement mobile + desktop.

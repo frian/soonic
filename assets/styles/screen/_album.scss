@@ -1,0 +1,111 @@
+@use '../config/screen' as theme;
+@use '../config/layout' as config;
+
+@mixin album-grid-pattern($cols) {
+    .album-container:nth-child(n) {
+        background: theme.$theme-dark-gradient;
+    }
+
+    @for $i from 1 through $cols {
+        @if ($i % 2 == 0) {
+            .album-container:nth-child(#{$cols * 2}n + #{$i}) {
+                background: theme.$theme-clear-gradient;
+            }
+        }
+
+        @if ($i % 2 != 0) {
+            .album-container:nth-child(#{$cols * 2}n + #{$cols + $i}) {
+                background: theme.$theme-clear-gradient;
+            }
+        }
+    }
+}
+
+.albums-view {
+    font-family: theme.$text-font;
+}
+
+.album-container {
+    .album-infos {
+        > div {
+            text-align: center;
+        }
+
+        .album-info-album {
+            font-size: 1.1em;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .album-info-artist {
+            font-size: 0.9em;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    }
+}
+
+.single-album-view {
+    background-color: theme.$album-overlay;
+}
+
+.single-album-container {
+    background-color: theme.$album-overlay ;
+
+    .album-songs {
+        tbody tr:nth-child(2n) {
+            background-color: theme.$bg-alternate;
+        }
+
+        tbody tr.is-playing {
+            background-color: theme.$active-playing;
+        }
+    }
+
+    .album-artist {
+        border-bottom: theme.$border-size solid theme.$border-color;
+    }
+
+    .icon-plus {
+        cursor: pointer;
+    }
+}
+
+
+.albums-view {
+    @include album-grid-pattern(2);
+}
+
+@include config.up(xs) {
+    .albums-view {
+        @include album-grid-pattern(3);
+    }
+}
+
+@include config.up(sm) {
+    .albums-view {
+        @include album-grid-pattern(4);
+    }
+}
+
+@include config.up(md) {
+    .albums-view {
+        @include album-grid-pattern(5);
+    }
+}
+
+@include config.up(lg) {
+    .albums-view {
+        @include album-grid-pattern(6);
+    }
+}
+
+@include config.up(xl) {
+    .albums-view {
+        @include album-grid-pattern(8);
+    }
+}

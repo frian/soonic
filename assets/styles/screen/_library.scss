@@ -1,0 +1,46 @@
+@use '../config/layout' as config;
+@use '../config/screen' as theme;
+
+.filter {
+  background-color: theme.$header-color;
+}
+
+.artists-navigation a {
+    line-height: config.$mobile-button-size;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.album-nav {
+    background-color: theme.$bg-alternate;
+}
+
+@include config.up(md) {
+    .artists-navigation a {
+        line-height: 1.3em;
+    }
+
+    .artists-navigation a.albums-list {
+        line-height: 1.4em;
+    }
+}
+
+.songs-context-menu, .playlist-context-menu {
+    box-shadow: 0 0 5px 3px rgb(0 0 0 / 20%);
+
+    .menu-options {
+        background-color: theme.$bg-color;
+
+        .menu-option {
+            font-family: theme.$ui-font;
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            &:hover {
+                background-color: theme.$hover-active;
+            }
+        }
+    }
+}

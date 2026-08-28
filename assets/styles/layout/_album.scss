@@ -1,0 +1,180 @@
+@use '../config/layout' as config;
+
+.album-container {
+    display: block;
+
+    box-sizing: border-box;
+
+    .img-wrapper {
+        position: relative;
+
+        width: 100%;
+        height: 0;
+
+        padding-top: 100%;
+
+        cursor: pointer;
+    }
+
+    img.cover {
+        position: absolute;
+        top: 0;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    .album-infos {
+        .album-info-album {
+            padding: config.$space-2;
+
+            overflow: hidden;
+        }
+
+        .album-info-artist {
+            padding: config.$space-1 config.$space-2 config.$space-4;
+
+            overflow: hidden;
+        }
+    }
+}
+
+.single-album-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    display: flex;
+    flex-direction: column;
+
+    width: config.$single-album-col;
+    height: calc(config.$single-album-col * 2);
+
+    overflow: hidden;
+
+    transform: translate(-50%, -50%);
+
+    .img-wrapper {
+        position: relative;
+
+        width: 100%;
+        height: 0;
+
+        padding-top: 100%;
+    }
+
+    .single-album {
+        position: absolute;
+        top: 0;
+
+        z-index: 100;
+
+        width: 100%;
+        height: 100%;
+    }
+
+    .album-title {
+        padding: config.$space-2 0;
+
+        text-align: center;
+    }
+
+    .album-artist {
+        padding-bottom: config.$space-2;
+
+        text-align: center;
+    }
+
+    .album-songs-section {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+
+        min-height: 0;
+    }
+
+    .album-songs-wrapper {
+        flex: 1 1 auto;
+
+        min-height: 0;
+
+        overflow-y: auto;
+    }
+
+    .album-songs {
+        table-layout: auto;
+
+        width: 100%;
+
+        td {
+            padding: config.$space-1;
+        }
+
+        td:nth-child(1)  {
+            text-align: center;
+        }
+
+        td:nth-child(2)  {
+            text-align: right;
+        }
+    }
+
+    .album-actions {
+        margin-bottom: config.$space-2;
+
+        text-align: center;
+    }
+
+    .album-content {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+
+        min-height: 0;
+    }
+}
+
+@include config.up(sm) {
+    .single-album-container {
+        display: grid;
+
+        grid-template-columns: config.$single-album-col config.$single-album-col;
+
+        width: calc(config.$single-album-col * 2);
+        height: config.$single-album-col;
+    }
+}
+
+@include config.up(md) {
+    .single-album-container {
+        grid-template-columns: config.$single-album-col-md config.$single-album-col-md;
+
+        width: calc(config.$single-album-col-md * 2);
+        height: config.$single-album-col-md;
+
+        > .img-wrapper {
+            width: 100%;
+            height: 100%;
+
+            padding-top: 0;
+        }
+    }
+}
+
+@include config.up(lg) {
+    .single-album-container {
+        grid-template-columns: config.$single-album-col-lg config.$single-album-col-lg;
+
+        width: calc(config.$single-album-col-lg * 2);
+        height: config.$single-album-col-lg;
+    }
+}
+
+@include config.up(xl) {
+    .single-album-container {
+        grid-template-columns: config.$single-album-col-xl config.$single-album-col-xl;
+
+        width: calc(config.$single-album-col-xl * 2);
+        height: config.$single-album-col-xl;
+    }
+}

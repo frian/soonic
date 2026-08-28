@@ -1,0 +1,75 @@
+@use '../config/layout' as config;
+@use '../config/screen' as theme;
+
+.radio:nth-child(even) {
+    background-color: theme.$bg-alternate;
+}
+
+.radio {
+    font-size: 16px;
+}
+
+.radio-name {
+    font-family: theme.$text-font;
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.radio .icon-play,
+.radio .icon-pause {
+    font-size: 40px;
+}
+
+.radio-edit-view .form dt,
+.radio-new-view .form dt {
+    font-weight: 700;
+    text-align: right;
+}
+
+.radio-edit-view .form input[type='text'],
+.radio-edit-view .form input[type='url'],
+.radio-new-view .form input[type='text'],
+.radio-new-view .form input[type='url'],
+table.form input[type='text'],
+table.form input[type='url'] {
+    font-size: 1.2em;
+    line-height: 40px;
+}
+
+@include config.up(sm) {
+    .radio-name {
+        font-size: 1.4rem;
+    }
+
+    .radio .icon-play,
+    .radio .icon-pause {
+        font-size: 3em;
+    }
+}
+
+@include config.up(md) {
+    .radio-name {
+        font-size: 2rem;
+    }
+
+    .radio .icon-play,
+    .radio .icon-pause {
+        font-size: 5em;
+    }
+
+    .radio:nth-child(even) {
+        background-color: transparent;
+    }
+
+    .radio:nth-child(4n+2),
+    .radio:nth-child(4n+3) {
+        background-color: theme.$bg-alternate;
+    }
+
+    .radio {
+        &.is-active-radio {
+            background-color: theme.$hover-active;
+        }
+    }
+
+}

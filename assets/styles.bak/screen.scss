@@ -1,0 +1,368 @@
+/*
+  -- Default styling ----------------------------------------------------------
+*/
+
+@use "reset";
+@use "fonts";
+
+$fg-color: #111;
+$bg-color: #eee;
+$hover-active: #ddd;
+$bg-alternate: #ddd;
+$border-color: #666;
+$default-gradient: linear-gradient(to top, rgb(34 34 34 / 20%), rgb(51 51 51 / 10%) );
+$debug: 0;
+
+@use "screen/topbar" with (
+    $border-color: $border-color,
+);
+@use "screen/artists-navigation" with (
+    $bg-color: $bg-color,
+    $hover-active: $hover-active,
+);
+@use "screen/songs-playlist" with (
+    $bg-alternate: $bg-alternate,
+    $hover-active: $hover-active
+);
+
+
+/*
+  --  1. Global ---------------------------------------------------------------
+*/
+html, body {
+    font-family: Lato, sans-serif;
+}
+
+a {
+    color: $fg-color;
+    text-decoration: none;
+    line-height: 1.2em;
+    font-weight: 700;
+}
+
+h1 {
+    border-bottom: 1px solid $border-color;
+    text-align: center;
+    padding: 30px 0;
+    font-family: Muli, sans-serif;
+    font-size: 1.6em;
+    letter-spacing: 1px;
+}
+
+h2 {
+    padding: 10px 20px;
+    font-family: Muli, sans-serif;
+    font-size: 1.4em;
+    letter-spacing: 1px;
+    border-bottom: 1px solid $border-color;
+}
+
+.empty-list {
+    font-family: Lato, sans-serif;
+    font-weight: 300;
+    font-size: 2em;
+    padding: 20px;
+}
+
+
+/*
+  --  2/3/5. Topbar + Artists nav + Songs/playlist ----------------------------
+*/
+.topbar {
+    background-color: $bg-color;
+}
+
+#playlist-flash-message,
+#radio-flash-message,
+#ajax-flash-message {
+    border-radius: 6px;
+    background: $hover-active;
+    color: $fg-color;
+    font-size: 20px;
+}
+
+
+/*
+  --  4. Views ----------------------------------------------------------------
+*/
+.single-album-view {
+    background-color: rgb(255 255 255 / 90%);
+}
+
+
+/*
+  --  6. Albums view ----------------------------------------------------------
+*/
+.single-album-container {
+    color: $fg-color;
+}
+
+
+/*
+  --  7. Radios ---------------------------------------------------------------
+*/
+.radio {
+    .radio-name {
+        font-family: Lato, sans-serif;
+        font-weight: 300;
+        font-size: 1.5em;
+        border: #{$debug}px solid red;
+    }
+
+    .radio-url {
+        font-family: Lato, sans-serif;
+        font-weight: 300;
+    }
+
+    .icon-play, .icon-pause {
+        cursor: pointer;
+        font-size: 3em;
+    }
+
+    .radio-play.is-loading {
+        position: relative;
+        pointer-events: none;
+    }
+
+    .radio-play.is-loading::before {
+        visibility: hidden;
+    }
+
+    .radio-play.is-loading::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0.72em;
+        height: 0.72em;
+        margin-top: -0.36em;
+        margin-left: -0.36em;
+        border: 0.09em solid currentcolor;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: radio-spin 0.8s linear infinite;
+    }
+
+    .radio-edit-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+
+        .material-icons {
+            font-size: 1.3rem;
+        }
+    }
+
+}
+
+@keyframes radio-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.radio:nth-child(4n+2), .radio:nth-child(4n+3) {
+    background-color: $bg-alternate;
+}
+
+
+/*
+  --  8. Settings-view --------------------------------------------------------
+*/
+.settings {
+    padding-bottom: 20px;
+    border-bottom: 1px solid $border-color;
+
+    table {
+        font-family: Muli, sans-serif;
+        font-size: 1.2em;
+    }
+}
+
+.settings a {
+    font-size: 18px;
+}
+
+.settings-view .library-info select {
+    appearance: none;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 36px 10px 12px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    color: $fg-color;
+    font-family: Muli, sans-serif;
+    font-size: 1rem;
+    line-height: 1.2;
+    cursor: pointer;
+    background-image:
+        linear-gradient(45deg, transparent 50%, #555 50%),
+        linear-gradient(135deg, #555 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) calc(50% - 2px),
+        calc(100% - 12px) calc(50% - 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+}
+
+.settings-view .library-info select:hover {
+    border-color: #333;
+}
+
+.settings-view .library-info select:focus {
+    outline: none;
+    border-color: #111;
+    box-shadow: 0 0 0 3px rgb(0 0 0 / 12%);
+}
+
+
+/*
+  -- 10. Small screen buttons -------------------------------------------------
+*/
+.mobile-button {
+    border: 1px solid $border-color;
+    background-color: $bg-color;
+
+    &:hover {
+        background-color: $hover-active;
+    }
+}
+
+
+/*
+  -- 11. Forms ----------------------------------------------------------------
+*/
+input[type="text"] {
+    color: $fg-color;
+    background-color: #fff;
+    font-family: Muli, sans-serif;
+    font-size: 18px;
+    border: 1px solid #555;
+}
+
+#search-form input[type="text"]:focus-visible {
+    outline: 2px solid $border-color;
+}
+
+.input-reset {
+    background-color: #ddd;
+}
+
+.input-reset::after {
+    color: $fg-color;
+    background-color: #ddd;
+}
+
+
+/*
+  -- 12. Crud forms -----------------------------------------------------------
+*/
+form div div label {
+    font-family: Lato, sans-serif;
+    font-size: 1.2em;
+    letter-spacing: 0.6px;
+}
+
+form div div input {
+    font-size: 1.2em;
+    letter-spacing: 0.6px;
+    padding: 5px 10px;
+    width: 300px;
+    border: 1px solid $border-color;
+}
+
+.button {
+    color: $fg-color;
+    font-family: Lato, sans-serif;
+    font-size: 1em;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
+    background: $default-gradient;
+    transition: background 120ms ease, transform 80ms ease, box-shadow 120ms ease;
+}
+
+.button:focus-visible,
+[role="button"]:focus-visible {
+    outline: 2px solid $border-color;
+    outline-offset: 2px;
+}
+
+.button:active,
+[role="button"]:active {
+    transform: translateY(1px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    [role="button"]:hover {
+        opacity: 0.85;
+    }
+}
+
+
+/*
+  -- 13. Context menus --------------------------------------------------------
+*/
+.songs-context-menu, .playlist-context-menu {
+    box-shadow: 0 0 5px 3px rgb(0 0 0 / 20%);
+
+    .menu-options {
+        list-style: none;
+        padding: 10px 0;
+        background-color: $bg-color;
+
+        .menu-option {
+            font-family: Muli, sans-serif;
+            letter-spacing: 1px;
+            padding: 10px 40px 10px 20px;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $hover-active;
+            }
+        }
+    }
+}
+
+
+/*
+  -- Media query 700px --------------------------------------------------------
+*/
+@media all and (min-width: 700px) {
+    .radio {
+        .icon-play, .icon-pause {
+            font-size: 4em;
+        }
+    }
+}
+
+
+/*
+  -- Media query 1024px -------------------------------------------------------
+*/
+@media all and (min-width: 1024px) {
+    /* -- Radios -- */
+    .radio {
+        .radio-name {
+            font-size: 2em;
+        }
+
+        .radio-url {
+            font-size: 1.2em;
+        }
+    }
+
+    /* -- Crud forms -- */
+    form div div label {
+        text-align: right;
+        display: inline-block;
+        padding: 20px 50px;
+        width: calc(50% - 100px);
+    }
+}

@@ -1,0 +1,145 @@
+@use '../config/layout' as config;
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 300;
+
+    width: 100%;
+    height: config.$topbar-content-size-touch;
+    border-bottom-width: config.$topbar-border-size-touch;
+    border-bottom-style: solid;
+}
+
+.albums-view {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.single-album-view {
+    position: fixed;
+    left: 0;
+    z-index: 200;
+}
+
+:is(.albums-view, .radios-view, .settings-view) {
+    @include config.scrollable-y;
+}
+
+.view {
+    position: absolute;
+    top: config.$topbar-size-touch;
+    left: 0;
+
+    width: 100%;
+    height: calc(100% - config.$topbar-size-touch);
+}
+
+.page-title-meta {
+    display: none;
+}
+
+.artists-navigation {
+    width: 100%;
+    height: 100%;
+
+    overflow-y: auto;
+}
+
+.songs, .playlist {
+    display: none;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    table {
+        width: 100%;
+    }
+}
+
+
+@include config.up(xs) {
+    .albums-view {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@include config.up(sm) {
+    .albums-view {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@include config.up(md) {
+    .library-view {
+        display: grid;
+        grid-template-columns: config.$artists-navigation-1024 minmax(0, 1fr);
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .library-view > :not(.artists-navigation, .songs, .playlist) {
+        grid-column: 1 / -1;
+        grid-row: 1 / -1;
+    }
+
+    .topbar {
+        height: config.$topbar-content-size;
+        border-bottom-width: config.$topbar-border-size;
+    }
+
+    .albums-view {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .view {
+        top: config.$topbar-size;
+
+        height: calc(100% - config.$topbar-size);
+    }
+
+    .songs, .playlist {
+        display: block;
+
+        min-width: 0;
+        height: auto;
+    }
+
+    .artists-navigation {
+        grid-column: 1;
+        grid-row: 1 / -1;
+
+        width: config.$artists-navigation-1024;
+    }
+
+    .songs {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .playlist {
+        grid-column: 2;
+        grid-row: 2;
+    }
+}
+
+@include config.up(lg) {
+    .library-view {
+        grid-template-columns: config.$artists-navigation-1200 minmax(0, 1fr);
+    }
+
+    .albums-view {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .artists-navigation {
+        width: config.$artists-navigation-1200;
+    }
+}
+
+@include config.up(xl) {
+    .albums-view {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+}

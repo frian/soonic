@@ -5,15 +5,15 @@
             <tbody>
                 <tr>
                     <td>{{ 'files'|trans }}</td>
-                    <td id="num-files">{{ infos.songs }}</td>
+                    <td id="num-files" class="settings-value">{{ infos.songs }}</td>
                 </tr>
                 <tr>
                     <td>{{ 'artists'|trans }}</td>
-                    <td id="num-artists">{{ infos.artists }}</td>
+                    <td id="num-artists" class="settings-value">{{ infos.artists }}</td>
                 </tr>
                 <tr>
                     <td>{{ 'albums'|trans }}</td>
-                    <td id="num-albums">{{ infos.albums }}</td>
+                    <td id="num-albums" class="settings-value">{{ infos.albums }}</td>
                 </tr>
             </tbody>
         </table>
@@ -37,12 +37,12 @@
             <table class="library-info">
                 <tbody>
                     <tr>
-                        <td>{{ form_label(edit_form.language, 'language') }}</td>
-                        <td>{{ form_widget(edit_form.language) }}</td>
+                        <td class="settings-label">{{ form_label(edit_form.language, 'language') }}</td>
+                        <td class="settings-value">{{ form_widget(edit_form.language) }}</td>
                     </tr>
                     <tr>
-                        <td>{{ form_label(edit_form.theme, 'theme') }}</td>
-                        <td>{{ form_widget(edit_form.theme) }}</td>
+                        <td class="settings-label">{{ form_label(edit_form.theme, 'theme') }}</td>
+                        <td class="settings-value">{{ form_widget(edit_form.theme) }}</td>
                     </tr>
                 </tbody>
             </table>
